@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ * Mira Brand Studio — Design Tokens
+ * Identidade real: near-black quente + dourado + creme. Território cósmico.
+ * (extraído da proposta HelpCell V2 — "cada marca é um universo")
+ * ------------------------------------------------------------------ */
+@theme {
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Base — near-black quente (warm dark) */
+  --color-ink-950: #0c0a07;
+  --color-ink-900: #141210;
+  --color-ink-800: #1c1916;
+  --color-ink-700: #24201a;
+  --color-ink-600: #2e2820;
+
+  /* Marca — olive/dourado escuro (superfícies e gradientes) */
+  --color-brand-700: #2a2516;
+  --color-brand-600: #3a3320;
+  --color-brand-500: #5a4e2a;
+  --color-brand-400: #7d6c33;
+
+  /* Acento — dourado Mira */
+  --color-accent-500: #e3b23c;
+  --color-accent-400: #efc85f;
+  --color-accent-300: #f6da8a;
+  /* dourado escuro — para texto legível sobre fundo branco (mundo "solo") */
+  --color-gold-700: #8a6d1f;
+
+  /* Neutros claros (creme quente) */
+  --color-cream: #f4efe2;
+  --color-paper: #faf7ef;
+  --color-fog: #a39b86;
+
+  --radius-card: 1.5rem;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-ink-900);
+  color: var(--color-cream);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-accent-500);
+  color: var(--color-ink-900);
+}
+
+/* Scrollbar discreta no tema escuro */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-brand-600) 50%, transparent);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+/* Galeria de cases — revelação por IntersectionObserver (ver CasesGallery).
+ * Três estados: 'pre' (abaixo, vai subir e aparecer) → 'in' (centro, sólido)
+ * → 'out' (saiu pelo topo, sobe e some). Transições GPU em opacity/transform. */
+[data-tile] {
+  transition:
+    opacity 0.7s ease,
+    filter 0.7s ease,
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+[data-tile][data-state="pre"] {
+  opacity: 0;
+  transform: translateY(110px) scale(0.9);
+  filter: blur(6px);
+}
+[data-tile][data-state="in"] {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+[data-tile][data-state="out"] {
+  opacity: 0;
+  transform: translateY(-110px) scale(0.9);
+  filter: blur(6px);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-tile] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+  }
+}
+
+/* Starfield cósmico — território visual da Mira ("cada marca é um universo") */
+@utility starfield {
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(244, 239, 226, 0.7), transparent),
+    radial-gradient(1px 1px at 75% 18%, rgba(244, 239, 226, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 40% 70%, rgba(246, 218, 138, 0.6), transparent),
+    radial-gradient(1px 1px at 88% 55%, rgba(244, 239, 226, 0.45), transparent),
+    radial-gradient(1px 1px at 12% 80%, rgba(244, 239, 226, 0.4), transparent),
+    radial-gradient(1.5px 1.5px at 60% 40%, rgba(244, 239, 226, 0.55), transparent),
+    radial-gradient(1px 1px at 33% 12%, rgba(246, 218, 138, 0.5), transparent),
+    radial-gradient(1px 1px at 92% 85%, rgba(244, 239, 226, 0.4), transparent);
+  background-repeat: repeat;
+  background-size: 320px 320px;
+}
