@@ -80,10 +80,6 @@ export function Login() {
             </button>
           </form>
 
-          <p className="mt-5 rounded-xl border border-white/10 bg-white/[0.02] px-3 py-2 text-center text-xs text-fog">
-            Demo: <span className="text-cream">cliente@adapto.com.br</span> · senha{" "}
-            <span className="text-cream">mira</span>
-          </p>
         </div>
 
         <Link

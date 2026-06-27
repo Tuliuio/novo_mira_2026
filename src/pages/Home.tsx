@@ -66,14 +66,11 @@ function Nav() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Logo height={24} tone={light ? "dark" : "light"} />
-        <nav className="hidden items-center gap-8 text-sm opacity-80 md:flex">
-          <a href="#cases" className="transition-opacity hover:opacity-100">Cases</a>
-        </nav>
         <Link
           to="/login"
           aria-label="Área do cliente"
           title="Área do cliente"
-          className="inline-flex items-center justify-center rounded-full border border-accent-500/40 bg-accent-500/10 p-2.5 text-gold-700 transition-colors hover:bg-accent-500/20"
+          className="inline-flex items-center justify-center rounded-full border border-current p-2.5 text-current opacity-90 transition-opacity hover:opacity-100"
         >
           <RocketIcon />
         </Link>

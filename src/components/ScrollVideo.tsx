@@ -10,9 +10,12 @@ interface ScrollVideoProps {
 }
 
 /**
- * Vídeo travado no topo (sticky, fullscreen, sem controles) cujo tempo é
- * dirigido pelo scroll: ao rolar, o vídeo "desce" quadro a quadro e o conteúdo
- * surge por cima. Requer MP4 com keyframes frequentes para scrub fluido.
+ * Vídeo travado no topo (sticky, fullscreen, sem controles).
+ *
+ * Desktop: o tempo do vídeo é dirigido pelo scroll (scrub quadro a quadro).
+ * Mobile (pointer coarse): o iOS não renderiza frames via `currentTime` sem
+ * um play por gesto (dá tela preta), então o vídeo TOCA sozinho (autoplay
+ * mudo inline + loop) como abertura — o conteúdo ainda some no scroll.
  */
 export function ScrollVideo({ src, poster, trackVh = 300, children }: ScrollVideoProps) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -25,15 +28,46 @@ export function ScrollVideo({ src, poster, trackVh = 300, children }: ScrollVide
     const overlay = overlayRef.current;
     if (!track || !video) return;
 
-    let raf = 0;
-    let target = 0;
-
+    // progresso (0..1) do scroll dentro da trilha
     const progress = () => {
       const total = track.offsetHeight - window.innerHeight;
       if (total <= 0) return 0;
       const scrolled = -track.getBoundingClientRect().top;
       return Math.min(1, Math.max(0, scrolled / total));
     };
+    const fadeOverlay = (p: number) => {
+      if (!overlay) return;
+      overlay.style.opacity = String(Math.max(0, 1 - p * 1.7));
+      overlay.style.transform = `translateY(${p * -48}px)`;
+    };
+
+    const coarse =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+
+    /* ---------- Mobile: autoplay (evita frame preto do scrub no iOS) ------- */
+    if (coarse) {
+      video.loop = true;
+      video.muted = true;
+      const play = () => video.play().catch(() => {});
+      play();
+      const onTouch = () => {
+        play();
+        window.removeEventListener("touchstart", onTouch);
+      };
+      window.addEventListener("touchstart", onTouch, { passive: true });
+      const onScrollM = () => fadeOverlay(progress());
+      window.addEventListener("scroll", onScrollM, { passive: true });
+      onScrollM();
+      return () => {
+        window.removeEventListener("scroll", onScrollM);
+        window.removeEventListener("touchstart", onTouch);
+      };
+    }
+
+    /* ---------- Desktop: scroll-scrubbing -------------------------------- */
+    let raf = 0;
+    let target = 0;
 
     const tick = () => {
       raf = 0;
@@ -60,10 +94,7 @@ export function ScrollVideo({ src, poster, trackVh = 300, children }: ScrollVide
     const onScroll = () => {
       const p = progress();
       target = p * (video.duration || 0);
-      if (overlay) {
-        overlay.style.opacity = String(Math.max(0, 1 - p * 1.7));
-        overlay.style.transform = `translateY(${p * -48}px)`;
-      }
+      fadeOverlay(p);
       if (!raf) raf = requestAnimationFrame(tick);
     };
 
