@@ -3,6 +3,9 @@ import { useAuth } from "@/lib/auth";
 import { Home } from "@/pages/Home";
 import { Login } from "@/pages/Login";
 import { NotFound } from "@/pages/NotFound";
+import { LinkBio } from "@/pages/LinkBio";
+import { Metodo } from "@/pages/Metodo";
+import { PROFILES } from "@/lib/bio";
 import { BrandOSLayout } from "@/pages/brandos/BrandOSLayout";
 import { BrandItemPage } from "@/pages/brandos/BrandItemPage";
 import { BrandOverview } from "@/pages/brandos/BrandOverview";
@@ -20,6 +23,8 @@ export function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/renata" element={<LinkBio profile={PROFILES.renata} />} />
+      <Route path="/metodo" element={<Metodo />} />
 
       <Route
         path="/app"

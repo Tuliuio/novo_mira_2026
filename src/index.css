@@ -76,6 +76,25 @@ body {
   text-wrap: balance;
 }
 
+/* Pulso sutil para o CTA do quiz no link de bio */
+@keyframes bio-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(227, 178, 60, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(227, 178, 60, 0.12);
+  }
+}
+.bio-pulse {
+  animation: bio-pulse 2.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bio-pulse {
+    animation: none;
+  }
+}
+
 /* Galeria de cases — revelação por IntersectionObserver (ver CasesGallery).
  * Três estados: 'pre' (abaixo, vai subir e aparecer) → 'in' (centro, sólido)
  * → 'out' (saiu pelo topo, sobe e some). Transições GPU em opacity/transform. */

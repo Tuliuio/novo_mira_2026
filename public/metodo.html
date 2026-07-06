@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Método Mira · Mira Brand Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050505;
+    --text:#EDEAE2;
+    --muted:#9A968C;
+    --faint:#5C5952;
+    --gold:#E0A92E;
+    --gold-soft:#F2CE8C;
+    --violet:#8B7FE8;
+    --core:#F2CE8C;
+    --essencia:#E39B36;
+    --narrativa:#D96C3A;
+    --expressao:#A0432A;
+    --line:rgba(237,234,226,.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{max-width:1240px;margin:0 auto;padding:56px 32px 80px}
+
+  header{margin-bottom:40px}
+  .eyebrow{
+    font-size:11px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--gold);font-weight:500;margin-bottom:16px;
+  }
+  h1{font-size:clamp(32px,4.5vw,52px);font-weight:300;letter-spacing:-.02em;line-height:1.05}
+  h1 strong{font-weight:600;background:linear-gradient(100deg,#8a7a2e 0%,var(--gold) 45%,var(--gold-soft) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{margin-top:14px;font-size:16px;color:var(--muted);max-width:560px;line-height:1.6}
+
+  .stage{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,1fr);gap:48px;align-items:start}
+
+  .diagram-col{position:relative}
+  .diagram{width:100%;height:auto;display:block}
+  .ring{cursor:pointer;transition:opacity .35s ease,filter .35s ease}
+  .ring:hover{filter:brightness(1.14)}
+  .diagram.has-sel .ring:not(.active){opacity:.32}
+  .ring.active{filter:brightness(1.08)}
+  .ring-label{font-family:'Inter',sans-serif;font-weight:500;pointer-events:none;transition:opacity .35s ease}
+  .diagram.has-sel .ring-label:not(.active){opacity:.35}
+  .sel-stroke{fill:none;stroke:var(--gold-soft);stroke-width:1.5;opacity:0;transition:opacity .3s ease;pointer-events:none}
+  .sel-stroke.on{opacity:.9}
+  .sat{cursor:pointer}
+  .sat circle{transition:r .25s ease,filter .25s ease}
+  .sat:hover circle{filter:brightness(1.3)}
+  .sat text{font-size:11.5px;fill:var(--muted);font-weight:400;letter-spacing:.02em;pointer-events:none}
+  .sat.active circle{filter:brightness(1.35)}
+  .sat.active text{fill:var(--violet)}
+
+  .gravity-bar{
+    display:flex;align-items:center;gap:18px;margin-top:22px;flex-wrap:wrap;
+  }
+  .btn-gravity{
+    font-family:'Inter',sans-serif;font-size:12px;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--bg);background:linear-gradient(100deg,var(--gold) 0%,var(--gold-soft) 100%);
+    border:none;border-radius:999px;padding:13px 26px;cursor:pointer;
+    transition:transform .2s ease,opacity .2s ease;
+  }
+  .btn-gravity:hover{transform:translateY(-1px)}
+  .btn-gravity:disabled{opacity:.4;cursor:default;transform:none}
+  .btn-gravity:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
+  .ring,.sat{outline:none;-webkit-tap-highlight-color:transparent}
+  .ring:focus,.sat:focus,.ring:focus-visible,.sat:focus-visible{outline:none}
+  .journey-caption{
+    font-size:14px;color:var(--muted);line-height:1.55;min-height:44px;flex:1;min-width:220px;
+    transition:opacity .25s ease;
+  }
+  .journey-caption em{color:var(--gold-soft);font-style:normal;font-weight:400}
+
+  .panel{
+    border:1px solid var(--line);border-radius:20px;
+    padding:34px 32px;min-height:520px;
+    background:linear-gradient(160deg,rgba(224,169,46,.05) 0%,rgba(5,5,5,0) 45%);
+    position:sticky;top:32px;
+  }
+  .panel-eyebrow{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;font-weight:500;margin-bottom:14px;color:var(--gold)}
+  .panel-eyebrow.violet{color:var(--violet)}
+  .panel h2{font-size:30px;font-weight:500;letter-spacing:-.015em;margin-bottom:6px}
+  .panel .question{font-size:15px;color:var(--gold-soft);margin-bottom:20px;font-weight:400}
+  .panel p{font-size:14.5px;line-height:1.75;color:var(--muted);margin-bottom:14px}
+  .panel p strong{color:var(--text);font-weight:500}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 18px}
+  .chip{
+    font-size:12px;color:var(--text);border:1px solid var(--line);
+    border-radius:999px;padding:6px 13px;font-weight:400;letter-spacing:.01em;
+  }
+  .chip.gold{border-color:rgba(224,169,46,.45);color:var(--gold-soft)}
+  .group-title{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);font-weight:500;margin:18px 0 10px}
+  .deliverable{
+    margin-top:22px;padding-top:18px;border-top:1px solid var(--line);
+    font-size:13.5px;color:var(--muted);line-height:1.6;
+  }
+  .deliverable span{display:block;font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:6px}
+  .stage-tag{
+    display:inline-block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--violet);border:1px solid rgba(139,127,232,.4);border-radius:999px;
+    padding:5px 12px;font-weight:500;margin-bottom:18px;
+  }
+  .panel-fade{animation:fadeIn .35s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer p{font-size:12px;color:var(--faint);letter-spacing:.04em}
+
+  @media (max-width:960px){
+    .stage{grid-template-columns:1fr;gap:36px}
+    .panel{position:static;min-height:0}
+    .wrap{padding:40px 20px 64px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .panel-fade{animation:none}
+    .btn-gravity,.ring,.sat circle{transition:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Mira Brand Studio · Metodologia</div>
+    <h1>Tudo orbita <strong>o cliente.</strong></h1>
+    <p class="sub">O Método Mira constrói marcas em camadas, de dentro pra fora. Clique em cada camada pra entender o que ela responde, e ative a gravidade pra ver como a gestão transforma prospects em clientes.</p>
+  </header>
+
+  <div class="stage">
+    <div class="diagram-col">
+      <svg class="diagram" id="diagram" viewBox="0 0 720 720" role="img" aria-label="Diagrama orbital do Método Mira com camadas clicáveis e canais em órbita">
+        <circle id="orbitPath" cx="360" cy="360" r="330" fill="none" stroke="rgba(237,234,226,.25)" stroke-width="1" stroke-dasharray="4 6"/>
+        <circle class="ring" data-key="expressao" cx="360" cy="360" r="270" fill="#A0432A" role="button" aria-label="Camada Expressão"/>
+        <circle class="ring" data-key="narrativa" cx="360" cy="360" r="200" fill="#D96C3A" role="button" aria-label="Camada Narrativa"/>
+        <circle class="ring" data-key="essencia" cx="360" cy="360" r="130" fill="#E39B36" role="button" aria-label="Camada Essência"/>
+        <circle class="ring" data-key="cliente" cx="360" cy="360" r="65" fill="#F2CE8C" role="button" aria-label="Núcleo Cliente"/>
+        <circle class="sel-stroke" id="selStroke" cx="360" cy="360" r="270"/>
+        <text class="ring-label" data-for="expressao" x="360" y="126" text-anchor="middle" font-size="15" fill="#F6E8DF">Expressão</text>
+        <text class="ring-label" data-for="narrativa" x="360" y="196" text-anchor="middle" font-size="15" fill="#4A1B0C">Narrativa</text>
+        <text class="ring-label" data-for="essencia" x="360" y="264" text-anchor="middle" font-size="15" fill="#412402">Essência</text>
+        <text class="ring-label" data-for="cliente" x="360" y="360" text-anchor="middle" dominant-baseline="central" font-size="17" font-weight="600" fill="#412402">Cliente</text>
+        <g id="sats"></g>
+        <circle id="prospect" r="7" fill="#F2CE8C" opacity="0"/>
+        <circle id="referral" r="4.5" fill="#8B7FE8" opacity="0"/>
+      </svg>
+      <div class="gravity-bar">
+        <button class="btn-gravity" id="btnGravity">Ativar gravidade</button>
+        <div class="journey-caption" id="journeyCaption">A gravidade é a gestão contínua: cada contato consistente puxa o prospect uma camada pra dentro.</div>
+      </div>
+    </div>
+
+    <aside class="panel" id="panel" aria-live="polite"></aside>
+  </div>
+
+  <footer>
+    <p>Método Mira · Metodologia proprietária da Mira Brand Studio</p>
+    <p>Versão interna para estudo do time · 2026</p>
+  </footer>
+</div>
+<script>
+const LAYERS = {
+  cliente: {
+    eyebrow: "Núcleo · Fonte de energia",
+    title: "Cliente",
+    question: "Pra quem tudo isso existe?",
+    body: [
+      "O cliente é o núcleo do modelo porque a marca não existe por si mesma: ela existe como resposta a alguém. Todo o calor do sistema vem daqui, e cada camada só é válida na medida em que responde a essa verdade central.",
+      "No núcleo mora a <strong>verdade do cliente</strong>, o que descobrimos na fase de imersão: dores reais, contexto, comportamento, o que ele já tentou e por que não funcionou. Nada é inventado em sala de reunião.",
+      "Uma distinção importante: o núcleo é <strong>descoberta</strong>. A escolha de qual público priorizar é decisão estratégica e mora na camada de Essência."
+    ],
+    chips: ["Pesquisa e entrevistas", "Dores e desejos", "Contexto real", "Jornada atual"],
+    chipsTitle: "O que vive aqui",
+    deliverable: "Diagnóstico de imersão: o retrato honesto do cliente e do contexto antes de qualquer criação."
+  },
+  essencia: {
+    eyebrow: "Camada 01",
+    title: "Essência",
+    question: "Quem somos e como competimos?",
+    body: [
+      "A camada que separa um estúdio de branding de um fornecedor de logo. Ela se divide em duas metades que mudam em ritmos diferentes.",
+      "A <strong>Identidade</strong> é o imutável: o que continuaria verdadeiro se a marca trocasse de mercado amanhã. A <strong>Estratégia</strong> é o competitivo: revisada a cada ciclo, é onde vive a maior parte do trabalho de rebranding.",
+      "A ordem é sempre identidade primeiro, estratégia depois. Estratégia sem identidade gera marca camaleoa."
+    ],
+    groups: [
+      { title: "Identidade · o imutável", chips: ["Propósito", "Valores", "Personalidade e arquétipo"] },
+      { title: "Estratégia · o competitivo", chips: ["Público", "Diferenciais", "Posicionamento", "Promessa"] }
+    ],
+    deliverable: "Plataforma de marca: o documento que consolida identidade e estratégia em decisões, não inspirações."
+  },
+  narrativa: {
+    eyebrow: "Camada 02",
+    title: "Narrativa",
+    question: "Como contamos nossa história?",
+    body: [
+      "A Narrativa dá vida à Essência e opera em dois níveis. A <strong>narrativa de marca</strong> constrói o universo: a origem (por que a marca nasceu), o inimigo (a ideia ou padrão de mercado que ela combate) e o manifesto que condensa tudo em uma peça emocional.",
+      "O <strong>motor de vendas</strong> roda dentro desse universo, em sete atos: o cliente é o herói, a marca é o guia. Marcas que só têm o motor vendem mas não constroem memória; marcas que só têm o universo emocionam mas não convertem.",
+      "Quando o inimigo da marca e o problema do cliente apontam na mesma direção, branding e marketing viram a mesma coisa."
+    ],
+    groups: [
+      { title: "Narrativa de marca", chips: ["Origem", "Inimigo", "Manifesto"] },
+      { title: "Motor de vendas · 7 atos", chips: ["Herói", "Problema", "Guia", "Plano", "Chamada pra ação", "Fracasso", "Sucesso"] }
+    ],
+    deliverable: "Documento de narrativa e manifesto: a história que a marca vai repetir até virar memória."
+  },
+  expressao: {
+    eyebrow: "Camada 03",
+    title: "Expressão",
+    question: "Como nos apresentamos ao mundo?",
+    body: [
+      "A Expressão torna a marca visível, tangível e memorável. A regra central da camada: separar <strong>sistema</strong> (a identidade em si, as regras) de <strong>aplicações</strong> (os materiais produzidos com ela). O sistema é o projeto de branding; as aplicações podem ser pacotes ou recorrência.",
+      "O tom de voz deriva direto do arquétipo definido na Essência. É por isso que a ordem das camadas não é negociável: expressão sem essência é decoração."
+    ],
+    groups: [
+      { title: "Expressão verbal", chips: ["Nome", "Slogan", "Tom de voz", "Mensagens-chave"] },
+      { title: "Expressão visual", chips: ["Logo", "Identidade visual", "Cores", "Tipografia", "Ícones e elementos", "Fotografia", "Direção de arte", "Motion"] }
+    ],
+    deliverable: "Brandbook: o sistema completo transformado em regra utilizável por qualquer pessoa que produza pra marca."
+  }
+};
+
+const CHANNELS = [
+  { key: "indicacoes", label: "Indicações", angle: -55, size: 9, stage: "Descoberta qualificada",
+    body: ["O canal mais forte da órbita, e o único que nasce do próprio núcleo: <strong>clientes satisfeitos lançam novos prospects em órbita</strong>. É a gravidade assistida do modelo.",
+    "O papel da gestão aqui é tornar a indicação intencional em vez de acidental: momentos certos pra pedir, motivos concretos pra indicar, e uma experiência que valha a história contada."] },
+  { key: "google", label: "Google", angle: -110, size: 7, stage: "Descoberta ativa",
+    body: ["Quem chega pelo Google já tem o problema nomeado: está procurando. SEO e anúncios capturam <strong>demanda que já existe</strong>.",
+    "A gravidade age garantindo que o que a pessoa encontra confirma o que ela procurava: página certa, promessa clara, próxima ação óbvia."] },
+  { key: "instagram", label: "Instagram", angle: -160, size: 8, stage: "Descoberta e prova",
+    body: ["O canal onde a marca é <strong>descoberta por quem ainda não sabia que precisava dela</strong>, e onde prospects em consideração voltam pra conferir se ela é real.",
+    "Consistência visual e de narrativa aqui pesa mais que frequência: cada post é uma volta a mais na órbita, aproximando ou afastando."] },
+  { key: "site", label: "Site", angle: 155, size: 8, stage: "Consideração",
+    body: ["A casa da marca: o único território em órbita que ela controla por completo. É onde o prospect <strong>decide se leva a sério</strong>.",
+    "Aqui a narrativa completa roda: herói, problema, guia, plano. O site não apresenta a empresa; ele organiza a decisão do prospect."] },
+  { key: "whatsapp", label: "WhatsApp", angle: 105, size: 9, stage: "Conversão e relacionamento",
+    body: ["No Brasil, é onde a órbita vira conversa: o último anel antes do núcleo. Quase todo prospect <strong>passa por aqui antes de virar cliente</strong>.",
+    "A gravidade se manifesta em tempo de resposta, tom de voz coerente com a marca e um plano claro de próximos passos. É também o canal que sustenta o relacionamento depois da conversão."] },
+  { key: "email", label: "E-mail", angle: 55, size: 6, stage: "Nutrição",
+    body: ["O canal da paciência: mantém em órbita os prospects que <strong>ainda não estão prontos</strong>, sem depender de algoritmo.",
+    "Conteúdo útil e recorrente impede que a distância aumente. Prospect que some da órbita raramente volta sozinho."] },
+  { key: "eventos", label: "Eventos", angle: 12, size: 6, stage: "Descoberta presencial",
+    body: ["Eventos, palestras e parcerias colocam a marca em órbitas que ela ainda não alcança sozinha, com <strong>a confiança de quem apresenta</strong>.",
+    "Um bom evento comprime a jornada: descoberta, narrativa e confiança acontecem na mesma conversa."] }
+];
+
+const GRAVITY_PANEL = {
+  eyebrow: "Gravidade · Gestão contínua",
+  title: "Gravidade",
+  question: "O que puxa o prospect pra dentro?",
+  body: [
+    "Na física do modelo, gravidade é <strong>gestão</strong>: a força constante que mantém tudo alinhado ao núcleo. Sem ela, prospects passam pela órbita e seguem viagem.",
+    "Cada contato consistente aumenta a atração: o prospect reconhece a Expressão, se conecta com a Narrativa, confia na Essência e chega ao núcleo: vira cliente. E cliente no núcleo lança novas indicações em órbita. O ciclo se fecha.",
+    "Inconsistência é velocidade de escape: uma marca que muda de cara e de voz a cada contato empurra o prospect pra fora, por melhor que seja o serviço."
+  ],
+  chips: ["Consistência nos canais", "Cadência de conteúdo", "Tempo de resposta", "Revisão estratégica por ciclo"],
+  chipsTitle: "Onde a gestão atua",
+  deliverable: "Fase Órbita: a gestão recorrente da marca, que transforma projeto em relação de longo prazo."
+};
+
+const panel = document.getElementById('panel');
+const diagram = document.getElementById('diagram');
+const selStroke = document.getElementById('selStroke');
+const caption = document.getElementById('journeyCaption');
+const CX = 360, CY = 360, ORBIT_R = 330;
+const RADII = { expressao:270, narrativa:200, essencia:130, cliente:65 };
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function esc(s){ return s; }
+
+function renderPanel(data, opts = {}) {
+  let html = '<div class="panel-fade">';
+  html += `<div class="panel-eyebrow${opts.violet ? ' violet' : ''}">${data.eyebrow}</div>`;
+  html += `<h2>${data.title}</h2>`;
+  if (data.stage) html += `<div class="stage-tag">${data.stage}</div>`;
+  if (data.question) html += `<div class="question">${data.question}</div>`;
+  data.body.forEach(p => html += `<p>${p}</p>`);
+  if (data.groups) {
+    data.groups.forEach(g => {
+      html += `<div class="group-title">${g.title}</div><div class="chips">`;
+      g.chips.forEach(c => html += `<span class="chip">${c}</span>`);
+      html += '</div>';
+    });
+  }
+  if (data.chips) {
+    html += `<div class="group-title">${data.chipsTitle || 'Elementos'}</div><div class="chips">`;
+    data.chips.forEach(c => html += `<span class="chip gold">${c}</span>`);
+    html += '</div>';
+  }
+  if (data.deliverable) html += `<div class="deliverable"><span>Entregável</span>${data.deliverable}</div>`;
+  html += '</div>';
+  panel.innerHTML = html;
+}
+
+function selectLayer(key) {
+  document.querySelectorAll('.sat').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ring').forEach(r => r.classList.toggle('active', r.dataset.key === key));
+  document.querySelectorAll('.ring-label').forEach(l => l.classList.toggle('active', l.dataset.for === key));
+  diagram.classList.add('has-sel');
+  selStroke.setAttribute('r', RADII[key]);
+  selStroke.classList.add('on');
+  renderPanel(LAYERS[key]);
+}
+
+document.querySelectorAll('.ring').forEach(ring => {
+  ring.addEventListener('click', () => selectLayer(ring.dataset.key));
+  ring.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectLayer(ring.dataset.key); } });
+});
+
+const satsGroup = document.getElementById('sats');
+const satEls = [];
+CHANNELS.forEach(ch => {
+  const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('class','sat');
+  g.setAttribute('role','button');
+  g.setAttribute('aria-label','Canal ' + ch.label);
+  const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  dot.setAttribute('r', ch.size);
+  dot.setAttribute('fill', '#8B7FE8');
+  const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+  label.setAttribute('text-anchor','middle');
+  label.textContent = ch.label;
+  g.appendChild(dot); g.appendChild(label);
+  satsGroup.appendChild(g);
+  const activate = () => {
+    document.querySelectorAll('.ring').forEach(r => r.classList.remove('active'));
+    document.querySelectorAll('.ring-label').forEach(l => l.classList.remove('active'));
+    diagram.classList.remove('has-sel');
+    selStroke.classList.remove('on');
+    document.querySelectorAll('.sat').forEach(s => s.classList.remove('active'));
+    g.classList.add('active');
+    renderPanel({ eyebrow: 'Canal em órbita', title: ch.label, stage: ch.stage, body: ch.body,
+      deliverable: 'Todo canal carrega a mesma expressão e a mesma narrativa. O canal muda; a marca, nunca.' }, { violet: true });
+  };
+  g.addEventListener('click', activate);
+  g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
+  satEls.push({ g, dot, label, angle: ch.angle * Math.PI / 180 });
+});
+
+function placeSats(offset) {
+  satEls.forEach(s => {
+    const a = s.angle + offset;
+    const x = CX + ORBIT_R * Math.cos(a);
+    const y = CY + ORBIT_R * Math.sin(a);
+    s.g.setAttribute('transform', `translate(${x},${y})`);
+    const inX = -34 * Math.cos(a), inY = -34 * Math.sin(a);
+    s.label.setAttribute('x', inX);
+    s.label.setAttribute('y', inY + 4);
+  });
+}
+placeSats(0);
+if (!reducedMotion) {
+  let start = null;
+  function spin(t) {
+    if (!start) start = t;
+    placeSats(((t - start) / 1000) * (2 * Math.PI / 140));
+    requestAnimationFrame(spin);
+  }
+  requestAnimationFrame(spin);
+}
+
+const prospect = document.getElementById('prospect');
+const referral = document.getElementById('referral');
+const btn = document.getElementById('btnGravity');
+const STAGES = [
+  { r: ORBIT_R, text: 'O prospect entra em órbita: descobre a marca em um canal.' },
+  { r: RADII.expressao, text: '<em>Expressão</em>: ele reconhece a marca. Mesma cara, mesma voz, em todo lugar.' },
+  { r: RADII.narrativa, text: '<em>Narrativa</em>: ele se vê na história. O problema dele tem nome e tem plano.' },
+  { r: RADII.essencia, text: '<em>Essência</em>: ele confia. A promessa se sustenta em cada conversa.' },
+  { r: RADII.cliente, text: '<em>Núcleo</em>: o prospect vira cliente. E clientes geram indicações: novas órbitas começam.' }
+];
+
+function setCaption(html) { caption.innerHTML = html; }
+
+function runGravity() {
+  btn.disabled = true;
+  renderPanel(GRAVITY_PANEL);
+  document.querySelectorAll('.ring').forEach(r => r.classList.remove('active'));
+  document.querySelectorAll('.ring-label').forEach(l => l.classList.remove('active'));
+  document.querySelectorAll('.sat').forEach(s => s.classList.remove('active'));
+  diagram.classList.remove('has-sel');
+  selStroke.classList.remove('on');
+
+  if (reducedMotion) {
+    let i = 0;
+    prospect.setAttribute('opacity','0');
+    const step = () => {
+      setCaption(STAGES[i].text);
+      i++;
+      if (i < STAGES.length) setTimeout(step, 2200);
+      else { btn.disabled = false; }
+    };
+    step();
+    return;
+  }
+
+  const DURATION = 11000;
+  const startAngle = Math.random() * Math.PI * 2;
+  const TURNS = 2.4;
+  let t0 = null, lastStage = -1;
+  prospect.setAttribute('opacity','1');
+
+  function frame(t) {
+    if (!t0) t0 = t;
+    const p = Math.min((t - t0) / DURATION, 1);
+    const ease = 1 - Math.pow(1 - p, 2.2);
+    const r = ORBIT_R * (1 - ease);
+    const a = startAngle + TURNS * 2 * Math.PI * ease;
+    prospect.setAttribute('cx', CX + r * Math.cos(a));
+    prospect.setAttribute('cy', CY + r * Math.sin(a));
+    let stageIdx = 0;
+    for (let i = 0; i < STAGES.length; i++) if (r <= STAGES[i].r + 1) stageIdx = i;
+    if (stageIdx !== lastStage) { lastStage = stageIdx; setCaption(STAGES[stageIdx].text); }
+    if (p < 1) requestAnimationFrame(frame);
+    else finish(a);
+  }
+
+  function finish(a) {
+    prospect.setAttribute('opacity','0');
+    setCaption(STAGES[STAGES.length - 1].text);
+    let t0r = null;
+    const outAngle = a + Math.PI * 0.6;
+    referral.setAttribute('opacity','1');
+    function out(t) {
+      if (!t0r) t0r = t;
+      const p = Math.min((t - t0r) / 2600, 1);
+      const ease = p * p * (3 - 2 * p);
+      const r = ORBIT_R * ease;
+      referral.setAttribute('cx', CX + r * Math.cos(outAngle + ease * 1.2));
+      referral.setAttribute('cy', CY + r * Math.sin(outAngle + ease * 1.2));
+      if (p < 1) requestAnimationFrame(out);
+      else { referral.setAttribute('opacity','0'); btn.disabled = false; }
+    }
+    requestAnimationFrame(out);
+  }
+  requestAnimationFrame(frame);
+}
+btn.addEventListener('click', runGravity);
+
+renderPanel({
+  eyebrow: 'Método Mira',
+  title: 'Comece pelo núcleo',
+  question: 'Um modelo, três camadas, uma órbita.',
+  body: [
+    'Este é o mapa da metodologia da Mira. O <strong>cliente</strong> está no núcleo como fonte de energia: tudo o que construímos se forma em camadas ao redor dele, de dentro pra fora, sempre nesta ordem: Essência, Narrativa, Expressão.',
+    'Em volta, os <strong>canais orbitam</strong> carregando a marca até o mundo. E a <strong>gravidade</strong>, que é a gestão contínua, é o que puxa prospects camada a camada até o núcleo.',
+    'Clique em qualquer camada ou canal pra explorar. Ou ative a gravidade e veja o ciclo completo acontecer.'
+  ],
+  deliverable: 'Documento completo da metodologia disponível pro time: este diagrama é o mapa, o documento é o território.'
+}, {});
+</script>
+</body>
+</html>
