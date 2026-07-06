@@ -23,9 +23,9 @@ export function BrandOverview() {
       </div>
 
       <p className="mt-8 max-w-xl leading-relaxed text-fog">
-        Bem-vindo ao seu <span className="text-cream">Brand OS</span> — o sistema vivo
-        da sua marca. Navegue pelos três pilares do Método Mira no menu lateral para
-        consultar cada elemento da identidade.
+        Bem-vindo à sua <span className="text-cream">Plataforma de Marca</span> — o
+        sistema vivo da sua marca. Navegue pelas três camadas do Método Mira no menu
+        lateral para consultar cada elemento da identidade.
       </p>
 
       <div className="mt-10 grid gap-5 md:grid-cols-3">

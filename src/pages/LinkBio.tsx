@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
-import { waLink, type BioProfile, type BioService } from "@/lib/bio";
+import { waLink, googleCalendarLink, type BioProfile, type BioService } from "@/lib/bio";
 
 /* --------------------------------------------------------- Ícones flat */
 const PATHS: Record<string, string[]> = {
@@ -35,6 +35,10 @@ const PATHS: Record<string, string[]> = {
   check: ["M5 12l5 5l10 -10"],
   arrowRight: ["M5 12l14 0", "M13 18l6 -6l-6 -6"],
   chevron: ["M9 6l6 6l-6 6"],
+  calendar: [
+    "M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z",
+    "M16 3v4M8 3v4M4 11h16",
+  ],
 };
 
 function Icon({ name, size = 20 }: { name: string; size?: number }) {
@@ -132,8 +136,17 @@ export function LinkBio({ profile }: { profile: BioProfile }) {
                 onClick={() => setService(item)}
                 className="w-44 shrink-0 snap-start overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] text-left transition-colors hover:border-accent-500/40"
               >
-                <div className="flex h-24 items-end bg-gradient-to-br from-brand-600 to-ink-800 p-3">
-                  <span className="rounded-full bg-ink-900/50 px-2 py-0.5 text-[10px] font-medium text-accent-300">
+                <div className="relative flex h-24 items-end overflow-hidden bg-gradient-to-br from-brand-600 to-ink-800 p-3">
+                  {item.image && (
+                    <img
+                      src={item.image}
+                      alt=""
+                      className="absolute inset-0 h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-900/85 via-ink-900/30 to-ink-900/10" />
+                  <span className="relative rounded-full bg-ink-900/60 px-2 py-0.5 text-[10px] font-medium text-accent-300 backdrop-blur-sm">
                     {item.tag}
                   </span>
                 </div>
@@ -189,7 +202,10 @@ export function LinkBio({ profile }: { profile: BioProfile }) {
           ))}
         </div>
 
-        {/* 7 — Prova social */}
+        {/* 7 — Agendamento (Google Agenda) */}
+        {profile.booking && <BookingCalendar profile={profile} />}
+
+        {/* 8 — Prova social */}
         {profile.stat && (
           <div className="mt-8 text-center">
             <p className="text-3xl font-bold text-accent-400" style={{ fontFamily: "var(--font-display)" }}>
@@ -223,7 +239,7 @@ export function LinkBio({ profile }: { profile: BioProfile }) {
           <Link to="/" className="opacity-80 transition-opacity hover:opacity-100">
             <Logo height={22} />
           </Link>
-          <p className="text-xs text-fog">Brand studio · Florianópolis, Brasil</p>
+          <p className="text-xs text-fog">Brand Studio · Florianópolis, Brasil</p>
         </footer>
       </main>
 
@@ -293,6 +309,134 @@ function LinkRow({
     <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
       {inner}
     </a>
+  );
+}
+
+/* ---------------------------------------------------- Agendamento */
+function nextWeekdays(count: number): { iso: string; wd: string; day: string; month: string }[] {
+  const WD = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
+  const MO = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+  const out: { iso: string; wd: string; day: string; month: string }[] = [];
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  while (out.length < count) {
+    const dow = d.getDay();
+    if (dow !== 0 && dow !== 6) {
+      const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+        d.getDate(),
+      ).padStart(2, "0")}`;
+      out.push({ iso, wd: WD[dow], day: String(d.getDate()), month: MO[d.getMonth()] });
+    }
+    d.setDate(d.getDate() + 1);
+  }
+  return out;
+}
+
+function BookingCalendar({ profile }: { profile: BioProfile }) {
+  const b = profile.booking!;
+  const [date, setDate] = useState<string | null>(null);
+  const [time, setTime] = useState<string | null>(null);
+  const days = nextWeekdays(8);
+
+  // Se a Renata tiver um "Horário de atendimento" do Google, usa o link real.
+  if (b.scheduleUrl) {
+    return (
+      <a
+        href={b.scheduleUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-8 flex items-center gap-4 rounded-2xl border border-accent-500/30 bg-accent-500/10 p-4 transition-colors hover:bg-accent-500/15"
+      >
+        <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-accent-500 text-ink-900">
+          <Icon name="calendar" size={20} />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-semibold">Agende uma conversa de 30 min</span>
+          <span className="block text-xs text-fog">Escolha um horário na agenda da Renata</span>
+        </span>
+        <Icon name="arrowRight" size={20} />
+      </a>
+    );
+  }
+
+  const link =
+    date && time
+      ? googleCalendarLink({
+          date,
+          time,
+          durationMin: b.durationMin,
+          title: b.title,
+          details: "Conversa agendada pelo link da Renata (Mira Brand Studio).",
+          guestEmail: b.guestEmail,
+          timezone: b.timezone,
+        })
+      : null;
+
+  return (
+    <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+      <p className="flex items-center gap-2 text-sm font-semibold">
+        <Icon name="calendar" size={18} />
+        Agende uma conversa de 30 min
+      </p>
+      <p className="mt-1 text-xs text-fog">Escolha um dia e horário — abre no seu Google Agenda.</p>
+
+      <div className="-mx-1 mt-4 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none]">
+        {days.map((d) => (
+          <button
+            key={d.iso}
+            onClick={() => {
+              setDate(d.iso);
+              setTime(null);
+            }}
+            className={`flex shrink-0 flex-col items-center rounded-xl border px-3 py-2 transition-colors ${
+              date === d.iso
+                ? "border-accent-500 bg-accent-500/15 text-cream"
+                : "border-white/10 bg-white/[0.02] text-fog hover:border-accent-500/40"
+            }`}
+          >
+            <span className="text-[10px] uppercase tracking-wide">{d.wd}</span>
+            <span className="text-base font-semibold text-cream">{d.day}</span>
+            <span className="text-[10px] text-fog">{d.month}</span>
+          </button>
+        ))}
+      </div>
+
+      {date && (
+        <div className="mt-3 grid grid-cols-4 gap-2">
+          {b.slots.map((s) => (
+            <button
+              key={s}
+              onClick={() => setTime(s)}
+              className={`rounded-lg border py-2 text-sm transition-colors ${
+                time === s
+                  ? "border-accent-500 bg-accent-500/15 text-cream"
+                  : "border-white/10 bg-white/[0.02] text-fog hover:border-accent-500/40"
+              }`}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+      )}
+
+      <a
+        href={link ?? undefined}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-disabled={!link}
+        onClick={(e) => {
+          if (!link) e.preventDefault();
+        }}
+        className={`mt-4 flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-transform ${
+          link
+            ? "bg-accent-500 text-ink-900 hover:scale-[1.02]"
+            : "cursor-not-allowed bg-white/5 text-fog"
+        }`}
+      >
+        <Icon name="calendar" size={18} />
+        {link ? "Agendar no Google Agenda" : "Escolha dia e horário"}
+      </a>
+    </div>
   );
 }
 

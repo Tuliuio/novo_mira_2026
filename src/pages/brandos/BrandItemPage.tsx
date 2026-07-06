@@ -87,7 +87,7 @@ function EmptyState({ label }: { label: string }) {
           Este item ainda está sendo construído pela Mira.
         </p>
         <p className="mt-1 text-sm text-fog/60">
-          Em breve ele aparecerá aqui no seu Brand OS.
+          Em breve ele aparecerá aqui na sua Plataforma de Marca.
         </p>
       </div>
     </div>

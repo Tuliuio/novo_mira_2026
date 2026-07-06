@@ -55,7 +55,7 @@ export function BrandOSLayout() {
           </span>
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold">{client.name}</p>
-            <p className="truncate text-xs text-fog">Brand OS</p>
+            <p className="truncate text-xs text-fog">Plataforma de Marca</p>
           </div>
         </Link>
 

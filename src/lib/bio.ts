@@ -43,6 +43,8 @@ export interface BioService {
   name: string;
   tag: string;
   description: string;
+  /** imagem de fundo do card (case da Mira, em /public/cases) */
+  image?: string;
 }
 
 export interface BioWhatsApp {
@@ -72,6 +74,16 @@ export interface BioProfile {
   whatsappCards: BioWhatsApp[];
   stat?: { value: string; label: string };
   instagram?: { handle: string; href: string };
+  booking?: {
+    title: string;
+    durationMin: number;
+    guestEmail?: string;
+    timezone?: string;
+    /** horários oferecidos (24h) */
+    slots: string[];
+    /** URL do "Horário de atendimento" do Google (se a Renata configurar) */
+    scheduleUrl?: string;
+  };
 }
 
 const WA = "5548984291699";
@@ -153,28 +165,33 @@ export const PROFILES: Record<string, BioProfile> = {
           tag: "Ponto de partida",
           description:
             "Uma leitura estratégica de onde a sua marca está e do que ela precisa para crescer com clareza.",
+          image: "/cases/case-03.png",
         },
         {
           name: "Branding Completo",
           tag: "Método Mira",
           description:
             "Da essência à expressão: público, propósito, posicionamento, narrativa, naming, identidade visual e aplicações.",
+          image: "/cases/case-11.png",
         },
         {
-          name: "Brand OS",
-          tag: "Plataforma viva",
+          name: "Plataforma de Marca",
+          tag: "Plataforma digital",
           description:
-            "Toda a sua marca organizada numa plataforma que a sua equipe realmente usa — um brandbook vivo.",
+            "Toda a sua marca organizada numa plataforma digital e exclusiva que a sua equipe realmente usa.",
+          image: "/cases/case-20.png",
         },
         {
           name: "Naming",
           tag: "Nome & verbal",
           description: "Criação ou ajuste de nome, com checagem de viabilidade e território verbal.",
+          image: "/cases/case-27.png",
         },
         {
           name: "Site / Landing page",
           tag: "Presença digital",
           description: "A expressão da marca no digital, pronta para converter.",
+          image: "/cases/case-34.png",
         },
       ],
     },
@@ -192,7 +209,7 @@ export const PROFILES: Record<string, BioProfile> = {
         icon: "layers",
       },
       {
-        label: "Área do cliente — Brand OS",
+        label: "Área do cliente — Plataforma de Marca",
         sublabel: "Acesse a sua marca",
         href: "/login",
         icon: "rocket",
@@ -212,10 +229,55 @@ export const PROFILES: Record<string, BioProfile> = {
     ],
     stat: { value: "+300", label: "marcas construídas pela Mira" },
     instagram: { handle: "@somos.mira", href: "https://instagram.com/somos.mira" },
+    booking: {
+      title: "Conversa com a Mira · 30 min",
+      durationMin: 30,
+      guestEmail: "contato@somosmira.com.br",
+      timezone: "America/Sao_Paulo",
+      slots: ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"],
+      // scheduleUrl: "https://calendar.app.google/..." // ← link do Google Agenda da Renata
+    },
   },
 };
 
 /** Monta um link wa.me com mensagem pré-preenchida. */
 export function waLink(number: string, message: string): string {
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+}
+
+/**
+ * Link do Google Agenda (template) para criar um evento pré-preenchido.
+ * `date` = "YYYY-MM-DD", `time` = "HH:mm". Sem backend: abre o Google Agenda
+ * do usuário já com o evento de N minutos e a Renata como convidada.
+ */
+export function googleCalendarLink(opts: {
+  date: string;
+  time: string;
+  durationMin: number;
+  title: string;
+  details?: string;
+  guestEmail?: string;
+  timezone?: string;
+}): string {
+  const [y, m, d] = opts.date.split("-").map(Number);
+  const [hh, mm] = opts.time.split(":").map(Number);
+  const start = new Date(y, m - 1, d, hh, mm);
+  const end = new Date(start.getTime() + opts.durationMin * 60000);
+  const fmt = (dt: Date) =>
+    dt.getFullYear().toString() +
+    String(dt.getMonth() + 1).padStart(2, "0") +
+    String(dt.getDate()).padStart(2, "0") +
+    "T" +
+    String(dt.getHours()).padStart(2, "0") +
+    String(dt.getMinutes()).padStart(2, "0") +
+    "00";
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: opts.title,
+    dates: `${fmt(start)}/${fmt(end)}`,
+  });
+  if (opts.details) params.set("details", opts.details);
+  if (opts.guestEmail) params.set("add", opts.guestEmail);
+  if (opts.timezone) params.set("ctz", opts.timezone);
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }

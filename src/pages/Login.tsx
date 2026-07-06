@@ -41,7 +41,7 @@ export function Login() {
 
         <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8">
           <h1 className="text-xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
-            Acessar seu Brand OS
+            Acessar sua Plataforma de Marca
           </h1>
           <p className="mt-1 text-sm text-fog">
             Entre para consultar todos os elementos da sua marca.

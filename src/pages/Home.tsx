@@ -48,6 +48,25 @@ function RocketIcon() {
   );
 }
 
+/** Planetinha (Saturno) — igual às apresentações do Canva da Mira. */
+function PlanetIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="11" r="5.2" />
+      <ellipse cx="12" cy="11" rx="10" ry="3.1" transform="rotate(-22 12 11)" />
+    </svg>
+  );
+}
+
 /* --------------------------------------------------------------- Nav */
 function Nav() {
   const [light, setLight] = useState(false); // true = mundo branco (solo)
@@ -65,7 +84,7 @@ function Nav() {
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Logo height={24} tone={light ? "dark" : "light"} />
+        <Logo height={32} tone={light ? "dark" : "light"} />
         <Link
           to="/login"
           aria-label="Área do cliente"
@@ -88,17 +107,18 @@ function HeroContent() {
       <div className="relative max-w-3xl">
         <span className="inline-flex items-center gap-2 rounded-full border border-accent-500/30 bg-ink-950/40 px-4 py-1.5 text-xs font-medium tracking-wide text-accent-300 backdrop-blur-sm">
           <span className="size-1.5 rounded-full bg-accent-500" />
-          Brand studio · desde 2020 · +300 marcas
+          Brand Studio · desde 2020 · +300 marcas
         </span>
         <h1
           className="mx-auto mt-7 max-w-3xl text-balance text-4xl font-bold leading-[1.05] tracking-tight drop-shadow-[0_2px_24px_rgba(0,0,0,0.5)] md:text-6xl"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Cada marca é um universo
+          Cada marca é um universo.
         </h1>
         <p className="mx-auto mt-6 max-w-xl text-balance text-lg text-cream/80 drop-shadow-[0_2px_16px_rgba(0,0,0,0.5)]">
           A Mira constrói marcas com método e profundidade, da essência à
-          expressão, e entrega tudo num Brand OS vivo.
+          expressão, e entrega tudo isso em uma Plataforma de Marca digital e
+          exclusiva.
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
           <a
@@ -114,7 +134,10 @@ function HeroContent() {
             Ver cases
           </a>
         </div>
-        <p className="mt-14 text-xs uppercase tracking-[0.3em] text-cream/50">
+        <p className="mt-8 text-xs font-medium tracking-[0.15em] text-cream/60">
+          Campeche · Florianópolis · BR
+        </p>
+        <p className="mt-10 text-xs uppercase tracking-[0.3em] text-cream/50">
           role para descer ↓
         </p>
       </div>
@@ -127,7 +150,10 @@ function Method() {
   return (
     <section id="metodo" className="border-t border-black/5 bg-white py-24">
       <div className="mx-auto max-w-6xl px-6">
-        <p className="text-sm font-medium text-gold-700">Método Mira</p>
+        <p className="inline-flex items-center gap-2 text-sm font-medium text-gold-700">
+          <PlanetIcon size={16} />
+          Método Mira
+        </p>
         <h2
           className="mt-1 max-w-2xl text-balance text-2xl font-bold tracking-tight text-ink-900 md:text-4xl"
           style={{ fontFamily: "var(--font-display)" }}
@@ -169,7 +195,7 @@ function CTA() {
         <div className="starfield pointer-events-none absolute inset-0 opacity-50" />
         <div className="relative">
           <p className="text-sm font-medium tracking-wide text-accent-400">
-            Brand studio · Florianópolis, Brasil
+            Brand Studio · Florianópolis, Brasil
           </p>
           <h2
             className="mx-auto mt-3 max-w-2xl text-balance text-3xl font-bold tracking-tight md:text-5xl"
@@ -179,7 +205,7 @@ function CTA() {
           </h2>
           <p className="mx-auto mt-4 max-w-md text-fog">
             Conte sua ideia pra gente. A Mira dá à sua marca essência, narrativa
-            e expressão, tudo num Brand OS vivo.
+            e expressão, tudo numa Plataforma de Marca digital e exclusiva.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <a
@@ -207,7 +233,7 @@ function Footer() {
   return (
     <footer className="bg-white text-ink-900">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 border-t border-black/5 px-6 py-12 text-sm text-stone-500 md:flex-row md:items-end">
-        <Logo height={26} tone="dark" />
+        <Logo height={34} tone="dark" />
         <div className="flex flex-col items-center gap-1 md:items-start">
           <a href="https://somosmira.com.br" className="transition-colors hover:text-ink-900">
             somosmira.com.br
@@ -219,7 +245,7 @@ function Footer() {
         </div>
         <div className="flex flex-col items-center gap-1 md:items-end">
           <Link to="/login" className="text-gold-700 transition-colors hover:text-ink-900">
-            Acessar Brand OS →
+            Acessar Plataforma de Marca →
           </Link>
           <span>© {new Date().getFullYear()} Mira Brand Studio</span>
         </div>

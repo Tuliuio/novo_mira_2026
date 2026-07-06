@@ -55,7 +55,7 @@ export const METHOD: MethodPillar[] = [
   {
     id: "storytelling",
     number: "02",
-    label: "Storytelling",
+    label: "Narrativa",
     tagline: "A narrativa que move a marca.",
     items: [
       { id: "heroi", label: "O Herói" },
