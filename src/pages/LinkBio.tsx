@@ -182,20 +182,20 @@ export function LinkBio({ profile }: { profile: BioProfile }) {
               href={waLink(w.number, w.message)}
               target="_blank"
               rel="noopener noreferrer"
-              className="block rounded-2xl border border-emerald-400/20 bg-emerald-500/10 p-4 transition-colors hover:bg-emerald-500/15"
+              className="block rounded-2xl border border-accent-500/25 bg-accent-500/10 p-4 transition-colors hover:bg-accent-500/15"
             >
               <div className="flex items-center gap-3">
-                <span className="grid size-9 place-items-center rounded-lg bg-emerald-400/15 text-emerald-300">
+                <span className="grid size-9 place-items-center rounded-lg bg-accent-500/15 text-accent-300">
                   <Icon name="whatsapp" size={18} />
                 </span>
                 <div className="min-w-0">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-emerald-300">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-accent-300">
                     {w.category}
                   </p>
                   <p className="truncate text-xs text-fog">WhatsApp · resposta rápida</p>
                 </div>
               </div>
-              <span className="mt-3 flex items-center justify-center gap-2 rounded-full bg-emerald-400 px-4 py-2 text-sm font-semibold text-emerald-950">
+              <span className="mt-3 flex items-center justify-center gap-2 rounded-full bg-accent-500 px-4 py-2 text-sm font-semibold text-ink-900">
                 Iniciar conversa <Icon name="arrowRight" size={16} />
               </span>
             </a>
@@ -253,11 +253,13 @@ export function LinkBio({ profile }: { profile: BioProfile }) {
 
 /* ----------------------------------------------------------- Avatar */
 function Avatar({ profile }: { profile: BioProfile }) {
-  if (profile.avatar) {
+  const [failed, setFailed] = useState(false);
+  if (profile.avatar && !failed) {
     return (
       <img
         src={profile.avatar}
         alt={profile.name}
+        onError={() => setFailed(true)}
         className="size-24 rounded-full object-cover ring-2 ring-accent-500/40"
       />
     );

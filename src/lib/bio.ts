@@ -95,7 +95,7 @@ export const PROFILES: Record<string, BioProfile> = {
     role: "Mira Brand Studio",
     bio: "Responda 5 perguntas e descubra o melhor caminho para construir a sua marca comigo ↓",
     initials: "R",
-    // avatar: "/renata.jpg", // ← me envie a foto da Renata para ativar
+    avatar: "/renata.jpg", // foto em /public/renata.jpg (fallback para "R" se ausente)
     whatsapp: WA,
     socials: [
       { label: "Instagram", href: "https://instagram.com/somos.mira", icon: "instagram" },
@@ -227,7 +227,6 @@ export const PROFILES: Record<string, BioProfile> = {
         message: "Oi! Sou cliente da Mira e preciso de um suporte.",
       },
     ],
-    stat: { value: "+300", label: "marcas construídas pela Mira" },
     instagram: { handle: "@somos.mira", href: "https://instagram.com/somos.mira" },
     booking: {
       title: "Conversa com a Mira · 30 min",
