@@ -88,8 +88,7 @@ export interface BioProfile {
 
 const WA = "5548984291699";
 
-export const PROFILES: Record<string, BioProfile> = {
-  renata: {
+const renata: BioProfile = {
     slug: "renata",
     name: "Renata",
     role: "Mira Brand Studio",
@@ -234,10 +233,39 @@ export const PROFILES: Record<string, BioProfile> = {
       guestEmail: "contato@somosmira.com.br",
       timezone: "America/Sao_Paulo",
       slots: ["09:00", "10:00", "11:00", "14:00", "15:00", "16:00", "17:00"],
-      // scheduleUrl: "https://calendar.app.google/..." // ← link do Google Agenda da Renata
+      // scheduleUrl: "https://calendar.app.google/..." // ← link do Google Agenda
+    },
+};
+
+// Tom — herda tudo da Renata; sobrescreve identidade e mensagens.
+const tom: BioProfile = {
+  ...renata,
+  slug: "tom",
+  name: "Tom",
+  initials: "T",
+  avatar: "/tom.jpg", // foto em /public/tom.jpg (fallback para "T" se ausente)
+  quiz: {
+    ...renata.quiz,
+    result: {
+      ...renata.quiz.result,
+      text: "Com base nas suas respostas, o Tom vai te indicar a melhor frente do Método Mira. É só enviar para continuar a conversa no WhatsApp.",
     },
   },
+  whatsappCards: [
+    {
+      category: "Novo projeto",
+      number: WA,
+      message: "Oi, Tom! Quero construir/evoluir a minha marca com a Mira.",
+    },
+    {
+      category: "Já sou cliente",
+      number: WA,
+      message: "Oi! Sou cliente da Mira e preciso de um suporte.",
+    },
+  ],
 };
+
+export const PROFILES: Record<string, BioProfile> = { renata, tom };
 
 /** Monta um link wa.me com mensagem pré-preenchida. */
 export function waLink(number: string, message: string): string {

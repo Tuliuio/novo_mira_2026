@@ -24,6 +24,7 @@ export function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/renata" element={<LinkBio profile={PROFILES.renata} />} />
+      <Route path="/tom" element={<LinkBio profile={PROFILES.tom} />} />
       <Route path="/metodo" element={<Metodo />} />
 
       <Route

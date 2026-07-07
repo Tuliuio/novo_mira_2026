@@ -354,7 +354,7 @@ function BookingCalendar({ profile }: { profile: BioProfile }) {
         </span>
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-semibold">Agende uma conversa de 30 min</span>
-          <span className="block text-xs text-fog">Escolha um horário na agenda da Renata</span>
+          <span className="block text-xs text-fog">Escolha um horário na agenda de {profile.name}</span>
         </span>
         <Icon name="arrowRight" size={20} />
       </a>
@@ -368,7 +368,7 @@ function BookingCalendar({ profile }: { profile: BioProfile }) {
           time,
           durationMin: b.durationMin,
           title: b.title,
-          details: "Conversa agendada pelo link da Renata (Mira Brand Studio).",
+          details: `Conversa agendada pelo link de ${profile.name} (Mira Brand Studio).`,
           guestEmail: b.guestEmail,
           timezone: b.timezone,
         })
@@ -475,7 +475,7 @@ function QuizModal({ profile, onClose }: { profile: BioProfile; onClose: () => v
       .map((q) => `• ${q.question}\n  → ${answers[q.id] || "-"}`)
       .join("\n");
     const msg =
-      `Oi, Renata! Fiz o quiz no seu link de bio.\n\n` +
+      `Oi, ${profile.name}! Fiz o quiz no seu link de bio.\n\n` +
       `Nome: ${lead.name}\nWhatsApp: ${lead.whatsapp}\nInstagram: ${lead.instagram}\n\n` +
       `Minhas respostas:\n${lines}`;
     window.open(waLink(profile.whatsapp, msg), "_blank", "noopener,noreferrer");
@@ -599,7 +599,7 @@ function QuizModal({ profile, onClose }: { profile: BioProfile; onClose: () => v
                 Quase lá!
               </h2>
               <p className="mt-1 text-sm text-fog">
-                Deixe seus dados para a Renata te enviar o melhor caminho da sua marca.
+                Deixe seus dados para {profile.name} te enviar o melhor caminho da sua marca.
               </p>
               <div className="mt-5 space-y-3">
                 <input
@@ -646,7 +646,7 @@ function QuizModal({ profile, onClose }: { profile: BioProfile; onClose: () => v
                 onClick={finish}
                 className="mt-6 inline-flex items-center gap-2 rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-emerald-950 transition-transform hover:scale-[1.03]"
               >
-                <Icon name="whatsapp" size={18} /> Enviar e falar com a Renata
+                <Icon name="whatsapp" size={18} /> Enviar e falar com {profile.name}
               </button>
             </div>
           )}
@@ -696,7 +696,7 @@ function ServiceModal({
           <a
             href={waLink(
               profile.whatsapp,
-              `Oi, Renata! Tenho interesse em "${service.name}" da Mira. Pode me contar mais?`,
+              `Oi, ${profile.name}! Tenho interesse em "${service.name}" da Mira. Pode me contar mais?`,
             )}
             target="_blank"
             rel="noopener noreferrer"
