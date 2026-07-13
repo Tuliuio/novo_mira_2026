@@ -5,6 +5,7 @@ import { Login } from "@/pages/Login";
 import { NotFound } from "@/pages/NotFound";
 import { LinkBio } from "@/pages/LinkBio";
 import { Metodo } from "@/pages/Metodo";
+import { Oka } from "@/pages/Oka";
 import { PROFILES } from "@/lib/bio";
 import { BrandOSLayout } from "@/pages/brandos/BrandOSLayout";
 import { BrandItemPage } from "@/pages/brandos/BrandItemPage";
@@ -26,6 +27,7 @@ export function App() {
       <Route path="/renata" element={<LinkBio profile={PROFILES.renata} />} />
       <Route path="/tom" element={<LinkBio profile={PROFILES.tom} />} />
       <Route path="/metodo" element={<Metodo />} />
+      <Route path="/oka" element={<Oka />} />
 
       <Route
         path="/app"
