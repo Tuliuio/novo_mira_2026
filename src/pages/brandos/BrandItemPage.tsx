@@ -1,22 +1,21 @@
 import { Link, useParams } from "react-router-dom";
-import { DEMO_CLIENT } from "@/lib/content";
-import { METHOD, findPillar } from "@/lib/method";
+import { useAuth } from "@/lib/auth";
+import { DEMO_CLIENT, getClient } from "@/lib/content";
+import { availableFlat, findPillar } from "@/lib/method";
 import { Block } from "./blocks";
-
-/** Sequência plana de todos os itens (para navegação anterior/próximo). */
-const FLAT = METHOD.flatMap((p) => {
-  const items = p.items ?? (p.subgroups ?? []).flatMap((g) => g.items);
-  return items.map((it) => ({ pillarId: p.id, id: it.id, label: it.label }));
-});
 
 export function BrandItemPage() {
   const { pillar: pillarId = "", item: itemId = "" } = useParams();
+  const { user } = useAuth();
+  const client = getClient(user?.clientSlug) ?? DEMO_CLIENT;
   const pillar = findPillar(pillarId);
-  const page = DEMO_CLIENT.pages[itemId];
+  const page = client.pages[itemId];
 
-  const idx = FLAT.findIndex((f) => f.pillarId === pillarId && f.id === itemId);
-  const prev = idx > 0 ? FLAT[idx - 1] : null;
-  const next = idx >= 0 && idx < FLAT.length - 1 ? FLAT[idx + 1] : null;
+  // Navegação anterior/próximo só entre os elementos que o cliente possui.
+  const flat = availableFlat((id) => id in client.pages);
+  const idx = flat.findIndex((f) => f.pillarId === pillarId && f.id === itemId);
+  const prev = idx > 0 ? flat[idx - 1] : null;
+  const next = idx >= 0 && idx < flat.length - 1 ? flat[idx + 1] : null;
 
   return (
     <article>
@@ -41,7 +40,7 @@ export function BrandItemPage() {
           </div>
         </>
       ) : (
-        <EmptyState label={FLAT[idx]?.label ?? "Este item"} />
+        <EmptyState />
       )}
 
       {/* Navegação anterior/próximo */}
@@ -73,22 +72,17 @@ export function BrandItemPage() {
   );
 }
 
-function EmptyState({ label }: { label: string }) {
+function EmptyState() {
   return (
     <div className="mt-4">
-      <h1
-        className="text-3xl font-bold tracking-tight md:text-4xl"
-        style={{ fontFamily: "var(--font-display)" }}
-      >
-        {label}
-      </h1>
-      <div className="mt-8 rounded-3xl border border-dashed border-white/15 bg-white/[0.02] px-8 py-14 text-center">
-        <p className="text-fog">
-          Este item ainda está sendo construído pela Mira.
-        </p>
-        <p className="mt-1 text-sm text-fog/60">
-          Em breve ele aparecerá aqui na sua Plataforma de Marca.
-        </p>
+      <div className="rounded-3xl border border-dashed border-white/15 bg-white/[0.02] px-8 py-14 text-center">
+        <p className="text-fog">Este elemento não faz parte do seu Brand System.</p>
+        <Link
+          to="/app"
+          className="mt-3 inline-block text-sm text-accent-300 transition-colors hover:text-accent-200"
+        >
+          ← Voltar ao início
+        </Link>
       </div>
     </div>
   );

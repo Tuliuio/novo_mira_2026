@@ -17,7 +17,7 @@ import {
 export interface User {
   name: string;
   email: string;
-  /** slug do cliente cujo Brand OS este usuário acessa */
+  /** slug do cliente cujo Brand System este usuário acessa */
   clientSlug: string;
 }
 
@@ -36,6 +36,15 @@ const DEMO_USERS: Array<{ email: string; password: string; user: User }> = [
     email: "cliente@adapto.com.br",
     password: "mira",
     user: { name: "Equipe Adapto", email: "cliente@adapto.com.br", clientSlug: "adapto" },
+  },
+  {
+    email: "bento.cacilda@gmail.com",
+    password: "cruz60",
+    user: {
+      name: "Cruz de Malta",
+      email: "bento.cacilda@gmail.com",
+      clientSlug: "cruz-de-malta",
+    },
   },
 ];
 

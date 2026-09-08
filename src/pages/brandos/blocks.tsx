@@ -1,6 +1,7 @@
+import { useState } from "react";
 import type { ContentBlock } from "@/lib/content";
 
-/** Renderiza um bloco de conteúdo do Brand OS. */
+/** Renderiza um bloco de conteúdo do Brand System. */
 export function Block({ block }: { block: ContentBlock }) {
   switch (block.type) {
     case "lead":
@@ -50,14 +51,7 @@ export function Block({ block }: { block: ContentBlock }) {
       return (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {block.colors.map((c) => (
-            <div key={c.hex} className="overflow-hidden rounded-2xl border border-white/10">
-              <div className="h-20" style={{ background: c.hex }} />
-              <div className="bg-white/[0.03] px-4 py-3">
-                <p className="text-sm font-medium text-cream">{c.name}</p>
-                <p className="font-mono text-xs uppercase text-fog">{c.hex}</p>
-                {c.usage && <p className="mt-1 text-xs text-fog/80">{c.usage}</p>}
-              </div>
-            </div>
+            <ColorSwatch key={c.hex} color={c} />
           ))}
         </div>
       );
@@ -81,5 +75,161 @@ export function Block({ block }: { block: ContentBlock }) {
           ))}
         </div>
       );
+
+    case "image":
+      return (
+        <figure>
+          <DriveImage src={block.src} alt={block.alt} contain={block.contain} />
+          {block.caption && (
+            <figcaption className="mt-2 text-center text-xs text-fog/70">{block.caption}</figcaption>
+          )}
+        </figure>
+      );
+
+    case "gallery":
+      return (
+        <div className="grid gap-3 sm:grid-cols-3">
+          {block.images.map((img, i) => (
+            <DriveImage key={i} src={img.src} alt={img.alt} contain />
+          ))}
+        </div>
+      );
+
+    case "files":
+      return (
+        <ul className="grid gap-2 sm:grid-cols-2">
+          {block.files.map((f, i) => (
+            <li key={i}>
+              <a
+                href={f.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 transition-colors hover:border-accent-500/30 hover:bg-white/[0.05]"
+              >
+                {f.kind && (
+                  <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-accent-500/15 text-[10px] font-bold uppercase tracking-wide text-accent-300">
+                    {f.kind}
+                  </span>
+                )}
+                <span className="min-w-0 flex-1 truncate text-sm text-cream">{f.name}</span>
+                <span className="shrink-0 text-fog" aria-hidden>
+                  ↓
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      );
+
+    case "embed":
+      return (
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+          <iframe
+            src={block.src}
+            title={block.title}
+            className="aspect-[4/3] w-full"
+            allow="autoplay"
+          />
+        </div>
+      );
   }
+}
+
+/** Copia texto para a área de transferência, com fallback para contextos restritos. */
+async function copyText(text: string): Promise<boolean> {
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch {
+    /* cai no fallback abaixo */
+  }
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand("copy");
+    ta.remove();
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
+/** Amostra de cor clicável — copia o hexadecimal para a área de transferência. */
+function ColorSwatch({ color }: { color: { name: string; hex: string; usage?: string } }) {
+  const [copied, setCopied] = useState(false);
+
+  async function copy() {
+    if (await copyText(color.hex)) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1400);
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      title={`Copiar ${color.hex}`}
+      className="group overflow-hidden rounded-2xl border border-white/10 text-left transition-colors hover:border-accent-500/40"
+    >
+      <div className="h-20" style={{ background: color.hex }} />
+      <div className="bg-white/[0.03] px-4 py-3">
+        <p className="text-sm font-medium text-cream">{color.name}</p>
+        <p className="flex items-center gap-1.5 font-mono text-xs uppercase text-fog">
+          {copied ? (
+            <span className="text-accent-300">Copiado!</span>
+          ) : (
+            <>
+              {color.hex}
+              <span className="opacity-0 transition-opacity group-hover:opacity-70" aria-hidden>
+                ⧉
+              </span>
+            </>
+          )}
+        </p>
+        {color.usage && <p className="mt-1 text-xs text-fog/80">{color.usage}</p>}
+      </div>
+    </button>
+  );
+}
+
+/**
+ * Imagem servida pelo Google Drive. Se o arquivo ainda não estiver
+ * compartilhado publicamente (ou falhar), mostra um fallback elegante
+ * com link para abrir no Drive — nunca uma imagem quebrada.
+ */
+function DriveImage({ src, alt, contain }: { src: string; alt: string; contain?: boolean }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return (
+      <a
+        href={src}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="grid aspect-video place-items-center rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-6 text-center transition-colors hover:border-accent-500/30"
+      >
+        <span className="text-sm text-fog">{alt}</span>
+        <span className="mt-1 text-xs text-fog/60">Abrir no Drive ↗</span>
+      </a>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      onError={() => setFailed(true)}
+      className={`w-full rounded-2xl border border-white/10 ${
+        contain ? "bg-white/[0.03] object-contain p-6" : "object-cover"
+      }`}
+    />
+  );
 }

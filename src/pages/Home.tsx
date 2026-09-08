@@ -117,8 +117,8 @@ function HeroContent() {
         </h1>
         <p className="mx-auto mt-6 max-w-xl text-balance text-lg text-cream/80 drop-shadow-[0_2px_16px_rgba(0,0,0,0.5)]">
           A Mira constrói marcas com método e profundidade, da essência à
-          expressão, e entrega tudo isso em uma Plataforma de Marca digital e
-          exclusiva.
+          expressão, e entrega tudo isso em um Brand System digital e
+          exclusivo.
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
           <a
@@ -205,7 +205,7 @@ function CTA() {
           </h2>
           <p className="mx-auto mt-4 max-w-md text-fog">
             Conte sua ideia pra gente. A Mira dá à sua marca essência, narrativa
-            e expressão, tudo numa Plataforma de Marca digital e exclusiva.
+            e expressão, tudo num Brand System digital e exclusivo.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <a
@@ -245,7 +245,7 @@ function Footer() {
         </div>
         <div className="flex flex-col items-center gap-1 md:items-end">
           <Link to="/login" className="text-gold-700 transition-colors hover:text-ink-900">
-            Acessar Plataforma de Marca →
+            Acessar Brand System →
           </Link>
           <span>© {new Date().getFullYear()} Mira Brand Studio</span>
         </div>

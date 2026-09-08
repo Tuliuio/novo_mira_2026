@@ -174,7 +174,7 @@ const renata: BioProfile = {
           image: "/cases/case-11.png",
         },
         {
-          name: "Plataforma de Marca",
+          name: "Brand System",
           tag: "Plataforma digital",
           description:
             "Toda a sua marca organizada numa plataforma digital e exclusiva que a sua equipe realmente usa.",
@@ -208,7 +208,7 @@ const renata: BioProfile = {
         icon: "layers",
       },
       {
-        label: "Área do cliente — Plataforma de Marca",
+        label: "Área do cliente — Brand System",
         sublabel: "Acesse a sua marca",
         href: "/login",
         icon: "rocket",

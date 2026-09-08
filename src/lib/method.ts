@@ -2,7 +2,7 @@
  * Método Mira — estrutura canônica da metodologia.
  *
  * Três pilares (Essência → Storytelling → Expressão) que organizam o
- * Brand OS de cada cliente. A navegação lateral da área interna é gerada
+ * Brand System de cada cliente. A navegação lateral da área interna é gerada
  * diretamente a partir daqui.
  */
 
@@ -122,4 +122,19 @@ export function findPillar(pillarId: string): MethodPillar | undefined {
 export function pillarItems(pillar: MethodPillar): MethodItem[] {
   if (pillar.items) return pillar.items;
   return (pillar.subgroups ?? []).flatMap((g) => g.items);
+}
+
+/**
+ * Lista plana (pilar + item) apenas com os elementos que o cliente possui,
+ * na ordem canônica do método. Base para navegação anterior/próximo e para
+ * suprimir itens vazios da interface.
+ */
+export function availableFlat(
+  has: (id: string) => boolean,
+): { pillarId: string; id: string; label: string }[] {
+  return METHOD.flatMap((p) =>
+    pillarItems(p)
+      .filter((it) => has(it.id))
+      .map((it) => ({ pillarId: p.id, id: it.id, label: it.label })),
+  );
 }
