@@ -44,6 +44,33 @@ export interface BrandPage {
   blocks: ContentBlock[];
 }
 
+/* ------------------------------------------------------------------ *
+ * Brand Hub — modelo estruturado que alimenta a área logada (/app).
+ * É o "BRAND" do hub interativo, agora por cliente. Trocar de cliente =
+ * preencher isto. RGB/CMYK e contraste são calculados no render.
+ * ------------------------------------------------------------------ */
+export interface HubLogo { name: string; role: string; src: string; file: string; drive?: string; pad: string; }
+export interface HubColor { name: string; hex: string; role?: string; }
+export interface HubPair { bg: string; fg: string; label: string; }
+export interface HubType { role: string; family: string; sample: string; cssFamily?: string; }
+export interface HubApplication { k: string; s: string; bg: string; fg: string; }
+
+export interface HubBrand {
+  year: string;
+  since?: string;
+  drive?: { assets?: string; expressao?: string };
+  logos: HubLogo[];
+  colorsNote?: string;
+  colors: HubColor[];
+  pairings?: HubPair[];
+  /** se preenchido, mostra esta nota no lugar dos cards de tipografia */
+  typeNote?: string;
+  type?: HubType[];
+  essence?: { lead?: string; proposito?: string; posicionamento?: string; quote?: string; atributos?: string[] };
+  verbal?: { tom?: string; sim?: string[]; nao?: string[]; examples?: { sim: string; nao: string }[] };
+  applications?: HubApplication[];
+}
+
 export interface ClientBrand {
   slug: string;
   name: string;
@@ -52,6 +79,8 @@ export interface ClientBrand {
   accent: string;
   /** mapeia item.id (do method.ts) -> página de conteúdo */
   pages: Record<string, BrandPage>;
+  /** dados estruturados do Brand Hub (área logada) */
+  hub?: HubBrand;
 }
 
 /* ------------------------------------------------------------------ *
@@ -62,6 +91,37 @@ export const DEMO_CLIENT: ClientBrand = {
   name: "Adapto",
   tagline: "Você imagina. A gente faz acontecer.",
   accent: "#6338CE",
+  hub: {
+    year: "2026",
+    since: "Manufatura aditiva",
+    logos: [],
+    colors: [
+      { name: "Roxo Adapto", hex: "#6338CE", role: "Protagonismo — transformação e profundidade. PANTONE 2097 C" },
+      { name: "Azul claro", hex: "#D0FCF8", role: "Apoio — leveza, segurança e fluidez. PANTONE 9480 C" },
+      { name: "Preto", hex: "#1E1E1E", role: "Base — robustez e solidez. PANTONE 419 C" },
+    ],
+    pairings: [
+      { bg: "#6338CE", fg: "#D0FCF8", label: "Roxo + Azul claro" },
+      { bg: "#1E1E1E", fg: "#D0FCF8", label: "Preto + Azul claro" },
+      { bg: "#D0FCF8", fg: "#1E1E1E", label: "Azul claro + Preto" },
+    ],
+    type: [
+      { role: "Títulos", family: "PP Radio Grotesk", sample: "Você imagina." },
+      { role: "Apoio", family: "Inter", sample: "A gente faz acontecer.", cssFamily: "var(--font-sans)" },
+    ],
+    essence: {
+      lead: "A impressão 3D é meio. O resultado é o valor.",
+      proposito: "Reduzir a distância entre uma necessidade real e a capacidade de torná-la física, viável e funcional.",
+      posicionamento: "Uma indústria de manufatura aditiva sob demanda, com capacidade de produção em escala, especializada em transformar necessidades reais em soluções físicas viáveis.",
+      quote: "Se isso precisa existir no mundo físico, nós encontramos uma forma viável de produzir.",
+      atributos: ["Segura", "Competente", "Didática", "Resolutiva", "Acessível"],
+    },
+    verbal: {
+      tom: "Educativo e resolutivo — a venda acontece quando o cliente entende o potencial da tecnologia. Didático, seguro e pragmático.",
+      sim: ["A gente faz acontecer", "Você traz o problema, nós materializamos a solução", "Viável", "Escala"],
+      nao: ["Hype", "Futurista exagerado", "Jargão vazio", "Maker cool"],
+    },
+  },
   pages: {
     /* ---------------------------------------------------- 01 Essência */
     proposito: {
@@ -523,7 +583,58 @@ export const CRUZ_DE_MALTA: ClientBrand = {
   slug: "cruz-de-malta",
   name: "Cruz de Malta",
   tagline: "O restaurante mais tradicional de Pelotas.",
-  accent: "#B21E28", // vermelho âncora (provisório — em documentação)
+  accent: "#E71E2E", // vermelho âncora (amostrado dos logos)
+  hub: {
+    year: "2026",
+    since: "Desde 1967",
+    drive: {
+      assets: "https://drive.google.com/drive/folders/1rRtiCoDLGGgFoMN42ZWh74cnqHuTnzHc",
+      expressao: "https://drive.google.com/drive/folders/1vmNRp891cFr4xx25i4_f_j8vua02B8eU",
+    },
+    logos: [
+      { name: "Assinatura principal", role: "Positiva sobre vermelho", src: "/clients/cruz-de-malta/logo-02.png", file: "cruz-de-malta-principal.png", drive: "https://drive.google.com/file/d/1o9NtFtu25cT_fdzQxvh1l1ZCnpjmrX7p/view", pad: "var(--c1)" },
+      { name: "Vermelho sobre branco", role: "Fundos claros", src: "/clients/cruz-de-malta/logo-01.png", file: "cruz-de-malta-vermelho.png", drive: "https://drive.google.com/file/d/1mub_QSel8s7k0r2Ct3WAW3UTczwhiDxM/view", pad: "#ffffff" },
+      { name: "Sobre creme", role: "Peças de tradição", src: "/clients/cruz-de-malta/logo-03.png", file: "cruz-de-malta-creme.png", drive: "https://drive.google.com/file/d/1CmSEVGo1-OcA5guaNKYzgiiEPeEZdGuS/view", pad: "var(--c3)" },
+      { name: "Branco sobre bordô", role: "Uso sóbrio", src: "/clients/cruz-de-malta/logo-04.png", file: "cruz-de-malta-bordo.png", drive: "https://drive.google.com/file/d/1jKgYnnbgoHozdskD7jErK91_71WcK1yu/view", pad: "var(--c2)" },
+    ],
+    colorsNote: "Paleta provisória — extraída dos logos entregues, aguardando documentação oficial das cores.",
+    colors: [
+      { name: "Vermelho Cruz", hex: "#E71E2E", role: "Cor âncora da marca" },
+      { name: "Bordô", hex: "#891623", role: "Profundidade e sobriedade" },
+      { name: "Creme", hex: "#F8E2C0", role: "Tradição e acolhimento" },
+      { name: "Tinta", hex: "#19191A", role: "Texto e contraste" },
+      { name: "Papel", hex: "#FFFFFF", role: "Respiro e fundos claros" },
+    ],
+    pairings: [
+      { bg: "#E71E2E", fg: "#FFFFFF", label: "Vermelho + Papel" },
+      { bg: "#F8E2C0", fg: "#891623", label: "Creme + Bordô" },
+      { bg: "#19191A", fg: "#F8E2C0", label: "Tinta + Creme" },
+      { bg: "#891623", fg: "#F8E2C0", label: "Bordô + Creme" },
+    ],
+    typeNote:
+      "O sistema tipográfico do Cruz de Malta ainda está sendo definido pela Mira — uma fonte com propósito, que carregue tradição e atualidade. Enquanto isso, a assinatura vintage do logo é a referência de personalidade. Assim que fechada, ela aparece aqui com amostra viva, pangrama e ficha técnica.",
+    essence: {
+      lead: "Tirar o Cruz do lugar de “antigo” e levá-lo ao de “tradicional”. Antigo é o que ficou para trás; tradicional é o que mantém relevância, independentemente do tempo.",
+      proposito: "Manter viva — e servida à mesa — a comida de verdade que fez do Cruz de Malta parte da história de Pelotas. Seis décadas sem uma única pausa: o restaurante mais antigo em funcionamento da cidade.",
+      posicionamento: "Ser, na mente do público, o primeiro nome quando o desejo é uma comida de verdade que reúne a família à mesa — para a tradição gastronômica de Pelotas o que o Mercado Público é para a cidade.",
+      quote: "Vai no Cruz da Bento. É o restaurante mais antigo de Pelotas, comida de verdade e você come como se estivesse em casa.",
+      atributos: ["Tradicional", "Consistente", "Autêntico", "Acolhedor", "Confiável", "Caprichado", "Farto", "Familiar", "Honesto", "Variado"],
+    },
+    verbal: {
+      tom: "Acolhedor e orgulhoso, sem pretensão. Fala com quem já é de casa e com quem ainda vai ser. Direto, caloroso, com o pé no chão de quem trabalha há 60 anos.",
+      sim: ["Comida de verdade", "Feito na hora", "Tradição de Pelotas", "Como se estivesse em casa", "O Cruz da Bento"],
+      nao: ["Gourmet", "Experiência gastronômica premium", "Disruptivo", "O melhor da cidade (superlativo vazio)", "Happy hour"],
+      examples: [
+        { sim: "Há 60 anos, a mesma comida de verdade. É só chegar.", nao: "A experiência gastronômica mais autêntica e premium de Pelotas." },
+        { sim: "Parmegiana, peixe com camarão e a receita que não muda.", nao: "Pratos autorais que ressignificam a tradição regional." },
+      ],
+    },
+    applications: [
+      { k: "Fachada", s: "Cruz da Bento", bg: "var(--c1)", fg: "#fff" },
+      { k: "Cardápio", s: "Impresso", bg: "var(--c3)", fg: "var(--c2)" },
+      { k: "Social", s: "Instagram", bg: "var(--c2)", fg: "var(--c3)" },
+    ],
+  },
   pages: {
     /* ---------------------------------------------------- 01 Essência */
     proposito: {

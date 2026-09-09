@@ -7,9 +7,7 @@ import { LinkBio } from "@/pages/LinkBio";
 import { Metodo } from "@/pages/Metodo";
 import { Oka } from "@/pages/Oka";
 import { PROFILES } from "@/lib/bio";
-import { BrandOSLayout } from "@/pages/brandos/BrandOSLayout";
-import { BrandItemPage } from "@/pages/brandos/BrandItemPage";
-import { BrandOverview } from "@/pages/brandos/BrandOverview";
+import { BrandHub } from "@/pages/brandos/BrandHub";
 import type { ReactNode } from "react";
 
 function Protected({ children }: { children: ReactNode }) {
@@ -33,13 +31,12 @@ export function App() {
         path="/app"
         element={
           <Protected>
-            <BrandOSLayout />
+            <BrandHub />
           </Protected>
         }
-      >
-        <Route index element={<BrandOverview />} />
-        <Route path=":pillar/:item" element={<BrandItemPage />} />
-      </Route>
+      />
+      {/* Rotas antigas do Brand OS (doc) redirecionam para o hub */}
+      <Route path="/app/*" element={<Navigate to="/app" replace />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
