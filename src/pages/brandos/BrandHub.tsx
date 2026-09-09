@@ -47,7 +47,17 @@ export function BrandHub() {
 
   const [active, setActive] = useState("");
   const [drawer, setDrawer] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">(() => {
+    try { return (localStorage.getItem("bh-theme") as "dark" | "light") || "dark"; } catch { return "dark"; }
+  });
   const [toast, setToast] = useState<{ msg: string; color: string } | null>(null);
+  function toggleTheme() {
+    setTheme((t) => {
+      const next = t === "dark" ? "light" : "dark";
+      try { localStorage.setItem("bh-theme", next); } catch { /* ignore */ }
+      return next;
+    });
+  }
   const toastTimer = useRef<number | undefined>(undefined);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -60,7 +70,7 @@ export function BrandHub() {
     if ((hub.type && hub.type.length) || hub.typeNote) s.push({ id: "tipografia", label: "Tipografia" });
     if (hub.essence) s.push({ id: "essencia", label: "Essência" });
     if (hub.verbal) s.push({ id: "verbal", label: "Verbal" });
-    if ((hub.applications && hub.applications.length) || hub.drive?.expressao) s.push({ id: "em-uso", label: "Em uso" });
+    if ((hub.photos && hub.photos.length) || (hub.applications && hub.applications.length) || hub.drive?.expressao) s.push({ id: "em-uso", label: "Em uso" });
     s.push({ id: "ia", label: "IA" });
     return s;
   }, [hub]);
@@ -132,9 +142,12 @@ export function BrandHub() {
   const md = buildMarkdown(client);
 
   return (
-    <div className="bh" ref={rootRef} style={brandVars}>
-      {/* Nav */}
-      <div className="nav-shell">
+    <div className="bh" data-theme={theme} ref={rootRef} style={brandVars}>
+      {/* Header fixo: logo da Mira + menu + cliente, pinados juntos */}
+      <header className="hub-top">
+        <Link className="brandmark" to="/" aria-label="Ir para o site da Mira">
+          <Logo height={22} tone={theme === "light" ? "dark" : undefined} />
+        </Link>
         <nav className="nav" aria-label="Seções">
           <div className="nav-scroll">
             {sections.map((s) => (
@@ -142,18 +155,19 @@ export function BrandHub() {
             ))}
           </div>
           <span className="spacer" />
+          <button className="icon-btn" onClick={toggleTheme} title="Alternar tema claro/escuro" aria-label="Alternar tema">
+            {theme === "light" ? (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" /></svg>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="4.5" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19" /></svg>
+            )}
+          </button>
           <button className="icon-btn" onClick={handleLogout} title="Sair" aria-label="Sair">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><path d="m16 17 5-5-5-5" /><path d="M21 12H9" /></svg>
           </button>
         </nav>
-      </div>
-
-      <div className="wrap">
-        <div className="topbar">
-          <Link to="/" aria-label="Ir para o site da Mira"><Logo height={20} /></Link>
-          <span className="who"><b>{client.name}</b> · Brand System</span>
-        </div>
-      </div>
+        <span className="client-tag"><b>{client.name}</b> · Brand System</span>
+      </header>
 
       <main className="wrap">
         <Hero client={client} hub={hub} />
@@ -367,10 +381,34 @@ function Verbal({ hub }: { hub: HubBrand }) {
 }
 
 function InUse({ hub }: { hub: HubBrand }) {
+  // Agrupa as fotos preservando a ordem dos grupos
+  const photos = hub.photos ?? [];
+  const groups: { name: string; items: typeof photos }[] = [];
+  photos.forEach((p) => {
+    const name = p.group ?? "Aplicações";
+    let g = groups.find((x) => x.name === name);
+    if (!g) { g = { name, items: [] }; groups.push(g); }
+    g.items.push(p);
+  });
+
   return (
     <section id="em-uso">
-      <SecHead eyebrow="Em uso" title="A marca no mundo real" desc="Como a marca aparece nos pontos de contato." />
-      {hub.applications && hub.applications.length > 0 && (
+      <SecHead eyebrow="Em uso" title="A marca no mundo real" desc="A marca ao vivo — aplicações e direção fotográfica que guiam como o Cruz de Malta aparece em cada ponto de contato." />
+      {groups.length > 0 ? (
+        groups.map((g) => (
+          <div key={g.name}>
+            <div className="grp-label">{g.name}</div>
+            <div className="photo-grid">
+              {g.items.map((p) => (
+                <figure className="photo reveal" key={p.src}>
+                  <img src={p.src} alt={p.label} loading="lazy" />
+                  <figcaption className="cap">{p.label}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        ))
+      ) : hub.applications && hub.applications.length > 0 ? (
         <div className="use-grid">
           {hub.applications.map((a) => (
             <div className="use-tile reveal" key={a.k} style={{ background: a.bg, color: a.fg }}>
@@ -378,10 +416,10 @@ function InUse({ hub }: { hub: HubBrand }) {
             </div>
           ))}
         </div>
-      )}
+      ) : null}
       {hub.drive?.expressao && (
         <div style={{ marginTop: 22 }} className="reveal">
-          <a className="btn" href={hub.drive.expressao} target="_blank" rel="noopener noreferrer">↗ Ver aplicações e moodboard no Drive</a>
+          <a className="btn" href={hub.drive.expressao} target="_blank" rel="noopener noreferrer">↗ Ver mais aplicações e moodboard no Drive</a>
         </div>
       )}
     </section>

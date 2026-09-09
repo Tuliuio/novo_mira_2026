@@ -54,6 +54,7 @@ export interface HubColor { name: string; hex: string; role?: string; }
 export interface HubPair { bg: string; fg: string; label: string; }
 export interface HubType { role: string; family: string; sample: string; cssFamily?: string; }
 export interface HubApplication { k: string; s: string; bg: string; fg: string; }
+export interface HubPhoto { src: string; label: string; group?: string; }
 
 export interface HubBrand {
   year: string;
@@ -69,6 +70,8 @@ export interface HubBrand {
   essence?: { lead?: string; proposito?: string; posicionamento?: string; quote?: string; atributos?: string[] };
   verbal?: { tom?: string; sim?: string[]; nao?: string[]; examples?: { sim: string; nao: string }[] };
   applications?: HubApplication[];
+  /** fotografias reais da marca no mundo (aplicações + direção fotográfica) */
+  photos?: HubPhoto[];
 }
 
 export interface ClientBrand {
@@ -629,10 +632,17 @@ export const CRUZ_DE_MALTA: ClientBrand = {
         { sim: "Parmegiana, peixe com camarão e a receita que não muda.", nao: "Pratos autorais que ressignificam a tradição regional." },
       ],
     },
-    applications: [
-      { k: "Fachada", s: "Cruz da Bento", bg: "var(--c1)", fg: "#fff" },
-      { k: "Cardápio", s: "Impresso", bg: "var(--c3)", fg: "var(--c2)" },
-      { k: "Social", s: "Instagram", bg: "var(--c2)", fg: "var(--c3)" },
+    photos: [
+      { src: "/clients/cruz-de-malta/fotografia/fachada.jpg", label: "Fachada — o Cruz da Bento", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/fotografia/cardapio.jpg", label: "Cardápio", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/fotografia/embalagem.jpg", label: "Embalagem", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/fotografia/sacola.jpg", label: "Sacola", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/fotografia/taca.jpg", label: "Taça", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/fotografia/avental.jpg", label: "Avental", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/fotografia/campo.jpg", label: "O campo — a origem", group: "Direção fotográfica" },
+      { src: "/clients/cruz-de-malta/fotografia/em-casa.jpg", label: "O Cruz na sua casa", group: "Direção fotográfica" },
+      { src: "/clients/cruz-de-malta/fotografia/delivery.jpg", label: "Delivery", group: "Direção fotográfica" },
+      { src: "/clients/cruz-de-malta/fotografia/cacilda.jpg", label: "A cozinha da Cilda", group: "Direção fotográfica" },
     ],
   },
   pages: {
