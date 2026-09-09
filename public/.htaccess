@@ -14,4 +14,9 @@
   <FilesMatch "\.(js|css|woff2|png|jpg|jpeg|svg|mp4)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
+  # HTML (index.html do SPA + brand-hub.html) sempre revalida —
+  # garante que um novo deploy apareça na hora, sem cache preso.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
 </IfModule>
