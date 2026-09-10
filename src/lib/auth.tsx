@@ -46,6 +46,15 @@ const DEMO_USERS: Array<{ email: string; password: string; user: User }> = [
       clientSlug: "cruz-de-malta",
     },
   },
+  {
+    email: "cliente@jujoo.com.br",
+    password: "jujoo2026",
+    user: {
+      name: "Jujoo",
+      email: "cliente@jujoo.com.br",
+      clientSlug: "jujoo",
+    },
+  },
 ];
 
 const AuthContext = createContext<AuthContextValue | null>(null);

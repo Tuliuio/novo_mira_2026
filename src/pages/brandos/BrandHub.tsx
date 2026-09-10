@@ -30,7 +30,8 @@ function buildMarkdown(client: ClientBrand): string {
   if (h.colorsNote) L.push("_" + h.colorsNote + "_");
   h.colors.forEach((c) => {
     const rgb = hexToRgb(c.hex), k = rgbToCmyk(rgb);
-    L.push(`- **${c.name}** — \`${c.hex.toUpperCase()}\` · RGB ${rgb.r} ${rgb.g} ${rgb.b} · CMYK ${k.c} ${k.m} ${k.y} ${k.k}${c.role ? " — " + c.role : ""}`);
+    const cmyk = c.cmyk ?? `${k.c} ${k.m} ${k.y} ${k.k}`;
+    L.push(`- **${c.name}** — \`${c.hex.toUpperCase()}\` · RGB ${rgb.r} ${rgb.g} ${rgb.b} · CMYK ${cmyk}${c.role ? " — " + c.role : ""}`);
   });
   if (h.drive?.assets) { L.push("\n## Logos & assets"); L.push("Pacote completo (SVG/AI/PDF, RGB+CMYK): " + h.drive.assets); }
   L.push("\n_Gerado a partir do Brand System — sempre em sincronia com o hub._");
@@ -287,7 +288,7 @@ function Colors({ hub, onCopy }: { hub: HubBrand; onCopy: (hex: string) => void 
               <div className="chipcolor" style={{ background: c.hex }}><div className="copyhint"><span>Copiar hex</span></div></div>
               <div className="sw-body">
                 <div className="sw-name">{c.name}</div>
-                <div className="sw-vals"><code>{c.hex.toUpperCase()}</code><br />RGB {rgb.r} {rgb.g} {rgb.b}<br />CMYK {k.c} {k.m} {k.y} {k.k}</div>
+                <div className="sw-vals"><code>{c.hex.toUpperCase()}</code><br />RGB {rgb.r} {rgb.g} {rgb.b}<br />CMYK {c.cmyk ?? `${k.c} ${k.m} ${k.y} ${k.k}`}</div>
                 {c.role && <div className="sw-role">{c.role}</div>}
               </div>
             </button>
@@ -400,7 +401,11 @@ function InUse({ hub }: { hub: HubBrand }) {
             <div className="grp-label">{g.name}</div>
             <div className="photo-grid">
               {g.items.map((p) => (
-                <figure className="photo reveal" key={p.src}>
+                <figure
+                  className={"photo reveal" + (p.fit === "contain" ? " contain" : "")}
+                  key={p.src}
+                  style={p.pad ? { background: p.pad } : undefined}
+                >
                   <img src={p.src} alt={p.label} loading="lazy" />
                   <figcaption className="cap">{p.label}</figcaption>
                 </figure>

@@ -50,11 +50,11 @@ export interface BrandPage {
  * preencher isto. RGB/CMYK e contraste são calculados no render.
  * ------------------------------------------------------------------ */
 export interface HubLogo { name: string; role: string; src: string; file: string; drive?: string; pad: string; }
-export interface HubColor { name: string; hex: string; role?: string; }
+export interface HubColor { name: string; hex: string; role?: string; /** CMYK oficial (do brandbook); se ausente, é calculado do hex */ cmyk?: string; }
 export interface HubPair { bg: string; fg: string; label: string; }
 export interface HubType { role: string; family: string; sample: string; cssFamily?: string; }
 export interface HubApplication { k: string; s: string; bg: string; fg: string; }
-export interface HubPhoto { src: string; label: string; group?: string; }
+export interface HubPhoto { src: string; label: string; group?: string; fit?: "cover" | "contain"; pad?: string; }
 
 export interface HubBrand {
   year: string;
@@ -931,12 +931,76 @@ export const CRUZ_DE_MALTA: ClientBrand = {
 };
 
 /* ------------------------------------------------------------------ *
+ * Cliente — Jujoo (Milkshakeria · milkshakes e sobremesas premium)
+ * Dados extraídos do "Brandbook Jujoo V1" (Drive). Cores e tipografia
+ * documentadas. Sem fotografia ainda — "em uso" = lockups do slogan.
+ * ------------------------------------------------------------------ */
+export const JUJOO: ClientBrand = {
+  slug: "jujoo",
+  name: "Jujoo",
+  tagline: "Milkshakeria — o seu momentoo de alegria.",
+  accent: "#63288A",
+  hub: {
+    year: "2026",
+    since: "Milkshakeria",
+    drive: {
+      assets: "https://drive.google.com/drive/folders/1-BIc7c07zxNWFi-qfz94TmWwfUp9zth4",
+      expressao: "https://drive.google.com/drive/folders/17k_n-w2H6i8S8GRUZADQk58OzkOUslTz",
+    },
+    logos: [
+      { name: "Assinatura principal", role: "Positiva sobre roxo", src: "/clients/jujoo/jujoo-principal.png", file: "jujoo-principal.png", drive: "https://drive.google.com/file/d/139T46kIm2elpX1pUm6H92qtAmNFJDGHJ/view", pad: "var(--c1)" },
+      { name: "Roxo sobre branco", role: "Fundos claros", src: "/clients/jujoo/jujoo-roxo.png", file: "jujoo-roxo.png", drive: "https://drive.google.com/file/d/139T46kIm2elpX1pUm6H92qtAmNFJDGHJ/view", pad: "#ffffff" },
+      { name: "Sobre pêssego", role: "Peças da marca", src: "/clients/jujoo/jujoo-pessego.png", file: "jujoo-pessego.png", pad: "var(--c2)" },
+      { name: "Branco sobre caramelo", role: "Uso quente", src: "/clients/jujoo/jujoo-caramelo.png", file: "jujoo-caramelo.png", pad: "var(--c3)" },
+    ],
+    colors: [
+      { name: "Roxo Jujoo", hex: "#63288A", role: "Cor âncora — PANTONE 526 C", cmyk: "63 88 6 1" },
+      { name: "Pêssego", hex: "#FFD8BD", role: "Leveza e apetite — PANTONE 475 C", cmyk: "3 14 20 0" },
+      { name: "Caramelo", hex: "#B76F3D", role: "Sabor e calor — PANTONE 7572 C", cmyk: "21 48 67 8" },
+    ],
+    pairings: [
+      { bg: "#63288A", fg: "#FFD8BD", label: "Roxo + Pêssego" },
+      { bg: "#FFD8BD", fg: "#63288A", label: "Pêssego + Roxo" },
+      { bg: "#63288A", fg: "#FFFFFF", label: "Roxo + Papel" },
+    ],
+    type: [
+      { role: "Display / Marca", family: "Koni Black", sample: "Jujoo" },
+      { role: "Ornamento", family: "Koni Ornament Black", sample: "Milkshakes" },
+      { role: "Texto", family: "PP Radio Grotesk", sample: "O seu momentoo de alegria!" },
+    ],
+    essence: {
+      lead: "Não é apenas sobremesa. É o seu momentoo de alegria — uma experiência jovem e confiável de milkshakes e sobremesas premium, com qualidade consistente e operação ágil.",
+      proposito: "Proporcionar momentos simples de felicidade por meio de experiências deliciosas, rápidas e confiáveis. Ser ponto de encontro, recompensa do dia e pausa prazerosa — transformar um consumo rápido num pequeno momento memorável.",
+      posicionamento: "Gourmet acessível: o território entre a sobremesaria artesanal lenta e o fast food genérico. Instagramável, ágil na medida e replicável — com cara de franquia pronta para crescer.",
+      quote: "Sempre gostoso. Sempre ágil. Sempre certo.",
+      atributos: ["Jovem", "Alegre", "Acessível", "Convidativa", "Contemporânea", "Premium", "Consistente", "Ágil", "Instagramável", "Confiável"],
+    },
+    verbal: {
+      tom: "Jovem e alegre, sem ser infantil. Convidativa e acessível, com a energia de quem entrega um momento de prazer rápido e certeiro. O “oo” é assinatura da marca — aparece no “Jujoo” e no “momentoo”.",
+      sim: ["O seu momentoo de alegria", "Sempre gostoso, sempre ágil", "Milkshakes e sobremesas premium", "Gourmet acessível", "Sabores pensados pra funcionar"],
+      nao: ["Infantil demais", "Gourmet elitista", "Artesanal improvisado", "Monte do seu jeito (personalização infinita)", "Mais do mesmo"],
+      examples: [
+        { sim: "O seu momentoo de alegria: milkshake premium, rápido e sempre gostoso.", nao: "A mais sofisticada e exclusiva experiência gastronômica de sobremesas autorais." },
+        { sim: "Sabores pensados pra funcionar. É só escolher e aproveitar.", nao: "Monte do seu jeito com infinitas combinações." },
+      ],
+    },
+    photos: [
+      { src: "/clients/jujoo/slogan-roxo.png", label: "O seu momentoo de alegria", group: "Assinatura em uso", fit: "contain", pad: "var(--c2)" },
+      { src: "/clients/jujoo/slogan-pessego.png", label: "Versão positiva", group: "Assinatura em uso", fit: "contain", pad: "var(--c1)" },
+      { src: "/clients/jujoo/slogan-caramelo.png", label: "Versão quente", group: "Assinatura em uso", fit: "contain", pad: "#ffffff" },
+    ],
+  },
+  pages: {},
+};
+
+/* ------------------------------------------------------------------ *
  * Registro de clientes — resolvido por slug (user.clientSlug).
  * Fase 2: substituir por consulta ao Supabase.
  * ------------------------------------------------------------------ */
 export const CLIENTS: Record<string, ClientBrand> = {
   [DEMO_CLIENT.slug]: DEMO_CLIENT,
   [CRUZ_DE_MALTA.slug]: CRUZ_DE_MALTA,
+  [JUJOO.slug]: JUJOO,
 };
 
 /** Resolve o Brand System de um cliente pelo slug. */
