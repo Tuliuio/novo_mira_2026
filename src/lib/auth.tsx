@@ -40,23 +40,24 @@ const STORAGE_KEY = "mira.session";
 const DEMO_USERS: Array<{ username: string; password: string; user: User }> = [
   {
     username: "Adapto",
-    password: "Adapto 2026",
+    password: "Adapto2026",
     user: { name: "Adapto", username: "Adapto", clientSlug: "adapto" },
   },
   {
-    username: "Cruz de Malta",
-    password: "Cruz de Malta 2026",
-    user: { name: "Cruz de Malta", username: "Cruz de Malta", clientSlug: "cruz-de-malta" },
+    username: "CruzdeMalta",
+    password: "CruzdeMalta2026",
+    user: { name: "Cruz de Malta", username: "CruzdeMalta", clientSlug: "cruz-de-malta" },
   },
   {
     username: "Jujoo",
-    password: "Jujoo 2026",
+    password: "Jujoo2026",
     user: { name: "Jujoo", username: "Jujoo", clientSlug: "jujoo" },
   },
 ];
 
-/** normaliza para comparar: sem acento de caixa e sem espaços repetidos */
-const norm = (s: string) => s.trim().toLowerCase().replace(/\s+/g, " ");
+/** normaliza para comparar: ignora caixa e QUALQUER espaço
+ * (então "CruzdeMalta" e "Cruz de Malta" batem igual) */
+const norm = (s: string) => s.toLowerCase().replace(/\s+/g, "");
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
