@@ -89,9 +89,10 @@ function Nav() {
           to="/login"
           aria-label="Área do cliente"
           title="Área do cliente"
-          className="inline-flex items-center justify-center rounded-full border border-current p-2.5 text-current opacity-90 transition-opacity hover:opacity-100"
+          className="inline-flex items-center gap-2 rounded-full border border-current px-4 py-2 text-sm font-medium text-current opacity-90 transition-opacity hover:opacity-100"
         >
           <RocketIcon />
+          <span>Área do cliente</span>
         </Link>
       </div>
     </header>

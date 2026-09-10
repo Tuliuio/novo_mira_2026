@@ -6,7 +6,7 @@ import { Logo } from "@/components/Logo";
 export function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -16,7 +16,7 @@ export function Login() {
     setError(null);
     setBusy(true);
     try {
-      await login(email, password);
+      await login(username, password);
       navigate("/app");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Falha ao entrar.");
@@ -49,12 +49,12 @@ export function Login() {
 
           <form onSubmit={handleSubmit} className="mt-6 space-y-4">
             <Field
-              label="E-mail"
-              type="email"
-              value={email}
-              onChange={setEmail}
-              placeholder="voce@empresa.com"
-              autoComplete="email"
+              label="Usuário"
+              type="text"
+              value={username}
+              onChange={setUsername}
+              placeholder="Nome da sua marca"
+              autoComplete="username"
             />
             <Field
               label="Senha"

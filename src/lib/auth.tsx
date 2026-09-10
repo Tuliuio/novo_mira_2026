@@ -16,7 +16,8 @@ import {
 
 export interface User {
   name: string;
-  email: string;
+  /** usuário público = nome do cliente (o Brand System não é sigiloso) */
+  username: string;
   /** slug do cliente cujo Brand System este usuário acessa */
   clientSlug: string;
 }
@@ -24,38 +25,38 @@ export interface User {
 interface AuthContextValue {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
 const STORAGE_KEY = "mira.session";
 
-/** Credenciais demo (substituir por Supabase). */
-const DEMO_USERS: Array<{ email: string; password: string; user: User }> = [
+/**
+ * Credenciais dos clientes (substituir por Supabase).
+ * Padrão simples e compartilhável: usuário = nome do cliente,
+ * senha = nome do cliente + ano. A comparação é tolerante
+ * (ignora maiúsculas/minúsculas e espaços repetidos).
+ */
+const DEMO_USERS: Array<{ username: string; password: string; user: User }> = [
   {
-    email: "cliente@adapto.com.br",
-    password: "mira",
-    user: { name: "Equipe Adapto", email: "cliente@adapto.com.br", clientSlug: "adapto" },
+    username: "Adapto",
+    password: "Adapto 2026",
+    user: { name: "Adapto", username: "Adapto", clientSlug: "adapto" },
   },
   {
-    email: "bento.cacilda@gmail.com",
-    password: "cruz60",
-    user: {
-      name: "Cruz de Malta",
-      email: "bento.cacilda@gmail.com",
-      clientSlug: "cruz-de-malta",
-    },
+    username: "Cruz de Malta",
+    password: "Cruz de Malta 2026",
+    user: { name: "Cruz de Malta", username: "Cruz de Malta", clientSlug: "cruz-de-malta" },
   },
   {
-    email: "cliente@jujoo.com.br",
-    password: "jujoo2026",
-    user: {
-      name: "Jujoo",
-      email: "cliente@jujoo.com.br",
-      clientSlug: "jujoo",
-    },
+    username: "Jujoo",
+    password: "Jujoo 2026",
+    user: { name: "Jujoo", username: "Jujoo", clientSlug: "jujoo" },
   },
 ];
+
+/** normaliza para comparar: sem acento de caixa e sem espaços repetidos */
+const norm = (s: string) => s.trim().toLowerCase().replace(/\s+/g, " ");
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
@@ -73,14 +74,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setLoading(false);
   }, []);
 
-  async function login(email: string, password: string) {
+  async function login(username: string, password: string) {
     // simula latência de rede
     await new Promise((r) => setTimeout(r, 450));
     const match = DEMO_USERS.find(
-      (u) => u.email.toLowerCase() === email.trim().toLowerCase() && u.password === password,
+      (u) => norm(u.username) === norm(username) && norm(u.password) === norm(password),
     );
     if (!match) {
-      throw new Error("E-mail ou senha inválidos.");
+      throw new Error("Usuário ou senha inválidos.");
     }
     setUser(match.user);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(match.user));
