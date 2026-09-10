@@ -60,6 +60,10 @@ export interface HubBrand {
   year: string;
   since?: string;
   drive?: { assets?: string; expressao?: string };
+  /** URL (Drive) do brandbook completo em PDF — botão de download na Essência */
+  brandbook?: string;
+  /** URL (Drive) da pasta/arquivo de fontes — botão de download na Tipografia */
+  fontsUrl?: string;
   logos: HubLogo[];
   colorsNote?: string;
   colors: HubColor[];
@@ -594,6 +598,7 @@ export const CRUZ_DE_MALTA: ClientBrand = {
       assets: "https://drive.google.com/drive/folders/1rRtiCoDLGGgFoMN42ZWh74cnqHuTnzHc",
       expressao: "https://drive.google.com/drive/folders/1vmNRp891cFr4xx25i4_f_j8vua02B8eU",
     },
+    brandbook: "https://drive.google.com/file/d/1k-LIns2b6glB9AmibZn_8ZSaJOOW9kOu/view",
     logos: [
       { name: "Assinatura principal", role: "Positiva sobre vermelho", src: "/clients/cruz-de-malta/logo-02.png", file: "cruz-de-malta-principal.png", drive: "https://drive.google.com/file/d/1o9NtFtu25cT_fdzQxvh1l1ZCnpjmrX7p/view", pad: "var(--c1)" },
       { name: "Vermelho sobre branco", role: "Fundos claros", src: "/clients/cruz-de-malta/logo-01.png", file: "cruz-de-malta-vermelho.png", drive: "https://drive.google.com/file/d/1mub_QSel8s7k0r2Ct3WAW3UTczwhiDxM/view", pad: "#ffffff" },
@@ -947,6 +952,8 @@ export const JUJOO: ClientBrand = {
       assets: "https://drive.google.com/drive/folders/1-BIc7c07zxNWFi-qfz94TmWwfUp9zth4",
       expressao: "https://drive.google.com/drive/folders/17k_n-w2H6i8S8GRUZADQk58OzkOUslTz",
     },
+    brandbook: "https://drive.google.com/file/d/1nMR2lh5TVU1nremF_y3Bf1ja2b-yjSXO/view",
+    fontsUrl: "https://drive.google.com/drive/folders/1iC5e9aNEI1IsXF0LmDdo_q01nJ0Ai_UC",
     logos: [
       { name: "Assinatura principal", role: "Positiva sobre roxo", src: "/clients/jujoo/jujoo-principal.png", file: "jujoo-principal.png", drive: "https://drive.google.com/file/d/139T46kIm2elpX1pUm6H92qtAmNFJDGHJ/view", pad: "var(--c1)" },
       { name: "Roxo sobre branco", role: "Fundos claros", src: "/clients/jujoo/jujoo-roxo.png", file: "jujoo-roxo.png", drive: "https://drive.google.com/file/d/139T46kIm2elpX1pUm6H92qtAmNFJDGHJ/view", pad: "#ffffff" },

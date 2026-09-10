@@ -6,18 +6,26 @@ import { hexToRgb, rgbToCmyk, contrastRatio, contrastBadge, copyText } from "@/l
 import { Logo } from "@/components/Logo";
 import "./brand-hub.css";
 
-/* Constrói o brand.md a partir do hub — sempre em sincronia. */
+function colorLine(c: HubBrand["colors"][number]): string {
+  const rgb = hexToRgb(c.hex), k = rgbToCmyk(rgb);
+  const cmyk = c.cmyk ?? `${k.c} ${k.m} ${k.y} ${k.k}`;
+  return `- **${c.name}** — \`${c.hex.toUpperCase()}\` · RGB ${rgb.r} ${rgb.g} ${rgb.b} · CMYK ${cmyk}${c.role ? " — " + c.role : ""}`;
+}
+
+/* Constrói o brand.md completo a partir do hub — sempre em sincronia. */
 function buildMarkdown(client: ClientBrand): string {
   const h = client.hub!;
   const L: string[] = [];
   L.push(`# ${client.name} — Brand System`);
   L.push(`> ${client.tagline}${h.since ? "  ·  " + h.since : ""}`);
-  L.push("_Documento gerado pela Mira Brand Studio._");
+  L.push("_Documento gerado pela Mira Brand Studio a partir do Brand System interativo._");
+
   if (h.essence) {
     L.push("\n## Essência");
     if (h.essence.lead) L.push(h.essence.lead);
     if (h.essence.proposito) L.push("**Propósito:** " + h.essence.proposito);
     if (h.essence.posicionamento) L.push("**Posicionamento:** " + h.essence.posicionamento);
+    if (h.essence.quote) L.push("> " + h.essence.quote);
     if (h.essence.atributos?.length) L.push("**Atributos:** " + h.essence.atributos.join(", "));
   }
   if (h.verbal) {
@@ -25,17 +33,83 @@ function buildMarkdown(client: ClientBrand): string {
     if (h.verbal.tom) L.push(h.verbal.tom);
     if (h.verbal.sim?.length) L.push("**Diga:** " + h.verbal.sim.join(", "));
     if (h.verbal.nao?.length) L.push("**Evite:** " + h.verbal.nao.join(", "));
+    if (h.verbal.examples?.length) {
+      L.push("**Exemplos (assim sim / assim não):**");
+      h.verbal.examples.forEach((e) => L.push(`- ✅ ${e.sim}\n- ❌ ${e.nao}`));
+    }
   }
+
   L.push("\n## Cores");
   if (h.colorsNote) L.push("_" + h.colorsNote + "_");
+  h.colors.forEach((c) => L.push(colorLine(c)));
+  if (h.pairings?.length) {
+    L.push("**Pares aprovados (fundo → texto):**");
+    h.pairings.forEach((p) => L.push(`- ${p.label} — ${p.bg.toUpperCase()} → ${p.fg.toUpperCase()} (contraste ${contrastRatio(p.bg, p.fg).toFixed(1)}:1)`));
+  }
+
+  if (h.type?.length) {
+    L.push("\n## Tipografia");
+    h.type.forEach((t) => L.push(`- **${t.role}:** ${t.family}`));
+    if (h.fontsUrl) L.push("Arquivos das fontes: " + h.fontsUrl);
+  } else if (h.typeNote) {
+    L.push("\n## Tipografia");
+    L.push("_" + h.typeNote + "_");
+  }
+
+  if (h.logos?.length) {
+    L.push("\n## Logos");
+    h.logos.forEach((lg) => L.push(`- **${lg.name}** — ${lg.role}`));
+  }
+  if (h.drive?.assets) L.push("Pacote de assets (SVG/AI/PDF, RGB+CMYK): " + h.drive.assets);
+  if (h.brandbook) L.push("Brandbook completo (PDF): " + h.brandbook);
+
+  L.push("\n_Sempre em sincronia com o Brand System do cliente._");
+  return L.join("\n\n");
+}
+
+/* Gera um SKILL.md pronto pra colar no Claude Code / Codex Cloud —
+ * faz a IA produzir qualquer peça dentro do design system da marca. */
+function buildSkill(client: ClientBrand): string {
+  const h = client.hub!;
+  const L: string[] = [];
+  L.push("---");
+  L.push(`name: marca-${client.slug}`);
+  L.push(`description: Cria qualquer peça (apresentações, posts, textos, layouts) EXATAMENTE dentro da identidade da marca ${client.name}. Use sempre que gerar conteúdo para ${client.name}.`);
+  L.push("---");
+  L.push(`\n# Identidade da marca — ${client.name}`);
+  L.push(`Ao criar qualquer coisa para **${client.name}** (${client.tagline}), siga estas regras à risca. Nunca invente cor, fonte ou tom fora do que está definido aqui.`);
+
+  L.push("\n## Cores (use exatamente estes valores)");
   h.colors.forEach((c) => {
     const rgb = hexToRgb(c.hex), k = rgbToCmyk(rgb);
     const cmyk = c.cmyk ?? `${k.c} ${k.m} ${k.y} ${k.k}`;
-    L.push(`- **${c.name}** — \`${c.hex.toUpperCase()}\` · RGB ${rgb.r} ${rgb.g} ${rgb.b} · CMYK ${cmyk}${c.role ? " — " + c.role : ""}`);
+    L.push(`- ${c.name}: HEX ${c.hex.toUpperCase()} · RGB ${rgb.r},${rgb.g},${rgb.b} · CMYK ${cmyk}${c.role ? ` — ${c.role}` : ""}`);
   });
-  if (h.drive?.assets) { L.push("\n## Logos & assets"); L.push("Pacote completo (SVG/AI/PDF, RGB+CMYK): " + h.drive.assets); }
-  L.push("\n_Gerado a partir do Brand System — sempre em sincronia com o hub._");
-  return L.join("\n\n");
+  if (h.pairings?.length) {
+    L.push("Combinações aprovadas (fundo → texto):");
+    h.pairings.forEach((p) => L.push(`- ${p.bg.toUpperCase()} → ${p.fg.toUpperCase()} (${p.label})`));
+  }
+
+  L.push("\n## Tipografia");
+  if (h.type?.length) h.type.forEach((t) => L.push(`- ${t.role}: ${t.family}`));
+  else if (h.typeNote) L.push(`- ${h.typeNote}`);
+
+  if (h.verbal) {
+    L.push("\n## Tom de voz");
+    if (h.verbal.tom) L.push(h.verbal.tom);
+    if (h.verbal.sim?.length) L.push("SEMPRE soar como: " + h.verbal.sim.join("; "));
+    if (h.verbal.nao?.length) L.push("NUNCA soar como: " + h.verbal.nao.join("; "));
+  }
+  if (h.essence) {
+    L.push("\n## Essência (o porquê)");
+    if (h.essence.posicionamento) L.push("Posicionamento: " + h.essence.posicionamento);
+    if (h.essence.atributos?.length) L.push("Atributos: " + h.essence.atributos.join(", "));
+  }
+
+  L.push("\n## Checklist antes de entregar qualquer peça");
+  L.push("- [ ] Usei somente as cores/hex acima?\n- [ ] Usei as fontes definidas (ou o fallback mais próximo)?\n- [ ] O texto soa no tom de voz da marca?\n- [ ] Respeitei as combinações de contraste aprovadas?");
+  L.push(`\n_Skill gerada pelo Brand System da Mira — fonte única da identidade de ${client.name}._`);
+  return L.join("\n");
 }
 
 interface SectionDef { id: string; label: string; }
@@ -98,12 +172,14 @@ export function BrandHub() {
   async function copyGuide() {
     showToast((await copyText(buildMarkdown(client))) ? "Guia copiado" : "Não consegui copiar", "var(--gold)");
   }
-  function downloadGuide() {
-    const blob = new Blob([buildMarkdown(client)], { type: "text/markdown;charset=utf-8" });
+  function downloadText(text: string, filename: string) {
+    const blob = new Blob([text], { type: "text/markdown;charset=utf-8" });
     const url = URL.createObjectURL(blob);
-    downloadLogo(url, client.slug + "-brand.md");
+    downloadLogo(url, filename);
     setTimeout(() => URL.revokeObjectURL(url), 3000);
   }
+  function downloadGuide() { downloadText(buildMarkdown(client), client.slug + "-brand.md"); }
+  function downloadSkill() { downloadText(buildSkill(client), "marca-" + client.slug + "-SKILL.md"); }
   function handleLogout() { logout(); navigate("/"); }
 
   /* IntersectionObserver: nav ativa + reveal */
@@ -178,7 +254,7 @@ export function BrandHub() {
         {sections.some((s) => s.id === "essencia") && <Essence hub={hub} />}
         {sections.some((s) => s.id === "verbal") && <Verbal hub={hub} />}
         {sections.some((s) => s.id === "em-uso") && <InUse hub={hub} />}
-        <AIGuide md={md} onCopy={copyGuide} onDownload={downloadGuide} />
+        <AIGuide md={md} onCopy={copyGuide} onDownload={downloadGuide} onDownloadSkill={downloadSkill} />
       </main>
 
       <footer>
@@ -336,6 +412,11 @@ function Typography({ hub }: { hub: HubBrand }) {
       ) : (
         <div className="note-card reveal"><b>Tipografia em documentação.</b> {hub.typeNote}</div>
       )}
+      {hub.fontsUrl && (
+        <div style={{ marginTop: 22 }} className="reveal">
+          <a className="btn btn-gold" href={hub.fontsUrl} target="_blank" rel="noopener noreferrer">↓ Baixar as fontes</a>
+        </div>
+      )}
     </section>
   );
 }
@@ -351,6 +432,11 @@ function Essence({ hub }: { hub: HubBrand }) {
         {e.posicionamento && <><div className="grp-label">Posicionamento</div><p>{e.posicionamento}</p></>}
         {e.quote && <div className="quote"><p>“{e.quote}”</p></div>}
         {e.atributos && e.atributos.length > 0 && <><div className="grp-label">Atributos</div><div className="attrs">{e.atributos.map((a) => <span className="tag2" key={a}>{a}</span>)}</div></>}
+        {hub.brandbook && (
+          <div style={{ marginTop: 26 }}>
+            <a className="btn btn-gold" href={hub.brandbook} target="_blank" rel="noopener noreferrer">↓ Baixar o brandbook completo (PDF)</a>
+          </div>
+        )}
       </div>
     </section>
   );
@@ -399,7 +485,7 @@ function InUse({ hub }: { hub: HubBrand }) {
         groups.map((g) => (
           <div key={g.name}>
             <div className="grp-label">{g.name}</div>
-            <div className="photo-grid">
+            <div className="photo-carousel" role="group" aria-label={g.name}>
               {g.items.map((p) => (
                 <figure
                   className={"photo reveal" + (p.fit === "contain" ? " contain" : "")}
@@ -431,15 +517,21 @@ function InUse({ hub }: { hub: HubBrand }) {
   );
 }
 
-function AIGuide({ md, onCopy, onDownload }: { md: string; onCopy: () => void; onDownload: () => void }) {
+function AIGuide({ md, onCopy, onDownload, onDownloadSkill }: { md: string; onCopy: () => void; onDownload: () => void; onDownloadSkill: () => void }) {
   return (
     <section id="ia">
-      <SecHead eyebrow="IA" title="Use sua marca com IA" desc="Um resumo estruturado da marca em texto puro. Cole no ChatGPT, Claude ou Midjourney antes de pedir qualquer peça — e o modelo já cria dentro da marca." />
+      <SecHead eyebrow="IA" title="Use sua marca com IA" desc="A marca inteira em texto estruturado — cole no ChatGPT, Claude ou Midjourney antes de pedir qualquer peça e o modelo já cria dentro da identidade." />
       <div className="ai-card reveal">
-        <p>Este texto é gerado a partir do próprio Brand System, então nunca fica desatualizado. Copie para o chat ou baixe o <code>brand.md</code> para o seu editor.</p>
+        <p>
+          Gerado a partir do próprio Brand System, então nunca fica desatualizado. Duas formas de usar:
+          o <code>brand.md</code> para colar em qualquer chat, ou a <code>SKILL.md</code> — uma skill pronta
+          pra soltar no Claude Code / Codex Cloud, que faz apresentações e peças saírem sempre no seu
+          design system (mesmas cores, tipografia e tom).
+        </p>
         <div className="ai-actions">
           <button className="btn btn-gold" onClick={onCopy}>Copiar guia</button>
           <button className="btn" onClick={onDownload}>Baixar brand.md</button>
+          <button className="btn" onClick={onDownloadSkill}>Baixar skill (SKILL.md)</button>
         </div>
         <pre className="ai-preview">{md}</pre>
       </div>

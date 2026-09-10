@@ -186,7 +186,16 @@
 .bh .toast.show { opacity: 1; transform: translate(-50%, 0); }
 .bh .toast .tdot { width: 12px; height: 12px; border-radius: 3px; }
 
-/* Fotografia — marca ao vivo */
+/* Fotografia — marca ao vivo (carrossel horizontal com scroll-snap) */
+.bh .photo-carousel {
+  display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+  padding-bottom: 14px; margin: 0 -24px; padding-left: 24px; padding-right: 24px;
+  scrollbar-width: thin;
+}
+.bh .photo-carousel > .photo {
+  flex: 0 0 clamp(240px, 42%, 340px); scroll-snap-align: start;
+}
+@media (max-width: 560px) { .bh .photo-carousel > .photo { flex-basis: 82%; } }
 .bh .photo-grid { display: grid; gap: 14px; grid-template-columns: repeat(3, 1fr); }
 @media (max-width: 780px) { .bh .photo-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px) { .bh .photo-grid { grid-template-columns: 1fr; } }
