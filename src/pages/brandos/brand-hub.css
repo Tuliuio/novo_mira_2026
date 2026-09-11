@@ -47,7 +47,14 @@
 .bh .client-tag { flex: 1 1 0; text-align: right; color: var(--muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .bh .client-tag b { color: var(--text); }
 .bh .nav { flex: 0 0 auto; display: flex; align-items: center; gap: 4px; background: color-mix(in srgb, var(--surface) 84%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: var(--radius); padding: 6px; box-shadow: var(--shadow); max-width: 100%; }
-@media (max-width: 720px) { .bh .hub-top { padding: 12px 16px; } .bh .client-tag { display: none; } .bh .brandmark { flex: 0 0 auto; } }
+@media (max-width: 720px) {
+  .bh .hub-top { padding: 12px 14px; gap: 10px; }
+  .bh .client-tag { display: none; }
+  .bh .brandmark { flex: 0 0 auto; }
+  /* a pílula ocupa o espaço restante e os links rolam dentro dela */
+  .bh .nav { flex: 1 1 auto; min-width: 0; }
+  .bh .nav-scroll { min-width: 0; }
+}
 .bh .nav-scroll { display: flex; align-items: center; gap: 2px; overflow-x: auto; scrollbar-width: none; }
 .bh .nav-scroll::-webkit-scrollbar { display: none; }
 .bh .nav a { color: var(--muted); text-decoration: none; font-size: 13.5px; font-weight: 600; padding: 9px 15px; border-radius: var(--radius); white-space: nowrap; transition: color .18s, background .18s; cursor: pointer; }
@@ -60,6 +67,12 @@
 /* Sections */
 .bh section { padding: 84px 0; border-top: 1px solid var(--border); scroll-margin-top: calc(var(--nav-h) + 16px); }
 .bh section.hero { border-top: none; padding: clamp(28px, 6vh, 64px) 0 68px; }
+@media (max-width: 560px) {
+  .bh section { padding: 52px 0; }
+  .bh section.hero { padding: 16px 0 40px; }
+  .bh .sec-head { margin-bottom: 30px; }
+  .bh .hero-logo { padding: 32px 22px; }
+}
 .bh .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
 .bh .sec-head { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 42px; }
 @media (min-width: 800px) { .bh .sec-head { grid-template-columns: 1fr 1fr; align-items: end; } .bh .sec-head p { justify-self: end; text-align: right; } }
