@@ -6,6 +6,7 @@ import { NotFound } from "@/pages/NotFound";
 import { LinkBio } from "@/pages/LinkBio";
 import { Metodo } from "@/pages/Metodo";
 import { Oka } from "@/pages/Oka";
+import { Costao } from "@/pages/Costao";
 import { PROFILES } from "@/lib/bio";
 import { BrandHub } from "@/pages/brandos/BrandHub";
 import type { ReactNode } from "react";
@@ -26,6 +27,9 @@ export function App() {
       <Route path="/tom" element={<LinkBio profile={PROFILES.tom} />} />
       <Route path="/metodo" element={<Metodo />} />
       <Route path="/oka" element={<Oka />} />
+      <Route path="/propostas/costao" element={<Costao />} />
+      {/* Atalho: /costao redireciona para a URL canônica da proposta */}
+      <Route path="/costao" element={<Navigate to="/propostas/costao" replace />} />
 
       <Route
         path="/app"

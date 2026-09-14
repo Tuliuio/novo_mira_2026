@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Costão × Mira · Proposta de desenvolvimento & autonomia digital</title>
+<meta name="description" content="Dois sites — Eventos e Costão Estaleirinho — e uma decisão maior: como o marketing do Costão passa a lançar sites e landing pages com autonomia, segurança e o aval da TI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050505;
+    --text:#EDEAE2;
+    --muted:#9A968C;
+    --faint:#5C5952;
+    --gold:#E0A92E;
+    --gold-soft:#F2CE8C;
+    --teal:#6FB6B0;
+    --core:#F2CE8C;
+    --line:rgba(237,234,226,.12);
+    --panel-bg:linear-gradient(160deg,rgba(224,169,46,.05) 0%,rgba(5,5,5,0) 45%);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .lp{max-width:1240px;margin:0 auto}
+  a{color:inherit}
+
+  /* ---------- shared tokens ---------- */
+  .eyebrow{
+    font-size:11px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--gold);font-weight:500;margin-bottom:16px;
+  }
+  h1,h2{font-weight:300;letter-spacing:-.02em;line-height:1.08}
+  h1 strong,h2 strong,.grad{
+    font-weight:600;
+    background:linear-gradient(100deg,#8a7a2e 0%,var(--gold) 45%,var(--gold-soft) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .lead{margin-top:14px;font-size:16px;color:var(--muted);max-width:620px;line-height:1.7}
+  .group-title{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);font-weight:500;margin:0 0 12px}
+
+  .chip{
+    display:inline-block;font-size:12px;color:var(--text);border:1px solid var(--line);
+    border-radius:999px;padding:6px 13px;font-weight:400;letter-spacing:.01em;
+  }
+  .chip.gold{border-color:rgba(224,169,46,.45);color:var(--gold-soft)}
+  .chip.teal{border-color:rgba(111,182,176,.4);color:var(--teal)}
+
+  .btn-gold{
+    font-family:'Inter',sans-serif;font-size:12px;font-weight:500;
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--bg);background:linear-gradient(100deg,var(--gold) 0%,var(--gold-soft) 100%);
+    border:none;border-radius:999px;padding:14px 30px;cursor:pointer;text-decoration:none;
+    display:inline-block;transition:transform .2s ease,opacity .2s ease;
+  }
+  .btn-gold:hover{transform:translateY(-1px)}
+  .btn-gold:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px}
+  .btn-ghost{
+    font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--gold-soft);background:transparent;border:1px solid rgba(224,169,46,.4);
+    border-radius:999px;padding:10px 22px;cursor:pointer;text-decoration:none;
+    transition:border-color .2s ease,color .2s ease;
+  }
+  .btn-ghost:hover{border-color:var(--gold-soft);color:var(--gold)}
+
+  .card{
+    border:1px solid var(--line);border-radius:20px;
+    background:var(--panel-bg);
+  }
+
+  /* ---------- nav ---------- */
+  .nav{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:20px 32px;position:sticky;top:0;z-index:100;
+    background:rgba(5,5,5,.72);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav .logo{display:inline-flex;align-items:center}
+  .nav .logo img{height:24px;width:auto;display:block}
+
+  /* ---------- section frame ---------- */
+  .section{padding:80px 32px}
+  .hero{padding:88px 32px 72px;position:relative;overflow:hidden}
+  .hero::before{
+    content:'';position:absolute;top:-160px;right:-120px;width:560px;height:560px;
+    background:radial-gradient(circle,rgba(224,169,46,.14) 0%,transparent 70%);pointer-events:none;
+  }
+  .hero-inner{position:relative;max-width:840px}
+  .hero h1{font-size:clamp(34px,5vw,58px);margin-bottom:8px}
+  .hero .lead{font-size:17px;max-width:660px;margin-bottom:34px}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .hero-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+
+  .section-head{max-width:680px;margin-bottom:44px}
+  .section-head h2{font-size:clamp(26px,3.4vw,42px)}
+
+  /* ---------- 01 contexto ---------- */
+  .diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .diag-cell{padding:28px 30px}
+  .diag-cell.now{background:linear-gradient(160deg,rgba(160,67,42,.08) 0%,rgba(5,5,5,0) 50%)}
+  .diag-cell.goal{background:linear-gradient(160deg,rgba(224,169,46,.06) 0%,rgba(5,5,5,0) 50%)}
+  .diag-cell h4{font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:500;margin-bottom:18px}
+  .diag-cell.now h4{color:#C97A53}
+  .diag-cell.goal h4{color:var(--gold)}
+  .diag-cell ul{list-style:none}
+  .diag-cell li{
+    font-size:14.5px;color:var(--muted);padding:11px 0;line-height:1.5;
+    border-bottom:1px solid var(--line);display:flex;gap:11px;align-items:baseline;
+  }
+  .diag-cell li:last-child{border-bottom:none}
+  .diag-cell li::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;position:relative;top:6px}
+  .diag-cell.now li::before{background:#C97A53}
+  .diag-cell.goal li::before{background:var(--gold)}
+  .diag-alert{
+    margin-top:22px;border:1px solid var(--line);border-radius:20px;
+    padding:26px 30px;text-align:center;background:var(--panel-bg);
+  }
+  .diag-alert .group-title{margin-bottom:10px;color:var(--gold)}
+  .diag-alert p{font-size:16px;color:var(--muted);line-height:1.7;max-width:680px;margin:0 auto}
+  .diag-alert strong{color:var(--text);font-weight:500}
+  .diag-alert .grad{font-weight:600}
+
+  /* ---------- 02 projetos ---------- */
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .proj-card{padding:32px 30px;position:relative;overflow:hidden}
+  .proj-card .kicker{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .proj-card .kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--gold)}
+  .proj-card .kicker span{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);font-weight:500}
+  .proj-card h3{font-size:22px;font-weight:500;letter-spacing:-.01em;margin-bottom:8px}
+  .proj-card .url{font-size:12.5px;color:var(--teal);letter-spacing:.02em;margin-bottom:16px;font-weight:400}
+  .proj-card p{font-size:14.5px;color:var(--muted);line-height:1.7;margin-bottom:16px}
+  .proj-card .tags{display:flex;gap:8px;flex-wrap:wrap}
+
+  /* ---------- 03 abordagens ---------- */
+  .approach-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+  .approach-card{padding:34px 32px;position:relative}
+  .approach-card.b{border-color:rgba(224,169,46,.4);background:linear-gradient(165deg,rgba(224,169,46,.09) 0%,rgba(5,5,5,0) 55%)}
+  .approach-badge{
+    position:absolute;top:-11px;left:32px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+    font-weight:600;color:var(--bg);background:linear-gradient(100deg,var(--gold),var(--gold-soft));
+    padding:6px 14px;border-radius:999px;
+  }
+  .approach-card .a-label{font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:var(--faint);margin-bottom:10px}
+  .approach-card.b .a-label{color:var(--gold)}
+  .approach-card h3{font-size:21px;font-weight:500;letter-spacing:-.01em;margin-bottom:12px}
+  .approach-card .desc{font-size:14.5px;color:var(--muted);line-height:1.7;margin-bottom:22px}
+  .approach-card ul{list-style:none;margin-bottom:8px}
+  .approach-card li{
+    font-size:14px;color:var(--muted);padding:10px 0;line-height:1.5;
+    border-bottom:1px solid var(--line);display:flex;gap:11px;align-items:baseline;
+  }
+  .approach-card li:last-child{border-bottom:none}
+  .approach-card li::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0;position:relative;top:6px;background:var(--faint)}
+  .approach-card.b li::before{background:var(--gold)}
+  .approach-card li strong{color:var(--text);font-weight:500}
+  .approach-card .ceiling{
+    margin-top:16px;padding:14px 16px;border-radius:14px;border:1px dashed var(--line);
+    font-size:12.5px;color:var(--faint);line-height:1.6;
+  }
+  .approach-card.b .ceiling{border-color:rgba(224,169,46,.28);color:var(--gold-soft)}
+
+  /* ---------- 04 fluxo ---------- */
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:30px}
+  .flow-step{
+    padding:22px 18px;border:1px solid var(--line);border-radius:16px;
+    background:var(--panel-bg);position:relative;text-align:left;
+  }
+  .flow-step .n{
+    width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:500;margin-bottom:14px;
+    background:rgba(224,169,46,.1);border:1px solid rgba(224,169,46,.35);color:var(--gold-soft);
+  }
+  .flow-step h5{font-size:14px;font-weight:500;margin-bottom:6px;letter-spacing:-.01em}
+  .flow-step p{font-size:12.5px;color:var(--muted);line-height:1.55}
+  .flow-step:not(:last-child)::after{
+    content:'→';position:absolute;right:-11px;top:50%;transform:translateY(-50%);
+    color:rgba(224,169,46,.55);font-size:15px;z-index:2;
+  }
+  .flow-step.ti{border-color:rgba(111,182,176,.35);background:linear-gradient(160deg,rgba(111,182,176,.07) 0%,rgba(5,5,5,0) 55%)}
+  .flow-step.ti .n{background:rgba(111,182,176,.12);border-color:rgba(111,182,176,.4);color:var(--teal)}
+
+  .gov-panel{padding:30px 32px}
+  .gov-panel .group-title{color:var(--teal);margin-bottom:18px}
+  .gov-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 34px}
+  .gov-grid li{
+    list-style:none;font-size:14px;color:var(--muted);line-height:1.55;
+    padding:9px 0;display:flex;gap:11px;align-items:baseline;
+  }
+  .gov-grid li::before{content:'';width:6px;height:6px;border-radius:2px;flex-shrink:0;position:relative;top:6px;background:var(--teal)}
+  .gov-grid li strong{color:var(--text);font-weight:500}
+  .repos{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+  .repo{
+    font-size:12px;color:var(--gold-soft);border:1px solid rgba(224,169,46,.3);border-radius:10px;
+    padding:9px 13px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.01em;
+  }
+  .repo .k{color:var(--faint);font-family:'Inter',sans-serif;letter-spacing:.02em;margin-right:8px}
+
+  /* ---------- 05 entregáveis ---------- */
+  .deliv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .deliv-card{padding:28px 26px}
+  .deliv-icon{
+    width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    margin-bottom:20px;background:rgba(224,169,46,.09);border:1px solid rgba(224,169,46,.22);
+  }
+  .deliv-icon svg{width:20px;height:20px;stroke:var(--gold-soft);fill:none;stroke-width:1.5}
+  .deliv-card h4{font-size:16px;font-weight:500;margin-bottom:9px;letter-spacing:-.01em}
+  .deliv-card p{font-size:14px;color:var(--muted);line-height:1.7}
+
+  /* ---------- 06 investimento ---------- */
+  .price-note{
+    font-size:12.5px;color:var(--faint);letter-spacing:.02em;margin-bottom:26px;
+    display:flex;gap:9px;align-items:baseline;max-width:640px;line-height:1.6;
+  }
+  .price-note::before{content:'✳';color:var(--gold);position:relative;top:1px}
+  .price-wrap{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--panel-bg);margin-bottom:22px}
+  .price-wrap.b{border-color:rgba(224,169,46,.4)}
+  .price-header{
+    padding:28px 34px;display:flex;justify-content:space-between;align-items:center;gap:20px;
+    background:linear-gradient(160deg,rgba(224,169,46,.08) 0%,rgba(5,5,5,0) 60%);
+    border-bottom:1px solid var(--line);
+  }
+  .price-header h3{font-size:20px;font-weight:500;letter-spacing:-.01em}
+  .price-header .sub{font-size:13px;color:var(--faint);margin-top:6px;letter-spacing:.02em;max-width:440px;line-height:1.5}
+  .price-header .flag{
+    font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;flex-shrink:0;
+    padding:7px 14px;border-radius:999px;
+  }
+  .price-header .flag.rec{color:var(--bg);background:linear-gradient(100deg,var(--gold),var(--gold-soft))}
+  .price-header .flag.alt{color:var(--faint);border:1px solid var(--line)}
+  .price-lines{padding:12px 34px 8px}
+  .price-line{
+    display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    padding:18px 0;border-bottom:1px solid var(--line);
+  }
+  .price-line:last-child{border-bottom:none}
+  .price-line .pl-name{font-size:15px;color:var(--text);font-weight:400}
+  .price-line .pl-name small{display:block;font-size:12.5px;color:var(--faint);margin-top:4px;font-weight:300;letter-spacing:.01em}
+  .price-line .pl-val{font-size:20px;font-weight:300;white-space:nowrap}
+  .price-line .pl-val strong{font-weight:600}
+  .price-line.total{border-top:1px solid var(--line);border-bottom:none;margin-top:2px}
+  .price-line.total .pl-name{color:var(--gold-soft);font-weight:500}
+  .price-line.pre .pl-name{color:var(--teal)}
+  .price-footer{border-top:1px solid var(--line);padding:20px 34px;font-size:12.5px;color:var(--faint);letter-spacing:.02em;line-height:1.6}
+  .pay-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+  .pay-option{border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+  .pay-option.highlight{border-color:rgba(224,169,46,.4);background:rgba(224,169,46,.06)}
+  .pay-option .tag{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:8px}
+  .pay-option p{font-size:13.5px;color:var(--muted);line-height:1.55}
+
+  /* ---------- 07 roadmap ---------- */
+  .steps{display:flex;flex-direction:column}
+  .step{display:flex;align-items:flex-start;gap:22px;padding:22px 0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:none}
+  .step-num{
+    width:40px;height:40px;border-radius:50%;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;
+    background:rgba(224,169,46,.09);border:1px solid rgba(224,169,46,.35);color:var(--gold-soft);
+  }
+  .step-content h4{font-size:16px;font-weight:500;margin-bottom:5px;letter-spacing:-.01em}
+  .step-content p{font-size:14px;color:var(--muted);line-height:1.6;max-width:600px}
+  .step-tag{
+    margin-top:10px;display:inline-block;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold);border:1px solid rgba(224,169,46,.3);border-radius:999px;padding:4px 12px;font-weight:500;
+  }
+
+  /* ---------- cta ---------- */
+  .cta-section{padding:96px 32px;text-align:center;position:relative;overflow:hidden}
+  .cta-section::before{
+    content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:680px;height:680px;background:radial-gradient(circle,rgba(224,169,46,.1) 0%,transparent 68%);pointer-events:none;
+  }
+  .cta-section .inner{position:relative}
+  .cta-section h2{font-size:clamp(28px,4vw,48px);max-width:720px;margin:0 auto 16px}
+  .cta-section p{font-size:16px;color:var(--muted);margin-bottom:36px}
+  .cta-sub{margin-top:22px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+
+  /* ---------- footer ---------- */
+  .footer-bar{
+    padding:26px 32px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+    border-top:1px solid var(--line);
+  }
+  .footer-bar .logo{display:inline-flex;align-items:center}
+  .footer-bar .logo img{height:20px;width:auto;display:block}
+  .footer-bar .tagline{font-size:12px;color:var(--faint);letter-spacing:.03em}
+
+  .reveal{opacity:0;transform:translateY(14px)}
+  .reveal.in{animation:fadeIn .6s ease forwards}
+  @keyframes fadeIn{to{opacity:1;transform:none}}
+
+  @media (max-width:900px){
+    .flow{grid-template-columns:repeat(2,1fr)}
+    .flow-step:not(:last-child)::after{display:none}
+  }
+  @media (max-width:820px){
+    .diag-grid,.proj-grid,.approach-grid,.deliv-grid,.gov-grid,.pay-grid{grid-template-columns:1fr}
+    .price-header{flex-direction:column;align-items:flex-start}
+    .approach-card.b{order:-1}
+  }
+  @media (max-width:600px){
+    .section,.hero,.cta-section{padding:56px 20px}
+    .nav{padding:16px 20px}
+    .flow{grid-template-columns:1fr}
+    .footer-bar{flex-direction:column;text-align:center}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none}
+    .reveal.in{animation:none}
+    .btn-gold{transition:none}
+  }
+</style>
+</head>
+<body>
+<div class="lp">
+
+  <nav class="nav">
+    <a class="logo" href="https://www.somosmira.com.br" target="_blank" rel="noopener" aria-label="Mira">
+      <img src="/mira-wordmark-light.png" alt="Mira" />
+    </a>
+    <a class="btn-ghost" href="https://www.somosmira.com.br" target="_blank" rel="noopener">Visitar o site ↗</a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Mira Brand Studio · Proposta de desenvolvimento & autonomia digital · Costão</div>
+      <h1>Do gargalo da TI<br><strong>à autonomia do marketing.</strong></h1>
+      <p class="lead">Dois sites para tirar do papel — <strong style="color:var(--text);font-weight:400">Eventos</strong> e <strong style="color:var(--text);font-weight:400">Costão Estaleirinho</strong> — e uma decisão maior por trás deles: como o marketing do Costão passa a lançar sites e landing pages no seu próprio ritmo, com segurança e o aval da TI.</p>
+      <div class="hero-actions">
+        <a class="btn-gold" href="#cta">Quero destravar o marketing</a>
+        <a class="btn-ghost" href="#abordagens">Ver os dois caminhos ↓</a>
+      </div>
+      <div class="hero-chips">
+        <span class="chip gold">Site de Eventos</span>
+        <span class="chip gold">Costão Estaleirinho</span>
+        <span class="chip teal">Duas abordagens · orçamentos separados</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" id="contexto">
+    <div class="section-head reveal">
+      <div class="eyebrow">01 · O contexto</div>
+      <h2>O que trava o marketing <strong>hoje</strong></h2>
+      <p class="lead">Existe uma oportunidade rara: nova gestão de TI, dois projetos parados esperando e a chance de descentralizar sem perder o controle.</p>
+    </div>
+    <div class="diag-grid reveal">
+      <div class="diag-cell now card">
+        <h4>Como funciona hoje</h4>
+        <ul>
+          <li>Cada página nova depende da fila da TI</li>
+          <li>Prazos longos travam campanhas e tráfego pago</li>
+          <li>Site de Eventos fora do ar — acesso perdido</li>
+          <li>Estaleirinho é quase uma LP, em outra plataforma</li>
+          <li>Landing pages de captura e conversão não saem no ritmo do time</li>
+        </ul>
+      </div>
+      <div class="diag-cell goal card">
+        <h4>O que queremos destravar</h4>
+        <ul>
+          <li>Autonomia para criar páginas, LPs e capturas</li>
+          <li>Velocidade para acompanhar as campanhas</li>
+          <li>Independência da fila — sem esperar o fluxo da TI</li>
+          <li>Padrão e segurança que a TI aprove e enxergue</li>
+          <li>Uma base que escala com a marca, não contra ela</li>
+        </ul>
+      </div>
+    </div>
+    <div class="diag-alert reveal">
+      <div class="group-title">O ponto de virada</div>
+      <p>A TI continua dona da segurança e da governança. O marketing ganha a velocidade. <span class="grad">Descentralizar sem abrir mão do controle.</span></p>
+    </div>
+  </section>
+
+  <section class="section" id="projetos">
+    <div class="section-head reveal">
+      <div class="eyebrow">02 · Os dois projetos</div>
+      <h2>Dois sites, <strong>um novo padrão</strong></h2>
+      <p class="lead">Cada projeto tem seu próprio escopo e seu próprio orçamento — dá para começar por um, pelo outro ou pelos dois.</p>
+    </div>
+    <div class="proj-grid reveal">
+      <div class="proj-card card">
+        <div class="kicker"><span class="dot"></span><span>Projeto 01 · do zero</span></div>
+        <h3>Site de Eventos</h3>
+        <div class="url">costao.com.br/eventos · ou domínio próprio</div>
+        <p>O site saiu do ar e o acesso foi perdido. Reconstruímos como um site de verdade — não uma página solta — pronto para apresentar os espaços e captar leads de eventos (casamentos, corporativo, MICE). A estrutura (dentro de costao.com.br ou domínio próprio) é decidida junto com o time.</p>
+        <div class="tags">
+          <span class="chip">Construção do zero</span>
+          <span class="chip">Captação de leads</span>
+        </div>
+      </div>
+      <div class="proj-card card">
+        <div class="kicker"><span class="dot"></span><span>Projeto 02 · redesenho</span></div>
+        <h3>Costão Estaleirinho</h3>
+        <div class="url">costaoestaleirinho.com.br</div>
+        <p>Hoje o site é mais parecido com uma landing page do que com um site, e roda em outra plataforma. Trazemos para a mesma infraestrutura da marca e transformamos num site completo, à altura do novo empreendimento — estrutura, conteúdo e presença digital redesenhados.</p>
+        <div class="tags">
+          <span class="chip">Redesenho completo</span>
+          <span class="chip">Migração de plataforma</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="abordagens">
+    <div class="section-head reveal">
+      <div class="eyebrow">03 · Dois caminhos</div>
+      <h2>Um resolve o pedido. <strong>O outro resolve o problema.</strong></h2>
+      <p class="lead">Há duas formas de entregar esses sites. A que recomendamos dá autonomia real ao marketing — e ainda sai mais em conta. A alternativa atende exatamente ao que foi pedido, dentro do CMS que a marca já usa.</p>
+    </div>
+    <div class="approach-grid reveal">
+
+      <div class="approach-card card b">
+        <div class="approach-badge">Recomendada</div>
+        <div class="a-label">Abordagem A</div>
+        <h3>Infraestrutura baseada em IA (Git + Claude Code)</h3>
+        <p class="desc">Um repositório por domínio e por subdomínio, um fluxo de publicação seguro e auditável, e o marketing criando sites e landing pages com Claude Code — no próprio ritmo. A TI define os limites uma vez; depois o time voa dentro deles.</p>
+        <ul>
+          <li><strong>Autonomia real:</strong> sites, LPs e páginas de captura/conversão sem fila</li>
+          <li>Cada publicação <strong>versionada, revisada e reversível</strong></li>
+          <li>Escala <strong>sem custo marginal de desenvolvimento</strong></li>
+          <li>Governança e segurança que a TI <strong>aprova e enxerga</strong></li>
+        </ul>
+        <div class="ceiling">Da ideia à página no ar sem depender de terceiros — menor investimento e cada peça nova custa tempo do marketing, não um novo orçamento de dev.</div>
+      </div>
+
+      <div class="approach-card card">
+        <div class="a-label">Abordagem B</div>
+        <h3>Dentro do CMS atual (Directus)</h3>
+        <p class="desc">Construímos os dois sites no mesmo Directus que a marca já usa e edita, com integração completa ao ecossistema atual. O marketing ganha autonomia de conteúdo dentro dos modelos que criamos — familiar, porém com mais desenvolvimento envolvido a cada nova página.</p>
+        <ul>
+          <li>Usa a infraestrutura que <strong>já existe</strong> na empresa</li>
+          <li>Curva de aprendizado curta — o time já conhece o CMS</li>
+          <li>Edição de conteúdo autônoma nas páginas publicadas</li>
+          <li>Integração completa com o ecossistema atual (Omnibees)</li>
+        </ul>
+        <div class="ceiling">Teto de autonomia: edição de <em>conteúdo</em>, não de <em>criação</em>. Uma landing page ou layout fora do padrão ainda passa pelo desenvolvimento — LP nova continua sendo um ticket.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="como-funciona">
+    <div class="section-head reveal">
+      <div class="eyebrow">04 · Como a Abordagem B funciona</div>
+      <h2>Velocidade do marketing, <strong>controle da TI</strong></h2>
+      <p class="lead">Nenhuma mudança vai direto para o ar. Todo caminho da ideia até a produção passa por um fluxo seguro — o mesmo que a engenharia séria usa no mundo todo.</p>
+    </div>
+
+    <div class="flow reveal">
+      <div class="flow-step">
+        <div class="n">1</div>
+        <h5>Marketing cria</h5>
+        <p>O time cria ou edita páginas com Claude Code, no repositório do domínio.</p>
+      </div>
+      <div class="flow-step">
+        <div class="n">2</div>
+        <h5>Branch + PR</h5>
+        <p>Cada mudança fica isolada num Pull Request — nada toca a produção ainda.</p>
+      </div>
+      <div class="flow-step">
+        <div class="n">3</div>
+        <h5>Preview automático</h5>
+        <p>Um link de pré-visualização é gerado a cada alteração, antes de publicar.</p>
+      </div>
+      <div class="flow-step ti">
+        <div class="n">4</div>
+        <h5>Revisão & aprovação</h5>
+        <p>A TI aprova pelo fluxo. Regras automáticas garantem o padrão.</p>
+      </div>
+      <div class="flow-step">
+        <div class="n">5</div>
+        <h5>Deploy</h5>
+        <p>Publicação automática após o aval. Histórico completo e rollback em 1 clique.</p>
+      </div>
+    </div>
+
+    <div class="gov-panel card reveal">
+      <div class="group-title">Por que a TI aprova</div>
+      <ul class="gov-grid">
+        <li><span><strong>Zero acesso direto à produção.</strong> Tudo passa pelo fluxo aprovado.</span></li>
+        <li><span><strong>Auditoria completa.</strong> Cada alteração tem autor, data e revisão no histórico.</span></li>
+        <li><span><strong>Checagens automáticas.</strong> A CI barra erros antes de qualquer publicação.</span></li>
+        <li><span><strong>Rollback instantâneo.</strong> Voltar para qualquer versão anterior em segundos.</span></li>
+        <li><span><strong>Isolamento por domínio.</strong> Um repositório por site — raio de impacto mínimo.</span></li>
+        <li><span><strong>Regras definidas com a TI.</strong> Limites e padrões acordados antes de começar.</span></li>
+      </ul>
+      <div class="repos">
+        <span class="repo"><span class="k">domínio</span>costao.com.br</span>
+        <span class="repo"><span class="k">subdomínio</span>eventos.costao.com.br</span>
+        <span class="repo"><span class="k">domínio</span>costaoestaleirinho.com.br</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="entregaveis">
+    <div class="section-head reveal">
+      <div class="eyebrow">05 · O que acompanha</div>
+      <h2>Presente em <strong>todo projeto</strong></h2>
+      <p class="lead">Independentemente do caminho escolhido, cada site entra no ar completo, rápido e pronto para performar.</p>
+    </div>
+    <div class="deliv-grid reveal">
+      <div class="deliv-card card">
+        <div class="deliv-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <h4>Design sob medida</h4>
+        <p>Layout autoral, fiel à marca do Costão e ao posicionamento de cada empreendimento.</p>
+      </div>
+      <div class="deliv-card card">
+        <div class="deliv-icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+        <h4>Responsivo & rápido</h4>
+        <p>Mobile-first, performático e com SEO técnico de base — pronto para buscar e converter.</p>
+      </div>
+      <div class="deliv-card card">
+        <div class="deliv-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg></div>
+        <h4>Integração ao ecossistema</h4>
+        <p>Conexão com o que já roda na marca — Omnibees e Directus onde fizer sentido.</p>
+      </div>
+      <div class="deliv-card card">
+        <div class="deliv-icon"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 4-5"/></svg></div>
+        <h4>Pronto para tráfego pago</h4>
+        <p>Páginas de captura e conversão desenhadas para receber as campanhas do time.</p>
+      </div>
+      <div class="deliv-card card">
+        <div class="deliv-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h4>Treinamento do time</h4>
+        <p>Capacitação do marketing para operar com autonomia — sem depender da fila.</p>
+      </div>
+      <div class="deliv-card card">
+        <div class="deliv-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <h4>Handoff & documentação</h4>
+        <p>Guia de operação e — na Abordagem A — a skill do Claude Code pronta para a marca.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="investimento">
+    <div class="section-head reveal">
+      <div class="eyebrow">06 · O investimento</div>
+      <h2>Dois caminhos, <strong>orçamentos separados</strong></h2>
+      <p class="lead">Cada site pode ser contratado de forma independente, dentro da abordagem escolhida.</p>
+    </div>
+
+    <div class="price-note reveal">Valores de referência para esta proposta — a serem confirmados conforme o escopo final de cada site. Não incluem custos de hospedagem, licenças ou domínios, contratados à parte.</div>
+
+    <div class="price-wrap b reveal">
+      <div class="price-header">
+        <div>
+          <h3>Abordagem A · Infra Git + Claude Code</h3>
+          <div class="sub">Autonomia total do marketing · segurança aprovada pela TI · menor investimento</div>
+        </div>
+        <div class="flag rec">Recomendada</div>
+      </div>
+      <div class="price-lines">
+        <div class="price-line pre">
+          <div class="pl-name">Fundação da infraestrutura <small>Setup único · pré-requisito · repos, fluxo de publicação, CI, guardrails com a TI e treinamento</small></div>
+          <div class="pl-val">R$ <strong>4.000</strong></div>
+        </div>
+        <div class="price-line">
+          <div class="pl-name">Site de Eventos <small>Construído sobre a infraestrutura</small></div>
+          <div class="pl-val">R$ <strong>14.000</strong></div>
+        </div>
+        <div class="price-line">
+          <div class="pl-name">Costão Estaleirinho <small>Redesenho completo sobre a infraestrutura</small></div>
+          <div class="pl-val">R$ <strong>14.000</strong></div>
+        </div>
+        <div class="price-line total">
+          <div class="pl-name">Pacote completo · infra + 2 sites</div>
+          <div class="pl-val">R$ <strong>32.000</strong></div>
+        </div>
+      </div>
+      <div class="price-footer">Entrega única (setup), sem mensalidade. Após a fundação, o marketing cria novas páginas e LPs sem novo custo de desenvolvimento.</div>
+    </div>
+
+    <div class="price-wrap reveal">
+      <div class="price-header">
+        <div>
+          <h3>Abordagem B · Dentro do CMS (Directus)</h3>
+          <div class="sub">Atende ao pedido · integração completa dentro do CMS atual da marca</div>
+        </div>
+        <div class="flag alt">Alternativa</div>
+      </div>
+      <div class="price-lines">
+        <div class="price-line">
+          <div class="pl-name">Site de Eventos <small>Construído do zero e integrado ao Directus</small></div>
+          <div class="pl-val">R$ <strong>24.000</strong></div>
+        </div>
+        <div class="price-line">
+          <div class="pl-name">Costão Estaleirinho <small>Redesenho, migração e integração ao Directus</small></div>
+          <div class="pl-val">R$ <strong>28.000</strong></div>
+        </div>
+        <div class="price-line total">
+          <div class="pl-name">Os dois sites · integrados ao Directus</div>
+          <div class="pl-val">R$ <strong>52.000</strong></div>
+        </div>
+      </div>
+      <div class="price-footer">Entrega única. Novas páginas ou layouts fora do padrão passam pelo desenvolvimento.</div>
+    </div>
+
+    <div class="price-wrap reveal" style="background:transparent;border-color:transparent">
+      <div class="pay-grid">
+        <div class="pay-option highlight">
+          <div class="tag">À vista · melhor opção</div>
+          <p>10% de desconto sobre o valor total.</p>
+        </div>
+        <div class="pay-option">
+          <div class="tag">Cartão de crédito</div>
+          <p>Parcelamento em até 12x sem juros.</p>
+        </div>
+        <div class="pay-option">
+          <div class="tag">Padrão</div>
+          <p>50% na entrada · 50% na entrega.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="roadmap">
+    <div class="section-head reveal">
+      <div class="eyebrow">07 · O caminho</div>
+      <h2>Do alinhamento <strong>ao go-live</strong></h2>
+      <p class="lead">Um roteiro claro, começando pela conversa com a TI — porque a governança vem antes da velocidade.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Alinhamento com a TI</h4><p>Definição das regras, acessos, ambientes e limites — a base que a TI aprova antes de qualquer código.</p><span class="step-tag">Semana 1</span></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Fundação</h4><p>Montagem da infraestrutura (Abordagem A) ou modelagem no Directus (Abordagem B).</p><span class="step-tag">Semana 1–3</span></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Estrutura & design</h4><p>Arquitetura de conteúdo e design dos dois sites, aprovados antes da construção.</p><span class="step-tag">Semana 2–5</span></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Construção</h4><p>Desenvolvimento do site de Eventos e do Costão Estaleirinho sobre a base definida.</p><span class="step-tag">Semana 4–8</span></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Treinamento & go-live</h4><p>Capacitação do marketing, publicação e transição para a operação autônoma.</p><span class="step-tag">Semana 8–9</span></div></div>
+    </div>
+  </section>
+
+  <section class="cta-section" id="cta">
+    <div class="inner">
+      <div class="eyebrow" style="text-align:center">Próximo passo</div>
+      <h2>Pronta para tirar o marketing <strong>da fila da TI?</strong></h2>
+      <p>Vamos alinhar o escopo final e definir por onde começar — um site, o outro ou os dois.</p>
+      <a class="btn-gold" href="https://wa.me/5548984291699?text=Oi%2C%20Mira!%20Quero%20falar%20sobre%20a%20proposta%20de%20desenvolvimento%20para%20o%20Cost%C3%A3o%20(Eventos%20e%20Estaleirinho).%20Quais%20os%20pr%C3%B3ximos%20passos%3F" target="_blank" rel="noopener">Falar com a Mira ↗</a>
+      <p class="cta-sub">somosmira.com.br · @somos.mira</p>
+    </div>
+  </section>
+
+  <div class="footer-bar">
+    <a class="logo" href="https://www.somosmira.com.br" target="_blank" rel="noopener" aria-label="Mira">
+      <img src="/mira-wordmark-light.png" alt="Mira" />
+    </a>
+    <div class="tagline">EST. 2020 · Nossa missão é mostrar o melhor da sua marca para o mundo.</div>
+  </div>
+
+</div>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
