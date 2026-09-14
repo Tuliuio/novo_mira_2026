@@ -256,7 +256,20 @@
   .pay-option .tag{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:8px}
   .pay-option p{font-size:13.5px;color:var(--muted);line-height:1.55}
 
-  /* ---------- 07 roadmap ---------- */
+  /* ---------- 03 branding (o diferencial) ---------- */
+  .tri-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:6px 0 24px}
+  .tri-card{padding:28px 26px}
+  .tri-card .tnum{font-size:30px;font-weight:300;line-height:1;color:var(--gold);margin-bottom:14px}
+  .tri-card h4{font-size:17px;font-weight:500;margin-bottom:9px;letter-spacing:-.01em}
+  .tri-card p{font-size:14px;color:var(--muted);line-height:1.7}
+  .tri-card .map{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);font-weight:500}
+  .flow.tri{grid-template-columns:repeat(3,1fr)}
+  .flow-step.brand{border-color:rgba(224,169,46,.35);background:linear-gradient(160deg,rgba(224,169,46,.09) 0%,rgba(5,5,5,0) 55%)}
+  .proof{margin-top:26px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .proof .lbl{font-size:12.5px;color:var(--faint);letter-spacing:.02em}
+  .proof .chip{border-color:rgba(224,169,46,.35);color:var(--gold-soft)}
+
+  /* ---------- roadmap ---------- */
   .steps{display:flex;flex-direction:column}
   .step{display:flex;align-items:flex-start;gap:22px;padding:22px 0;border-bottom:1px solid var(--line)}
   .step:last-child{border-bottom:none}
@@ -301,7 +314,7 @@
     .flow-step:not(:last-child)::after{display:none}
   }
   @media (max-width:820px){
-    .diag-grid,.proj-grid,.approach-grid,.deliv-grid,.gov-grid,.pay-grid{grid-template-columns:1fr}
+    .diag-grid,.proj-grid,.approach-grid,.deliv-grid,.gov-grid,.pay-grid,.tri-grid,.flow.tri{grid-template-columns:1fr}
     .price-header{flex-direction:column;align-items:flex-start}
     .approach-card.b{order:-1}
   }
@@ -330,17 +343,18 @@
 
   <header class="hero">
     <div class="hero-inner">
-      <div class="eyebrow">Mira Brand Studio · Proposta de desenvolvimento & autonomia digital · Costão</div>
-      <h1>Do gargalo da TI<br><strong>à autonomia do marketing.</strong></h1>
-      <p class="lead">Dois sites para tirar do papel — <strong style="color:var(--text);font-weight:400">Eventos</strong> e <strong style="color:var(--text);font-weight:400">Costão Estaleirinho</strong> — e uma decisão maior por trás deles: como o marketing do Costão passa a lançar sites e landing pages no seu próprio ritmo, com segurança e o aval da TI.</p>
+      <div class="eyebrow">Mira Brand Studio · Branding, desenvolvimento & autonomia digital · Costão</div>
+      <h1>Autonomia para o marketing.<br><strong>Consistência da marca.</strong></h1>
+      <p class="lead">Dois sites para tirar do papel — <strong style="color:var(--text);font-weight:400">Eventos</strong> e <strong style="color:var(--text);font-weight:400">Costão Estaleirinho</strong> — e uma virada maior por trás deles: dar ao marketing autonomia para criar no próprio ritmo, com a consistência que só uma marca bem construída garante. Por isso, tudo começa pelo branding.</p>
       <div class="hero-actions">
         <a class="btn-gold" href="#cta">Quero destravar o marketing</a>
-        <a class="btn-ghost" href="#abordagens">Ver os dois caminhos ↓</a>
+        <a class="btn-ghost" href="#diferencial">Por que começa pela marca ↓</a>
       </div>
       <div class="hero-chips">
+        <span class="chip gold">Fundação de marca</span>
         <span class="chip gold">Site de Eventos</span>
         <span class="chip gold">Costão Estaleirinho</span>
-        <span class="chip teal">Duas abordagens · orçamentos separados</span>
+        <span class="chip teal">Autonomia com IA</span>
       </div>
     </div>
   </header>
@@ -409,11 +423,74 @@
     </div>
   </section>
 
+  <section class="section" id="diferencial">
+    <div class="section-head reveal">
+      <div class="eyebrow">03 · O diferencial</div>
+      <h2>Antes de qualquer site, <strong>a marca.</strong></h2>
+      <p class="lead">Autonomia sem marca é um problema, não uma solução: a IA dá velocidade, mas sem uma base sólida ela só multiplica a inconsistência. O que faz o marketing criar rápido <em>e</em> no padrão é a marca sistematizada por trás. É aqui que a Mira faz a diferença.</p>
+    </div>
+
+    <div class="diag-alert reveal" style="text-align:left">
+      <div class="group-title">A base de tudo</div>
+      <p style="margin:0">Construímos a <strong>Fundação de Marca</strong> — um <strong>Brand System</strong>: design system (tokens, componentes e regras), diretrizes estratégicas e verbais, tudo organizado e vivo. É essa infraestrutura de branding que ensina a IA a criar com <span class="grad">consistência visual, estratégica e verbal</span> — em cada página, cada landing, cada campanha.</p>
+    </div>
+
+    <div class="tri-grid reveal">
+      <div class="tri-card card">
+        <div class="tnum">01</div>
+        <h4>Consistência estratégica</h4>
+        <p>Propósito, posicionamento e público ideal guiam cada decisão. A página certa, para a pessoa certa, com o argumento certo.</p>
+        <div class="map">Método Mira · Essência</div>
+      </div>
+      <div class="tri-card card">
+        <div class="tnum">02</div>
+        <h4>Consistência verbal</h4>
+        <p>Tom de voz, mensagens-chave e vocabulário da marca. Tudo o que a IA escreve soa como o Costão — não como um texto genérico.</p>
+        <div class="map">Método Mira · Narrativa</div>
+      </div>
+      <div class="tri-card card">
+        <div class="tnum">03</div>
+        <h4>Consistência visual</h4>
+        <p>Cores, tipografia, grid e componentes. Cada layout gerado respeita o sistema visual, sem retrabalho e sem fugir do padrão.</p>
+        <div class="map">Método Mira · Expressão</div>
+      </div>
+    </div>
+
+    <div class="section-head reveal" style="margin:52px 0 28px;max-width:640px">
+      <div class="group-title">Como a marca vira autonomia</div>
+      <h2 style="font-size:clamp(22px,2.8vw,32px)">Do Brand System <strong>à página no ar</strong></h2>
+    </div>
+    <div class="flow tri reveal">
+      <div class="flow-step brand">
+        <div class="n">◎</div>
+        <h5>Brand System</h5>
+        <p>A marca sistematizada — o design system e as diretrizes que definem o padrão.</p>
+      </div>
+      <div class="flow-step brand">
+        <div class="n">↳</div>
+        <h5>Skill da marca</h5>
+        <p>O Brand System vira uma skill que o marketing usa no Claude Code — a marca, legível para a IA.</p>
+      </div>
+      <div class="flow-step">
+        <div class="n">✦</div>
+        <h5>Criação no padrão</h5>
+        <p>Cada site e landing page nasce consistente — visual, estratégica e verbalmente.</p>
+      </div>
+    </div>
+
+    <div class="proof reveal">
+      <span class="lbl">Já fazemos isso hoje:</span>
+      <span class="chip">Brand System · Cruz de Malta</span>
+      <span class="chip">Brand System · Jujoo</span>
+      <span class="lbl">— marcas vivas onde o time acessa e cria no próprio design system.</span>
+    </div>
+  </section>
+
   <section class="section" id="abordagens">
     <div class="section-head reveal">
-      <div class="eyebrow">03 · Dois caminhos</div>
+      <div class="eyebrow">04 · Dois caminhos</div>
       <h2>Um resolve o pedido. <strong>O outro resolve o problema.</strong></h2>
-      <p class="lead">Há duas formas de entregar esses sites. A que recomendamos dá autonomia real ao marketing — e ainda sai mais em conta. A alternativa atende exatamente ao que foi pedido, dentro do CMS que a marca já usa.</p>
+      <p class="lead">Com a Fundação de Marca no lugar, há duas formas de construir esses sites. A que recomendamos transforma a marca num motor de criação com IA — e ainda sai mais em conta. A alternativa atende exatamente ao que foi pedido, dentro do CMS que a marca já usa.</p>
     </div>
     <div class="approach-grid reveal">
 
@@ -421,7 +498,7 @@
         <div class="approach-badge">Recomendada</div>
         <div class="a-label">Abordagem A</div>
         <h3>Infraestrutura baseada em IA (Git + Claude Code)</h3>
-        <p class="desc">Um repositório por domínio e por subdomínio, um fluxo de publicação seguro e auditável, e o marketing criando sites e landing pages com Claude Code — no próprio ritmo. A TI define os limites uma vez; depois o time voa dentro deles.</p>
+        <p class="desc">Sobre a Fundação de Marca, o marketing cria sites e landing pages com Claude Code — guiado pela skill da marca, cada página nasce no padrão. Um repositório por domínio e subdomínio, fluxo de publicação seguro e auditável, e o time no próprio ritmo.</p>
         <ul>
           <li><strong>Autonomia real:</strong> sites, LPs e páginas de captura/conversão sem fila</li>
           <li>Cada publicação <strong>versionada, revisada e reversível</strong></li>
@@ -434,7 +511,7 @@
       <div class="approach-card card">
         <div class="a-label">Abordagem B</div>
         <h3>Dentro do CMS atual (Directus)</h3>
-        <p class="desc">Construímos os dois sites no mesmo Directus que a marca já usa e edita, com integração completa ao ecossistema atual. O marketing ganha autonomia de conteúdo dentro dos modelos que criamos — familiar, porém com mais desenvolvimento envolvido a cada nova página.</p>
+        <p class="desc">Com a marca sistematizada, construímos os dois sites no mesmo Directus que a marca já usa e edita, com integração completa ao ecossistema atual. O marketing ganha autonomia de conteúdo dentro dos modelos que criamos — familiar, porém com mais desenvolvimento envolvido a cada nova página.</p>
         <ul>
           <li>Usa a infraestrutura que <strong>já existe</strong> na empresa</li>
           <li>Curva de aprendizado curta — o time já conhece o CMS</li>
@@ -449,7 +526,7 @@
 
   <section class="section" id="como-funciona">
     <div class="section-head reveal">
-      <div class="eyebrow">04 · Como a Abordagem B funciona</div>
+      <div class="eyebrow">05 · Como a Abordagem A funciona</div>
       <h2>Velocidade do marketing, <strong>controle da TI</strong></h2>
       <p class="lead">Nenhuma mudança vai direto para o ar. Todo caminho da ideia até a produção passa por um fluxo seguro — o mesmo que a engenharia séria usa no mundo todo.</p>
     </div>
@@ -458,7 +535,7 @@
       <div class="flow-step">
         <div class="n">1</div>
         <h5>Marketing cria</h5>
-        <p>O time cria ou edita páginas com Claude Code, no repositório do domínio.</p>
+        <p>O time cria ou edita páginas com Claude Code, guiado pela skill da marca — nascem no padrão.</p>
       </div>
       <div class="flow-step">
         <div class="n">2</div>
@@ -502,15 +579,15 @@
 
   <section class="section" id="entregaveis">
     <div class="section-head reveal">
-      <div class="eyebrow">05 · O que acompanha</div>
+      <div class="eyebrow">06 · O que acompanha</div>
       <h2>Presente em <strong>todo projeto</strong></h2>
-      <p class="lead">Independentemente do caminho escolhido, cada site entra no ar completo, rápido e pronto para performar.</p>
+      <p class="lead">Da fundação de marca aos sites no ar — completo, rápido e pronto para performar.</p>
     </div>
     <div class="deliv-grid reveal">
       <div class="deliv-card card">
-        <div class="deliv-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <h4>Design sob medida</h4>
-        <p>Layout autoral, fiel à marca do Costão e ao posicionamento de cada empreendimento.</p>
+        <div class="deliv-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.5" fill="currentColor" stroke="none"/></svg></div>
+        <h4>Brand System (marca viva)</h4>
+        <p>Design system — tokens, componentes e diretrizes estratégicas e verbais — que rege cada layout, fiel ao Costão.</p>
       </div>
       <div class="deliv-card card">
         <div class="deliv-icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
@@ -542,12 +619,29 @@
 
   <section class="section" id="investimento">
     <div class="section-head reveal">
-      <div class="eyebrow">06 · O investimento</div>
-      <h2>Dois caminhos, <strong>orçamentos separados</strong></h2>
-      <p class="lead">Cada site pode ser contratado de forma independente, dentro da abordagem escolhida.</p>
+      <div class="eyebrow">07 · O investimento</div>
+      <h2>Começa pela marca, <strong>orçamentos separados</strong></h2>
+      <p class="lead">A Fundação de Marca é o passo 1 e vale para os dois caminhos. Depois dela, cada site é contratado de forma independente, dentro da abordagem escolhida.</p>
     </div>
 
-    <div class="price-note reveal">Valores de referência para esta proposta — a serem confirmados conforme o escopo final de cada site. Não incluem custos de hospedagem, licenças ou domínios, contratados à parte.</div>
+    <div class="price-note reveal">Valores de referência para esta proposta — a serem confirmados conforme o escopo final. Não incluem custos de hospedagem, licenças ou domínios, contratados à parte.</div>
+
+    <div class="price-wrap b reveal">
+      <div class="price-header">
+        <div>
+          <h3>Passo 1 · Fundação de Marca (Brand System)</h3>
+          <div class="sub">Pré-requisito de todo o projeto — garante consistência visual, estratégica e verbal</div>
+        </div>
+        <div class="flag rec">O diferencial</div>
+      </div>
+      <div class="price-lines">
+        <div class="price-line total">
+          <div class="pl-name">Brand System <small>Design system + diretrizes estratégicas e verbais + skill da marca para IA</small></div>
+          <div class="pl-val">R$ <strong>18.000</strong></div>
+        </div>
+      </div>
+      <div class="price-footer">A base sobre a qual os dois sites — e todas as páginas futuras — são construídos com consistência. Vale para qualquer um dos caminhos abaixo.</div>
+    </div>
 
     <div class="price-wrap b reveal">
       <div class="price-header">
@@ -575,7 +669,7 @@
           <div class="pl-val">R$ <strong>32.000</strong></div>
         </div>
       </div>
-      <div class="price-footer">Entrega única (setup), sem mensalidade. Após a fundação, o marketing cria novas páginas e LPs sem novo custo de desenvolvimento.</div>
+      <div class="price-footer">Entrega única (setup), sem mensalidade. Após a fundação, o marketing cria novas páginas e LPs sem novo custo de desenvolvimento. <strong style="color:var(--gold-soft)">Com a Fundação de Marca, o pacote recomendado fica em R$ 50.000.</strong></div>
     </div>
 
     <div class="price-wrap reveal">
@@ -600,7 +694,7 @@
           <div class="pl-val">R$ <strong>52.000</strong></div>
         </div>
       </div>
-      <div class="price-footer">Entrega única. Novas páginas ou layouts fora do padrão passam pelo desenvolvimento.</div>
+      <div class="price-footer">Entrega única. Novas páginas ou layouts fora do padrão passam pelo desenvolvimento. <strong style="color:var(--gold-soft)">Com a Fundação de Marca, os dois sites integrados ficam em R$ 70.000.</strong></div>
     </div>
 
     <div class="price-wrap reveal" style="background:transparent;border-color:transparent">
@@ -623,16 +717,17 @@
 
   <section class="section" id="roadmap">
     <div class="section-head reveal">
-      <div class="eyebrow">07 · O caminho</div>
-      <h2>Do alinhamento <strong>ao go-live</strong></h2>
-      <p class="lead">Um roteiro claro, começando pela conversa com a TI — porque a governança vem antes da velocidade.</p>
+      <div class="eyebrow">08 · O caminho</div>
+      <h2>Da marca <strong>ao go-live</strong></h2>
+      <p class="lead">Um roteiro que começa pela marca — porque é ela que garante consistência — e passa pela TI antes de acelerar.</p>
     </div>
     <div class="steps reveal">
-      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Alinhamento com a TI</h4><p>Definição das regras, acessos, ambientes e limites — a base que a TI aprova antes de qualquer código.</p><span class="step-tag">Semana 1</span></div></div>
-      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Fundação</h4><p>Montagem da infraestrutura (Abordagem A) ou modelagem no Directus (Abordagem B).</p><span class="step-tag">Semana 1–3</span></div></div>
-      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Estrutura & design</h4><p>Arquitetura de conteúdo e design dos dois sites, aprovados antes da construção.</p><span class="step-tag">Semana 2–5</span></div></div>
-      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Construção</h4><p>Desenvolvimento do site de Eventos e do Costão Estaleirinho sobre a base definida.</p><span class="step-tag">Semana 4–8</span></div></div>
-      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Treinamento & go-live</h4><p>Capacitação do marketing, publicação e transição para a operação autônoma.</p><span class="step-tag">Semana 8–9</span></div></div>
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h4>Fundação de Marca</h4><p>Construção do Brand System — design system, diretrizes estratégicas e verbais e a skill da marca. A base de consistência de todo o resto.</p><span class="step-tag">Semana 1–3</span></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h4>Alinhamento com a TI</h4><p>Definição das regras, acessos, ambientes e limites — a base que a TI aprova antes de qualquer código.</p><span class="step-tag">Semana 2</span></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h4>Fundação técnica</h4><p>Montagem da infraestrutura (Abordagem A) ou modelagem no Directus (Abordagem B).</p><span class="step-tag">Semana 3–5</span></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h4>Estrutura & design</h4><p>Arquitetura de conteúdo e design dos dois sites, sobre o Brand System, aprovados antes da construção.</p><span class="step-tag">Semana 4–7</span></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><h4>Construção</h4><p>Desenvolvimento do site de Eventos e do Costão Estaleirinho sobre a base definida.</p><span class="step-tag">Semana 6–10</span></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-content"><h4>Treinamento & go-live</h4><p>Capacitação do marketing, publicação e transição para a operação autônoma.</p><span class="step-tag">Semana 10–11</span></div></div>
     </div>
   </section>
 
