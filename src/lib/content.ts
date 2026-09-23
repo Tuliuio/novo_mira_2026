@@ -755,6 +755,67 @@ export const CRUZ_DE_MALTA: ClientBrand = {
       { src: "/clients/cruz-de-malta/fotografia/delivery.jpg", label: "Delivery", group: "Direção fotográfica" },
       { src: "/clients/cruz-de-malta/fotografia/cacilda.jpg", label: "A cozinha da Cilda", group: "Direção fotográfica" },
     ],
+    narratives: [
+      {
+        slug: "cruz-de-malta",
+        kicker: "Narrativa de Marca · StoryBrand · Público principal",
+        title: "Cruz de Malta",
+        subtitle: "Herói: o cliente fiel, movido por memória e tradição. Voz da marca: acolhedora e orgulhosa, sem pretensão.",
+        sections: [
+          {
+            heading: "01 · O herói",
+            paragraphs: [
+              "Quem é: o público central do Cruz de Malta é maduro, 60+ na maioria — mas o costume atravessa gerações, trazido pela família de quem valoriza memória e pertencimento. É quem chega por indicação, por memória ou por reputação, e boa parte já entra sabendo o que vai pedir.",
+              "O que ele quer: sentar-se à mesa da comida de verdade que já conhece, cercado por quem ama, com a certeza de que vai ser exatamente como sempre foi.",
+            ],
+          },
+          {
+            heading: "02 · O problema",
+            paragraphs: [
+              "Vilão: um mercado de opções passageiras, onde tudo muda o tempo todo e nada dura.",
+              "Externo: encontrar, entre tantos restaurantes novos e modismos de ocasião, um lugar que sirva a mesma comida de verdade de sempre — sem depender da sorte.",
+              "Interno: o receio de que a próxima novidade decepcione, ou pior, de que o lugar de sempre tenha mudado sem avisar.",
+              "Filosófico: quem já tem 60 anos de história não devia precisar provar nada a cada visita — a confiança devia vir de graça, construída ao longo do tempo.",
+            ],
+          },
+          {
+            heading: "03 · O guia",
+            paragraphs: [
+              "Empatia: “sabemos que, quando bate a vontade de uma comida de verdade, você não quer surpresa — quer a certeza de encontrar exatamente o que já ama”.",
+              "Autoridade: 60 anos ininterruptos no mesmo endereço, a Avenida Bento Gonçalves, 143 — o restaurante mais antigo em funcionamento de Pelotas. Cardápio genuinamente multiétnico, do churrasco gaúcho ao bacalhau português, do galeto ao camarão, com tempero da casa, feito na hora, sem atalho. Conduzido por Adriano e Cacilda desde 2000, com raízes de família que vêm do campo.",
+            ],
+          },
+          {
+            heading: "04 · O plano",
+            paragraphs: [
+              "Processo: venha como sempre veio, sem reserva, sem cerimônia. Peça o que já ama, ou deixe a casa apresentar o cardápio inteiro, do galeto ao camarão. Saia como sempre saiu: satisfeito, e já pensando na próxima vez.",
+              "Acordo (promessas): a mesma receita de sempre. Tempero da casa, feito na hora. Atendimento sem pressa, olho no olho.",
+            ],
+          },
+          {
+            heading: "05 · A ação",
+            paragraphs: [
+              "Direta: venha para o Cruz da Bento.",
+              "Transicional: siga o Instagram, veja o cardápio, peça pelo WhatsApp (delivery próprio, sem plataforma).",
+            ],
+          },
+          {
+            heading: "06 · O que se evita",
+            paragraphs: [
+              "A decepção de um lugar que prometia tradição e entregou modismo. A comida que muda de sabor a cada visita. A sensação de ter arriscado um jantar em vez de ter certeza dele.",
+            ],
+          },
+          {
+            heading: "07 · O sucesso",
+            paragraphs: [
+              "Ele sai como entrou: em casa. A mesma comida de sempre, a família reunida à mesa, e mais uma visita que confirma por que sempre volta.",
+              "Transformação de identidade: de quem procura, ansioso, um lugar em que confiar, para quem já sabe — é no Cruz da Bento.",
+            ],
+          },
+        ],
+        closing: "Há 60 anos, a mesma comida de verdade. É só chegar — a família reunida, o tempero de sempre e a certeza de que nada mudou.",
+      },
+    ],
   },
   pages: {
     /* ---------------------------------------------------- 01 Essência */
