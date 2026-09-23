@@ -162,6 +162,38 @@
 .bh .sn.nao h4 { background: color-mix(in srgb, #e7462e 16%, transparent); color: #ff8a8a; }
 .bh .sn ul { margin: 0; padding: 14px 18px 18px 34px; }
 .bh .sn li { margin: 6px 0; }
+.bh .read-more { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Narrativa — cards de roteiro (StoryBrand), cada um abre no leitor de texto corrido */
+.bh .narr-grid { display: grid; gap: 16px; }
+.bh .narr-card { padding: 28px 30px; border-radius: var(--radius-card); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 16px; }
+.bh .narr-kicker { font-size: 11.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+.bh .narr-title { margin: 6px 0 0; font-size: clamp(21px, 2.8vw, 27px); font-weight: 800; letter-spacing: -.01em; }
+.bh .narr-sub { margin: 8px 0 0; color: var(--muted); font-size: 14.5px; max-width: 62ch; }
+.bh .narr-closing { margin: 0; font-size: 15.5px; font-style: italic; color: var(--text); border-left: 2px solid var(--gold); padding-left: 14px; max-width: 62ch; }
+.bh .narr-actions { margin-top: 2px; }
+
+/* Leitor — Essência / Narrativa em texto corrido, confortável como um blog post */
+.bh .reader-overlay { position: fixed; inset: 0; z-index: 88; background: color-mix(in srgb, var(--hub-bg) 80%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; visibility: hidden; transition: opacity .28s ease; }
+.bh .reader-overlay.open { opacity: 1; visibility: visible; }
+.bh .reader { position: fixed; inset: 0; z-index: 89; overflow-y: auto; opacity: 0; visibility: hidden; transform: translateY(18px); transition: opacity .3s ease, transform .3s ease, visibility .3s; background: var(--hub-bg); }
+.bh .reader.open { opacity: 1; visibility: visible; transform: none; }
+.bh .reader-bar { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 22px; background: linear-gradient(to bottom, var(--hub-bg) 55%, transparent); }
+.bh .reader-nav { display: flex; gap: 8px; }
+.bh .reader-inner { max-width: 680px; margin: 0 auto; padding: 12px 24px 130px; }
+.bh .reader-kicker { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.bh .reader h1 { margin: 12px 0 0; font-size: clamp(30px, 5vw, 48px); font-weight: 800; letter-spacing: -.02em; line-height: 1.06; text-wrap: balance; }
+.bh .reader .reader-sub { margin: 18px 0 0; color: var(--muted); font-size: 17px; line-height: 1.6; max-width: 58ch; }
+.bh .reader article { margin-top: 50px; }
+.bh .reader article h2 { font-size: 12.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin: 46px 0 16px; }
+.bh .reader article h2:first-child { margin-top: 0; }
+.bh .reader article p { font-size: 18px; line-height: 1.85; color: var(--text); margin: 0 0 20px; max-width: 100%; }
+.bh .reader .reader-closing { margin-top: 52px; padding: 22px 26px; border-left: 3px solid var(--gold); background: var(--surface); border-radius: 0 16px 16px 0; font-size: clamp(19px, 2.4vw, 23px); font-weight: 500; line-height: 1.5; letter-spacing: -.01em; }
+@media (max-width: 560px) {
+  .bh .reader-bar { padding: 14px 16px; }
+  .bh .reader-inner { padding: 6px 18px 100px; }
+  .bh .reader article p { font-size: 16.5px; line-height: 1.8; }
+}
 
 /* AI */
 .bh .ai-card { padding: 28px; border-radius: var(--radius-card); border: 1px solid var(--border); background: linear-gradient(160deg, var(--surface), var(--surface-2)); }

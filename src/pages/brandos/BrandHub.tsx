@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
-import { DEMO_CLIENT, getClient, type ClientBrand, type HubBrand } from "@/lib/content";
+import { DEMO_CLIENT, getClient, type ClientBrand, type HubBrand, type HubArticle } from "@/lib/content";
 import { hexToRgb, rgbToCmyk, contrastRatio, contrastBadge, copyText } from "@/lib/color";
 import { Logo } from "@/components/Logo";
 import "./brand-hub.css";
@@ -126,6 +126,12 @@ export function BrandHub() {
     try { return (localStorage.getItem("bh-theme") as "dark" | "light") || "dark"; } catch { return "dark"; }
   });
   const [toast, setToast] = useState<{ msg: string; color: string } | null>(null);
+  const [reader, setReader] = useState<{ items: HubArticle[]; index: number } | null>(null);
+  function openReader(items: HubArticle[], index = 0) { setReader({ items, index }); }
+  function closeReader() { setReader(null); }
+  function readerStep(delta: number) {
+    setReader((r) => (r ? { items: r.items, index: Math.min(Math.max(r.index + delta, 0), r.items.length - 1) } : r));
+  }
   function toggleTheme() {
     setTheme((t) => {
       const next = t === "dark" ? "light" : "dark";
@@ -144,6 +150,7 @@ export function BrandHub() {
     if (hub.colors.length) s.push({ id: "cores", label: "Cores" });
     if ((hub.type && hub.type.length) || hub.typeNote) s.push({ id: "tipografia", label: "Tipografia" });
     if (hub.essence) s.push({ id: "essencia", label: "Essência" });
+    if (hub.narratives && hub.narratives.length) s.push({ id: "narrativa", label: "Narrativa" });
     if (hub.verbal) s.push({ id: "verbal", label: "Verbal" });
     if ((hub.photos && hub.photos.length) || (hub.applications && hub.applications.length) || hub.drive?.expressao) s.push({ id: "em-uso", label: "Em uso" });
     s.push({ id: "ia", label: "IA" });
@@ -200,10 +207,19 @@ export function BrandHub() {
   }, [sections]);
 
   useEffect(() => {
-    function onKey(e: KeyboardEvent) { if (e.key === "Escape") setDrawer(false); }
+    function onKey(e: KeyboardEvent) {
+      if (e.key !== "Escape") return;
+      if (reader) closeReader(); else setDrawer(false);
+    }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [reader]);
+
+  /* Trava o scroll do fundo enquanto o leitor (Essência/Narrativa) está aberto */
+  useEffect(() => {
+    document.body.style.overflow = reader ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [reader]);
 
   if (!hub) {
     return (
@@ -251,9 +267,14 @@ export function BrandHub() {
         {sections.some((s) => s.id === "logos") && <Logos hub={hub} onDownload={downloadLogo} />}
         {sections.some((s) => s.id === "cores") && <Colors hub={hub} onCopy={copyHex} />}
         {sections.some((s) => s.id === "tipografia") && <Typography hub={hub} />}
-        {sections.some((s) => s.id === "essencia") && <Essence hub={hub} />}
+        {sections.some((s) => s.id === "essencia") && (
+          <Essence hub={hub} onRead={() => hub.essenceArticle && openReader([hub.essenceArticle])} />
+        )}
+        {sections.some((s) => s.id === "narrativa") && (
+          <Narrative hub={hub} onRead={(i) => hub.narratives && openReader(hub.narratives, i)} />
+        )}
         {sections.some((s) => s.id === "verbal") && <Verbal hub={hub} />}
-        {sections.some((s) => s.id === "em-uso") && <InUse hub={hub} />}
+        {sections.some((s) => s.id === "em-uso") && <InUse hub={hub} clientName={client.name} />}
         <AIGuide md={md} onCopy={copyGuide} onDownload={downloadGuide} onDownloadSkill={downloadSkill} />
       </main>
 
@@ -287,6 +308,9 @@ export function BrandHub() {
         <span className="tdot" style={{ background: toast?.color }} />
         <span>{toast?.msg}</span>
       </div>
+
+      {/* Leitor — Essência / Narrativa em texto corrido */}
+      <ArticleReader items={reader?.items ?? null} index={reader?.index ?? 0} onClose={closeReader} onStep={readerStep} />
     </div>
   );
 }
@@ -421,7 +445,7 @@ function Typography({ hub }: { hub: HubBrand }) {
   );
 }
 
-function Essence({ hub }: { hub: HubBrand }) {
+function Essence({ hub, onRead }: { hub: HubBrand; onRead: () => void }) {
   const e = hub.essence!;
   return (
     <section id="essencia">
@@ -432,13 +456,81 @@ function Essence({ hub }: { hub: HubBrand }) {
         {e.posicionamento && <><div className="grp-label">Posicionamento</div><p>{e.posicionamento}</p></>}
         {e.quote && <div className="quote"><p>“{e.quote}”</p></div>}
         {e.atributos && e.atributos.length > 0 && <><div className="grp-label">Atributos</div><div className="attrs">{e.atributos.map((a) => <span className="tag2" key={a}>{a}</span>)}</div></>}
-        {hub.brandbook && (
-          <div style={{ marginTop: 26 }}>
-            <a className="btn btn-gold" href={hub.brandbook} target="_blank" rel="noopener noreferrer">↓ Baixar o brandbook completo (PDF)</a>
-          </div>
-        )}
+        <div className="read-more">
+          {hub.essenceArticle && (
+            <button className="btn btn-gold" onClick={onRead}>Ler a essência completa ↗</button>
+          )}
+          {hub.brandbook && (
+            <a className="btn" href={hub.brandbook} target="_blank" rel="noopener noreferrer">↓ Baixar o brandbook completo (PDF)</a>
+          )}
+        </div>
       </div>
     </section>
+  );
+}
+
+function Narrative({ hub, onRead }: { hub: HubBrand; onRead: (index: number) => void }) {
+  const items = hub.narratives ?? [];
+  return (
+    <section id="narrativa">
+      <SecHead eyebrow="Narrativa" title="O roteiro da marca" desc="Como a marca-mãe e cada frente falam com seu público — metodologia StoryBrand, em texto corrido." />
+      <div className="narr-grid">
+        {items.map((n, i) => (
+          <div className="narr-card reveal" key={n.slug}>
+            <div>
+              {n.kicker && <div className="narr-kicker">{n.kicker}</div>}
+              <h3 className="narr-title">{n.title}</h3>
+              {n.subtitle && <p className="narr-sub">{n.subtitle}</p>}
+            </div>
+            {n.closing && <p className="narr-closing">“{n.closing}”</p>}
+            <div className="narr-actions">
+              <button className="btn btn-gold" onClick={() => onRead(i)}>Ler roteiro completo ↗</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ArticleReader({
+  items, index, onClose, onStep,
+}: { items: HubArticle[] | null; index: number; onClose: () => void; onStep: (delta: number) => void }) {
+  const open = !!items;
+  const a = items ? items[index] : null;
+  return (
+    <>
+      <div className={"reader-overlay" + (open ? " open" : "")} onClick={onClose} aria-hidden={!open} />
+      <div className={"reader" + (open ? " open" : "")} role="dialog" aria-modal="true" aria-hidden={!open}>
+        {a && (
+          <>
+            <div className="reader-bar">
+              <button className="btn" onClick={onClose}>✕ Fechar</button>
+              {items && items.length > 1 && (
+                <div className="reader-nav">
+                  <button className="btn" onClick={() => onStep(-1)} disabled={index === 0}>← Anterior</button>
+                  <button className="btn" onClick={() => onStep(1)} disabled={index === items.length - 1}>Próximo →</button>
+                </div>
+              )}
+            </div>
+            <div className="reader-inner">
+              {a.kicker && <div className="reader-kicker">{a.kicker}</div>}
+              <h1>{a.title}</h1>
+              {a.subtitle && <p className="reader-sub">{a.subtitle}</p>}
+              <article>
+                {a.sections.map((s) => (
+                  <div key={s.heading}>
+                    <h2>{s.heading}</h2>
+                    {s.paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+                  </div>
+                ))}
+              </article>
+              {a.closing && <div className="reader-closing">“{a.closing}”</div>}
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 }
 
@@ -467,7 +559,7 @@ function Verbal({ hub }: { hub: HubBrand }) {
   );
 }
 
-function InUse({ hub }: { hub: HubBrand }) {
+function InUse({ hub, clientName }: { hub: HubBrand; clientName: string }) {
   // Agrupa as fotos preservando a ordem dos grupos
   const photos = hub.photos ?? [];
   const groups: { name: string; items: typeof photos }[] = [];
@@ -480,7 +572,7 @@ function InUse({ hub }: { hub: HubBrand }) {
 
   return (
     <section id="em-uso">
-      <SecHead eyebrow="Em uso" title="A marca no mundo real" desc="A marca ao vivo — aplicações e direção fotográfica que guiam como o Cruz de Malta aparece em cada ponto de contato." />
+      <SecHead eyebrow="Em uso" title="A marca no mundo real" desc={`A marca ao vivo — aplicações e direção fotográfica que guiam como ${clientName} aparece em cada ponto de contato.`} />
       {groups.length > 0 ? (
         groups.map((g) => (
           <div key={g.name}>
