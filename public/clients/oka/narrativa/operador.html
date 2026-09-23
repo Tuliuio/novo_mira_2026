@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OKA · Narrativa de Marca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1a1a1a;
+    --ink:#ffffff;
+    --body:#cfcfcf;
+    --dim:#8a8a8a;
+    --faint:#5a5a5a;
+    --line:rgba(255,255,255,.11);
+    --accent:#d2a24c;
+    --accent-dim:#9c7a3e;
+    --stageW:1280px;
+    --stageH:720px;
+    --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    --disp:'Oswald',var(--sans);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#000;overflow:hidden;font-family:var(--sans)}
+  #fit{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
+  #stage{
+    width:var(--stageW);height:var(--stageH);position:relative;
+    background:var(--bg);overflow:hidden;transform-origin:center center;
+    box-shadow:0 40px 120px rgba(0,0,0,.6);
+  }
+  .slide{position:absolute;inset:0;padding:58px 70px 54px;opacity:0;visibility:hidden;
+    transition:opacity .5s ease;background:var(--bg)}
+  .slide.active{opacity:1;visibility:visible}
+
+  .rhead{position:absolute;top:44px;left:70px;font-size:11px;letter-spacing:.22em;
+    color:var(--dim);text-transform:uppercase;font-weight:500;font-family:var(--sans)}
+  .rhead-mark{position:absolute;top:44px;right:70px;font-size:12px;letter-spacing:.28em;
+    color:var(--accent);text-transform:uppercase;font-weight:700;font-family:var(--disp)}
+  .rfoot{position:absolute;bottom:34px;left:70px;right:70px;display:flex;justify-content:space-between;
+    font-size:10.5px;letter-spacing:.22em;color:var(--faint);text-transform:uppercase;font-weight:500}
+
+  .kicker{font-size:13px;letter-spacing:.30em;text-transform:uppercase;color:var(--accent);font-weight:600;font-family:var(--sans)}
+  .rule{height:1px;background:var(--line);width:100%}
+
+  /* ---------- COVER ---------- */
+  .cover{display:flex;flex-direction:column;justify-content:center}
+  .cover .kicker{margin-bottom:26px;color:var(--dim)}
+  .cover h1{font-family:var(--disp);font-size:98px;font-weight:700;color:var(--ink);
+    letter-spacing:-.01em;line-height:.96;text-transform:uppercase}
+  .cover .sub{margin-top:22px;font-size:17px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  .cover .meta{position:absolute;left:70px;bottom:110px;color:var(--dim);font-size:13px;line-height:1.8;font-weight:400;letter-spacing:.02em}
+
+  /* ---------- INDEX ---------- */
+  .idx .head{margin-bottom:30px}
+  .idx .kicker{margin-bottom:12px}
+  .idx h2{font-family:var(--disp);font-size:54px;font-weight:700;color:var(--ink);letter-spacing:-.005em;text-transform:uppercase}
+  .cols{display:grid;grid-template-columns:1fr 1fr;column-gap:70px;margin-top:26px}
+  .irow{display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:baseline;
+    padding:15px 0;border-bottom:1px solid var(--line)}
+  .irow .n{color:var(--accent-dim);font-size:14px;font-weight:700;font-family:var(--disp)}
+  .irow .t{color:var(--body);font-size:16.5px;font-weight:400}
+  .irow.plus .n{color:var(--accent)}
+  .irow.plus .t{color:var(--ink)}
+
+  /* ---------- SB7 hybrid ---------- */
+  .sb{display:grid;grid-template-columns:35% 1fr;gap:56px;height:100%;align-content:center;
+    padding-top:20px}
+  .sb-left{display:flex;flex-direction:column;justify-content:center}
+  .sb-num{font-family:var(--disp);font-size:150px;font-weight:700;color:var(--accent);line-height:.85;letter-spacing:-.02em}
+  .sb-label{margin-top:10px;font-size:19px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);font-weight:600}
+  .sb-ess{margin-top:26px;font-size:21px;font-weight:400;color:var(--body);line-height:1.4;max-width:330px}
+  .sb-body{align-self:center;max-width:620px}
+  .field{margin-bottom:24px}
+  .field:last-child{margin-bottom:0}
+  .field-l{font-size:11.5px;letter-spacing:.20em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:9px}
+  .field-t{font-size:16.5px;line-height:1.6;color:var(--body);font-weight:400}
+  .field-t b{color:var(--ink);font-weight:600}
+  .want{border-left:2px solid var(--accent);padding:4px 0 4px 20px}
+  .want .field-t{font-size:20px;line-height:1.45;color:var(--ink);font-weight:400}
+
+  .steps{display:flex;flex-direction:column;gap:14px}
+  .step{display:grid;grid-template-columns:30px 1fr;gap:14px;align-items:baseline}
+  .step .sn{color:var(--accent);font-size:15px;font-weight:700;font-family:var(--disp)}
+  .step .st{font-size:16.5px;line-height:1.5;color:var(--body)}
+  .step .st b{color:var(--ink);font-weight:600}
+
+  .fromto{display:grid;grid-template-columns:1fr 34px 1fr;gap:18px;align-items:center;margin-top:4px}
+  .ft-box .lab{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;font-weight:600}
+  .ft-box .txt{font-size:15.5px;line-height:1.5;color:var(--body)}
+  .ft-box.to .txt{color:var(--ink)}
+  .ft-arrow{color:var(--accent);font-size:26px;text-align:center;font-weight:400}
+
+  /* ---------- STATEMENT (one-liner) ---------- */
+  .stmt{display:flex;flex-direction:column;justify-content:center}
+  .stmt .kicker{margin-bottom:34px}
+  .stmt p{font-size:36px;font-weight:400;color:var(--ink);line-height:1.3;letter-spacing:-.005em;max-width:1050px;font-family:var(--disp);text-transform:uppercase}
+
+  /* ---------- generic lead + trio ---------- */
+  .lead{display:flex;flex-direction:column;justify-content:center;height:100%;padding-top:10px}
+  .lead .kicker{margin-bottom:20px}
+  .lead h2{font-family:var(--disp);font-size:44px;font-weight:600;color:var(--ink);letter-spacing:-.005em;line-height:1.12;max-width:920px;text-transform:none}
+  .lead h2 em{font-style:normal;color:var(--accent)}
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:52px}
+  .trio .tl{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
+  .trio .tt{font-size:16px;line-height:1.55;color:var(--body)}
+  .note{margin-top:44px;font-size:15px;line-height:1.6;color:var(--dim);max-width:960px;
+    border-top:1px solid var(--line);padding-top:22px}
+  .note b{color:var(--body);font-weight:600}
+
+  #bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);width:0;z-index:10;transition:width .4s ease}
+  #count{position:fixed;bottom:16px;right:20px;color:#5a5a54;font-size:12px;letter-spacing:.15em;z-index:10;font-weight:500}
+  #hint{position:fixed;bottom:16px;left:20px;color:#4a4a44;font-size:11px;letter-spacing:.08em;z-index:10;
+    transition:opacity 1s ease;font-weight:400}
+
+  html,body,#fit,#stage,.slide{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  @page{size:1280px 720px;margin:0}
+  body.printing{overflow:visible;background:var(--bg)}
+  body.printing #fit{position:static;display:block;height:auto;background:var(--bg)}
+  body.printing #stage{transform:none!important;width:1280px;height:auto;box-shadow:none}
+  body.printing .slide{position:relative;inset:auto;opacity:1!important;visibility:visible!important;
+    width:1280px;height:720px;page-break-after:always;break-after:page}
+  body.printing .slide:last-child{page-break-after:auto;break-after:auto}
+  body.printing #bar,body.printing #count,body.printing #hint{display:none!important}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="fit"><div id="stage"></div></div>
+<div id="count"></div>
+<div id="hint">← → para navegar &nbsp;·&nbsp; F para tela cheia</div>
+
+<script>
+const HEAD = 'OKA · Narrativa de Marca';
+const FOOTL = 'OKA · Narrativa de Marca';
+const FOOTR = 'Mira Brand Studio';
+
+const slides = [];
+
+slides.push(`
+<div class="slide cover" data-nofoot>
+  <div class="kicker">Cliente · OKA Floripa</div>
+  <h1>Narrativa<br>de Marca</h1>
+  <div class="sub">Operador · Marca-mãe · Público principal</div>
+  <div class="meta">
+    Desenvolvido por MIRA BRAND STUDIO<br>
+    Etapa 2 · Narrativa de Marca · setembro de 2026
+  </div>
+</div>`);
+
+slides.push(`
+<div class="slide idx">
+  <div class="head">
+    <div class="kicker">Narrativa · StoryBrand</div>
+    <h2>O roteiro da marca</h2>
+  </div>
+  <div class="rule"></div>
+  <div class="cols">
+    <div>
+      <div class="irow"><span class="n">01</span><span class="t">O herói</span></div>
+      <div class="irow"><span class="n">02</span><span class="t">O problema</span></div>
+      <div class="irow"><span class="n">03</span><span class="t">O guia</span></div>
+      <div class="irow"><span class="n">04</span><span class="t">O plano</span></div>
+    </div>
+    <div>
+      <div class="irow"><span class="n">05</span><span class="t">A ação</span></div>
+      <div class="irow"><span class="n">06</span><span class="t">O que se evita</span></div>
+      <div class="irow"><span class="n">07</span><span class="t">O sucesso</span></div>
+      <div class="irow plus"><span class="n">+</span><span class="t">One-liner da marca</span></div>
+    </div>
+  </div>
+</div>`);
+
+slides.push(`
+<div class="slide">
+  <div class="lead">
+    <div class="kicker">00 · Ponto de partida</div>
+    <h2>Começamos pelo público que <em>move os outros dois</em>.</h2>
+    <div class="trio">
+      <div><div class="tl">Motor</div><div class="tt">É o operador que gera a receita que sustenta o investidor.</div></div>
+      <div><div class="tl">Experiência</div><div class="tt">É ele que determina a experiência que o consumidor encontra.</div></div>
+      <div><div class="tl">Cadeia</div><div class="tt">Operador, investidor e consumidor são uma cadeia única, não públicos separados.</div></div>
+    </div>
+    <div class="note">Por isso este é o roteiro da <b>marca-mãe</b>. Investidor e consumidor entram como sub-roteiros aninhados, com o mesmo tom, o mesmo guia e a mesma promessa. Anti-persona e equipe interna são documentos complementares, fora dessa cadeia.</div>
+  </div>
+</div>`);
+
+function sb(num,label,ess,body){
+  return `
+<div class="slide">
+  <div class="sb">
+    <div class="sb-left">
+      <div class="sb-num">${num}</div>
+      <div class="sb-label">${label}</div>
+      <div class="sb-ess">${ess}</div>
+    </div>
+    <div class="sb-body">${body}</div>
+  </div>
+</div>`;
+}
+
+slides.push(sb('01','O herói','Um operador que já resolve sozinho, e agora quer que a vizinhança também jogue a seu favor.',`
+  <div class="field">
+    <div class="field-l">Quem é</div>
+    <div class="field-t">Operador maduro, capitalizado, com plano e público próprio — uma <b>operação de destino</b>, muitas vezes já testada em outra praça.</div>
+  </div>
+  <div class="field want">
+    <div class="field-l">O que ele quer</div>
+    <div class="field-t">Não busca quem resolva seu fluxo nem sua conta; isso ele já sabe fazer. Quer fazer parte do <b>ecossistema certo</b> — um endereço onde o público, os negócios e o momento do lugar realmente conversam com o que ele construiu.</div>
+  </div>`));
+
+slides.push(sb('02','O problema','A vizinhança genérica: um endereço que não multiplica o que ele já construiu sozinho.',`
+  <div class="field">
+    <div class="field-l">Vilão</div>
+    <div class="field-t"><b>A vizinhança genérica.</b> Um endereço que não multiplica o que ele já construiu sozinho.</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Externo</div>
+    <div class="field-t">Os endereços disponíveis pra esse perfil (sala comercial isolada, loja de rua, shopping tradicional) colocam ele ao lado de qualquer um, sem nenhuma conexão real com o público ou os negócios que fazem sentido pra sua operação.</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Interno</div>
+    <div class="field-t">Mesmo autossuficiente, ele sente que opera fora de um ecossistema que reflita o que construiu, sem o encontro com quem também pensa à frente.</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Filosófico</div>
+    <div class="field-t">Quem já enxerga pra onde as coisas estão indo devia estar cercado de quem também enxerga, não competindo por atenção qualquer num endereço qualquer.</div>
+  </div>`));
+
+slides.push(sb('03','O guia','Um empreendimento que apostou cedo, e seleciona quem entra com o mesmo critério.',`
+  <div class="field">
+    <div class="field-l">Empatia</div>
+    <div class="field-t">"Você já sabe fazer a conta. O que falta é estar cercado por quem também enxerga pra onde o sul da ilha está indo."</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Autoridade</div>
+    <div class="field-t">O próprio OKA apostou cedo — construiu a centralidade antes da população chegar, quando a região ainda não tinha nada ao redor. Hoje seleciona quem entra com o mesmo critério: <b>cartório</b> (fluxo alto, zero risco), <b>Arquipélago</b> (destino, maior faturamento do empreendimento), <b>Kerfé</b> (capitalizado, já operou em outras praças). Comitê semanal avalia plano e solidez antes de afinidade de mix.</div>
+  </div>`));
+
+slides.push(sb('04','O plano','Quatro passos, do plano próprio ao contrato pensado pra durar.',`
+  <div class="field">
+    <div class="field-l">Plano de processo</div>
+    <div class="steps">
+      <div class="step"><span class="sn">1</span><span class="st"><b>Chegue com plano e público já formados.</b></span></div>
+      <div class="step"><span class="sn">2</span><span class="st"><b>Passe pelo comitê</b>, que avalia solidez e aderência ao momento do empreendimento.</span></div>
+      <div class="step"><span class="sn">3</span><span class="st"><b>Entre num ecossistema</b> que já reúne cartório, banco, clínica, gastronomia de destino.</span></div>
+      <div class="step"><span class="sn">4</span><span class="st"><b>Assine um contrato pensado pra durar</b>, não pra te trocar quando começar a dar certo.</span></div>
+    </div>
+  </div>
+  <div class="field">
+    <div class="field-l">Plano de acordo · promessas</div>
+    <div class="field-t">Régua igual pra todos, protegendo quem está há mais tempo · conversa direta se não performar, sem prolongar prejuízo.</div>
+  </div>`));
+
+slides.push(sb('05','A ação','Um convite direto, e um caminho pra quem ainda não decidiu.',`
+  <div class="field">
+    <div class="field-l">Chamada direta</div>
+    <div class="field-t"><b>Faça parte do ecossistema de quem já enxerga pra onde o sul da ilha está indo.</b></div>
+  </div>
+  <div class="field">
+    <div class="field-l">Chamada transicional</div>
+    <div class="field-t">Visite o OKA numa manhã de semana e veja, sem discurso, o movimento de trabalho que já acontece ali.</div>
+  </div>`));
+
+slides.push(sb('06','O que se evita','O que ele deixa para trás ao dizer sim.',`
+  <div class="field">
+    <div class="field-l">O que está em jogo</div>
+    <div class="field-t">Ficar fora do ecossistema que realmente conversa com o seu negócio. Competir por atenção genérica em vez de estar entre quem também enxerga à frente. Entrar num lugar que, na prática, ainda se comporta como shopping pequeno: disperso, sem critério de quem faz parte dele.</div>
+  </div>`));
+
+slides.push(sb('07','O sucesso','Multiplicar o que já construiu, por estar cercado da vizinhança certa.',`
+  <div class="field">
+    <div class="field-l">A conquista</div>
+    <div class="field-t">Ele passa a fazer parte de um ecossistema que <b>multiplica</b> o que já construiu sozinho — onde o encontro no corredor pode virar o próximo contrato.</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Transformação de identidade</div>
+    <div class="fromto">
+      <div class="ft-box from"><div class="lab">De</div><div class="txt">operador que resolve tudo sozinho, num endereço qualquer, sem conexão com quem enxerga à frente</div></div>
+      <div class="ft-arrow">→</div>
+      <div class="ft-box to"><div class="lab">Para</div><div class="txt">operador que faz parte do ecossistema certo, onde estar cercado multiplica o que ele construiu</div></div>
+    </div>
+  </div>`));
+
+slides.push(`
+<div class="slide stmt">
+  <div class="kicker">+ One-liner da marca</div>
+  <p>O endereço de quem já enxerga pra onde o sul da ilha está indo.</p>
+</div>`);
+
+
+const stage = document.getElementById('stage');
+stage.innerHTML = slides.join('');
+const all = [...stage.querySelectorAll('.slide')];
+
+all.forEach((s,i)=>{
+  if(!s.hasAttribute('data-nofoot')){
+    const m=document.createElement('div'); m.className='rhead-mark'; m.textContent='OKA'; s.appendChild(m);
+    const h=document.createElement('div'); h.className='rhead'; h.textContent=HEAD; s.appendChild(h);
+    const f=document.createElement('div'); f.className='rfoot';
+    f.innerHTML='<span>'+FOOTL+'</span><span>'+FOOTR+'</span>'; s.appendChild(f);
+  }
+});
+
+let idx=0;
+const bar=document.getElementById('bar');
+const count=document.getElementById('count');
+function show(n){
+  idx=Math.max(0,Math.min(all.length-1,n));
+  all.forEach((s,i)=>s.classList.toggle('active',i===idx));
+  bar.style.width=((idx)/(all.length-1)*100)+'%';
+  count.textContent=String(idx+1).padStart(2,'0')+' / '+String(all.length).padStart(2,'0');
+}
+function next(){show(idx+1)} function prev(){show(idx-1)}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();next()}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()}
+  else if(e.key==='Home'){show(0)} else if(e.key==='End'){show(all.length-1)}
+  else if(e.key==='f'||e.key==='F'){toggleFs()}
+});
+document.getElementById('fit').addEventListener('click',e=>{
+  const x=e.clientX/window.innerWidth; x>0.28?next():prev();
+});
+function toggleFs(){ if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()} else {document.exitFullscreen&&document.exitFullscreen()} }
+
+function fit(){
+  const w=window.innerWidth, h=window.innerHeight;
+  const s=Math.min(w/1280, h/720);
+  stage.style.transform='scale('+s+')';
+}
+const PRINT = /(^|[#?&])print\b/.test(location.hash+location.search);
+if(PRINT){
+  document.body.classList.add('printing');
+  all.forEach(s=>s.classList.add('active'));
+}else{
+  window.addEventListener('resize',fit);
+  fit(); show(0);
+  setTimeout(()=>{const el=document.getElementById('hint'); if(el) el.style.opacity='0'},4200);
+}
+</script>
+</body>
+</html>

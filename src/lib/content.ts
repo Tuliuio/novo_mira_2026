@@ -1568,6 +1568,508 @@ const CASA_CAMPO: ClientBrand = {
 };
 
 /* ------------------------------------------------------------------ *
+ * Cliente — OKA Floripa (centro de serviços e negócios, sul da ilha)
+ * Essência extraída de "OKA - Essência (apresentação).pdf" (12 pontos).
+ * Narrativa (StoryBrand) já entregue: Operador (marca-mãe), Investidor e
+ * Consumidor (sub-roteiros), Anti-persona e Equipe interna (uso interno).
+ * Expressão ainda não iniciada — cores/tipografia abaixo vêm do sistema
+ * visual do próprio documento de Essência, mantidas como base provisória.
+ * ------------------------------------------------------------------ */
+const OKA: ClientBrand = {
+  slug: "oka",
+  name: "OKA",
+  tagline: "O endereço onde o dia se resolve e os negócios se encontram.",
+  accent: "#d2a24c",
+  hub: {
+    year: "2026",
+    since: "Reposicionamento em curso desde 2025",
+    logos: [],
+    colorsNote: "Sistema extraído do documento de Essência — a Expressão (identidade visual final) ainda não foi desenvolvida. Paleta e tipografia seguem como base provisória.",
+    colors: [
+      { name: "Preto-chumbo", hex: "#1a1a1a", role: "Fundo — âncora da marca" },
+      { name: "Dourado", hex: "#d2a24c", role: "Destaque — maturidade e seleção" },
+      { name: "Branco", hex: "#ffffff", role: "Contraste e clareza" },
+      { name: "Cinza-corpo", hex: "#cfcfcf", role: "Texto corrido" },
+      { name: "Cinza-mudo", hex: "#6a6a6a", role: "Texto de apoio" },
+    ],
+    pairings: [
+      { bg: "#1a1a1a", fg: "#ffffff", label: "Preto-chumbo + Branco" },
+      { bg: "#1a1a1a", fg: "#d2a24c", label: "Preto-chumbo + Dourado" },
+      { bg: "#d2a24c", fg: "#1a1a1a", label: "Dourado + Preto-chumbo" },
+    ],
+    type: [
+      { role: "Títulos", family: "Oswald (Bold/Medium, condensada, caixa alta)", sample: "O ENDEREÇO ONDE O DIA SE RESOLVE" },
+      { role: "Texto", family: "Helvetica Neue (Regular/Bold)", sample: "E os negócios se encontram." },
+    ],
+    essence: {
+      lead: "Convivência virou conveniência. O OKA deixa de disputar a família como público principal para se tornar o centro de serviços e negócios do dia a dia do sul da ilha.",
+      proposito: "Corrigir a equação que sustenta o empreendimento — recompor a rentabilidade a ponto de retomar a distribuição de resultados aos cotistas — reposicionando o OKA como centro de serviços e negócios do sul da ilha, não mais como shopping voltado à família.",
+      posicionamento: "Ocupar o lugar de centro de serviços e de negócios do dia a dia do sul da ilha: um endereço onde se trabalha, se reúne, se resolve o simples e se encontra quem também enxerga à frente. A palavra que traduz a virada é conveniência, que substitui a convivência que orientou o começo.",
+      quote: "Vamos marcar no OKA, que lá tu resolve tudo.",
+      atributos: ["Profissionalismo", "Networking", "Bem-estar", "Estrutura segura", "Atendimento excelente", "Conveniência", "Tranquilidade", "Organização"],
+    },
+    essenceArticle: {
+      slug: "essencia-oka",
+      kicker: "Essência de Marca · Mira Brand Studio",
+      title: "Essência de Marca",
+      subtitle: "O lugar que o OKA vai ocupar é o de centro de serviços e de negócios do dia a dia do sul da ilha. Serviço e negócio não competem entre si nessa definição — eles se explicam: são as operações de serviço que sustentam a conta, e é o conjunto delas que cria um ambiente de negócios.",
+      sections: [
+        {
+          heading: "01 · História",
+          paragraphs: [
+            "O OKA surgiu de uma oportunidade de mercado identificada por dois pontos. O primeiro é o plano diretor de Florianópolis: as duas maiores planícies construíveis da ilha ficam no sul. A maior começa em frente ao OKA e se estende até o Ribeirão, com capacidade para 400 mil pessoas, e a do Pântano do Sul comporta outras 180 mil. O segundo é logístico: a região tem fluxo alto de carros, mais de 50 mil por dia, e a concessão do aeroporto à Zurich Airport já previa em contrato um novo acesso. Do início da pesquisa à abertura, em novembro de 2022, foram cerca de cinco anos de estudo, projeto e obra.",
+            "Florianópolis foi escolhida mesmo com a expertise dos sócios concentrada no Rio Grande do Sul, onde acumulam anos de construção civil e cases de sucesso. O critério foi a origem do dinheiro: aqui o recurso é pulverizado, vem de várias regiões e de fora do país, e circula o ano inteiro. Somam-se o tamanho da cidade e a carência de um investimento desse porte no sul da ilha.",
+            "O complexo foi desenhado para reunir tudo num lugar só, com lojas, escritórios e moradia empilhados e movimento de dia e de noite. O OKA foi entregue muito antes do seu entorno, numa região ainda descampada, com potencial evidente no papel e pouca ocupação na prática. Chegar cedo foi decisão consciente. Teve custo, e teve pioneirismo: a aposta de construir a centralidade antes que a população chegasse até ela, assumindo o risco de sustentar o equipamento enquanto o entorno amadurece.",
+            "No início, o OKA apostou numa marca lúdica e familiar, de aldeia e convivência, que era o que se podia vender de algo que ainda não existia, e funcionou. Depois veio a fase de estabilização, com processo, disciplina e resultado medido.",
+            "Hoje se projeta, para um futuro próximo, a exigência de operações mais consolidadas, num movimento claro de amadurecimento. A ideia de comunidade foi revista pela prática: comunidade não se projeta, se constrói, e é sempre o reflexo das pessoas que a compõem ao longo do tempo.",
+          ],
+        },
+        {
+          heading: "02 · Contexto",
+          paragraphs: [
+            "A busca por um reposicionamento começou no marketing, que identificou uma dissonância entre o que a marca comunica e aquilo que o público hoje procura. A leitura inicial apontava para um ajuste de comunicação. Ao longo das conversas, ficou evidente que a questão era mais profunda e que alcançava o próprio modelo de negócio.",
+            "A raiz é econômica. O OKA foi estruturado como um investimento imobiliário, com um grupo de cotistas que aportou recursos na expectativa de retorno dentro de um prazo definido. Esse prazo foi superado e a distribuição de resultados ainda não se concretizou. O reposicionamento existe, antes de qualquer outra coisa, para corrigir essa equação e devolver ao empreendimento a rentabilidade que justificou a sua criação.",
+            "O setor vive uma transição estrutural que já dura mais de uma década. O varejo perde espaço de forma consistente, a compra migrou para o ambiente online e o próprio hábito de consumo mudou de natureza. Poucas marcas sustentam loja física, e as que permanecem reduzem área. O que ocupa o lugar do varejo é serviço, saúde, estética, bem-estar e gastronomia — movimento que se repete em praticamente todos os centros comerciais do país.",
+            "Em paralelo corre o amadurecimento do próprio OKA. O empreendimento não está mais disposto a acolher operações sem preparo, sem plano e sem fôlego para atravessar uma baixa temporada. Os primeiros anos mostraram o custo de sustentar quem ainda está aprendendo a empreender, e a régua subiu: busca-se hoje o operador consolidado, com público próprio e capacidade de honrar os seus compromissos.",
+            "A operação já vem se movendo nessa direção por conta própria, com procura crescente por serviço e uso cada vez mais profissional do espaço. O que falta é controle estratégico sobre esse movimento. A intenção não é impor um conceito, e sim acompanhar o consumo real. Se o mercado apontar para outro lugar adiante, o OKA se adapta outra vez. O compromisso é com o resultado, e não com o rótulo.",
+            "Há ainda uma lacuna a resolver. Da abertura até aqui, o OKA não alcançou junto ao público do sul da ilha a penetração que se imaginava ter. A transformação em curso é também a oportunidade de estreitar esse vínculo, oferecendo ao entorno aquilo de que ele efetivamente precisa.",
+            "Hoje o OKA disputa como um centro comercial pequeno dentro de um setor que encolhe, e é assim que ainda se apresenta. O que se deseja é ocupar a posição que o próprio contexto já oferece: a de referência em serviços e ponto de encontro profissional do sul da ilha. O entorno joga a favor, com um masterplan de cerca de 150 mil metros quadrados que prevê senior living, corporativo, escola e mercado no raio imediato. É uma posição que ninguém ocupa na região, e o tempo de tomá-la é agora.",
+          ],
+        },
+        {
+          heading: "03 · Desafios",
+          paragraphs: [
+            "Os desafios do OKA não estão na estrutura física nem na localização, que são o seu ponto forte. Estão na definição: em escolher o que o empreendimento é, atrair quem sustenta essa escolha e comunicá-la sem ruído. São três os principais.",
+            "Definir a vocação e o posicionamento do negócio. O OKA atende hoje, de forma parcial, dois públicos que pedem ambientes diferentes — de um lado a família e o entretenimento, de outro o trabalho, o serviço e a reunião de negócios. O resultado é que nenhum dos dois é plenamente atendido, e o próprio negócio já reconhece isso. É crítico porque, sem vocação definida, não existe régua: toda decisão de mix, horário, investimento e comunicação passa a ser tomada caso a caso.",
+            "Atração de um público menos maduro que o ideal. Nove em cada dez contatos que chegam ao comercial são operações pequenas de gastronomia, muitas vezes de quem está empreendendo pela primeira vez — o perfil que exige carência, obra e negociação, e que raramente atravessa uma baixa temporada, alimentando o ciclo de turnover, inadimplência e vacância que consome a rentabilidade. É crítico porque é a variável que trava diretamente o retorno ao investidor.",
+            "Uma transformação que precisa acontecer sem ser anunciada. A direção está clara internamente, mas não pode ser declarada. Um anúncio de reposicionamento geraria insegurança em três frentes ao mesmo tempo: no lojista, que interpreta mudança como ameaça antes de interpretá-la como oportunidade; no investidor, com cotistas resistentes à troca de conceito por apego à condição de proprietários de um shopping; e na própria captação, porque o operador que se quer atrair ainda compra parte da ideia de varejo. Não cabe manifesto, campanha de virada nem assinatura declaratória — a mudança precisa ser percebida depois de consumada, em etapas previstas, com marcos definidos do que muda em cada momento.",
+            "O desafio mais crítico é o primeiro, porque os outros dois se organizam a partir dele. Definida a vocação, a marca ganha a régua que hoje não tem. Resolvido, o maior impacto é a marca passar a operar como filtro: ela atrai o operador certo e afasta o errado sem precisar dizer nada, o que reduz turnover, inadimplência e vacância, e devolve previsibilidade à operação. A meta associada é a inversão da origem da demanda, que deixa de ser buscada ativamente e passa a chegar de forma orgânica e qualificada, com o retorno financeiro aos cotistas voltando ao horizonte.",
+          ],
+        },
+        {
+          heading: "04 · Serviços e Produtos",
+          paragraphs: [
+            "O OKA reúne torre comercial, torre residencial e o mall no térreo, sendo este último o negócio tratado neste projeto. O produto do OKA é a comercialização dos espaços aos operadores, juntamente com fluxo de pessoas, estacionamento, infraestrutura, segurança e localização. Soma-se a isso a proximidade de outros negócios, que gera encontro e oportunidade, e a visibilidade para uma via de tráfego intenso.",
+            "O aluguel médio praticado é de R$ 78 por m², com condomínio de R$ 33, o que leva o custo de ocupação a cerca de R$ 120. À título de comparação, um shopping consolidado parte de R$ 200 de aluguel, com condomínio que pode chegar a R$ 150. Esse patamar é competitivo para quem tem previsibilidade de receita — ele se torna pesado apenas para o varejo pequeno, que precisa vender muito todo mês para cobrir o compromisso, e é justamente aí que se concentram a inadimplência e a rotatividade.",
+            "A prioridade deste momento é atrair operações qualificadas para ocupar o mall, e é para elas que a marca precisa falar com mais força. Isso não permite ignorar o consumidor final, porque é ele quem valida o produto: é ele quem circula, consome, avalia o ambiente e precisa encontrar um lugar limpo, seguro, organizado e agradável.",
+            "O objetivo daqui para frente é claro: locar para operadores maduros — negócios capitalizados, com plano, com público próprio e com capacidade de sustentar a operação sem depender do OKA em si. A régua deixa de ser a afinidade de mix e passa a ser a solidez de quem opera.",
+            "O eixo dessa virada é o serviço com viés corporativo. O OKA já vem sendo usado espontaneamente como ambiente de trabalho e de reunião, e é esse comportamento que o reposicionamento pretende reconhecer e amplificar. A oferta futura se concentra em serviços profissionais, saúde, estética e bem-estar, educação, entidades de classe e órgãos que atendem demanda constante, além de gastronomia orientada ao dia útil, capaz de sustentar café da manhã, almoço de trabalho e jantar. Somam-se as operações de destino, que trazem o seu próprio público e reduzem a dependência do fluxo espontâneo. O varejo permanece, em escala menor e mais seletiva, deixando de ser o centro da oferta para ser complemento.",
+          ],
+        },
+        {
+          heading: "05 · Modelo de Negócio",
+          paragraphs: [
+            "O OKA foi estruturado como um investimento imobiliário. Uma sociedade de propósito específico detém o mall e foi cotizada entre investidores trazidos da carteira do grupo, hoje nove. A gestão é conduzida pela Tríade, braço do grupo que existe para gerar retorno a esses cotistas e que é remunerada por taxa de administração sobre a receita de locação. O desenho original era direto: locar os espaços, receber os aluguéis, ratear entre os cotistas e prestar contas. Toda decisão do empreendimento responde, em última instância, a essa equação.",
+            "A receita vem da locação dos espaços do mall, cobrada de forma recorrente. Parte dos contratos prevê aluguel vinculado ao faturamento do operador, o que aproxima o resultado do empreendimento do desempenho de quem opera e transfere ao OKA parte do risco de cada operação. O condomínio é rateio de custo e não gera resultado, e o fundo de promoção, que historicamente custeava ações de atração, vem sendo revisto. O modelo só se sustenta com ocupação qualificada, ou seja, com espaços ocupados por quem paga de forma previsível.",
+            "Do outro lado, o empreendimento assumiu uma estrutura de custo desproporcional ao seu porte, com equipe, marketing, agenda de eventos, segurança, limpeza e energia. Os grandes eventos foram descontinuados quando se mediu que não geravam retorno ao operador, e os horários estão sendo reorganizados por segmento, com expectativa de redução no condomínio. Há ainda o custo de entrada de cada nova operação — carência, obra e investimento direto — que não retorna quando o operador não se sustenta. A vacância cobra em dobro, porque encarece o rateio dos demais e dificulta atrair o próximo interessado.",
+            "A locação é conduzida por equipe comercial própria, combinando prospecção ativa com a demanda que chega de forma espontânea, e cada operação é aprovada em comitê, em reunião semanal, onde se avaliam capacidade de pagamento, plano de negócio e aderência ao momento do empreendimento.",
+            "A retenção segue a lógica de contrato longo, com o operador permanecendo por muitos anos. Ela se opõe à prática comum do setor, em que a boa performance do lojista é convertida em aumento de aluguel na renovação ou na venda do ponto ao concorrente. No OKA o interesse é que o operador permaneça, e isso só se sustenta se ele prosperar. A postura mudou nos últimos anos: saiu de cena a tentativa de segurar o operador a qualquer custo, com concessões sucessivas, e entrou uma relação contratual mais firme, com cobrança profissionalizada e conversa direta sobre viabilidade. A inadimplência caiu de forma significativa desde então.",
+            "O modelo caminha para depender menos de fluxo e mais de previsibilidade. Operações de serviço, com receita constante e obrigação de pagamento estável, tendem a substituir o varejo pequeno como base da receita, reduzindo turnover, inadimplência e custo de reposição. O objetivo permanece o mesmo desde a origem, e é ele que define o sucesso do reposicionamento: recompor a rentabilidade a ponto de retomar a distribuição de resultados aos cotistas.",
+          ],
+        },
+        {
+          heading: "06 · Público e Necessidades",
+          paragraphs: [
+            "O OKA atende três públicos, e a ordem entre eles define a estratégia. No topo está o investidor, cliente final da gestão, para quem o negócio precisa gerar retorno. Na base está o consumidor, que valida o produto com a sua presença e o seu consumo. No meio está o operador, e é ele o foco deste trabalho: é ele que gera a receita que chega ao investidor, e é ele que determina a qualidade da experiência que o consumidor encontra. Atuar sobre a camada do meio move as outras duas ao mesmo tempo.",
+            "O OKA nasceu com um posicionamento lúdico, de pertencimento e comunidade, dirigido sobretudo a famílias com crianças. Ele cumpriu a função de lançamento e efetivamente trouxe gente para dentro, mas o público que chegava não convertia na proporção esperada — o espaço enchia sem que a conta fechasse. Esse público deixou de ser prioridade.",
+            "Do lado do operador, o perfil predominante ainda é o oposto do desejado: nove em cada dez contatos que chegam ao comercial são operações pequenas de gastronomia, muitas de quem empreende pela primeira vez, e existe dificuldade real em atrair operadores com bom nível de capitalização — a maioria dos operadores atuais vem de fora da cidade.",
+            "Do lado do consumidor, convivem dois usos que não se acomodam bem: de um lado permanece a frequência familiar, em fins de semana, dias de chuva e saídas escolares; de outro cresce um uso adulto e profissional. O resultado é o limbo que o próprio negócio nomeou — o OKA não atende plenamente a família nem a operação de negócios. Esse desconforto já se manifesta: o público adulto se retraindo quando o ambiente é dominado por circulação infantil, e frequentadores mais velhos relatando que o ruído prejudica a experiência do jantar.",
+            "Existe um movimento acontecendo por conta própria, e ele é o principal indicativo de vocação: as mesas com tomada lotam pela manhã, há gente que vai ao OKA todos os dias para trabalhar, toma um café e almoça no local, reuniões de negócio já são marcadas ali com naturalidade, sem que a marca tenha convidado ninguém a isso. Esse uso tem um público bastante definido: pessoas de fora, em movimento migratório, muitas vindas do sul do país em busca de qualidade de vida, frequentemente casais jovens que chegam sem rede de contatos na cidade. Encontram no OKA estrutura para trabalhar, o que comer e circulação de gente — tomam um café, veem pessoas com computador, escutam uma conversa, leem a placa de uma empresa e começam uma relação que às vezes vira negócio. O espaço funciona como porto de chegada e como ambiente de conexão profissional. Esse é o dado mais relevante deste ponto: o público que o OKA gostaria de ter já está lá, apenas ainda não foi reconhecido pela marca.",
+            "O operador desejado é o de um negócio consolidado, com caixa, com plano e com capacidade de atravessar uma baixa temporada sem depender de concessão, de preferência com público próprio, o que reduz sua dependência do movimento do empreendimento, e com horizonte de permanência longa. A pessoa por trás desse negócio importa tanto quanto o segmento: alguém que já operou antes, frequentemente em outras praças, que entende sazonalidade e custo de ocupação, e que chega com pergunta de viabilidade em vez de expectativa de acolhimento. Os exemplos concretos traduzem esse perfil: o cartório, que ocupou uma área de difícil colocação e praticamente elimina o risco de inadimplência; o Arquipélago, operação de destino com faturamento muito acima da média; o Kerfé, que reúne capacidade de investimento e de pagamento com atuação já comprovada em outras praças. Os segmentos que se busca ampliar são serviços profissionais, saúde, estética e bem-estar, educação, entidades de classe e serviços de demanda constante como bancos, farmácias e correios.",
+            "O consumidor que se busca é o adulto ativo profissionalmente, que trabalha, se reúne, almoça bem e resolve serviços no mesmo endereço. No plano prático, suas necessidades são estrutura para trabalhar e se reunir fora de casa, uma boa refeição no dia útil com qualidade e agilidade, e a possibilidade de resolver serviços e burocracias sem atravessar a cidade. No plano emocional, o que está em jogo é pertencimento e credibilidade: para quem chegou há pouco, um lugar onde se conhece gente e se constrói rede; para quem trabalha, um endereço que comunica seriedade e influencia como esse profissional é percebido pelos seus próprios clientes.",
+            "O caminho é reconhecer e amplificar o que já acontece. O OKA deixa de disputar a família como público principal e passa a se organizar em torno do adulto que já o utiliza para trabalhar, se reunir e se conectar. Do lado do operador, o objetivo é inverter a origem da procura: em vez do comercial precisar buscar o perfil desejado, esse perfil passa a chegar por conta própria, reconhecendo ali um endereço onde vale a pena estar.",
+          ],
+        },
+        {
+          heading: "07 · Valores",
+          paragraphs: [
+            "Os valores originais do OKA foram formulados na fase de lançamento e refletiam aquele momento: senso de comunidade, empatia, humildade, respeito e foco. Eles não estavam errados para o que o empreendimento precisava fazer na época. O que a prática mostrou é que, aplicados a um ambiente de relação comercial, esses termos foram lidos de forma distorcida e acabaram deslizando para o paternalismo — uma parte relevante dos operadores interpretou acolhimento como flexibilidade permanente diante das próprias obrigações. A revisão não significa que a marca abandonou princípios. Significa que mudou quais deles coloca à frente.",
+            "Justiça. Ocupa o lugar antes reservado ao senso de comunidade. A comunidade não se impõe, e cada operador vive um estágio diferente de maturidade, o que torna inviável exigir de todos o mesmo grau de cooperação. O que cabe ao empreendimento é garantir que ninguém seja prejudicado em favor de outro — ela aparece nos critérios objetivos de decisão, como na definição de quais marcas ocupariam o tótem, resolvida por ordem de contratação e não por preferência, reconhecendo quem está ali há mais tempo.",
+            "Profissionalismo. Ocupa o lugar antes reservado à empatia. A empatia continua existindo e segue pesando na tomada de decisão, mas deixa de ser o que a marca coloca em primeiro plano, porque é um termo que se presta a leituras convenientes — ela passa a ser um valor mais sentido do que declarado. O profissionalismo aparece na cobrança estruturada, no fim da ouvidoria informal e na conversa direta sobre viabilidade, em que se diz com honestidade a quem não tem fôlego que o melhor caminho é sair antes de acumular prejuízo.",
+            "Resultado. É valor porque atravessa toda a cadeia. Se o operador não fatura, o empreendimento não recebe, e parte dos contratos vincula o aluguel ao faturamento, o que torna essa dependência literal. Ele aparece na decisão de encerrar os grandes eventos quando se mediu que não geravam retorno ao lojista, e no critério de seleção que passou a priorizar capacidade de pagamento em vez de afinidade de mix.",
+            "Responsabilidade. Caminha junto com o resultado e diz respeito ao compromisso assumido por cada parte. Aparece na exigência de plano de negócio antes da entrada, na substituição da pergunta sobre o sonho pela pergunta sobre o plano, e na diretriz interna de não recorrer a novos aportes dos sócios para custear a operação.",
+            "Os quatro descrevem principalmente como a marca deseja ser percebida, e não apenas o que ela já é. Justiça, resultado e responsabilidade já operam com clareza nas decisões internas. O profissionalismo está em consolidação, porque depende de consistência ao longo do tempo para ser reconhecido. São poucos de propósito: valor que não se cumpre todos os dias deixa de ser valor e vira discurso.",
+            "Vale um cuidado de narrativa: essa troca não deve ser comunicada como correção de um erro. Os valores anteriores foram adequados ao momento em que foram criados, e a mudança é consequência natural do amadurecimento de qualquer negócio. O OKA respeita o que foi para poder afirmar o que se tornou.",
+            "O que se espera é uma relação mais madura em toda a cadeia: que o operador chegue preparado, com plano e com consciência do que está assumindo; que a régua seja compreendida como justa, e não como dureza; e que essa maturidade se converta em resultado, tanto para quem opera quanto para quem investiu no empreendimento. Há um equilíbrio a perseguir, e ele foi bem descrito internamente: nem missionário, nem mercenário. O caminho é o meio, sustentado por trabalho e compromisso.",
+          ],
+        },
+        {
+          heading: "08 · Qualidades",
+          paragraphs: [
+            "Para entender como o OKA é percebido hoje, analisamos as avaliações públicas do empreendimento no Google, que somam 1.680 registros e nota média 4,5. As palavras que se repetem de forma positiva são consistentes entre si: estacionamento é o tema mais citado de todos, em seguida vêm gastronomia, arquitetura e beleza do espaço, limpeza e organização, integração com a natureza, tranquilidade e a prestatividade da equipe. Aparecem ainda menções recorrentes a operações específicas, à programação cultural e, em número menor, à hospedagem ligada aos studios.",
+            "Do lado das limitações, a ressalva mais frequente é a oferta restrita de lojas, e ela aparece nas próprias palavras dos avaliadores, que descrevem o OKA como um mini shopping — é a mesma leitura que a gestão faz internamente sobre o empreendimento. Há também reclamações pontuais sobre a manutenção dos banheiros.",
+            "A qualidade mais valorizada hoje é a conveniência prática. Ela é um patrimônio da marca e deve permanecer sendo, independentemente da mudança em curso: o que o OKA resolve com facilidade precisa continuar fácil.",
+            "Um dado chama atenção nesse levantamento: nenhum dos temas recorrentes tem relação com trabalho, reunião ou uso corporativo — que é justamente o viés pelo qual se pretende trabalhar daqui para frente. Esse comportamento acontece todos os dias, é observado pela gestão e é a principal aposta do reposicionamento, mas ainda não chegou ao vocabulário de quem avalia. O OKA já é usado como ambiente de trabalho e ainda não é reconhecido como tal — essa distância entre o uso real e a percepção declarada é a maior oportunidade deste ponto. Vale notar que a tranquilidade, hoje elogiada como característica de passeio, é o mesmo atributo que sustenta um bom ambiente de trabalho — ela já existe e apenas precisa ser reenquadrada.",
+            "A partir disso, cinco qualidades precisam ser conquistadas ou consolidadas. Profissionalismo: um ambiente adulto, sério e adequado ao trabalho e à reunião — é a qualidade que hoje não existe no vocabulário de quem avalia e a que mais interessa construir. Bem-estar: a sensação de estar bem no espaço, que reúne temperatura agradável, acústica que permite conversar, proteção contra vento e chuva e o conforto de poder ficar algumas horas sem incômodo — hoje é objeto de queixa e precisa virar elogio. Atendimento excelente: hoje o elo mais frágil, concentrado nas operações de gastronomia — como a operação não pertence ao empreendimento, o caminho mais eficaz é a seleção de bons operadores. Networking: um lugar onde as conexões aconteçam e onde os negócios se encontrem — é a qualidade mais singular do OKA e a que já se manifesta na prática: pessoas marcam reuniões ali, esbarram em quem interessa, leem a placa de uma empresa vizinha e saem com um contato novo; empresas escolhem endereços por esse motivo e chegam a pagar mais caro por ele. Estrutura segura: segurança e boa infraestrutura ganham peso à medida que o empreendimento passa a ser frequentado por quem trabalha, circula com equipamento e permanece por mais tempo.",
+            "O objetivo é que, ao se olhar novamente para essas avaliações em 2028, elas digam coisas mais próximas do que se deseja ouvir, e que ao lado de bonito, limpo e tranquilo apareçam profissional, seguro, bem atendido e bom para fazer contatos. Parte disso depende de operação, e parte depende de a marca finalmente nomear aquilo que já acontece.",
+          ],
+        },
+        {
+          heading: "09 · Promessas e Diferenciais",
+          paragraphs: [
+            "Hoje o OKA é reconhecido como um lugar bonito, tranquilo e conveniente, herdeiro de uma promessa de convivência e comunidade. É o que a arquitetura entrega e o que o público efetivamente enxerga. Essa promessa está migrando para outra: a de um endereço onde o dia se resolve e onde os negócios se encontram.",
+            "Ao operador, a promessa é fazer parte da concentração de serviços mais relevante do sul da ilha. Estar ao lado de um cartório, de um banco, de uma clínica e de boa gastronomia qualifica quem se instala ali, e o OKA se compromete a escolher com critério quem entra, protegendo quem já está dentro. Junto disso vem a credibilidade: o endereço diz algo sobre quem o ocupa, e um ambiente adulto e bem cuidado influencia como aquele negócio é percebido pelos seus próprios clientes. A segunda promessa ao operador é resultado com permanência: fluxo diário e previsível, custo de ocupação competitivo em relação tanto ao shopping quanto à loja de rua, estacionamento próprio e visibilidade para a via. E um contrato pensado para durar, porque aqui o interesse é que quem entra prospere e fique, e não que seja substituído quando começar a dar certo.",
+            "Ao cliente final, a promessa é resolver o dia num único endereço: trabalhar, almoçar bem, se reunir e dar conta de um serviço sem precisar atravessar a cidade, com estacionamento e num ambiente tranquilo. É a conveniência que o público já reconhece, agora organizada em torno do adulto que trabalha.",
+            "O diferencial mais forte serve aos dois perfis, e é o único que não se replica: o encontro que gera negócio. Vale para quem frequenta e marca ali a sua reunião, e vale igualmente para quem opera e recebe parceiros e fornecedores no próprio endereço em que trabalha. As mesas de trabalho lotam pela manhã e a circulação diária aproxima quem faz negócio entre si — empresas pagam caro apenas para estar perto de quem interessa, e isso não se constrói por decreto, porque depende de densidade, convivência e tempo.",
+            "Fica registrado o que a marca não deve prometer: variedade de shopping, destino de compras e entretenimento familiar. Foi justamente essa promessa desalinhada que produziu a ambiguidade atual. Daqui para frente a promessa é uma só, sustentada pela estrutura real: um endereço onde o dia se resolve e onde os negócios acontecem.",
+          ],
+        },
+        {
+          heading: "10 · Análise de Mercado",
+          paragraphs: [
+            "O OKA parte de uma leitura própria sobre concorrência: mais do que disputar o mesmo orçamento, disputa-se a mesma atenção. E, no caso dele, a disputa principal não é contra outro endereço — é contra três frentes: a falta de clareza no próprio posicionamento, a equação financeira que ainda não fecha e a mudança no comportamento de consumo. Resolver essas três vale mais do que reagir a qualquer concorrente.",
+            "Entre os endereços da região, o Multi Open Shopping é o que mais se aproxima. Tem porte semelhante, é igualmente um mini shopping e opera com um mix parecido, combinando algumas lojas de vestuário, serviços e restaurantes. Ainda assim, não é uma concorrência que preocupe nem um caminho que se deseje seguir, porque a sua vocação segue apontando para entretenimento e público familiar — justamente o território do qual o OKA está saindo.",
+            "Outros nomes servem menos como concorrência e mais como referência do que observar. O Passeio Primavera é forte em convivência e gastronomia e mantém uma torre corporativa bem ocupada. O Pátio Milano tem identidade própria e bem definida. O Rita Maria construiu uma associação clara com festa e vida noturna. E o Spot funciona bem como food hall concentrado. De cada um há características positivas a estudar, mas nenhum deles disputa o lugar que o OKA pretende ocupar.",
+            "A referência mais instrutiva é o Square, na SC-401. Depois de dois anos tentando entretenimento, reconheceu que a sua estrutura física conversava melhor com negócios, redirecionou a operação e passou a receber um público que vai até lá para trabalhar. A conta melhorou de forma consistente. É o espelho mais próximo do caminho que o OKA quer percorrer, e mostra que assumir uma vocação rende mais do que tentar atender a todas.",
+            "Nos concorrentes indiretos está o e-commerce, que segue retirando o varejo da prateleira. A loja de rua e a sala comercial disputam o mesmo operador, mas são cenários estruturalmente distintos, e é por isso que permanecem indiretos. Os grandes shoppings de Florianópolis disputam a conveniência de variedade, uma comparação que o OKA não vence e não deve tentar vencer.",
+            "O que ninguém mais faz na região é reunir serviço, gastronomia, trabalho, escritório e moradia num único endereço, situado no ponto de passagem obrigatória de quem circula pelo sul da ilha. O operador escolhe o OKA porque paga menos do que pagaria num shopping tradicional, tem fluxo previsível, não disputa atenção com duzentas lojas e ganha uma vizinhança que o qualifica. O cliente escolhe porque está no caminho e resolve o dia sem atravessar a cidade. Daqui para frente, o objetivo é ocupar esse território antes que alguém perceba que ele está vago.",
+          ],
+        },
+        {
+          heading: "11 · Posicionamento",
+          paragraphs: [
+            "Hoje o OKA ocupa, na cabeça de quem o conhece, o lugar de um shopping no sul da ilha. É associado a passeio em família, a uma arquitetura arrojada que desperta curiosidade justamente por ser bonita e diferente, a eventos voltados à família e à comunidade, e a lojas de varejo.",
+            "O problema está no descompasso entre o que essa expectativa promete e o que o visitante encontra. As pessoas chegam esperando o lugar da criança, do passeio e da compra, e a maioria das operações já não tem esse viés. O trabalho de posicionamento começa exatamente aí: mudar a expectativa para que a chegada corresponda ao que existe, em vez de continuar atraindo alguém para uma promessa que o espaço já não cumpre.",
+            "O lugar que o OKA vai ocupar é o de centro de serviços e de negócios do dia a dia do sul da ilha. Serviço e negócio não competem entre si nessa definição, eles se explicam: são as operações de serviço que sustentam a conta e garantem a viabilidade do empreendimento, e é o conjunto delas que cria um ambiente de negócios, com gente que trabalha, se reúne e se encontra ali todos os dias. A palavra que traduz a virada é conveniência, que substitui a convivência que orientou o começo. Convivência sugere permanência sem propósito. Conveniência sugere resolver, e é isso que o OKA faz bem.",
+            "A palavra shopping precisa sair, mas sairá aos poucos. Ela foi incorporada à comunicação por necessidade de explicação e hoje entrega uma promessa de variedade que a estrutura não cumpre. A retirada é gradual e silenciosa por estratégia, porque parte dos operadores que se deseja atrair ainda compra a ideia de varejo, e um rompimento declarado prejudicaria a captação.",
+            "O OKA não quer ser confundido com um shopping de variedade, com um destino de compras, com um parque de entretenimento infantil, nem com um ambiente de convivência afetiva, seja no formato de clube, de associação ou de comunidade. Esse é o caminho mais seguro do reposicionamento, e foi apontado pelos dois sócios de forma independente: neste momento, o que a marca não é define melhor do que aquilo que ela quer ser. É também a única forma de se reposicionar sem anunciar para onde se está indo.",
+            "A frase que se deseja ouvir de quem indica é simples e ainda não existe: vamos marcar no OKA, que lá tu resolve tudo. É uma frase de adulto, dita por quem trabalha e precisa resolver o dia, e não por quem procura um programa de fim de semana. Daqui para frente, o posicionamento se sustenta em ocupar o lugar de endereço mais prático e mais bem frequentado do sul da ilha, onde se trabalha, se come bem, se resolve o que precisa e se encontra quem interessa.",
+          ],
+        },
+        {
+          heading: "12 · Visão de Futuro",
+          paragraphs: [
+            "Daqui a três a cinco anos, o OKA quer ser reconhecido como o centro de serviços e de negócios do sul da ilha. Não por ter recebido esse rótulo, mas por ter identificado a própria vocação com honestidade e escolhido ocupá-la. É um endereço com mix majoritariamente de serviço, gastronomia forte e varejo seletivo, que funciona no ritmo de quem trabalha.",
+            "Para isso acontecer, algumas coisas precisam ser verdade dentro de casa. Os espaços precisam estar ocupados por operadores maduros, capitalizados e capazes de se sustentar sozinhos. A qualidade operacional precisa ser constante em limpeza, conforto, segurança e atendimento. E a disciplina de seleção precisa se manter, resistindo à tentação de preencher vaga com quem não vai durar.",
+            "Fora de casa, a transição precisa ser executada sem ruptura, no ritmo que não assuste nem o operador nem o investidor. E o entorno precisa continuar chegando, com o adensamento das planícies e os empreendimentos previstos no masterplan, que trarão a densidade que hoje ainda falta.",
+            "O que o OKA não quer se tornar tem nome, e foi o próprio negócio que o deu: um pato, que tenta atender a todos os públicos e não atende bem nenhum. Também não quer se tornar um equipamento inútil ao seu entorno, porque perder a utilidade para a região é perder a razão de existir. Não quer reproduzir a política canibalista de shopping, que troca o bom operador por um aluguel maior. E não quer voltar a depender de evento e promoção para se manter de pé.",
+            "Saberemos que chegamos lá por dois sinais. O primeiro e mais importante é financeiro: a retomada da distribuição de resultados aos cotistas, que é a razão pela qual o empreendimento existe e a medida final de que a equação foi corrigida. O segundo é a inversão da procura: hoje a busca é ativa e o que chega ao comercial é majoritariamente pequena gastronomia ensaiando um primeiro negócio; o sinal de sucesso é o dia em que a maioria das operações interessadas for do perfil desejado, chegando por conta própria porque reconhece ali um bom endereço. Somam-se a esses dois a queda do turnover e da inadimplência, e um indicador mais leve, porém revelador: as avaliações públicas passarem a falar de um lugar bom para trabalhar e para marcar uma reunião.",
+            "Por fim, uma ressalva que o próprio negócio faz questão de registrar. O OKA não se prende a um carimbo. A direção é firme, mas a forma é humilde: quem determina o que o equipamento precisa ser é o entorno que chega e diz do que precisa. Afinal, o compromisso é com o resultado e com a utilidade, e não com um rótulo.",
+          ],
+        },
+      ],
+    },
+    verbal: {
+      tom: "Direto e maduro — menos sonho, mais plano. Fala como um guia que já apostou cedo e entende o momento de cada operador, sem paternalismo. Termos vetados: \"startup\" e \"comunidade\" no sentido antigo (afeto de aldeia) — a Essência já ressignifica comunidade como \"ecossistema de negócios\", e é esse o sentido usado.",
+      sim: ["O endereço onde o dia se resolve", "Centro de serviços e negócios do sul da ilha", "Ecossistema de negócios", "Plano e capacidade de pagamento", "Conveniência"],
+      nao: ["Comunidade (sentido antigo, afeto de aldeia)", "Startup, jargão de aceleradora", "Shopping, destino de compras", "Sonho, acolhimento como flexibilidade", "Convivência como promessa central"],
+      examples: [
+        { sim: "Você já sabe fazer a conta. O que falta é estar cercado por quem também enxerga pra onde o sul da ilha está indo.", nao: "Venha fazer parte da nossa comunidade e realizar o sonho do seu negócio." },
+        { sim: "Vamos marcar no OKA, que lá tu resolve tudo.", nao: "O point mais divertido para toda a família passar o dia." },
+      ],
+    },
+    narratives: [
+      {
+        slug: "operador",
+        kicker: "Narrativa de Marca · StoryBrand · Marca-mãe · Público principal",
+        title: "Operador",
+        subtitle: "Herói: o operador de destino que já resolve sozinho, e agora quer fazer parte do ecossistema certo. Eixo: “O endereço onde o dia se resolve e os negócios se encontram.”",
+        presentationUrl: "/clients/oka/narrativa/operador.html",
+        sections: [
+          {
+            heading: "Ponto de partida",
+            paragraphs: [
+              "Começamos pelo público que move os outros dois. É o operador que gera a receita que sustenta o investidor, e é ele que determina a experiência que o consumidor encontra. Este é o roteiro da marca-mãe. Investidor e consumidor são sub-roteiros aninhados, com o mesmo tom, o mesmo guia e a mesma promessa, sem dividir o esforço de comunicação. A anti-persona e o roteiro interno da equipe do OKA são documentos complementares, fora dessa cadeia.",
+            ],
+          },
+          {
+            heading: "01 · O herói",
+            paragraphs: [
+              "Quem é: operador maduro, capitalizado, com plano e público próprio — uma operação de destino, muitas vezes já testada em outra praça.",
+              "O que ele quer: não busca quem resolva seu fluxo nem sua conta; isso ele já sabe fazer. Quer fazer parte do ecossistema certo — um endereço onde o público, os negócios e o momento do lugar realmente conversam com o que ele construiu.",
+            ],
+          },
+          {
+            heading: "02 · O problema",
+            paragraphs: [
+              "Vilão: a vizinhança genérica. Um endereço que não multiplica o que ele já construiu sozinho.",
+              "Externo: os endereços disponíveis pra esse perfil (sala comercial isolada, loja de rua, shopping tradicional) colocam ele ao lado de qualquer um, sem nenhuma conexão real com o público ou os negócios que fazem sentido pra sua operação.",
+              "Interno: mesmo autossuficiente, ele sente que opera fora de um ecossistema que reflita o que construiu, sem o encontro com quem também pensa à frente.",
+              "Filosófico: quem já enxerga pra onde as coisas estão indo devia estar cercado de quem também enxerga, não competindo por atenção qualquer num endereço qualquer.",
+            ],
+          },
+          {
+            heading: "03 · O guia",
+            paragraphs: [
+              "Empatia: “Você já sabe fazer a conta. O que falta é estar cercado por quem também enxerga pra onde o sul da ilha está indo.”",
+              "Autoridade: o próprio OKA apostou cedo — construiu a centralidade antes da população chegar, quando a região ainda não tinha nada ao redor. Hoje seleciona quem entra com o mesmo critério: cartório (fluxo alto, zero risco), Arquipélago (destino, maior faturamento do empreendimento), Kerfé (capitalizado, já operou em outras praças). Comitê semanal avalia plano e solidez antes de afinidade de mix.",
+            ],
+          },
+          {
+            heading: "04 · O plano",
+            paragraphs: [
+              "Processo: chegue com plano e público já formados. Passe pelo comitê, que avalia solidez e aderência ao momento do empreendimento. Entre num ecossistema que já reúne cartório, banco, clínica, gastronomia de destino — cada operador que compartilha esse critério é mais um motivo pra ficar. Assine um contrato pensado pra durar, não pra te trocar quando começar a dar certo.",
+              "Acordo (promessas): régua igual pra todos, protegendo quem está há mais tempo · conversa direta se não performar, sem prolongar prejuízo.",
+            ],
+          },
+          {
+            heading: "05 · A ação",
+            paragraphs: [
+              "Direta: faça parte do ecossistema de quem já enxerga pra onde o sul da ilha está indo.",
+              "Transicional: visite o OKA numa manhã de semana e veja, sem discurso, o movimento de trabalho que já acontece ali.",
+            ],
+          },
+          {
+            heading: "06 · O que se evita",
+            paragraphs: [
+              "Ficar fora do ecossistema que realmente conversa com o seu negócio. Competir por atenção genérica em vez de estar entre quem também enxerga à frente. Entrar num lugar que, na prática, ainda se comporta como shopping pequeno: disperso, sem critério de quem faz parte dele.",
+            ],
+          },
+          {
+            heading: "07 · O sucesso",
+            paragraphs: [
+              "Ele passa a fazer parte de um ecossistema que multiplica o que já construiu sozinho — onde o encontro no corredor pode virar o próximo contrato.",
+              "Transformação de identidade: de operador de destino que resolve tudo sozinho, num endereço qualquer, sem conexão com quem também enxerga à frente, para operador de destino que faz parte do ecossistema certo.",
+            ],
+          },
+        ],
+        closing: "O endereço de quem já enxerga pra onde o sul da ilha está indo.",
+      },
+      {
+        slug: "investidor",
+        kicker: "Narrativa de Marca · StoryBrand · Frente secundária",
+        title: "Investidor",
+        subtitle: "Quem já apostou e aguarda o retorno prometido. Público: os 9 cotistas atuais da SPE do mall — roteiro de retenção e prestação de contas, não de atração.",
+        presentationUrl: "/clients/oka/narrativa/investidor-consumidor.html",
+        sections: [
+          {
+            heading: "Ponto de partida",
+            paragraphs: [
+              "Investidor e consumidor falam com a mesma voz da marca-mãe (Operador): mesmo guia, mesma promessa, cada um com seu próprio herói e problema. O investidor é quem recebe o resultado que o operador gera. Nota: os documentos do projeto tratam esse público como um grupo fechado, sem intenção declarada de captar capital novo — por isso este roteiro é de retenção e prestação de contas, confirmado pelo cliente em setembro de 2026.",
+            ],
+          },
+          {
+            heading: "01 · O herói",
+            paragraphs: [
+              "Quem é: cotista da SPE do mall, que aportou capital na expectativa de retorno dentro de um prazo definido.",
+              "O que ele quer: ver o capital aportado gerar o retorno prometido, com previsibilidade.",
+            ],
+          },
+          {
+            heading: "02 · O problema",
+            paragraphs: [
+              "Vilão: o prazo que passou do combinado sem a distribuição de resultados se concretizar.",
+              "Externo: o retorno era esperado em cerca de um ano; já passaram mais de quatro sem distribuição aos cotistas.",
+              "Interno: a dúvida sobre ter apostado certo, e a ansiedade de ver capital parado numa operação que ainda parece um shopping pequeno tentando ser grande.",
+              "Filosófico: um investimento imobiliário sério deveria devolver previsibilidade, não a incerteza que existe hoje.",
+            ],
+          },
+          {
+            heading: "03 · O guia",
+            paragraphs: [
+              "Empatia: “Sabemos que o prazo já passou do combinado, e que isso pesa.”",
+              "Autoridade: inadimplência caiu de forma significativa desde a profissionalização da cobrança. Grandes eventos que não geravam retorno foram cortados. O comitê de seleção prioriza capacidade de pagamento antes de afinidade de mix. Parte dos contratos é vinculada ao faturamento do operador, o que alinha o risco do OKA ao desempenho de quem opera. Estacionamento é hoje o maior gerador de receita de locação, e o media kit é uma fonte nova ainda inexplorada.",
+            ],
+          },
+          {
+            heading: "04 · O plano",
+            paragraphs: [
+              "Processo: a raiz do problema foi diagnosticada — um modelo de shopping desproporcional ao porte do empreendimento. O reposicionamento corrige essa equação de forma silenciosa, sem colocar em risco o que já foi construído com lojistas e mercado. Seleção mais rigorosa de operador reduz turnover, inadimplência e vacância. Novas fontes de receita somam à equação.",
+              "Acordo (promessas): prestação de contas transparente · nenhuma mudança abrupta que arrisque o que já está de pé · o objetivo desde a origem continua o mesmo: retomar a distribuição.",
+            ],
+          },
+          {
+            heading: "05 · A ação",
+            paragraphs: [
+              "Direta: acompanhar e apoiar o reposicionamento em curso.",
+              "Transicional: acompanhar os indicadores reportados periodicamente (turnover, inadimplência, inversão da demanda).",
+            ],
+          },
+          {
+            heading: "06 · O que se evita",
+            paragraphs: [
+              "Mais tempo de capital parado. A operação continuar presa a um modelo que nunca gerou o retorno esperado. Perder a paciência com uma correção que já está em curso.",
+            ],
+          },
+          {
+            heading: "07 · O sucesso",
+            paragraphs: [
+              "A equação fecha e a distribuição de resultados é retomada.",
+              "Transformação de identidade: de investidor que aportou capital numa aposta ainda não comprovada, para investidor que vê a aposta original validada pelo retorno.",
+            ],
+          },
+        ],
+        closing: "O retorno que ficou pra trás volta a fazer sentido quando o OKA finalmente é o que sempre deveria ter sido.",
+      },
+      {
+        slug: "consumidor",
+        kicker: "Narrativa de Marca · StoryBrand · Frente secundária",
+        title: "Consumidor",
+        subtitle: "Quem resolve o dia de trabalho num só endereço. Público: adulto ativo profissionalmente — migrante recente, casal jovem, profissional autônomo ou remoto.",
+        presentationUrl: "/clients/oka/narrativa/investidor-consumidor.html",
+        sections: [
+          {
+            heading: "Ponto de partida",
+            paragraphs: [
+              "Investidor e consumidor falam com a mesma voz da marca-mãe (Operador): mesmo guia, mesma promessa, cada um com seu próprio herói e problema. O consumidor é quem valida o resultado do operador com presença e consumo.",
+            ],
+          },
+          {
+            heading: "01 · O herói",
+            paragraphs: [
+              "Quem é: pessoas de fora, muitas vindas do sul do país em busca de qualidade de vida, com frequência casais jovens que chegam sem rede de contatos na cidade; soma-se quem já mora na região e trabalha de forma autônoma ou remota.",
+              "O que ele quer: resolver o dia — trabalhar, se reunir, comer bem, resolver um serviço — sem atravessar a cidade.",
+            ],
+          },
+          {
+            heading: "02 · O problema",
+            paragraphs: [
+              "Vilão: o dia fragmentado em vários endereços diferentes.",
+              "Externo: resolver o que precisa costuma exigir ir a vários lugares distintos pela cidade; para quem chegou há pouco, ainda não existe um ponto de referência natural.",
+              "Interno: a sensação de estar sempre correndo, sem lugar fixo; para quem é de fora, a insegurança de não conhecer ninguém e começar do zero.",
+              "Filosófico: resolver o dia não devia significar atravessar a cidade nem estar sozinho nisso.",
+            ],
+          },
+          {
+            heading: "03 · O guia",
+            paragraphs: [
+              "Empatia: “Sabemos como é chegar num lugar novo sem conhecer ninguém, ou só querer resolver o dia sem perder tempo indo de um canto a outro da cidade.”",
+              "Autoridade: nota 4,5 em 1.680 avaliações no Google. Estacionamento, limpeza, organização e integração com a natureza estão entre os pontos mais elogiados. As mesas com tomada lotam pela manhã. Cartório, Arquipélago e Kerfé resolvendo necessidades reais no mesmo endereço.",
+            ],
+          },
+          {
+            heading: "04 · O plano",
+            paragraphs: [
+              "Processo: chegue e estacione sem stress. Trabalhe, almoce ou resolva um serviço no mesmo endereço. Esbarre em gente que também está ali resolvendo o dia — pode virar contato, pode virar rede.",
+              "Acordo (promessas): ambiente limpo, seguro e tranquilo todos os dias · o tempo e o custo valem a pena · nenhuma pressão pra ficar além do que precisa.",
+            ],
+          },
+          {
+            heading: "05 · A ação",
+            paragraphs: [
+              "Direta: venha resolver o dia — trabalhar, almoçar, marcar a próxima reunião.",
+              "Transicional: conhecer os serviços disponíveis no local · seguir o Instagram do OKA.",
+            ],
+          },
+          {
+            heading: "06 · O que se evita",
+            paragraphs: [
+              "Mais um dia perdido em deslocamento. Continuar sem uma rede de contatos na cidade nova. Não ter um endereço de referência pra resolver o simples.",
+            ],
+          },
+          {
+            heading: "07 · O sucesso",
+            paragraphs: [
+              "Ele tem um endereço de referência: resolve o que precisa e, sem procurar, constrói rede.",
+              "Transformação de identidade: de quem resolve o dia correndo por vários endereços diferentes, sem raiz na cidade, para quem tem um endereço fixo onde o dia se resolve e a rede se constrói sozinha.",
+            ],
+          },
+        ],
+        closing: "Um endereço onde o dia se resolve inteiro, e onde, sem procurar, você constrói a rede que ainda não tinha.",
+      },
+      {
+        slug: "anti-persona",
+        kicker: "Documento complementar · Uso interno · StoryBrand adaptada",
+        title: "Anti-persona",
+        subtitle: "Quem o OKA não é mais a resposta certa — pelo menos por enquanto. Não é um roteiro de atração: é um filtro. Estrutura adaptada, função invertida.",
+        presentationUrl: "/clients/oka/narrativa/anti-persona-equipe.html",
+        sections: [
+          {
+            heading: "01 · Quem é",
+            paragraphs: [
+              "Empreendedor de primeira viagem, tipicamente pequena operação de gastronomia, sem plano de negócio formal, capital limitado. Hoje é 9 em cada 10 contatos que chegam ao comercial do OKA.",
+            ],
+          },
+          {
+            heading: "02 · O que ele busca (que o OKA não entrega mais)",
+            paragraphs: [
+              "Externo: baixo custo de entrada e flexibilidade nas obrigações.",
+              "Interno: acolhimento — alguém que segure a mão dele enquanto aprende a empreender.",
+              "Filosófico: a crença de que o sonho sustenta o negócio, mesmo sem plano.",
+            ],
+          },
+          {
+            heading: "03 · Por que o OKA não é (mais) a resposta pra ele",
+            paragraphs: [
+              "A régua hoje prioriza plano de negócio, capacidade de pagamento e fôlego pra atravessar baixa temporada — exatamente o que esse perfil ainda não tem. Não é rejeição pessoal: é que o momento dele é outro.",
+            ],
+          },
+          {
+            heading: "04 · Sinais na comunicação que hoje atraem esse perfil (eliminar)",
+            paragraphs: [
+              "Menção a “comunidade” no sentido antigo (afeto de aldeia). Tom lúdico ou familiar como identidade central. Qualquer sinalização de baixo custo de entrada ou baixa exigência.",
+            ],
+          },
+          {
+            heading: "05 · Como a marca trata isso, sem ser cruel",
+            paragraphs: [
+              "Sem anúncio, sem manifesto. A régua do comitê (plano + capacidade de pagamento) faz o filtro na prática. Quando esse perfil chega, a conversa é honesta: se não aguentar até a temporada, o melhor caminho é testar em outro lugar primeiro — quando der certo, volta.",
+            ],
+          },
+          {
+            heading: "06 · O sucesso, pro lado dele",
+            paragraphs: [
+              "Reconhecer isso antes de acumular prejuízo, amadurecer o negócio em outro lugar, e voltar quando o plano e o caixa estiverem prontos.",
+            ],
+          },
+        ],
+      },
+      {
+        slug: "equipe-interna",
+        kicker: "Documento complementar · Uso interno · StoryBrand",
+        title: "Equipe interna do OKA",
+        subtitle: "Quem representa a marca todos os dias. Público: time comercial e operacional do OKA, em contato direto com lojistas e cotistas.",
+        presentationUrl: "/clients/oka/narrativa/anti-persona-equipe.html",
+        sections: [
+          {
+            heading: "01 · O herói",
+            paragraphs: [
+              "Quem é: o time comercial e operacional do OKA, que escuta as perguntas difíceis primeiro.",
+              "O que ele quer: ter clareza e confiança pra conduzir conversas com lojistas e cotistas, sem parecer que está escondendo algo ou vendendo uma mudança.",
+            ],
+          },
+          {
+            heading: "02 · O problema",
+            paragraphs: [
+              "Vilão: a ambiguidade — não ter uma linha clara de como falar sobre o momento do OKA quando questionado.",
+              "Externo: perguntas de lojistas e cotistas sobre pra onde o OKA está indo, sem resposta pronta e alinhada entre quem responde.",
+              "Interno: insegurança de comunicar algo errado, ou de parecer que está reconhecendo um erro passado em vez de uma evolução natural.",
+              "Filosófico: quem representa a marca no dia a dia merece a mesma clareza que se dá a quem está do lado de fora.",
+            ],
+          },
+          {
+            heading: "03 · O guia",
+            paragraphs: [
+              "Empatia: “Sabemos que é você quem escuta as perguntas difíceis primeiro.”",
+              "Autoridade: material de narrativa e vídeo estratégico centralizados, documentando a visão de forma única (decidido em reunião de 11/09/2026).",
+            ],
+          },
+          {
+            heading: "04 · O plano",
+            paragraphs: [
+              "Processo: o time recebe a visão de forma didática — vídeo, não reunião abrupta. Uma linha de resposta única para as perguntas mais frequentes de lojistas. A mudança é sempre tratada como amadurecimento natural, nunca como correção de erro.",
+              "Acordo (promessas): nenhuma surpresa · o time sempre sabe antes de o mercado perceber.",
+            ],
+          },
+          {
+            heading: "05 · A ação",
+            paragraphs: [
+              "Direta: assistir ao vídeo estratégico e alinhar a linguagem com o time.",
+              "Transicional: usar o brand system centralizado como referência contínua.",
+            ],
+          },
+          {
+            heading: "06 · O que se evita",
+            paragraphs: [
+              "Contradição entre o que pessoas diferentes do time dizem. Lojista pegando o time de surpresa com uma pergunta sem resposta pronta.",
+            ],
+          },
+          {
+            heading: "07 · O sucesso",
+            paragraphs: [
+              "O time entende e comunica a visão com naturalidade, antes mesmo de ser perguntado.",
+              "Transformação de identidade: de time que reage quando é perguntado, para time que já entende e comunica a visão com naturalidade.",
+            ],
+          },
+        ],
+        closing: "Quem representa o OKA todos os dias entende pra onde ele está indo antes de qualquer lojista perguntar.",
+      },
+    ],
+  },
+  pages: {},
+};
+
+/* ------------------------------------------------------------------ *
  * Registro de clientes — resolvido por slug (user.clientSlug).
  * Fase 2: substituir por consulta ao Supabase.
  * ------------------------------------------------------------------ */
@@ -1576,6 +2078,7 @@ export const CLIENTS: Record<string, ClientBrand> = {
   [CRUZ_DE_MALTA.slug]: CRUZ_DE_MALTA,
   [JUJOO.slug]: JUJOO,
   [CASA_CAMPO.slug]: CASA_CAMPO,
+  [OKA.slug]: OKA,
 };
 
 /** Resolve o Brand System de um cliente pelo slug. */

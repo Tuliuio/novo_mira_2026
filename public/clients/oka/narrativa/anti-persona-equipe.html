@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OKA · Narrativa de Marca · Anti-persona e Equipe Interna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1a1a1a; --ink:#ffffff; --body:#cfcfcf; --dim:#8a8a8a; --faint:#5a5a5a;
+    --line:rgba(255,255,255,.11); --accent:#d2a24c; --accent-dim:#9c7a3e;
+    --stageW:1280px; --stageH:720px;
+    --sans:'Helvetica Neue',Helvetica,Arial,sans-serif; --disp:'Oswald',var(--sans);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#000;overflow:hidden;font-family:var(--sans)}
+  #fit{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
+  #stage{width:var(--stageW);height:var(--stageH);position:relative;background:var(--bg);overflow:hidden;
+    transform-origin:center center;box-shadow:0 40px 120px rgba(0,0,0,.6)}
+  .slide{position:absolute;inset:0;padding:58px 70px 54px;opacity:0;visibility:hidden;
+    transition:opacity .5s ease;background:var(--bg)}
+  .slide.active{opacity:1;visibility:visible}
+  .rhead{position:absolute;top:44px;left:70px;font-size:11px;letter-spacing:.22em;color:var(--dim);
+    text-transform:uppercase;font-weight:500}
+  .rhead-mark{position:absolute;top:44px;right:70px;font-size:12px;letter-spacing:.28em;color:var(--accent);
+    text-transform:uppercase;font-weight:700;font-family:var(--disp)}
+  .rfoot{position:absolute;bottom:34px;left:70px;right:70px;display:flex;justify-content:space-between;
+    font-size:10.5px;letter-spacing:.22em;color:var(--faint);text-transform:uppercase;font-weight:500}
+  .kicker{font-size:13px;letter-spacing:.30em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  .rule{height:1px;background:var(--line);width:100%}
+  .cover{display:flex;flex-direction:column;justify-content:center}
+  .cover .kicker{margin-bottom:26px;color:var(--dim)}
+  .cover h1{font-family:var(--disp);font-size:70px;font-weight:700;color:var(--ink);letter-spacing:-.005em;
+    line-height:1.05;text-transform:uppercase}
+  .cover .sub{margin-top:22px;font-size:17px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  .cover .meta{position:absolute;left:70px;bottom:110px;color:var(--dim);font-size:13px;line-height:1.8;
+    font-weight:400;letter-spacing:.02em}
+  .lead{display:flex;flex-direction:column;justify-content:center;height:100%;padding-top:10px}
+  .lead .kicker{margin-bottom:20px}
+  .lead h2{font-family:var(--disp);font-size:42px;font-weight:600;color:var(--ink);letter-spacing:-.005em;
+    line-height:1.14;max-width:940px}
+  .lead h2 em{font-style:normal;color:var(--accent)}
+  .trio{display:grid;grid-template-columns:repeat(2,1fr);gap:40px;margin-top:52px}
+  .trio .tl{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:12px}
+  .trio .tt{font-size:16px;line-height:1.55;color:var(--body)}
+  .note{margin-top:44px;font-size:15px;line-height:1.6;color:var(--dim);max-width:960px;
+    border-top:1px solid var(--line);padding-top:22px}
+  .note b{color:var(--body);font-weight:600}
+  .front{display:flex;flex-direction:column;justify-content:center;height:100%}
+  .front .kicker{margin-bottom:18px}
+  .front h2{font-family:var(--disp);font-size:58px;font-weight:700;color:var(--ink);text-transform:uppercase;
+    letter-spacing:-.005em;line-height:1.05;max-width:900px}
+  .front .tag{margin-top:18px;font-size:19px;color:var(--body);max-width:660px;line-height:1.4}
+  .front .pub{margin-top:30px;font-size:13px;letter-spacing:.1em;color:var(--dim);text-transform:uppercase}
+  .sb{display:grid;grid-template-columns:35% 1fr;gap:56px;height:100%;align-content:center;padding-top:20px}
+  .sb-left{display:flex;flex-direction:column;justify-content:center}
+  .sb-num{font-family:var(--disp);font-size:140px;font-weight:700;color:var(--accent);line-height:.85;letter-spacing:-.02em}
+  .sb-label{margin-top:10px;font-size:17px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);font-weight:600}
+  .sb-ess{margin-top:26px;font-size:20px;font-weight:400;color:var(--body);line-height:1.4;max-width:330px}
+  .sb-body{align-self:center;max-width:620px}
+  .field{margin-bottom:22px}
+  .field:last-child{margin-bottom:0}
+  .field-l{font-size:11.5px;letter-spacing:.20em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:9px}
+  .field-t{font-size:16.5px;line-height:1.6;color:var(--body);font-weight:400}
+  .field-t b{color:var(--ink);font-weight:600}
+  .want{border-left:2px solid var(--accent);padding:4px 0 4px 20px}
+  .want .field-t{font-size:20px;line-height:1.45;color:var(--ink);font-weight:400}
+  .steps{display:flex;flex-direction:column;gap:14px}
+  .step{display:grid;grid-template-columns:30px 1fr;gap:14px;align-items:baseline}
+  .step .sn{color:var(--accent);font-size:15px;font-weight:700;font-family:var(--disp)}
+  .step .st{font-size:16.5px;line-height:1.5;color:var(--body)}
+  .step .st b{color:var(--ink);font-weight:600}
+  .fromto{display:grid;grid-template-columns:1fr 34px 1fr;gap:18px;align-items:center;margin-top:4px}
+  .ft-box .lab{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;font-weight:600}
+  .ft-box .txt{font-size:15.5px;line-height:1.5;color:var(--body)}
+  .ft-box.to .txt{color:var(--ink)}
+  .ft-arrow{color:var(--accent);font-size:26px;text-align:center;font-weight:400}
+  .stmt{display:flex;flex-direction:column;justify-content:center}
+  .stmt .kicker{margin-bottom:34px}
+  .stmt p{font-size:34px;font-weight:400;color:var(--ink);line-height:1.32;letter-spacing:-.005em;max-width:1050px;
+    font-family:var(--disp);text-transform:uppercase}
+  #bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);width:0;z-index:10;transition:width .4s ease}
+  #count{position:fixed;bottom:16px;right:20px;color:#5a5a54;font-size:12px;letter-spacing:.15em;z-index:10;font-weight:500}
+  #hint{position:fixed;bottom:16px;left:20px;color:#4a4a44;font-size:11px;letter-spacing:.08em;z-index:10;
+    transition:opacity 1s ease;font-weight:400}
+  html,body,#fit,#stage,.slide{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  @page{size:1280px 720px;margin:0}
+  body.printing{overflow:visible;background:var(--bg)}
+  body.printing #fit{position:static;display:block;height:auto;background:var(--bg)}
+  body.printing #stage{transform:none!important;width:1280px;height:auto;box-shadow:none}
+  body.printing .slide{position:relative;inset:auto;opacity:1!important;visibility:visible!important;
+    width:1280px;height:720px;page-break-after:always;break-after:page}
+  body.printing .slide:last-child{page-break-after:auto;break-after:auto}
+  body.printing #bar,body.printing #count,body.printing #hint{display:none!important}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="fit"><div id="stage"></div></div>
+<div id="count"></div>
+<div id="hint">← → para navegar &nbsp;·&nbsp; F para tela cheia</div>
+
+<script>
+const HEAD = 'OKA · Narrativa de Marca';
+const FOOTL = 'OKA · Narrativa de Marca';
+const FOOTR = 'Mira Brand Studio';
+const slides = [];
+
+slides.push(`
+<div class="slide cover" data-nofoot>
+  <div class="kicker">Cliente · OKA Floripa</div>
+  <h1>Documentos<br>Complementares</h1>
+  <div class="sub">Anti-persona · Equipe Interna</div>
+  <div class="meta">Desenvolvido por MIRA BRAND STUDIO<br>Etapa 2 · Narrativa de Marca · setembro de 2026</div>
+</div>`);
+
+slides.push(`
+<div class="slide">
+  <div class="lead">
+    <div class="kicker">00 · Ponto de partida</div>
+    <h2>Não são roteiros de atração. <em>São ferramentas de uso interno.</em></h2>
+    <div class="trio">
+      <div><div class="tl">Anti-persona</div><div class="tt">Documenta quem a comunicação deve deixar de atrair, sem anúncio nem julgamento — só parando de emitir os sinais que hoje o convidam.</div></div>
+      <div><div class="tl">Equipe interna</div><div class="tt">Organiza como o time do OKA fala sobre o momento da marca, sem ruptura, sem alarme, sem contradição entre pessoas diferentes do time.</div></div>
+    </div>
+    <div class="note">Estrutura adaptada da mesma metodologia StoryBrand, com função invertida onde necessário: na anti-persona, o objetivo não é guiar ao sucesso dentro do OKA, e sim documentar honestamente por que o momento é outro.</div>
+  </div>
+</div>`);
+
+function front(kicker,title,tag,pub){
+  return `
+<div class="slide">
+  <div class="front">
+    <div class="kicker">${kicker}</div>
+    <h2>${title}</h2>
+    <div class="tag">${tag}</div>
+    <div class="pub">${pub}</div>
+  </div>
+</div>`;
+}
+function sb(num,label,ess,body){
+  return `
+<div class="slide">
+  <div class="sb">
+    <div class="sb-left">
+      <div class="sb-num">${num}</div>
+      <div class="sb-label">${label}</div>
+      <div class="sb-ess">${ess}</div>
+    </div>
+    <div class="sb-body">${body}</div>
+  </div>
+</div>`;
+}
+function stmt(kicker,text){
+  return `
+<div class="slide stmt">
+  <div class="kicker">${kicker}</div>
+  <p>${text}</p>
+</div>`;
+}
+
+/* ===== ANTI-PERSONA ===== */
+slides.push(front('Frente 1 · Anti-persona','ANTI-PERSONA','Quem o OKA não é mais a resposta certa — pelo menos por enquanto.','Estrutura adaptada: mesmos elementos, função invertida (filtro, não atração)'));
+
+slides.push(sb('01','Quem é','O perfil que hoje domina a demanda que chega ao comercial.',`
+  <div class="field"><div class="field-t">Empreendedor de primeira viagem, tipicamente pequena operação de gastronomia, sem plano de negócio formal, capital limitado. Hoje é <b>9 em cada 10 contatos</b> que chegam ao comercial do OKA.</div></div>`));
+
+slides.push(sb('02','O que busca','O que o OKA já não entrega mais pra esse perfil.',`
+  <div class="field"><div class="field-l">Externo</div><div class="field-t">Baixo custo de entrada e flexibilidade nas obrigações.</div></div>
+  <div class="field"><div class="field-l">Interno</div><div class="field-t">Acolhimento: alguém que segure a mão dele enquanto aprende a empreender.</div></div>
+  <div class="field"><div class="field-l">Filosófico</div><div class="field-t">A crença de que o sonho sustenta o negócio, mesmo sem plano.</div></div>`));
+
+slides.push(sb('03','Por que não é a resposta','A régua mudou — e não é sobre ele, é sobre o momento.',`
+  <div class="field"><div class="field-t">A régua hoje prioriza plano de negócio, capacidade de pagamento e fôlego pra atravessar baixa temporada — exatamente o que esse perfil ainda não tem. Não é rejeição pessoal: <b>é que o momento dele é outro</b>.</div></div>`));
+
+slides.push(sb('04','Sinais a eliminar','O que na comunicação ainda convida esse perfil pra dentro.',`
+  <div class="field"><div class="field-t">Menção a "comunidade" no sentido antigo (afeto de aldeia). Tom lúdico ou familiar como identidade central. Qualquer sinalização de baixo custo de entrada ou baixa exigência.</div></div>`));
+
+slides.push(sb('05','Como a marca trata isso','Sem anúncio, sem manifesto — a régua faz o filtro na prática.',`
+  <div class="field"><div class="field-t">A régua do comitê (plano + capacidade de pagamento) faz o filtro na prática. Quando esse perfil chega, a conversa é honesta: se não aguentar até a temporada, o melhor caminho é <b>testar em outro lugar primeiro</b> — quando der certo, volta.</div></div>`));
+
+slides.push(sb('06','O sucesso, pro lado dele','Reconhecer o momento antes de acumular prejuízo.',`
+  <div class="field"><div class="field-t">Reconhecer isso antes de acumular prejuízo, amadurecer o negócio em outro lugar, e voltar quando o plano e o caixa estiverem prontos.</div></div>`));
+
+/* ===== EQUIPE INTERNA ===== */
+slides.push(front('Frente 2 · Equipe Interna','EQUIPE INTERNA','Quem representa a marca todos os dias.','Público: time comercial e operacional do OKA, em contato direto com lojistas e cotistas'));
+
+slides.push(sb('01','O herói','O time que escuta as perguntas difíceis primeiro.',`
+  <div class="field"><div class="field-l">Quem é</div><div class="field-t">O time comercial e operacional do OKA, que escuta as perguntas difíceis primeiro.</div></div>
+  <div class="field want"><div class="field-l">O que ele quer</div><div class="field-t">Ter clareza e confiança pra conduzir conversas com lojistas e cotistas, sem parecer que está escondendo algo ou vendendo uma mudança.</div></div>`));
+
+slides.push(sb('02','O problema','A ambiguidade de não ter uma linha clara pra responder.',`
+  <div class="field"><div class="field-l">Vilão</div><div class="field-t"><b>A ambiguidade</b>: não ter uma linha clara de como falar sobre o momento do OKA quando questionado.</div></div>
+  <div class="field"><div class="field-l">Externo</div><div class="field-t">Perguntas de lojistas e cotistas sobre pra onde o OKA está indo, sem resposta pronta e alinhada entre quem responde.</div></div>
+  <div class="field"><div class="field-l">Interno</div><div class="field-t">Insegurança de comunicar algo errado, ou de parecer que está reconhecendo um erro passado em vez de uma evolução natural.</div></div>
+  <div class="field"><div class="field-l">Filosófico</div><div class="field-t">Quem representa a marca no dia a dia merece a mesma clareza que se dá a quem está do lado de fora.</div></div>`));
+
+slides.push(sb('03','O guia','Material centralizado, documentando a visão de forma única.',`
+  <div class="field"><div class="field-l">Empatia</div><div class="field-t">"Sabemos que é você quem escuta as perguntas difíceis primeiro."</div></div>
+  <div class="field"><div class="field-l">Autoridade</div><div class="field-t">Material de narrativa e vídeo estratégico centralizados, documentando a visão de forma única (decidido em reunião de 11/09/2026).</div></div>`));
+
+slides.push(sb('04','O plano','Visão didática, resposta única, mudança sempre como amadurecimento.',`
+  <div class="field"><div class="field-l">Plano de processo</div>
+    <div class="steps">
+      <div class="step"><span class="sn">1</span><span class="st">O time recebe a visão de forma <b>didática</b>: vídeo, não reunião abrupta.</span></div>
+      <div class="step"><span class="sn">2</span><span class="st">Uma <b>linha de resposta única</b> para as perguntas mais frequentes de lojistas.</span></div>
+      <div class="step"><span class="sn">3</span><span class="st">A mudança é sempre tratada como <b>amadurecimento natural</b>, nunca como correção de erro.</span></div>
+    </div>
+  </div>
+  <div class="field"><div class="field-l">Plano de acordo · promessas</div><div class="field-t">Nenhuma surpresa · o time sempre sabe antes de o mercado perceber.</div></div>`));
+
+slides.push(sb('05','A ação','Alinhar a linguagem, usar o brand system como referência.',`
+  <div class="field"><div class="field-l">Chamada direta</div><div class="field-t"><b>Assistir ao vídeo estratégico e alinhar a linguagem com o time.</b></div></div>
+  <div class="field"><div class="field-l">Chamada transicional</div><div class="field-t">Usar o brand system centralizado como referência contínua.</div></div>`));
+
+slides.push(sb('06','O que se evita','O que acontece sem uma linha única de resposta.',`
+  <div class="field"><div class="field-t">Contradição entre o que pessoas diferentes do time dizem. Lojista pegando o time de surpresa com uma pergunta sem resposta pronta.</div></div>`));
+
+slides.push(sb('07','O sucesso','Naturalidade antes mesmo de ser perguntado.',`
+  <div class="field"><div class="field-l">A conquista</div><div class="field-t">O time entende e comunica a visão com <b>naturalidade</b>, antes mesmo de ser perguntado.</div></div>
+  <div class="field"><div class="field-l">Transformação de identidade</div>
+    <div class="fromto">
+      <div class="ft-box from"><div class="lab">De</div><div class="txt">time que reage quando é perguntado</div></div>
+      <div class="ft-arrow">→</div>
+      <div class="ft-box to"><div class="lab">Para</div><div class="txt">time que já entende e comunica a visão com naturalidade</div></div>
+    </div>
+  </div>`));
+
+slides.push(stmt('+ One-liner · Equipe Interna','Quem representa o OKA todos os dias entende pra onde ele está indo antes de qualquer lojista perguntar.'));
+
+const stage = document.getElementById('stage');
+stage.innerHTML = slides.join('');
+const all = [...stage.querySelectorAll('.slide')];
+all.forEach((s,i)=>{
+  if(!s.hasAttribute('data-nofoot')){
+    const m=document.createElement('div'); m.className='rhead-mark'; m.textContent='OKA'; s.appendChild(m);
+    const h=document.createElement('div'); h.className='rhead'; h.textContent=HEAD; s.appendChild(h);
+    const f=document.createElement('div'); f.className='rfoot';
+    f.innerHTML='<span>'+FOOTL+'</span><span>'+FOOTR+'</span>'; s.appendChild(f);
+  }
+});
+let idx=0;
+const bar=document.getElementById('bar');
+const count=document.getElementById('count');
+function show(n){
+  idx=Math.max(0,Math.min(all.length-1,n));
+  all.forEach((s,i)=>s.classList.toggle('active',i===idx));
+  bar.style.width=((idx)/(all.length-1)*100)+'%';
+  count.textContent=String(idx+1).padStart(2,'0')+' / '+String(all.length).padStart(2,'0');
+}
+function next(){show(idx+1)} function prev(){show(idx-1)}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();next()}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()}
+  else if(e.key==='Home'){show(0)} else if(e.key==='End'){show(all.length-1)}
+  else if(e.key==='f'||e.key==='F'){toggleFs()}
+});
+document.getElementById('fit').addEventListener('click',e=>{
+  const x=e.clientX/window.innerWidth; x>0.28?next():prev();
+});
+function toggleFs(){ if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()} else {document.exitFullscreen&&document.exitFullscreen()} }
+function fit(){
+  const w=window.innerWidth, h=window.innerHeight;
+  const s=Math.min(w/1280, h/720);
+  stage.style.transform='scale('+s+')';
+}
+const PRINT = /(^|[#?&])print\b/.test(location.hash+location.search);
+if(PRINT){
+  document.body.classList.add('printing');
+  all.forEach(s=>s.classList.add('active'));
+}else{
+  window.addEventListener('resize',fit);
+  fit(); show(0);
+  setTimeout(()=>{const el=document.getElementById('hint'); if(el) el.style.opacity='0'},4200);
+}
+</script>
+</body>
+</html>
