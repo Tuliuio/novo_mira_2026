@@ -67,6 +67,8 @@ export interface HubArticle {
   sections: ArticleSection[];
   /** frase de fechamento em destaque (ex.: one-liner da narrativa) */
   closing?: string;
+  /** apresentação em slides (HTML autossuficiente, public/), abre em nova aba */
+  presentationUrl?: string;
 }
 
 export interface HubBrand {
@@ -761,6 +763,7 @@ export const CRUZ_DE_MALTA: ClientBrand = {
         kicker: "Narrativa de Marca · StoryBrand (SB7) · Donald Miller",
         title: "Cruz de Malta",
         subtitle: "O herói da história não é o Cruz de Malta — é quem senta à mesa. O papel do Cruz é o de guia: quem já percorreu esse caminho, entende a jornada do herói e oferece um plano claro para que ele chegue lá.",
+        presentationUrl: "/clients/cruz-de-malta/narrativa/narrativa.html",
         sections: [
           {
             heading: "01 · O herói",
@@ -1366,6 +1369,7 @@ const CASA_CAMPO: ClientBrand = {
         kicker: "Narrativa de Marca · StoryBrand · Público principal",
         title: "Parque Casa Campo — marca-mãe",
         subtitle: "Herói: o visitante do parque. Eixo: “um dia que vira memória”. Voz da marca: sem travessão.",
+        presentationUrl: "/clients/casa-campo/narrativa/parque.html",
         sections: [
           {
             heading: "Ponto de partida",
@@ -1431,6 +1435,7 @@ const CASA_CAMPO: ClientBrand = {
         kicker: "Narrativa de Marca · StoryBrand · Frente secundária",
         title: "Eventos",
         subtitle: "Quem celebra um momento importante ao lado de quem ama. Públicos: noivos, bodas, formaturas, corporativo, destination wedding.",
+        presentationUrl: "/clients/casa-campo/narrativa/eventos-hospedagem.html",
         sections: [
           {
             heading: "Ponto de partida",
@@ -1496,6 +1501,7 @@ const CASA_CAMPO: ClientBrand = {
         kicker: "Narrativa de Marca · StoryBrand · Frente secundária",
         title: "Hospedagem",
         subtitle: "Quem quer prolongar o bom momento e ficar. Públicos: convidados dos eventos, visitantes que esticam, refúgio na natureza, descanso.",
+        presentationUrl: "/clients/casa-campo/narrativa/eventos-hospedagem.html",
         sections: [
           {
             heading: "Ponto de partida",

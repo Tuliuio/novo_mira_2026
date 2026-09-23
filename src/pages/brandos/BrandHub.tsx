@@ -485,6 +485,9 @@ function Narrative({ hub, onRead }: { hub: HubBrand; onRead: (index: number) => 
             {n.closing && <p className="narr-closing">“{n.closing}”</p>}
             <div className="narr-actions">
               <button className="btn btn-gold" onClick={() => onRead(i)}>Ler roteiro completo ↗</button>
+              {n.presentationUrl && (
+                <a className="btn" href={n.presentationUrl} target="_blank" rel="noopener noreferrer">↗ Ver apresentação</a>
+              )}
             </div>
           </div>
         ))}
@@ -506,12 +509,17 @@ function ArticleReader({
           <>
             <div className="reader-bar">
               <button className="btn" onClick={onClose}>✕ Fechar</button>
-              {items && items.length > 1 && (
-                <div className="reader-nav">
-                  <button className="btn" onClick={() => onStep(-1)} disabled={index === 0}>← Anterior</button>
-                  <button className="btn" onClick={() => onStep(1)} disabled={index === items.length - 1}>Próximo →</button>
-                </div>
-              )}
+              <div className="reader-nav">
+                {items && items.length > 1 && (
+                  <>
+                    <button className="btn" onClick={() => onStep(-1)} disabled={index === 0}>← Anterior</button>
+                    <button className="btn" onClick={() => onStep(1)} disabled={index === items.length - 1}>Próximo →</button>
+                  </>
+                )}
+                {a.presentationUrl && (
+                  <a className="btn btn-gold" href={a.presentationUrl} target="_blank" rel="noopener noreferrer">↗ Ver apresentação</a>
+                )}
+              </div>
             </div>
             <div className="reader-inner">
               {a.kicker && <div className="reader-kicker">{a.kicker}</div>}

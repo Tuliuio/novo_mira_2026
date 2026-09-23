@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casa Campo · Narrativa · Eventos e Hospedagem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0a;
+    --ink:#efeee9;
+    --body:#b7b7b1;
+    --dim:#6d6d66;
+    --faint:#4a4a44;
+    --line:rgba(255,255,255,.11);
+    --accent:#93a277;      /* verde-sálvia */
+    --accent-dim:#75835d;
+    --stageW:1280px;
+    --stageH:720px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#000;overflow:hidden;font-family:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif}
+  #fit{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
+  #stage{
+    width:var(--stageW);height:var(--stageH);position:relative;
+    background:var(--bg);overflow:hidden;transform-origin:center center;
+    box-shadow:0 40px 120px rgba(0,0,0,.6);
+  }
+  .slide{position:absolute;inset:0;padding:58px 70px 54px;opacity:0;visibility:hidden;
+    transition:opacity .5s ease;background:var(--bg)}
+  .slide.active{opacity:1;visibility:visible}
+
+  /* running header / footer */
+  .rhead{position:absolute;top:44px;left:70px;font-size:11px;letter-spacing:.22em;
+    color:var(--dim);text-transform:uppercase;font-weight:500}
+  .rfoot{position:absolute;bottom:34px;left:70px;right:70px;display:flex;justify-content:space-between;
+    font-size:10.5px;letter-spacing:.22em;color:var(--faint);text-transform:uppercase;font-weight:500}
+
+  /* generic type */
+  .kicker{font-size:13px;letter-spacing:.30em;text-transform:uppercase;color:var(--dim);font-weight:500}
+  .display{font-weight:300;color:var(--ink);letter-spacing:-.01em;line-height:1.04}
+  h1.title{font-size:74px;font-weight:300;color:var(--ink);letter-spacing:-.015em;line-height:1}
+  .rule{height:1px;background:var(--line);width:100%}
+
+  /* pills */
+  .pills{display:flex;flex-wrap:wrap;gap:12px}
+  .pill{border:1px solid rgba(255,255,255,.26);border-radius:40px;padding:9px 18px;
+    font-size:12.5px;letter-spacing:.06em;color:var(--body);font-weight:500;white-space:nowrap}
+
+  /* ---------- COVER ---------- */
+  .cover{display:flex;flex-direction:column;justify-content:center}
+  .cover .kicker{margin-bottom:26px}
+  .cover h1{font-size:90px;font-weight:200;color:var(--ink);letter-spacing:-.02em;line-height:.98}
+  .cover .sub{margin-top:22px;font-size:17px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:500}
+  .cover .meta{position:absolute;left:70px;bottom:110px;color:var(--dim);font-size:13px;line-height:1.8;font-weight:400;letter-spacing:.02em}
+
+  /* ---------- SB7 hybrid ---------- */
+  .sb{display:grid;grid-template-columns:35% 1fr;gap:56px;height:100%;align-content:center;
+    padding-top:20px}
+  .sb-left{display:flex;flex-direction:column;justify-content:center}
+  .sb-num{font-size:150px;font-weight:200;color:var(--ink);line-height:.9;letter-spacing:-.03em}
+  .sb-label{margin-top:6px;font-size:19px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);font-weight:500}
+  .sb-ess{margin-top:26px;font-size:21px;font-weight:300;color:var(--body);line-height:1.4;max-width:330px}
+  .sb-body{align-self:center;max-width:600px}
+  .field{margin-bottom:24px}
+  .field:last-child{margin-bottom:0}
+  .field-l{font-size:11.5px;letter-spacing:.20em;text-transform:uppercase;color:var(--dim);font-weight:500;margin-bottom:9px}
+  .field-t{font-size:16.5px;line-height:1.6;color:var(--body);font-weight:400}
+  .field-t b{color:var(--ink);font-weight:500}
+  .want{border-left:2px solid var(--accent);padding:4px 0 4px 20px}
+  .want .field-t{font-size:20px;line-height:1.45;color:var(--ink);font-weight:300}
+
+  /* numbered plan */
+  .steps{display:flex;flex-direction:column;gap:14px}
+  .step{display:grid;grid-template-columns:30px 1fr;gap:14px;align-items:baseline}
+  .step .sn{color:var(--accent);font-size:15px;font-weight:500}
+  .step .st{font-size:16.5px;line-height:1.5;color:var(--body)}
+  .step .st b{color:var(--ink);font-weight:500}
+
+  /* transformation from->to */
+  .fromto{display:grid;grid-template-columns:1fr 34px 1fr;gap:18px;align-items:center;margin-top:4px}
+  .ft-box .lab{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;font-weight:500}
+  .ft-box .txt{font-size:15.5px;line-height:1.5;color:var(--body)}
+  .ft-box.to .txt{color:var(--ink)}
+  .ft-arrow{color:var(--accent);font-size:26px;text-align:center;font-weight:200}
+
+  /* ---------- STATEMENT (one-liner) ---------- */
+  .stmt{display:flex;flex-direction:column;justify-content:center}
+  .stmt .kicker{margin-bottom:34px}
+  .stmt p{font-size:33px;font-weight:200;color:var(--ink);line-height:1.34;letter-spacing:-.01em;max-width:1060px}
+  .stmt p b{font-weight:400;color:#fff}
+
+  /* ---------- generic section w/ big statement + 3 blocks ---------- */
+  .lead{display:flex;flex-direction:column;justify-content:center;height:100%;padding-top:10px}
+  .lead .kicker{margin-bottom:20px}
+  .lead h2{font-size:46px;font-weight:200;color:var(--ink);letter-spacing:-.01em;line-height:1.08;max-width:900px}
+  .lead h2 em{font-style:normal;color:var(--accent)}
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:52px}
+  .trio .tl{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:12px}
+  .trio .tt{font-size:16px;line-height:1.55;color:var(--body)}
+  .note{margin-top:44px;font-size:15px;line-height:1.6;color:var(--dim);max-width:960px;
+    border-top:1px solid var(--line);padding-top:22px}
+  .note b{color:var(--body);font-weight:500}
+
+  /* ---------- validate / next (numbered big) ---------- */
+  .qlist{display:flex;flex-direction:column;gap:24px;margin-top:38px;max-width:1010px}
+  .q{display:grid;grid-template-columns:56px 1fr;gap:22px;align-items:start}
+  .q .qn{font-size:40px;font-weight:200;color:var(--accent);line-height:.9}
+  .q .qt{font-size:18px;line-height:1.5;color:var(--body);font-weight:400;padding-top:6px}
+  .q .qt b{color:var(--ink);font-weight:500}
+
+  /* progress + counter */
+  #bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);width:0;z-index:10;transition:width .4s ease}
+  #count{position:fixed;bottom:16px;right:20px;color:#5a5a54;font-size:12px;letter-spacing:.15em;z-index:10;font-weight:500}
+  #hint{position:fixed;bottom:16px;left:20px;color:#4a4a44;font-size:11px;letter-spacing:.08em;z-index:10;
+    transition:opacity 1s ease;font-weight:400}
+
+  /* ---------- PRINT / PDF MODE ---------- */
+  html,body,#fit,#stage,.slide{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  @page{size:1280px 720px;margin:0}
+  body.printing{overflow:visible;background:var(--bg)}
+  body.printing #fit{position:static;display:block;height:auto;background:var(--bg)}
+  body.printing #stage{transform:none!important;width:1280px;height:auto;box-shadow:none}
+  body.printing .slide{position:relative;inset:auto;opacity:1!important;visibility:visible!important;
+    width:1280px;height:720px;page-break-after:always;break-after:page}
+  body.printing .slide:last-child{page-break-after:auto;break-after:auto}
+  body.printing #bar,body.printing #count,body.printing #hint{display:none!important}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="fit"><div id="stage"></div></div>
+<div id="count"></div>
+<div id="hint">← → para navegar &nbsp;·&nbsp; F para tela cheia</div>
+
+<script>
+const HEAD = 'Casa Campo · Narrativa · Frentes secundárias';
+const FOOTL = 'Casa Campo · Narrativa de Marca';
+const FOOTR = 'Mira Brand Studio';
+const HE = 'Casa Campo · Narrativa · Eventos';
+const HH = 'Casa Campo · Narrativa · Hospedagem';
+
+const slides = [];
+
+/* helper: SB7 hybrid slide with per-section header */
+function sb(head,num,label,ess,body){
+  return `
+<div class="slide" data-head="${head}">
+  <div class="sb">
+    <div class="sb-left">
+      <div class="sb-num">${num}</div>
+      <div class="sb-label">${label}</div>
+      <div class="sb-ess">${ess}</div>
+    </div>
+    <div class="sb-body">${body}</div>
+  </div>
+</div>`;
+}
+
+/* 1 — COVER */
+slides.push(`
+<div class="slide cover" data-nofoot>
+  <div class="kicker">Cliente · Casa Campo</div>
+  <h1>Frentes<br>secundárias</h1>
+  <div class="sub">Eventos e Hospedagem · Sub-roteiros da marca-mãe</div>
+  <div class="meta">
+    Desenvolvido por MIRA BRAND STUDIO<br>
+    Etapa 2 · Narrativa de Marca · setembro de 2026
+  </div>
+</div>`);
+
+/* 2 — INTRO */
+slides.push(`
+<div class="slide">
+  <div class="lead">
+    <div class="kicker">Ponto de partida</div>
+    <h2>Eventos e hospedagem falam com a <em>mesma voz</em> da marca-mãe.</h2>
+    <div class="trio">
+      <div><div class="tl">Mesma promessa</div><div class="tt">Uma experiência de excelência em meio à natureza, ao lado de quem se ama, em escalas diferentes.</div></div>
+      <div><div class="tl">Herói próprio</div><div class="tt">Cada frente tem seu herói e seu problema, mas herda o tom, o guia e a promessa do parque.</div></div>
+      <div><div class="tl">Cascata</div><div class="tt">O parque traz o público que descobre os eventos e a hospedagem, e um alimenta o outro.</div></div>
+    </div>
+    <div class="note">Por isso não são marcas separadas. São sub-roteiros aninhados no roteiro do Parque Casa Campo, sem dividir o esforço de comunicação.</div>
+  </div>
+</div>`);
+
+/* ===================== EVENTOS ===================== */
+
+/* 3 — DIVIDER EVENTOS */
+slides.push(`
+<div class="slide" data-head="${HE}">
+  <div class="lead">
+    <div class="kicker">Frente secundária · 01</div>
+    <h2 style="font-size:92px;font-weight:200;letter-spacing:-.02em;margin-top:2px">Eventos</h2>
+    <div style="margin-top:24px;font-size:22px;color:var(--body);font-weight:300;max-width:680px">Quem celebra um momento importante ao lado de quem ama.</div>
+    <div class="pills" style="margin-top:36px">
+      <span class="pill">noivos</span><span class="pill">bodas</span><span class="pill">formaturas</span><span class="pill">corporativo</span><span class="pill">destination wedding</span>
+    </div>
+  </div>
+</div>`);
+
+slides.push(sb(HE,'01','O herói','Quem celebra um marco da vida ao lado de quem ama.',`
+  <div class="field">
+    <div class="field-l">Quem é</div>
+    <div class="field-t">O público principal são os <b>noivos de 25 a 35 anos</b>, classes A e B. Somam-se os pais e familiares acima de 40 que participam da decisão e pagam por confiança, as empresas e comissões de formatura, e os casais que escolhem casar longe de casa.</div>
+  </div>
+  <div class="field want">
+    <div class="field-l">O que ele quer</div>
+    <div class="field-t">Realizar um evento inesquecível, num lugar bonito e com tudo funcionando, para celebrar um momento que não se repete.</div>
+  </div>`));
+
+slides.push(sb(HE,'02','O problema','Um dia único que depende de mil detalhes.',`
+  <div class="field">
+    <div class="field-l">Vilão</div>
+    <div class="field-t"><b>O medo de que algo dê errado no dia</b>: a data única, que não se repete e depende de tudo se encaixar.</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Externo</div>
+    <div class="field-t">Um evento assim costuma exigir juntar vários fornecedores e lugares, o espaço, o buffet, a hospedagem, o cenário das fotos, e torcer para tudo combinar.</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Interno</div>
+    <div class="field-t">O receio de decepcionar os convidados ou a família, de que falte algo, de que o dia não fique à altura do que representa.</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Filosófico</div>
+    <div class="field-t">Um momento que celebra um vínculo merece um lugar à altura, e a tranquilidade de saber que vai dar certo.</div>
+  </div>`));
+
+slides.push(sb(HE,'03','O guia','Quem já fez isso duas mil vezes.',`
+  <div class="field">
+    <div class="field-l">Empatia</div>
+    <div class="field-t">“Sabemos que é um dia que não se repete, e que você quer viver cada minuto dele, não resolver problemas.”</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Autoridade · a soma</div>
+    <div class="field-t">Mais de 20 anos e 2 mil eventos realizados. Quatro espaços com identidade própria, de 80 a 500 pessoas, cada um com cozinha própria. Capela para cerimônias. Buffet, equipe completa e estacionamento interno. Nota 5,0. E o que ninguém na região tem: os <b>jardins do parque como cenário</b> e hospedagem para os convidados no mesmo lugar.</div>
+  </div>`));
+
+slides.push(sb(HE,'04','O plano','Três passos, da visita ao grande dia.',`
+  <div class="field">
+    <div class="field-l">Plano de processo</div>
+    <div class="steps">
+      <div class="step"><span class="sn">1</span><span class="st"><b>Visite e escolha o espaço</b>: conheça o lugar e o cenário. A visita costuma fechar a decisão.</span></div>
+      <div class="step"><span class="sn">2</span><span class="st"><b>Deixe com a equipe</b>: buffet, serviço, cerimônia e cada detalhe com quem já fez isso 2 mil vezes.</span></div>
+      <div class="step"><span class="sn">3</span><span class="st"><b>Viva o dia</b>: celebre sem preocupação, com os convidados no parque e hospedagem ali mesmo.</span></div>
+    </div>
+  </div>
+  <div class="field">
+    <div class="field-l">Plano de acordo · promessas</div>
+    <div class="field-t">Um cenário que nenhum outro espaço da região tem · equipe que cuida de tudo · convidados que podem dormir no parque.</div>
+  </div>`));
+
+slides.push(sb(HE,'05','A ação','Um convite para conhecer de perto.',`
+  <div class="field">
+    <div class="field-l">Chamada direta</div>
+    <div class="field-t"><b>Agende uma visita · Peça uma proposta.</b></div>
+  </div>
+  <div class="field">
+    <div class="field-l">Chamada transicional</div>
+    <div class="field-t">Veja os espaços · Conheça casamentos já realizados · Fale com a equipe de eventos.</div>
+  </div>`));
+
+slides.push(sb(HE,'06','O que se evita','O que ele não quer ver no grande dia.',`
+  <div class="field">
+    <div class="field-l">O que está em jogo</div>
+    <div class="field-t">Um dia importante marcado por imprevistos. Convidados mal acomodados. A sensação de que faltou algo num momento que não volta.</div>
+  </div>`));
+
+slides.push(sb(HE,'07','O sucesso','Um dia que vira as fotos da vida.',`
+  <div class="field">
+    <div class="field-l">A conquista</div>
+    <div class="field-t">Um evento que os convidados não esquecem, num cenário que vira memória. Você viveu o dia em vez de resolver problemas, e o momento ficou à altura do vínculo que celebrou.</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Transformação de identidade</div>
+    <div class="fromto">
+      <div class="ft-box from"><div class="lab">De</div><div class="txt">quem teme que o grande dia não saia como sonhou</div></div>
+      <div class="ft-arrow">→</div>
+      <div class="ft-box to"><div class="lab">Para</div><div class="txt">quem confia o momento a quem sabe fazer e vive cada minuto</div></div>
+    </div>
+  </div>`));
+
+/* 11 — ONE-LINER EVENTOS */
+slides.push(`
+<div class="slide stmt" data-head="${HE}">
+  <div class="kicker">+ One-liner · Eventos</div>
+  <p>Todo grande momento merece um lugar à altura. Na <b>Casa Campo</b> você celebra entre jardins, com uma equipe de mais de 2 mil eventos cuidando de tudo e hospedagem para os convidados no mesmo lugar, para <b>viver o dia em vez de resolver problemas</b>.</p>
+</div>`);
+
+/* ===================== HOSPEDAGEM ===================== */
+
+/* 12 — DIVIDER HOSPEDAGEM */
+slides.push(`
+<div class="slide" data-head="${HH}">
+  <div class="lead">
+    <div class="kicker">Frente secundária · 02</div>
+    <h2 style="font-size:92px;font-weight:200;letter-spacing:-.02em;margin-top:2px">Hospedagem</h2>
+    <div style="margin-top:24px;font-size:22px;color:var(--body);font-weight:300;max-width:680px">Quem quer prolongar o bom momento e ficar.</div>
+    <div class="pills" style="margin-top:36px">
+      <span class="pill">convidados dos eventos</span><span class="pill">visitantes que esticam</span><span class="pill">refúgio na natureza</span><span class="pill">descanso</span>
+    </div>
+  </div>
+</div>`);
+
+slides.push(sb(HH,'01','O herói','Quem não quer que o bom momento acabe.',`
+  <div class="field">
+    <div class="field-l">Quem é</div>
+    <div class="field-t">Os noivos e convidados dos eventos que querem dormir por perto, os visitantes que querem esticar o passeio e quem procura um refúgio tranquilo na natureza para descansar. Renda média e alta.</div>
+  </div>
+  <div class="field want">
+    <div class="field-l">O que ele quer</div>
+    <div class="field-t">Prolongar o bom momento e dormir dentro do parque, com conforto, privacidade e bem-estar.</div>
+  </div>`));
+
+slides.push(sb(HH,'02','O problema','O melhor momento sempre tem hora de acabar.',`
+  <div class="field">
+    <div class="field-l">Vilão</div>
+    <div class="field-t"><b>A hora de ir embora</b>: o momento bom que termina cedo demais.</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Externo</div>
+    <div class="field-t">Quem visita o parque ou vai a um evento costuma encerrar o dia e pegar a estrada, deixando a experiência pela metade. E uma hospedagem que reúna natureza, privacidade e conforto ali perto é rara.</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Interno</div>
+    <div class="field-t">O desejo de descansar de verdade, sem pressa e sem o barulho de sempre, e de esticar o tempo com quem se ama.</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Filosófico</div>
+    <div class="field-t">Bem-estar e natureza não deveriam ter hora para acabar.</div>
+  </div>`));
+
+slides.push(sb(HH,'03','O guia','Dormir dentro do parque, não num espaço de eventos.',`
+  <div class="field">
+    <div class="field-l">Empatia</div>
+    <div class="field-t">“Sabemos que o melhor de um lugar assim é não precisar ir embora.”</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Autoridade</div>
+    <div class="field-t">Casas e cabanas planejadas para conforto, privacidade e bem-estar em meio à natureza, <b>dentro do próprio parque</b>. Atendem noivos, convidados e visitantes. Em expansão: 20 unidades em 2026, 50 até 2027 e 100 em 2028.</div>
+  </div>`));
+
+slides.push(sb(HH,'04','O plano','Três passos para ficar.',`
+  <div class="field">
+    <div class="field-l">Plano de processo</div>
+    <div class="steps">
+      <div class="step"><span class="sn">1</span><span class="st"><b>Reserve sua casa ou cabana</b>: escolha a data e a unidade.</span></div>
+      <div class="step"><span class="sn">2</span><span class="st"><b>Durma dentro do parque</b>: privacidade e natureza ao redor.</span></div>
+      <div class="step"><span class="sn">3</span><span class="st"><b>Acorde sem pressa</b>: o parque à sua porta, no seu tempo.</span></div>
+    </div>
+  </div>
+  <div class="field">
+    <div class="field-l">Plano de acordo · promessas</div>
+    <div class="field-t">Privacidade e silêncio · natureza ao redor · o parque à sua porta.</div>
+  </div>`));
+
+slides.push(sb(HH,'05','A ação','Um convite para ficar mais.',`
+  <div class="field">
+    <div class="field-l">Chamada direta</div>
+    <div class="field-t"><b>Reserve sua estadia.</b></div>
+  </div>
+  <div class="field">
+    <div class="field-l">Chamada transicional</div>
+    <div class="field-t">Veja as casas e cabanas · consulte datas · combine com sua visita ao parque.</div>
+  </div>`));
+
+slides.push(sb(HH,'06','O que se evita','O que ele deixa para trás ao ficar.',`
+  <div class="field">
+    <div class="field-l">O que está em jogo</div>
+    <div class="field-t">Ir embora com gostinho de quero mais. Encerrar o dia cedo demais. Trocar o sossego por mais uma viagem de volta.</div>
+  </div>`));
+
+slides.push(sb(HH,'07','O sucesso','O bom momento que continua.',`
+  <div class="field">
+    <div class="field-l">A conquista</div>
+    <div class="field-t">Você fica. Dorme cercado de natureza, acorda sem pressa e vive o parque com calma, prolongando o bom momento com quem ama.</div>
+  </div>
+  <div class="field">
+    <div class="field-l">Transformação de identidade</div>
+    <div class="fromto">
+      <div class="ft-box from"><div class="lab">De</div><div class="txt">quem precisa encerrar o passeio e voltar</div></div>
+      <div class="ft-arrow">→</div>
+      <div class="ft-box to"><div class="lab">Para</div><div class="txt">quem faz do lugar um refúgio e fica o tempo que quiser</div></div>
+    </div>
+  </div>`));
+
+/* 20 — ONE-LINER HOSPEDAGEM */
+slides.push(`
+<div class="slide stmt" data-head="${HH}">
+  <div class="kicker">+ One-liner · Hospedagem</div>
+  <p>O melhor de um lugar assim é <b>não precisar ir embora</b>. Na <b>Casa Campo</b>, casas e cabanas dentro do parque deixam você dormir cercado de natureza, com privacidade e bem-estar, e acordar com o parque à sua porta.</p>
+</div>`);
+
+
+/* ---------------- ENGINE ---------------- */
+const stage = document.getElementById('stage');
+stage.innerHTML = slides.join('');
+const all = [...stage.querySelectorAll('.slide')];
+
+/* inject header/footer (per-slide data-head overrides default) */
+all.forEach((s)=>{
+  if(!s.hasAttribute('data-nofoot')){
+    const h=document.createElement('div'); h.className='rhead'; h.textContent=s.dataset.head||HEAD; s.appendChild(h);
+    const f=document.createElement('div'); f.className='rfoot';
+    f.innerHTML='<span>'+FOOTL+'</span><span>'+FOOTR+'</span>'; s.appendChild(f);
+  }
+});
+
+let idx=0;
+const bar=document.getElementById('bar');
+const count=document.getElementById('count');
+function show(n){
+  idx=Math.max(0,Math.min(all.length-1,n));
+  all.forEach((s,i)=>s.classList.toggle('active',i===idx));
+  bar.style.width=((idx)/(all.length-1)*100)+'%';
+  count.textContent=String(idx+1).padStart(2,'0')+' / '+String(all.length).padStart(2,'0');
+}
+function next(){show(idx+1)} function prev(){show(idx-1)}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();next()}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()}
+  else if(e.key==='Home'){show(0)} else if(e.key==='End'){show(all.length-1)}
+  else if(e.key==='f'||e.key==='F'){toggleFs()}
+});
+document.getElementById('fit').addEventListener('click',e=>{
+  const x=e.clientX/window.innerWidth; x>0.28?next():prev();
+});
+function toggleFs(){ if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()} else {document.exitFullscreen&&document.exitFullscreen()} }
+
+function fit(){
+  const w=window.innerWidth, h=window.innerHeight;
+  const s=Math.min(w/1280, h/720);
+  stage.style.transform='scale('+s+')';
+}
+const PRINT = /(^|[#?&])print\b/.test(location.hash+location.search);
+if(PRINT){
+  document.body.classList.add('printing');
+  all.forEach(s=>s.classList.add('active'));
+}else{
+  window.addEventListener('resize',fit);
+  fit(); show(0);
+  setTimeout(()=>{const el=document.getElementById('hint'); if(el) el.style.opacity='0'},4200);
+}
+</script>
+</body>
+</html>
