@@ -758,62 +758,69 @@ export const CRUZ_DE_MALTA: ClientBrand = {
     narratives: [
       {
         slug: "cruz-de-malta",
-        kicker: "Narrativa de Marca · StoryBrand · Público principal",
+        kicker: "Narrativa de Marca · StoryBrand (SB7) · Donald Miller",
         title: "Cruz de Malta",
-        subtitle: "Herói: o cliente fiel, movido por memória e tradição. Voz da marca: acolhedora e orgulhosa, sem pretensão.",
+        subtitle: "O herói da história não é o Cruz de Malta — é quem senta à mesa. O papel do Cruz é o de guia: quem já percorreu esse caminho, entende a jornada do herói e oferece um plano claro para que ele chegue lá.",
         sections: [
           {
             heading: "01 · O herói",
             paragraphs: [
-              "Quem é: o público central do Cruz de Malta é maduro, 60+ na maioria — mas o costume atravessa gerações, trazido pela família de quem valoriza memória e pertencimento. É quem chega por indicação, por memória ou por reputação, e boa parte já entra sabendo o que vai pedir.",
-              "O que ele quer: sentar-se à mesa da comida de verdade que já conhece, cercado por quem ama, com a certeza de que vai ser exatamente como sempre foi.",
+              "Quem é: pessoas com memórias afetivas do Cruz na infância ou juventude. Moradores de outras cidades com saudade de Pelotas, que voltam e reencontram o sabor que guardam na lembrança. Famílias em busca de uma refeição completa e de qualidade. E o público local, que valoriza tradição e consistência acima da novidade.",
+              "O que ele quer: reencontrar — ou descobrir — o sabor que não muda. Um lugar de confiança para reunir quem se ama. Uma experiência genuína, sem pressa. Sentir-se parte da história de Pelotas, não apenas de uma refeição.",
             ],
           },
           {
             heading: "02 · O problema",
             paragraphs: [
-              "Vilão: um mercado de opções passageiras, onde tudo muda o tempo todo e nada dura.",
-              "Externo: encontrar, entre tantos restaurantes novos e modismos de ocasião, um lugar que sirva a mesma comida de verdade de sempre — sem depender da sorte.",
-              "Interno: o receio de que a próxima novidade decepcione, ou pior, de que o lugar de sempre tenha mudado sem avisar.",
-              "Filosófico: quem já tem 60 anos de história não devia precisar provar nada a cada visita — a confiança devia vir de graça, construída ao longo do tempo.",
+              "Externo: a cidade se enche de opções genéricas, focadas no produto do dia, ou de tendências passageiras — happy hour, fast food, o “novo” a qualquer custo. Cada vez é mais difícil achar quem cozinhe como antes, sem atalhos e sem molho de pacotinho.",
+              "Interno: o medo de que a memória se perca. A frustração de voltar a um lugar querido e não reconhecer mais o sabor. A insegurança de escolher um restaurante para a família e se decepcionar.",
+              "Filosófico: tradição cuidada não deveria virar peça de museu. Uma cidade que carrega 60 anos de charqueadas, doces e histórias de convergência merece lugares que sirvam essa memória à mesa — não apenas que a lembrem.",
             ],
           },
           {
             heading: "03 · O guia",
             paragraphs: [
-              "Empatia: “sabemos que, quando bate a vontade de uma comida de verdade, você não quer surpresa — quer a certeza de encontrar exatamente o que já ama”.",
-              "Autoridade: 60 anos ininterruptos no mesmo endereço, a Avenida Bento Gonçalves, 143 — o restaurante mais antigo em funcionamento de Pelotas. Cardápio genuinamente multiétnico, do churrasco gaúcho ao bacalhau português, do galeto ao camarão, com tempero da casa, feito na hora, sem atalho. Conduzido por Adriano e Cacilda desde 2000, com raízes de família que vêm do campo.",
+              "Empatia: o Cruz entende essa busca porque a vive há 60 anos — sabe o que é ser o ponto de referência afetivo de quem cresceu em Pelotas, de quem voltou, de quem descobre a cidade pela primeira vez.",
+              "Autoridade: fundado em 1967, é o restaurante mais antigo em funcionamento de Pelotas. Único genuinamente multiétnico — do churrasco gaúcho ao bacalhau português, do galeto ao camarão, passando pela massa italiana. Tempero próprio da casa, conexão direta com a pecuária da família, e lugar cativo no roteiro afetivo de Pelotas, ao lado do Café Aquário e do Mercado Público.",
             ],
           },
           {
             heading: "04 · O plano",
             paragraphs: [
-              "Processo: venha como sempre veio, sem reserva, sem cerimônia. Peça o que já ama, ou deixe a casa apresentar o cardápio inteiro, do galeto ao camarão. Saia como sempre saiu: satisfeito, e já pensando na próxima vez.",
-              "Acordo (promessas): a mesma receita de sempre. Tempero da casa, feito na hora. Atendimento sem pressa, olho no olho.",
+              "Processo: venha como sempre veio — ou descubra pela primeira vez — o Cruz de Malta, à la carte no almoço ou no jantar. Sente-se à mesa que já viu gerações de famílias pelotenses passarem. Reencontre o sabor que não muda, e saia já querendo voltar.",
+              "Acordo (promessas): receitas sem atalhos, com tempero próprio da casa. O mesmo prato de sempre, ou melhor — nunca menos. Acolhimento familiar, com tempo e cuidado, não com pressa.",
             ],
           },
           {
             heading: "05 · A ação",
             paragraphs: [
-              "Direta: venha para o Cruz da Bento.",
-              "Transicional: siga o Instagram, veja o cardápio, peça pelo WhatsApp (delivery próprio, sem plataforma).",
+              "Direta: reserve sua mesa no Cruz de Malta. Venha almoçar ou jantar hoje.",
+              "Transicional: conheça a história do Cruz de Malta e de Pelotas. Siga a marca para descobrir receitas, memórias e bastidores de 60 anos de tradição.",
             ],
           },
           {
             heading: "06 · O que se evita",
             paragraphs: [
-              "A decepção de um lugar que prometia tradição e entregou modismo. A comida que muda de sabor a cada visita. A sensação de ter arriscado um jantar em vez de ter certeza dele.",
+              "Perder o vínculo com a própria história e memória afetiva. Ver a memória de Pelotas se diluir em restaurantes genéricos e passageiros. Reunir a família em lugares sem alma — e sem história para contar depois.",
             ],
           },
           {
             heading: "07 · O sucesso",
             paragraphs: [
-              "Ele sai como entrou: em casa. A mesma comida de sempre, a família reunida à mesa, e mais uma visita que confirma por que sempre volta.",
-              "Transformação de identidade: de quem procura, ansioso, um lugar em que confiar, para quem já sabe — é no Cruz da Bento.",
+              "Sentar à mesa e sentir que o que importa nunca mudou. Reencontrar Pelotas em cada prato — do charque à massa, do bacalhau ao galeto. Fazer parte do roteiro afetivo da cidade, ao lado do Café Aquário e do Mercado Público. Guardar mais uma memória para contar — e voltar para criar a próxima.",
+              "Transformação de identidade: de quem teme que a memória se perca, para quem sabe exatamente onde encontrá-la sempre que precisar.",
+            ],
+          },
+          {
+            heading: "08 · Aplicação prática",
+            paragraphs: [
+              "Site e cardápio: abrir com o problema do herói — a busca por autenticidade — não com a lista de pratos. O Cruz entra como guia que resolve isso.",
+              "Redes sociais: usar as chamadas transicionais para contar história, bastidores e receitas, construindo confiança antes da chamada direta.",
+              "Atendimento no salão: a linguagem da equipe deve refletir a personalidade da marca — tradicional sem ser ultrapassada, acolhedora sem informalidade excessiva, séria no que serve sem ser sisuda.",
             ],
           },
         ],
-        closing: "Há 60 anos, a mesma comida de verdade. É só chegar — a família reunida, o tempero de sempre e a certeza de que nada mudou.",
+        closing: "Pelotenses e visitantes que buscam uma refeição que sabe a memória muitas vezes não encontram mais quem sirva com a autenticidade de antes. O Cruz de Malta, o restaurante mais antigo em funcionamento da cidade, serve há 60 anos essa tradição sem atalhos — para que cada visita seja também uma viagem no tempo, e mais uma memória para guardar.",
       },
     ],
   },
