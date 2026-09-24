@@ -2098,6 +2098,480 @@ const OKA: ClientBrand = {
 };
 
 /* ------------------------------------------------------------------ *
+ * Cliente — Aloha Recovery (centro de recovery, franqueadora, Curitiba)
+ * Essência extraída de "Aloha - Essência (apresentação).pdf" (12 pontos +
+ * síntese). Narrativa v1 (StoryBrand) de "Aloha - Narrativa v1.md": roteiro
+ * principal (quem se movimenta) + sub-roteiros Mulheres e Atleta; franqueado
+ * em espera por decisão dos sócios (11/09). Nome em validação: a
+ * recomendação é "Aloha Recovery Club". Cores, tipografia e logos são os
+ * oficiais do manual atual (dez/2025) — a Expressão ainda não começou.
+ * ------------------------------------------------------------------ */
+const ALOHA: ClientBrand = {
+  slug: "aloha",
+  name: "Aloha",
+  tagline: "Saia melhor do que entrou.",
+  accent: "#c05f3f",
+  hub: {
+    year: "2026",
+    since: "Desde 2019",
+    logos: [
+      { name: "Logotipo principal · fundo claro", role: "Aplicação padrão, fundos claros", src: "/clients/aloha/logo-dark.png", file: "aloha-logo-fundo-claro.png", pad: "#f3efe6" },
+      { name: "Logotipo principal · fundo escuro", role: "Versão negativa, fundos escuros", src: "/clients/aloha/logo-light.png", file: "aloha-logo-fundo-escuro.png", pad: "#231f20" },
+      { name: "Símbolo", role: "Ciclo contínuo de recuperação — uso isolado", src: "/clients/aloha/simbolo.png", file: "aloha-simbolo.png", pad: "#f3efe6" },
+    ],
+    colorsNote: "Paleta oficial do manual atual da marca (dez/2025). A Expressão ainda não foi iniciada: a Essência pede uma expressão menos masculina e mais convidativa, então este sistema pode evoluir.",
+    colors: [
+      { name: "Laranja", hex: "#c05f3f", role: "Ação — cor de destaque" },
+      { name: "Amarelo", hex: "#d5b256", role: "Criatividade e calor" },
+      { name: "Bege", hex: "#c7b992", role: "Estabilidade — fundos e apoio" },
+      { name: "Azul esverdeado", hex: "#68a498", role: "Equilíbrio" },
+      { name: "Vermelho", hex: "#d74550", role: "Paixão — ponta do gradiente" },
+      { name: "Preto", hex: "#231f20", role: "Presença e força — logotipo" },
+    ],
+    pairings: [
+      { bg: "#231f20", fg: "#c7b992", label: "Preto + Bege" },
+      { bg: "#c7b992", fg: "#231f20", label: "Bege + Preto" },
+      { bg: "#231f20", fg: "#d5b256", label: "Preto + Amarelo" },
+      { bg: "#c05f3f", fg: "#ffffff", label: "Laranja + Branco" },
+    ],
+    type: [
+      { role: "Títulos / logotipo", family: "Gotham Ultra (iCiel Gotham Ultra)", sample: "SAIA MELHOR DO QUE ENTROU" },
+      { role: "Apoio", family: "Gilroy (Bold / UltraLight)", sample: "Relaxar · Recuperar · Recarregar" },
+    ],
+    essence: {
+      lead: "A Aloha ocupa o recovery, e o trabalho daqui para frente é expandir o que essa palavra significa: um recovery que já contém bem-estar, saúde mental e autocuidado, para qualquer pessoa com um pé em movimento.",
+      proposito: "Fazer quem se movimenta sair melhor do que entrou. Reunir num só lugar, e em cerca de uma hora, a recuperação criada por quem treina, com quem sabe o que faz, e levar o recovery do fim do esforço para o centro do cuidado.",
+      posicionamento: "Sair do lugar estreito do depois do treino e expandir o próprio recovery até que ele signifique cuidado por inteiro: o corpo, a cabeça, o sono, a energia da semana. Não é recovery mais bem-estar, é um recovery que já contém os dois. Quando alguém ouvir o nome Aloha, a primeira coisa que deve vir à cabeça continua sendo recovery.",
+      quote: "Vai lá, porque para recuperar não tem lugar melhor, e você sai de lá renovado.",
+      atributos: ["Competente", "Atenciosa", "Agradável", "Impecável", "Eficaz", "Completa", "Consistente", "Justa", "Referência", "Habitual"],
+    },
+    essenceArticle: {
+      slug: "essencia-aloha",
+      kicker: "Essência de Marca · Mira Brand Studio",
+      title: "Essência de Marca",
+      subtitle: "Uma marca que nasceu pioneira e precisa continuar se movendo para se manter nesse posto. O caminho não é somar bem-estar ao recovery, e sim expandir o próprio recovery até que ele contenha bem-estar, saúde mental e autocuidado.",
+      sections: [
+        {
+          heading: "O Diagnóstico",
+          paragraphs: [
+            "Uma marca que nasceu pioneira e precisa continuar se movendo para se manter nesse posto. O trabalho é garantir o lugar de vanguarda, sendo a marca que puxa o movimento, não a que adere a ele.",
+            "Um serviço que já cuida do corpo e da mente, mas que ainda fala pouco de saúde mental e autocuidado. O trabalho é expandir o próprio conceito de recovery, para que ele passe a conter bem-estar, saúde mental e autocuidado.",
+            "Uma marca que atende prioritariamente atletas, em grande maioria homens, e afasta quem não se entende como atleta e as mulheres de forma geral. O trabalho é ampliar o alcance sem abrir mão do esporte, acolhendo qualquer pessoa que queira se cuidar.",
+            "Um mercado que copia a estrutura da Aloha por fora, mas não alcança o que ela entrega por dentro. O trabalho é transformar a excelência do atendimento em território de marca, que a concorrência não consegue sustentar.",
+            "Uma história forte, reconhecida por quem é do meio, mas que ainda não trabalha a favor da marca. O trabalho é assumir a origem de atleta para atleta como a prova de legitimidade que ninguém copia.",
+          ],
+        },
+        {
+          heading: "01 · História",
+          paragraphs: [
+            "A Aloha começou a doze mil quilômetros de Curitiba. Em 2016, no Havaí, um dos fundadores disputava o Mundial de Ironman e terminou em quarto lugar entre os brasileiros da categoria amadora. O que o levou até a linha de chegada não foi só o treino, foi a atenção obsessiva à recuperação.",
+            "Uma temporada em Miami, logo depois, mostrou a ele que existiam centros que reuniam num só lugar tudo o que ajuda o corpo a se recuperar, enquanto no Brasil isso exigia uma logística bem mais complexa.",
+            "De volta ao país, ele começou pequeno: botas de compressão levadas aos treinos da assessoria, depois a banheira de gelo, depois um profissional para a massagem. Quando a procura ficou maior, veio o primeiro endereço, em fevereiro de 2019. Logo a sociedade tomou a forma que tem hoje, com sócios conectados pelo triatlo, vivenciando na pele a realidade de quem precisa do recovery.",
+            "Em janeiro de 2020 veio a segunda operação, maior, já com sauna e banheira quente. Ela segue ativa e se tornou a casa da marca.",
+            "O nome veio do começo de tudo. Aloha é a palavra que o Havaí usa para saudar, para acolher e para se despedir. É por isso que a Aloha não é um negócio montado sobre uma oportunidade de mercado. Foi criada por quem também precisava dela.",
+            "De atleta para atleta é uma frase que a marca usa com naturalidade, porque é literalmente verdade. Seis anos depois, são dez franquias pelo Brasil, uma unidade própria e uma franqueada em Curitiba, e a mesma inquietação do início: ser pioneira e líder no que se propõe a fazer.",
+          ],
+        },
+        {
+          heading: "02 · Contexto",
+          paragraphs: [
+            "O momento que trouxe a Aloha até aqui não é de crise, mas de uma certa pressa. O mercado que a marca ajudou a inaugurar está sendo redesenhado pelo movimento do bem-estar, e esse movimento já está em curso: já quebrou em São Paulo e fora do país, e chega a Curitiba agora. A urgência é de posição. Se a janela passar, o risco não é faturar menos no mês seguinte, é ver outra marca ocupar um território que a Aloha tinha tudo para reivindicar.",
+            "Esse movimento é uma mudança de comportamento. As pessoas trocaram o encontro no bar pelo grupo de corrida e passaram a tratar sono, alimentação e saúde mental como assunto sério. E há muito espaço pela frente: o sedentarismo ainda é uma das maiores preocupações de saúde a nível mundial. Quem passa a se exercitar é alguém que vai precisar de recuperação, e a Aloha não disputa o espaço da academia, ela é o contraponto dela e cresce junto.",
+            "Um segundo movimento reforça essa lógica: o uso crescente de medicamentos de performance e de emagrecimento, em torno do qual marcas grandes e pequenas já estão remodelando produtos e serviços. Eles mudaram o consumo em vários mercados, mas não fazem milagre sozinhos, porque quem toma precisa se exercitar e precisa se recuperar. É uma lacuna concreta para a marca ocupar, já que a Aloha entrega exatamente a parte que o remédio não entrega.",
+            "E há um terceiro movimento, talvez o mais estratégico. Vivemos uma era de pertencimento, e a solidão já é tratada pela Organização Mundial da Saúde como questão de saúde pública, afetando uma em cada seis pessoas no mundo. A resposta social tem sido o encontro em torno de propósitos comuns, e os novos pontos de encontro são os espaços ligados à saúde: grupos de corrida, aulas coletivas, clubes de bem-estar. Por isso a ideia de clube não é um detalhe de nomenclatura, é uma ferramenta estratégica de negócio, e está ali, disponível para ser ocupada.",
+            "O setor, portanto, está em transição, amadurecendo. O principal concorrente indireto de Curitiba veio do bem-estar e está migrando para o recovery. Já começou a se apresentar como Wellness Club, termo que a Aloha avaliou e decidiu não adotar.",
+            "Ao mesmo tempo, o território deixou de ser exclusivo. Sauna e banheira de gelo chegaram às academias e viraram item de venda em empreendimentos de alto padrão: o que era área gourmet há dez anos virou wellness center agora. A própria Aloha já foi procurada por três construtoras em busca de consultoria, o que é a maior prova de autoridade da marca e, ao mesmo tempo, o maior sinal de alerta. Se as modalidades estão em todo lugar, deixam de ser diferencial.",
+            "Há também um pano de fundo econômico, e ele muda conforme o público. Para o atleta, a recuperação não é supérflua: entra na planilha da semana como entra o treino. Já para quem a marca quer passar a atender, o serviço não é essencial e é dos primeiros a sair da lista quando o orçamento aperta. Ampliar o alcance traz junto a tarefa de transformar o cuidado em hábito, e não em luxo ocasional.",
+            "Por fim, é importante avaliar riscos no uso do vocabulário. O wellness tende a se banalizar, e daqui a pouco qualquer coisa é wellness. A Aloha não pode se apoiar no termo, e sim no que o sustenta: seis anos de operação, um método construído no erro e no acerto, e sócios que viveram o problema na própria pele. Num mercado que vai se encher de gente falando de bem-estar, a diferença estará em quem tem lastro para falar. A Aloha tem.",
+          ],
+        },
+        {
+          heading: "03 · Desafios",
+          paragraphs: [
+            "Os desafios da Aloha não estão na entrega. O serviço funciona, o cliente volta e a operação é reconhecida por quem passa por ela. Para o público que a marca atende hoje, ela já ocupa e sustenta muito bem aquilo que é. Os desafios estão no tamanho do que a marca pode ser. São três os principais.",
+            "Expandir o conceito de recovery, e o público que ele alcança. É o desafio mais crítico. Não se trata de somar bem-estar ao recovery, e sim de expandir o que a palavra recovery significa na cabeça das pessoas, até que ela contenha bem-estar, saúde mental e autocuidado. São dores que a Aloha já resolve na prática e comunica pouco, e é assim que se alcança um público novo sem abrir mão de quem já está lá. A dificuldade é que a estética, a linguagem e o ambiente foram construídos por atletas e para atletas: quem chega de fora esbarra numa barreira de percepção e conclui que aquele lugar não é para ela, sobretudo as mulheres. O desafio é antigo e de origem interna, e se tornou urgente agora, porque dele dependem a assinatura, o clube, as cidades menores e a expansão internacional.",
+            "Chegar primeiro, sem se diluir no caminho. A Aloha inaugurou o recovery como categoria no Brasil e virou referência por isso. Agora o mercado avança para o território do bem-estar, e a tentação seria se apresentar como as duas coisas ao mesmo tempo. Dizer que se é uma coisa e outra costuma enfraquecer as duas, porque sugere não haver especialidade em nenhuma. O caminho é chegar antes e com legitimidade, ampliando o próprio recovery em vez de dividi-lo com um segundo território. O desafio é recente e a origem é de mercado. É crítico porque a autoridade é um dos maiores patrimônios da Aloha, e é ela que está em jogo.",
+            "Manter o padrão do atendimento enquanto a rede cresce. O produto da Aloha é a mão de quem atende, e mão é pessoa. Cada nova unidade significa uma equipe nova para selecionar, treinar e manter no mesmo nível, e são essas pessoas que têm o contato mais próximo com o cliente e que decidem se ele volta. O desafio é antigo e interno, mas se multiplica a cada praça aberta. É crítico porque a competência de quem atende é o atributo mais reconhecido pelos clientes em toda a rede, e o único que a concorrência não conseguiu copiar.",
+            "Resolver o desafio mais crítico muda o tamanho do negócio sem trocar a identidade dele. O maior impacto é deixar de ser um serviço procurado por um nicho e passar a ser um hábito de cuidado para muito mais gente, com a mesma entrega e a mesma competência de hoje.",
+            "A meta é alcançar o público que está a um passo da marca, começando pelo círculo social de quem já frequenta a casa, ser reconhecida por resolver também cansaço, estresse e saúde mental, tudo isso ainda sob a palavra recovery, e chegar preparada para a assinatura, para o clube, para as cidades menores e para o salto internacional. Tudo isso sem perder o atleta, que sustenta a marca e dá legitimidade a ela.",
+            "No melhor cenário, a Aloha é a referência quando se falar em recovery, agora entendido de forma ampla, e é a marca que as outras olham para entender para onde o setor vai. Para o cliente, muda o sentido da escolha: ele deixa de ver um lugar que oferece modalidades e passa a ver um lugar ao qual pertence.",
+            "Se nada for feito, a Aloha continua excelente para quem já a conhece, e é aí que mora o risco: um teto. O público novo é conquistado por quem vem do bem-estar e chega antes com a linguagem certa, a assinatura e o clube perdem a base de gente para sustentá-los, e a expansão para praças menores fica sem argumento. A marca seguiria entregando o melhor serviço do mercado, para uma fatia cada vez menor de um mercado cada vez maior.",
+          ],
+        },
+        {
+          heading: "04 · Serviços e Produtos",
+          paragraphs: [
+            "Hoje, o que a Aloha entrega são cerca de sete modalidades, oferecidas de duas formas: avulsas, para quem quer uma coisa só, ou combinadas em circuitos, que é onde a marca se diferencia. A lógica é a que deu origem ao negócio: reunir num só lugar, e em cerca de uma hora, o que antes exigia uma logística complicada.",
+            "O carro-chefe é o Recovery completo, um circuito de quatro etapas: contraste entre banheira de gelo e banheira quente, eletroestimulação, massagem e bota de compressão. Ao lado dele estão o Super Recovery, versão mais completa, e o Day Spa, que usa as mesmas estruturas numa combinação voltada ao relaxamento, com ofurô quente, massagem e sauna. O mais novo é o Reset, lançado no início de 2026, um contraste entre banheira de gelo e sauna feito em baterias curtas.",
+            "A necessidade que leva o cliente até lá muda conforme quem ele é. Para o atleta, a recuperação é rotina planejada, com dia marcado na semana. Para quem não é atleta, a porta de entrada quase sempre é a dor ou o cansaço acumulado. O que a Aloha devolve é o corpo funcionando de novo, a tensão dissolvida e uma hora de pausa real. Há ainda uma sala privativa para quem prefere atendimento reservado, um recurso que a marca oferece mas comunica pouco.",
+            "Os avulsos, como só a sauna ou só a banheira de gelo, ficam em torno de R$ 50, o Super Recovery gira em torno de R$ 180 e o ticket médio da casa fica em aproximadamente R$ 150. São de 700 a 800 atendimentos por mês, com picos de 74 num único dia. O campeão de vendas não é o circuito, é a massagem avulsa, e isso diz muito: é o mais acessível, resolve o problema imediato e depende inteiramente da mão de quem atende.",
+            "E se fosse preciso explicar a Aloha para alguém que nunca ouviu falar dela, é assim que os próprios sócios explicam: um centro de recuperação, bem-estar e qualidade de vida, onde a pessoa passa por um circuito de quatro etapas em cerca de uma hora e sai melhor do que entrou. A palavra atleta fica de fora de propósito, e só volta quando a conversa é com atletas.",
+            "Olhando para frente, esse portfólio precisa acompanhar o novo momento. Não se trata de trocar o que existe, e sim de adaptar, renomear quando fizer sentido e, sobretudo, criar protocolos pensados para o bem-estar, a saúde mental e o autocuidado. Protocolos desenhados a partir da realidade e do comportamento de quem a marca quer alcançar, como as mulheres, que chegam com expectativas próprias. É uma frente a abrir, e não uma mudança de rota.",
+          ],
+        },
+        {
+          heading: "05 · Modelo de Negócio",
+          paragraphs: [
+            "Em termos técnicos, a Aloha opera dois negócios ao mesmo tempo. Um é a operação de serviço, venda direta ao consumidor: cada atendimento é uma venda, avulsa ou em pacote. O outro é a franqueadora, que licencia a marca e o método e vive de taxa de franquia e royalties. Hoje são cerca de dez franquias pelo Brasil, mais uma unidade própria e uma franqueada em Curitiba. A taxa de franquia é de R$ 37.000 e os royalties, de 6% sobre o faturamento bruto.",
+            "O canal principal é próprio e presencial. O cliente compra e consome no mesmo lugar, e mesmo o fechamento de pacotes acontece dentro do espaço, quase sempre no fim de um atendimento. Não há intermediário entre a marca e o cliente, o que dá controle sobre a experiência inteira e, ao mesmo tempo, faz a receita depender de alguém atravessar a porta.",
+            "O que faz o modelo funcionar é a combinação de três coisas. As pessoas, antes de tudo: o critério de seleção e a qualidade da mão de quem atende, sem a qual o cliente não volta, por melhor que seja a estrutura. O espaço, que responde por boa parte da percepção da marca. E o repertório operacional acumulado em seis anos, que é justamente o que a franquia vende, o atalho que poupa o franqueado dos erros que os fundadores já cometeram. Vale registrar uma engrenagem interna: os profissionais são remunerados por atendimento, o que mantém o custo variável e protege a operação nos meses fracos, mas transfere a oscilação para quem atende e torna a retenção dos bons um trabalho permanente.",
+            "A retenção do cliente hoje se apoia em promoção e pacote. A casa mantém uma campanha atrás da outra, com pacotes de seis ou oito sessões, e cada franqueado define os próprios preços conforme o mercado local, com unidades de São Paulo chegando a cobrar até 30% acima de Curitiba. Funciona, mas é um mecanismo de recompra que depende de estímulo constante, e não de vínculo.",
+            "É daí que nasce o movimento que a marca já começou a testar: a assinatura. Um plano mensal mais acessível, na casa dos R$ 200, com acesso livre às modalidades que não exigem um profissional o tempo todo, mantendo a massagem como serviço à parte. São três ganhos de uma vez: ocupar horários ociosos, transformar recompra em hábito e viabilizar a chegada a cidades menores, onde o ticket atual não se sustentaria.",
+            "Vale olhar esse movimento com atenção, porque ele não é só uma decisão de preço, é uma mudança no hábito de consumo. A assinatura virou o formato natural de relação com marcas em vários setores, do streaming aos serviços do dia a dia: um valor mensal previsível, cobrado de forma recorrente, que não compromete o limite do cartão de uma vez e por isso encontra bem menos resistência. Aplicada ao bem-estar, é a mesma lógica que faz alguém manter uma academia. É uma frente que este rebranding acompanha de perto, porque a forma de cobrar também comunica: pacote é transação, assinatura é pertencimento.",
+          ],
+        },
+        {
+          heading: "06 · Público e Necessidades",
+          paragraphs: [
+            "Hoje, o público da Aloha está, na maior parte, entre 20 e 55 anos, com concentração forte na casa dos 40. Não é acaso: é a idade em que a relação com o próprio corpo amadurece, quando a pessoa já conhece os próprios limites, sente as consequências de ignorá-los e passa a entender a recuperação como parte do cuidado, e não como luxo. Há atendimentos a partir dos 12 anos, com adolescentes de categorias de base, mas são exceção.",
+            "São, na maioria, das classes A e B, e isso tem explicação prática: movimentar-se custa dinheiro, entre equipamento, assessoria, inscrição de prova e tempo livre. Quem já investe no esporte que escolheu entende que a recuperação faz parte do mesmo orçamento.",
+            "Dentro desse recorte convivem duas lógicas quase opostas. De um lado, gente de alta exigência profissional, que aplica ao corpo a mesma régua da carreira: desafio, meta, superação. Não é coincidência que tantos executivos tenham começado a correr provas longas, e são eles quem mais precisa de recuperação. De outro, e cada vez mais, pessoas que caminham na direção contrária, desacelerando de propósito e colocando a saúde à frente do trabalho.",
+            "Os grupos de necessidade são três. O atleta, para quem a recuperação é parte do treino e tem dia marcado na semana. Quem já se exercita, mas não necessariamente se enxerga como atleta, e chega por um motivo concreto, quase sempre dor, tensão ou cansaço, adiando a visita quando o objetivo é apenas relaxar. E o público que a marca quer conquistar agora, que tem um perfil claro: são principalmente mulheres, as esposas e o círculo social de quem já frequenta a casa. Há ainda o franqueado, que compra a marca como negócio e pede um olhar próprio.",
+            "Vale delimitar quem a Aloha não persegue: não é quem busca terapia holística nem a experiência reservada de um salão de massagem, e sim quem tem, no mínimo, um pé em movimento.",
+            "A decisão de compra destes públicos passa por confiança, mas o que decide de verdade é a qualidade do atendimento. Somam-se a isso a indicação de quem já foi, a referência dentro das assessorias e dos grupos de corrida, as avaliações no Google e o exemplo de quem se admira.",
+            "Outro ponto a considerar é o pertencimento. Hoje as pessoas pesam muito, na hora de escolher, a chance de se sentirem parte de algo. Fazer parte é uma necessidade humana básica, e é isso que a marca oferece: estar entre pessoas que passam pelo mesmo, ser reconhecido como alguém que treina e que se cuida.",
+            "Na prática, todos esses públicos necessitam de três coisas: tirar a dor, aliviar a tensão do dia a dia e voltar a funcionar bem para continuar, sem perder a semana em endereços diferentes. No plano emocional, procuram pertencimento e a sensação de se reconhecerem como alguém que se cuida. Muita gente vem, no fundo, para se sentir um atleta, mesmo sem nunca ter competido. O problema que a Aloha resolve não é só muscular: é o de um corpo cobrado todos os dias e que quase nunca recebe uma pausa.",
+          ],
+        },
+        {
+          heading: "07 · Valores",
+          paragraphs: [
+            "Estes valores guiam as decisões da Aloha desde o início, e é a partir deles que a marca decide daqui para frente. Não são atributos de serviço, são pilares inegociáveis: valem para o atendimento, para a escolha de um ponto, para a aprovação de um franqueado e para a relação com quem trabalha junto. São cinco.",
+            "Excelência. O padrão é o mesmo em tudo, e não é negociável em nada. Vale para a mão de quem atende, para o material que entra no espaço, para o parceiro que assina junto e para quem recebe o direito de usar a marca. É o valor que impede o crescimento a qualquer custo: a Aloha prefere crescer mais devagar a entregar abaixo do que sabe entregar.",
+            "Cuidado. Cuidar é o que a marca vende e também o critério pelo qual ela decide. Está em como o espaço é pensado, em como a pessoa é recebida, em quem é escolhido para atender e no jeito de tratar quem trabalha e quem investe na marca. Nada que comprometa o cuidado entra, por mais rentável que pareça.",
+            "Comprometimento. Os sócios estão dentro da operação, usam o próprio serviço e conhecem o negócio por dentro, e é esse envolvimento que se transmite a todo mundo em volta. Na prática, significa cumprir o combinado: com o cliente, com o franqueado, com o time e com quem presta serviço para a marca. É o que faz a Aloha ser confiável para além daquilo que vende.",
+            "Renovação. Ninguém sai da Aloha do mesmo jeito que entrou, e a marca aplica a si mesma o que promete ao cliente. Está no símbolo, mas é sobretudo um método: revisar, atualizar e recomeçar sempre que necessário. Este próprio processo de rebranding é a prova do valor em funcionamento.",
+            "Constância. Resultado não vem de esforço isolado, vem de repetição, e é assim desde 2019. É o valor que orienta o crescimento sustentado, que exige o mesmo padrão em toda unidade e que sustenta a marca nos meses difíceis, quando o que importa é seguir presente.",
+            "Os cinco descrevem a marca como ela já é hoje e como pretende se manter. Funcionam como um filtro: definem o que a Aloha aceita e o que recusa no caminho. É esse filtro que precisa se repetir em cada unidade, dentro e fora do Brasil, para que a marca cresça sem se diluir.",
+          ],
+        },
+        {
+          heading: "08 · Qualidades",
+          paragraphs: [
+            "Para responder a este ponto com precisão, fomos ler o que o cliente escreve. Analisamos as avaliações públicas no Google de cinco praças da rede: Curitiba, Florianópolis, São Paulo, Rio de Janeiro e Porto Alegre.",
+            "O primeiro dado é a consistência. As notas ficam entre 4,9 e 5,0 em todas as praças, e o vocabulário se repete de cidade em cidade, mesmo entre unidades franqueadas e distantes umas das outras. Isso diz algo importante para uma rede em expansão: o padrão está chegando na ponta.",
+            "Interpretadas as avaliações, a Aloha é reconhecida hoje por dez atributos. Competente: quem atende sabe o que está fazendo, e o cliente percebe na primeira sessão. Atenciosa: o cuidado é pessoal, e o cliente costuma citar pelo nome quem o atendeu. Agradável: ambiente confortável e bem pensado, da música à iluminação. Impecável: espaço limpo, equipamento organizado, atenção ao detalhe. Eficaz: o cliente descreve resultado concreto, não só sensação de relaxamento. Completa: reúne num só lugar tudo o que a pessoa procurava. Consistente: entrega o mesmo padrão em cidades diferentes. Justa: o preço é percebido como coerente com o que se recebe. Referência: é apontada espontaneamente como pioneira e como a melhor do seu mercado. Habitual: deixa de ser um programa eventual e vira parte da rotina.",
+            "Dessas, as que garantem que a promessa seja cumprida são a competência, a atenção e a impecabilidade. São elas que fazem a pessoa sair como esperava sair, e que sustentam a diferença quando a estrutura já não diferencia mais ninguém. A mais notável, e a mais valorizada, é a competência de quem atende. É o assunto mais recorrente da rede inteira, e é o que transforma um circuito de modalidades naquilo que o cliente chama de experiência.",
+            "Há ainda um achado que interessa ao momento da marca. Onde a Aloha se apresenta como recovery, o cliente descreve em código esportivo: treino, prova, performance. Na unidade do Leblon, que inclui massagem e bem-estar no próprio nome, o mesmo serviço é descrito como paz, relaxamento e aconchego. Isso mostra que a clareza de posicionamento é um caminho possível para realizar os desafios apontados antes, em que o principal é entregar para um público mais amplo, dentro de um recovery de sentido mais largo, que abrigue saúde mental, relaxamento e autocuidado.",
+            "E é justamente por aí que o novo momento vai se medir. À medida que a Aloha assumir o seu lugar no universo do bem-estar e do autocuidado, esses dez atributos vão se somar a outros, e a mudança não precisará ser anunciada: ela aparece sozinha nas palavras de quem escreve sobre a marca. Quando acolhimento, tranquilidade e cuidado começarem a surgir com a mesma naturalidade com que hoje surgem estrutura, equipe e treino, será o sinal de que o reposicionamento chegou onde precisava chegar. Não é uma virada de chave, é um deslocamento lento e deliberado, e é assim que ele deve ser acompanhado.",
+          ],
+        },
+        {
+          heading: "09 · Promessas e Diferenciais",
+          paragraphs: [
+            "Mais do que aplicar um conjunto de modalidades, a Aloha se compromete com um resultado: a pessoa sai melhor do que entrou. Essa é a promessa, e ela é literal. Vale para o atleta que precisa estar pronto para o treino de amanhã e para quem chegou ali travado por uma semana difícil. É a mesma promessa que está no símbolo da marca desde o começo.",
+            "Na prática, o cliente recebe alívio de dor e de tensão, o corpo funcionando de novo e uma hora de pausa real, com tudo reunido num só endereço. O ganho não é apenas físico: quem frequenta relata sono melhor, menos estresse e a sensação de recomeçar a semana em outro estado.",
+            "O desejo por trás disso é maior do que o serviço. As pessoas procuram a Aloha para se reconhecer como alguém que se cuida, para pertencer a um grupo que leva o próprio corpo a sério e, muitas vezes, para se sentir um atleta, mesmo sem nunca ter competido. É a chance de treinar, descansar e se recuperar como fazem os profissionais que elas admiram.",
+            "A marca quer que o cliente se sinta renovado e bem cuidado, e que saia de lá com a sensação de ter feito algo por si mesmo. Menos o alívio pontual de uma massagem e mais o gosto de pertencer a um lugar que existe para cuidar dele.",
+            "O diferencial mais forte, e o único que ninguém consegue replicar, é a combinação de duas coisas. A primeira é a competência de quem atende, sustentada por um critério de seleção rigoroso e acompanhada de perto, atributo que os clientes reconhecem em todas as praças da rede. A segunda é a legitimidade da origem: um método criado por atletas para resolver um problema que eles próprios tinham, testado neles mesmos antes de virar negócio. Estrutura se copia, e já copiam. A mão de quem atende e a história de quem criou, não.",
+            "Essa promessa, no entanto, tende a se ampliar. Junto com o corpo recuperado, começam a entrar no discurso o pertencimento, a cabeça boa e a atenção plena. Há um movimento claro de volta ao que é offline: hobbies, atividades presenciais e encontros de verdade viraram válvula de escape e forma de cuidar da saúde mental. E existe uma ambiguidade interessante nisso, porque as mesmas pessoas que buscam desconectar querem mostrar ao mundo que estão fazendo isso. A Aloha atende os dois lados: entrega a pausa real e é, ao mesmo tempo, um lugar que se tem orgulho de mostrar que se frequenta.",
+            "Hoje, a promessa é sair melhor do que entrou. O passo seguinte é que ela também signifique pertencer, desacelerar e se orgulhar disso.",
+          ],
+        },
+        {
+          heading: "10 · Análise de Mercado",
+          paragraphs: [
+            "A rigor, a Aloha não tem hoje um concorrente direto que entregue exatamente o que ela entrega. O que existe é uma disputa em três frentes, e vale separá-las, porque cada uma exige um olhar próprio.",
+            "A primeira, e a mais relevante, é a de quem vem do bem-estar e caminha na direção do recovery, acabando por disputar o mesmo público. São nomes de peso em algumas capitais do país, alguns já se apresentando como wellness club. O que fazem bem é evidente: espaços bonitos e requintados, estética cuidada, presença em hotéis e em empreendimentos de alto padrão, e o domínio de um vocabulário que a Aloha ainda está construindo.",
+            "O que fazem mal está justamente onde a Aloha é forte: falta profundidade técnica na recuperação, o equipamento nem sempre acompanha e a massagem não é o ponto alto. A leitura é recíproca e honesta: se a Aloha vê neles um passo atrás no recovery, eles veem na Aloha um passo atrás no bem-estar. É esse ponto de encontro que os dois lados correm para ocupar.",
+            "A segunda frente é a de quem copia o modelo, e merece pouca atenção. São operações que replicam a estrutura e a estética, e que às vezes se apropriam de elementos da identidade, mas aparecem e desaparecem com a mesma facilidade. Copiaram o que está à vista, e não o que sustenta o negócio.",
+            "A terceira não é do setor, mas disputa o mesmo dinheiro e a mesma atenção: academias que passaram a oferecer sauna e banheira de gelo, prédios com wellness center próprio, massoterapeutas, spas e clínicas de fisioterapia. Nenhum entrega o circuito completo, mas todos oferecem uma parte dele, e é assim que as modalidades vão virando commodity.",
+            "O que a Aloha faz melhor é a soma de quatro coisas: um circuito completo construído como método, e não como cardápio de equipamentos; a competência da mão de quem atende; um ambiente informal em que a pessoa se sente entre iguais; e a consistência desse padrão de cidade em cidade, mesmo em unidades franqueadas. Some-se o fato de a franqueadora ter operação própria e seis anos de repertório para transferir, o que é raro no setor.",
+            "Por isso alguém escolhe a Aloha e não o concorrente: porque em qualquer lugar é possível encontrar uma banheira de gelo, mas é na Aloha que se encontra quem sabe o que fazer com ela.",
+            "Daqui para frente, esse mapa muda. Se a Aloha expandir o sentido do recovery antes que os outros cheguem lá, deixa de ser comparada e passa a definir a categoria, e quem hoje vem do spa vira, no máximo, uma alternativa parcial. É uma corrida contra o tempo, e quem chegar primeiro escreve as regras que os demais vão ter que seguir.",
+          ],
+        },
+        {
+          heading: "11 · Posicionamento",
+          paragraphs: [
+            "Hoje a Aloha ocupa um lugar preciso e bem definido: o depois. Ela está no fim do esforço, no momento em que o corpo pede reparo. Os clientes dizem isso com todas as letras quando chamam a marca de melhor pós-treino que existe. O movimento da casa confirma: o fluxo se concentra do meio da tarde até o começo da noite, e aos sábados muita gente chega direto do treino, ainda com a roupa do exercício.",
+            "É um lugar bom, conquistado com mérito e sustentado por seis anos de entrega. Mas é um lugar estreito. Ficar apenas no depois amarra a marca ao calendário de treinos de quem compete, e deixa de fora todo mundo que se movimenta sem ter uma prova no horizonte.",
+            "O lugar que a Aloha quer ocupar é maior, e a chave está numa distinção importante: não se trata de somar bem-estar ao recovery, e sim de expandir o próprio recovery até que ele signifique cuidado por inteiro. Marca que diz ser uma coisa e outra enfraquece as duas. Marca que amplia o sentido daquilo que já domina fica mais forte.",
+            "Recuperar deixa de ser algo de quem compete e passa a ser o que sustenta qualquer pessoa que se movimenta: o corpo, a cabeça, o sono, a energia da semana. É esse deslocamento que abre caminho para o modelo de clube, porque um clube não é onde se vai depois de algo, é onde se pertence.",
+            "Há também aquilo com o que a marca não quer ser confundida, nem hoje nem depois. Não é um espaço holístico, não é um salão de massagem e não é uma clínica. Também não quer ser lida como mais uma marca surfando a onda do wellness, nem como uma marca de duas metades, meio recovery e meio bem-estar. A Aloha vem do outro lado: tem método, anos de operação e uma origem verdadeira, e é isso que a separa de quem só tem vocabulário.",
+            "Se tivesse que ser resumida numa frase, seria a frase que os próprios clientes já dizem: vai lá, porque para recuperar não tem lugar melhor, e você sai de lá renovado. O trabalho daqui para frente é fazer com que essa frase caiba também na boca de quem ainda não treina para competir, sem que ela perca nada da força que tem hoje.",
+            "Após todo o trabalho de reposicionamento, quando alguém ouvir o nome Aloha, a primeira coisa que deve vir à cabeça continua sendo recovery. O que muda é o que essa palavra passa a significar: não apenas a recuperação de quem compete, mas bem-estar, autocuidado e a sensação de ter feito algo bom por si mesmo, num espaço feito por quem entende, para quem se movimenta.",
+          ],
+        },
+        {
+          heading: "12 · Visão de Futuro",
+          paragraphs: [
+            "Daqui a três a cinco anos, a Aloha quer ser a referência nacional quando o assunto for recovery, já entendido de forma ampla, com bem-estar e autocuidado dentro dele, com uma rede maior, mais espalhada e ainda mais rentável, e com os primeiros passos dados fora do Brasil. A visão é de crescimento, mas de um tipo específico: o que se sustenta no sucesso de quem carrega a marca. Os sócios são explícitos quanto a isso e o traduzem numa frase simples: o sucesso do franqueado é o nosso sucesso. Isso já se prova na prática quando a franqueadora abre mão de royalties num mês difícil para segurar uma operação de pé.",
+            "Para isso acontecer, algumas coisas precisam se tornar verdade. A marca precisa alcançar um público maior do que o de hoje, o que depende diretamente do trabalho que está sendo feito aqui. O modelo de clube, com mensalidade acessível, precisa passar a funcionar, porque é ele que viabiliza a expansão para cidades onde o ticket atual não se sustentaria. No plano internacional, o caminho já está estruturado em formato de master franqueado, com interessados de outros países aparecendo de forma orgânica, e o que falta é a marca chegar lá pronta para ser desejada.",
+            "Pensando no futuro, há também algo que a Aloha não quer se tornar. Não quer virar mais uma marca de wellness sem lastro, dessas que adotam o vocabulário da vez e não têm o que o sustente. Não quer crescer a qualquer custo, abrindo unidades mais rápido do que consegue garantir a qualidade, porque uma operação ruim contamina a rede inteira. E não quer se diluir em commodity, sendo comparada a qualquer espaço que tenha uma sauna e uma banheira de gelo.",
+            "A Aloha vai saber que tudo deu certo quando a composição do público tiver mudado, contando com mulheres e com pessoas que não competem frequentando com naturalidade, ao lado dos atletas de sempre. As avaliações passarão a falar de bem-estar e de cuidado com a mesma frequência com que hoje falam de treino e de prova. A assinatura terá transformado a recompra em hábito, e os horários hoje ociosos estarão ocupados. Os franqueados estarão prosperando ainda mais, e novos candidatos chegarão atraídos pela marca antes de perguntarem pelo retorno. E, no melhor dos sinais, a Aloha será a marca que as outras olham quando quiserem entender para onde o setor vai.",
+            "É esse o horizonte que orienta as decisões de agora. Tudo o que foi definido nos onze pontos anteriores, da origem aos valores, existe para sustentar essa caminhada sem que a marca perca pelo caminho aquilo que a tornou reconhecida.",
+          ],
+        },
+        {
+          heading: "Síntese e Escolhas",
+          paragraphs: [
+            "Tudo o que foi mapeado nos doze pontos converge para seis definições. É por elas que passa cada decisão de criação daqui para frente, e é contra elas que qualquer proposta deve ser conferida.",
+            "O território. A Aloha ocupa o recovery, e o trabalho daqui para frente é expandir o que essa palavra significa. Não é recovery mais bem-estar, é um recovery que já contém bem-estar, saúde mental e autocuidado. Dizer que se é uma coisa e outra enfraquece as duas; ampliar o sentido daquilo que já se domina fortalece.",
+            "O público. Fala com quem tem, no mínimo, um pé em movimento, em qualquer intensidade, do atleta que compete a quem faz academia duas vezes por semana. Não persegue quem busca terapia holística nem a experiência reservada de um salão de massagem. O crescimento começa pelo círculo social de quem já frequenta a casa, com atenção especial às mulheres.",
+            "O nome (antecipação da etapa de Expressão). A preferência é por Aloha Recovery Club. Ele mantém o recovery, que é o território a ser expandido e não abandonado, e acrescenta o clube, que traduz pertencimento e prepara o terreno para a assinatura. É também uma decisão reversível: se um dia fizer sentido enxugar, basta retirar o club e a marca volta ao que já é hoje. Wellness fica de fora do nome de propósito, para não prender a marca a um termo que tende a se esvaziar. Opções avaliadas: Aloha Recovery Club (recomendado), Aloha (segunda opção), Aloha Recovery (permanece no registro), Aloha Wellness Club e Aloha Recovery e Wellness Center (não recomendados).",
+            "As palavras. Wellness entra como discurso da marca, no jeito de se portar e de falar, mostrando que a Aloha faz parte desse universo. Fica fora do nome e das definições institucionais, porque citar é útil, mas se limitar a um termo engessa. Club faz o caminho oposto: entra no nome e na marca, porque pertencimento é estrutural para o próximo momento.",
+            "A expressão. Precisa ampliar sem descaracterizar. Menos masculina e mais convidativa, com espaço, ambiente e linguagem que acolham quem está chegando, sem abrir mão do esporte, que é a alma da marca e a origem da sua legitimidade.",
+            "O que vem a seguir. A Narrativa transforma essas escolhas em discurso, definindo como a marca fala, o que promete e com que frases. A Expressão transforma o discurso em forma, na identidade visual, no espaço e em cada ponto de contato.",
+          ],
+        },
+      ],
+    },
+    verbal: {
+      tom: "Direto e caloroso, de quem fala entre iguais. A Aloha fala como alguém que treina, que já sentiu o corpo pedir pausa e que sabe exatamente o que fazer com uma banheira de gelo: calorosa sem ser melosa, segura sem ser técnica, próxima sem ser informal demais. Português em toda a copy (inglês só como nome próprio: Recovery Club, Reset, Day Spa), sem travessão e sem superlativo que a marca não consiga provar. Antes de publicar: o herói é o cliente? Dá para provar? Quem treina duas vezes por semana se sente convidado?",
+      sim: ["Quem se movimenta, quem treina, quem se cuida", "Recovery, recuperar, se recuperar", "Saúde mental e física, cabeça boa, pausa real", "Comprometimento, constância", "Renovado, sair melhor do que entrou", "Clube, fazer parte, a casa", "A mão de quem atende"],
+      nao: ["Atleta (na comunicação geral)", "Wellness como definição da marca", "Meditação, mindfulness, holístico", "Disciplina, sacrifício, sem dor sem ganho", "Milagre, transformação total, detox", "Exclusivo, VIP, para poucos", "O maior e melhor centro do Brasil"],
+      examples: [
+        { sim: "Seu corpo trabalha a semana inteira. Aqui ele recebe de volta.", nao: "O maior e melhor centro de recuperação muscular do Brasil." },
+        { sim: "Saia melhor do que entrou.", nao: "Deixar nossos clientes prontos para o próximo treino ou competição." },
+        { sim: "Em qualquer lugar tem uma banheira de gelo. Aqui tem quem sabe o que fazer com ela.", nao: "Não entregamos apenas terapias. Criamos experiências." },
+        { sim: "Você não precisa ser atleta. Precisa de um pé em movimento.", nao: "Ir além dos limites: no esporte e na vida." },
+      ],
+    },
+    narratives: [
+      {
+        slug: "quem-se-movimenta",
+        kicker: "Narrativa de Marca · StoryBrand · Roteiro principal",
+        title: "Quem se movimenta",
+        subtitle: "Herói: quem se movimenta e cobra muito do próprio corpo, sem necessariamente se ver como atleta. Papel no negócio: volume e crescimento, onde o recovery ampliado vive.",
+        presentationUrl: "/clients/aloha/narrativa/narrativa.html#1",
+        sections: [
+          {
+            heading: "Ponto de partida",
+            paragraphs: [
+              "A Essência definiu o que a Aloha é. A Narrativa define como ela conta isso. A regra de ouro do método: o herói nunca é a marca, é sempre o cliente da Aloha. A Aloha é o guia, quem já passou pelo problema e sabe o caminho.",
+              "A estrutura é uma marca-mãe com um roteiro principal e dois sub-roteiros aninhados (Mulheres e círculo social; O atleta), todos com o mesmo tom, o mesmo guia e a mesma promessa. O franqueado (B2B) fica em espera por decisão dos sócios na reunião de 11/09 e entra numa próxima rodada.",
+              "A história em uma página: o herói é quem se movimenta e cobra do próprio corpo todos os dias. O problema é que o corpo recebe cobrança e quase nunca recebe pausa. O guia é a Aloha, criada por triatletas que viveram isso na pele. O plano é chegar como está, passar uma hora nas mãos de quem sabe, sair renovado e fazer disso rotina. O que está em jogo é continuar fazendo o que se ama, sem que o cansaço decida por você. A transformação é passar de alguém que aguenta para alguém que se cuida.",
+            ],
+          },
+          {
+            heading: "01 · O herói",
+            paragraphs: [
+              "Quem é: pessoa entre 25 e 55 anos, com concentração nos 40, que tem no mínimo um pé em movimento: academia duas ou três vezes por semana, grupo de corrida, beach tennis, pedal de fim de semana, pilates. Trabalha muito, muitas vezes em funções de alta exigência, e aplica ao corpo a mesma régua da carreira. Ou faz o caminho contrário e desacelera de propósito, pondo a saúde à frente do trabalho.",
+              "O que ele quer: um corpo funcionando, sem dor e sem tensão, para continuar fazendo o que gosta e dar conta da semana.",
+              "Desejo de fundo: se reconhecer como alguém que se cuida. Muitas vezes, se sentir um pouco atleta, mesmo sem nunca ter competido.",
+            ],
+          },
+          {
+            heading: "02 · O problema",
+            paragraphs: [
+              "Vilão: o acúmulo. A tensão que se soma dia após dia num corpo cobrado todos os dias e que quase nunca recebe uma pausa de verdade.",
+              "Externo: dor, tensão muscular, cansaço acumulado, sono ruim. E cuidar disso exige ir a vários lugares diferentes, em dias diferentes.",
+              "Interno: a sensação de estar sempre um pouco travado, de começar a semana já cansado. E a dúvida: recovery é coisa de atleta, não é para mim.",
+              "Filosófico: recuperar não deveria ser privilégio de quem compete. Quem se movimenta merece se recuperar tão bem quanto quem vive disso.",
+              "Por que o acúmulo: ele é verdadeiro para todos os públicos, não depende de medo nem de escassez e explica por que a pausa é parte do movimento, não o oposto dele. A recuperação espalhada em vários endereços entra como problema externo; o isso não é para mim, como problema interno.",
+            ],
+          },
+          {
+            heading: "03 · O guia",
+            paragraphs: [
+              "Empatia: “A gente sabe como é, porque começou do mesmo lugar: treinando muito, cobrando demais do corpo e descobrindo que a recuperação é tão importante quanto o treino.”",
+              "Autoridade (só o que é verificável): nascida da experiência real de um fundador que disputou o Mundial de Ironman no Havaí, em 2016, e de sócios que vêm do triatlo. Desde 2019 em operação, com unidades em várias capitais e cidades do Brasil. Notas entre 4,9 e 5,0 nas avaliações públicas das cinco praças analisadas, com o mesmo vocabulário de cidade em cidade. Um circuito montado como método, testado pelos próprios sócios antes de virar negócio. Quem atende passa por uma seleção rigorosa, acompanhada de perto por sócios que usam o próprio serviço.",
+            ],
+          },
+          {
+            heading: "04 · O plano",
+            paragraphs: [
+              "Processo: 1. Chegue do jeito que está. Agende ou apareça e conte o que o corpo está pedindo. 2. Deixe uma hora nas mãos de quem sabe: contraste de gelo e calor, eletroestimulação, massagem e bota de compressão, num só lugar e num só circuito. 3. Saia renovado e faça disso rotina: encaixe a recuperação na semana, como você já encaixa o treino.",
+              "Ponte com o slogan atual: os três passos conversam com o Relaxar · Recuperar · Recarregar do manual e podem ser a versão em português dele na Expressão.",
+              "Acordo (compromissos que tiram o medo de entrar): você não precisa ser atleta · a pressão é sua, quem atende pergunta e ajusta · tudo num só lugar, em cerca de uma hora · sala privativa para quem prefere · o mesmo padrão em qualquer unidade Aloha.",
+            ],
+          },
+          {
+            heading: "05 · A ação",
+            paragraphs: [
+              "Direta: Agende seu recovery. / Marque sua primeira hora.",
+              "Transicional: “Qual circuito é o seu?”, um guia curto que indica Recovery, Reset, Day Spa ou massagem conforme a rotina · “Traga alguém na próxima”, convite para o círculo de quem já frequenta · quando a assinatura estiver ativa: “Entre para o clube”.",
+            ],
+          },
+          {
+            heading: "06 · O que se evita",
+            paragraphs: [
+              "Sem exagero e sem medo, só consequências reais: a dor que vira companhia de todos os dias. Parar de fazer o que você gosta porque o corpo não acompanha. A pausa que só chega quando o corpo obriga. Semanas que começam no cansaço da anterior.",
+            ],
+          },
+          {
+            heading: "07 · O sucesso",
+            paragraphs: [
+              "Corpo funcionando de novo, tensão dissolvida, sono melhor, cabeça mais leve, uma hora de pausa real por semana e um lugar ao qual se pertence.",
+              "Transformação de identidade: de alguém que aguenta para alguém que se cuida. De quem deixa a pausa para quando der para quem trata a recuperação como parte do movimento. De “isso é coisa de atleta” para “eu me recupero como os melhores”.",
+            ],
+          },
+        ],
+        closing: "Quem se movimenta cobra muito do corpo e quase nunca devolve. A Aloha reúne, num só lugar e em cerca de uma hora, o circuito de recuperação criado por quem treina, com quem sabe o que faz. Você sai melhor do que entrou.",
+      },
+      {
+        slug: "mulheres",
+        kicker: "Narrativa de Marca · StoryBrand · Sub-roteiro 1",
+        title: "Mulheres e o círculo social",
+        subtitle: "Aninhado no roteiro principal: mesmo vilão (o acúmulo), mesmo guia, mesma promessa. Muda a porta de entrada. Papel no negócio: expansão, quebra o teto de público apontado na Essência.",
+        presentationUrl: "/clients/aloha/narrativa/narrativa.html#17",
+        sections: [
+          {
+            heading: "01 · A heroína",
+            paragraphs: [
+              "Quem é: mulher entre 30 e 50 anos, muitas vezes esposa, amiga ou parte do círculo de quem já frequenta a Aloha. Trabalha, muitas vezes é mãe, faz academia, corre, joga beach tennis ou pratica pilates. Já faz massagem com frequência, mas em outro lugar.",
+              "O que ela quer: tirar a tensão e o peso do corpo, ter uma hora que seja só dela, num lugar onde se sinta à vontade desde a porta.",
+            ],
+          },
+          {
+            heading: "02 · O problema",
+            paragraphs: [
+              "Vilão: o mesmo acúmulo, somado a um cuidado que ela sempre adia porque cuida de todo mundo antes.",
+              "Externo: tensão, pernas pesadas, inchaço, dor que aparece depois do treino ou de uma semana difícil.",
+              "Interno: “Esse lugar parece de atleta, cheio de homem. Vou me sentir deslocada. E se a massagem for forte demais?”",
+              "Filosófico: cuidar de si não precisa de licença. Autocuidado não é luxo, é o que sustenta a rotina.",
+            ],
+          },
+          {
+            heading: "03 · O guia",
+            paragraphs: [
+              "Empatia: “Entrar num lugar novo, cheio de gente treinando, pode intimidar. A gente pensou nisso.”",
+              "Autoridade: a mesma competência reconhecida em toda a rede; profissionais mulheres no time; sala privativa com climatização; pressão ajustada a cada pessoa; avaliações que já falam de paz, acolhimento e aconchego, como na unidade do Leblon.",
+            ],
+          },
+          {
+            heading: "04 · O plano",
+            paragraphs: [
+              "Processo: 1. Escolha o seu circuito. Para começar, o novo circuito de drenagem linfática, bota de compressão e sauna (nome recomendado: Leve). 2. Escolha como quer ser atendida: sala privativa, profissional mulher e, se aprovado, horário exclusivo. 3. Uma hora só sua. Saia leve e marque a próxima.",
+              "Acordo: aqui ninguém vai perguntar o seu pace · a pressão é você quem decide · espaço reservado para quem prefere.",
+              "Nome do circuito: Leve (recomendado: descreve o resultado real, curto, em português, não restringe por gênero) · Respiro (segunda opção: mais emocional, menos concreto) · Ritual Aloha (não recomendado: risco de soar spa ou holístico). Recomendação: não nomear o circuito como feminino. Ele é pensado para elas e comunicado para elas, mas aberto a todos.",
+            ],
+          },
+          {
+            heading: "05 · A ação",
+            paragraphs: [
+              "Direta: Agende sua primeira hora.",
+              "Transicional: Venha com uma amiga. / Conheça o espaço antes de marcar.",
+            ],
+          },
+          {
+            heading: "06 · O que se evita",
+            paragraphs: [
+              "Um cuidado que fica sempre para depois, até virar dor. Carregar a tensão da semana para dentro de casa.",
+            ],
+          },
+          {
+            heading: "07 · O sucesso",
+            paragraphs: [
+              "Corpo leve, pernas leves, sono melhor e a sensação de ter feito algo por si.",
+              "Transformação de identidade: de quem cuida de todo mundo e se deixa por último para quem se inclui na própria rotina. De “não é um lugar para mim” para “é o meu lugar de pausa”.",
+            ],
+          },
+        ],
+        closing: "Você cuida de tudo e de todos. A Aloha cuida de você: uma hora de pausa real, com quem sabe o que faz, do jeito que você preferir. Você sai leve, melhor do que entrou.",
+      },
+      {
+        slug: "atleta",
+        kicker: "Narrativa de Marca · StoryBrand · Sub-roteiro 2",
+        title: "O atleta",
+        subtitle: "Aninhado no roteiro principal. Único lugar da comunicação em que a palavra atleta aparece de frente. Papel no negócio: legitimidade, sustenta a autoridade que ninguém copia.",
+        presentationUrl: "/clients/aloha/narrativa/narrativa.html#22",
+        sections: [
+          {
+            heading: "01 · O herói",
+            paragraphs: [
+              "Quem é: atleta amador ou competidor (triatlo, corrida, ciclismo, natação, HYROX, esportes de quadra, categorias de base), com planilha, prova no calendário e cobrança alta sobre o próprio desempenho.",
+              "O que ele quer: treinar mais e melhor, sem se machucar, e chegar inteiro no próximo treino e na próxima prova.",
+            ],
+          },
+          {
+            heading: "02 · O problema",
+            paragraphs: [
+              "Vilão: a fadiga acumulada que rouba o próximo treino.",
+              "Externo: carga alta, dor muscular, recuperação improvisada e espalhada entre vários profissionais.",
+              "Interno: treinar muito e sentir que não rende. O receio de ter que parar.",
+              "Filosófico: a recuperação é tão importante quanto o treino.",
+            ],
+          },
+          {
+            heading: "03 · O guia",
+            paragraphs: [
+              "Empatia: “De atleta para atleta. Não é slogan, é a nossa história.”",
+              "Autoridade: José Lozano disputou o Mundial de Ironman no Havaí em 2016 e terminou entre os melhores brasileiros amadores, sustentado por uma atenção obsessiva à recuperação. Os sócios vêm do triatlo, um deles com carreira profissional desde os 11 anos. O circuito foi testado neles mesmos antes de virar negócio. Quem atende entende de carga, de prova e de pré-prova.",
+            ],
+          },
+          {
+            heading: "04 · O plano",
+            paragraphs: [
+              "Processo: 1. Coloque o recovery na planilha: um dia fixo na semana, como um treino. 2. Ajuste o circuito à carga: Recovery completo na rotina, Super Recovery nas semanas duras, Reset para a cabeça. 3. Chegue inteiro, no próximo treino e na próxima prova.",
+              "Acordo: o mesmo padrão em qualquer unidade Aloha, inclusive quando você viaja para competir · quem atende sabe o que é carga.",
+            ],
+          },
+          {
+            heading: "05 · A ação",
+            paragraphs: [
+              "Direta: Marque o recovery da semana.",
+              "Transicional: Plano de recuperação para a sua prova. / Parcerias com assessorias e grupos de corrida.",
+            ],
+          },
+          {
+            heading: "06 · O que se evita",
+            paragraphs: [
+              "Lesão que tira você da temporada. Estagnar mesmo treinando mais. Largar cansado na prova que você preparou por meses.",
+            ],
+          },
+          {
+            heading: "07 · O sucesso",
+            paragraphs: [
+              "Constância nos treinos, evolução e chegada inteira na prova.",
+              "Transformação de identidade: de atleta que só treina para atleta completo, que trata a recuperação como treino.",
+            ],
+          },
+        ],
+        closing: "Treinar forte é metade do trabalho. A Aloha foi criada por triatletas para cuidar da outra metade: tudo o que o corpo precisa para se recuperar, num só lugar, em cerca de uma hora. Para você chegar inteiro no próximo treino.",
+      },
+      {
+        slug: "manifesto",
+        kicker: "Documento complementar · Rascunho para a Expressão",
+        title: "Manifesto e frases de apoio",
+        subtitle: "O texto-manifesto que costura os três roteiros, o banco inicial de frases e o que muda em relação ao discurso atual da marca.",
+        presentationUrl: "/clients/aloha/narrativa/narrativa.html#26",
+        sections: [
+          {
+            heading: "Manifesto",
+            paragraphs: [
+              "Tem gente que acorda cedo para correr. Tem gente que encaixa a academia entre uma reunião e outra. Tem gente que pedala no fim de semana, joga com os amigos, se desafia numa prova ou só quer dar conta da semana com o corpo inteiro.",
+              "Todo mundo que se movimenta cobra alguma coisa do corpo. E quase ninguém devolve.",
+              "A Aloha nasceu de quem aprendeu isso na pele: treinando para um Mundial de Ironman, descobrindo que a recuperação é tão importante quanto o treino. Voltamos com uma ideia simples: reunir num só lugar tudo o que o corpo precisa para se recuperar.",
+              "Hoje, recovery é mais do que o depois do treino. É o corpo funcionando, a cabeça leve, o sono de volta, uma hora de pausa de verdade. É um lugar para pertencer.",
+              "Você não precisa ser atleta. Precisa só de um pé em movimento.",
+              "Chegue do jeito que está. Saia melhor do que entrou.",
+              "Aloha Recovery Club.",
+            ],
+          },
+          {
+            heading: "Frases de apoio",
+            paragraphs: [
+              "Saia melhor do que entrou. · Recuperar é para quem se movimenta. · Seu corpo trabalha a semana inteira. Aqui ele recebe de volta. · Em qualquer lugar tem uma banheira de gelo. Aqui tem quem sabe o que fazer com ela. · Uma hora. Um lugar. Tudo o que o corpo pede. · Você não precisa ser atleta. Precisa de um pé em movimento. · A recuperação é tão importante quanto o treino.",
+            ],
+          },
+          {
+            heading: "O que muda em relação ao discurso atual",
+            paragraphs: [
+              "“O maior e melhor centro de recuperação do Brasil” vira pioneira, reconhecida e consistente, com prova nas avaliações: superlativo difícil de provar.",
+              "“Deixar nossos clientes prontos para o próximo treino ou competição” vira “sair melhor do que entrou”: amplia o recovery para além de quem compete.",
+              "“Ir além dos limites” vira estar inteiro para continuar: régua de atleta afasta o público novo.",
+              "A Aloha no centro (“não entregamos apenas terapias, criamos experiências”) vira o cliente no centro, com a Aloha como guia: regra do método.",
+              "Terapias descritas em linguagem técnica (edema, ácido lático) viram benefício percebido primeiro, com a técnica como prova: clareza para quem não é do meio.",
+              "O slogan em inglês Time to Relax · Recover · Recharge vira relaxar, recuperar, recarregar como os três passos do plano: mantém o que já existe e fala a língua do público.",
+            ],
+          },
+          {
+            heading: "Pontos a validar com o cliente",
+            paragraphs: [
+              "Nome Aloha Recovery Club aprovado para uso em toda a narrativa. O acúmulo como vilão-mãe. Uso da história do José em Kona na comunicação (os sócios contam pouco e o fundador não gosta de falar do resultado). Nome do novo circuito (recomendação: Leve) e se ele será comunicado como aberto a todos. Horário exclusivo feminino: aprovado, e em quais unidades? Assinatura ou clube: nome, valor e data, o que condiciona a CTA “Entre para o clube”. Futuro do slogan em inglês. Aposentar o “maior e melhor do Brasil” em todos os materiais da rede. Validação com o público: apresentar o sub-roteiro 1 às esposas e ao círculo de quem frequenta, como combinado na reunião de 10/08.",
+            ],
+          },
+        ],
+        closing: "Chegue do jeito que está. Saia melhor do que entrou.",
+      },
+    ],
+  },
+  pages: {},
+};
+
+/* ------------------------------------------------------------------ *
  * Registro de clientes — resolvido por slug (user.clientSlug).
  * Fase 2: substituir por consulta ao Supabase.
  * ------------------------------------------------------------------ */
@@ -2107,6 +2581,7 @@ export const CLIENTS: Record<string, ClientBrand> = {
   [JUJOO.slug]: JUJOO,
   [CASA_CAMPO.slug]: CASA_CAMPO,
   [OKA.slug]: OKA,
+  [ALOHA.slug]: ALOHA,
 };
 
 /** Resolve o Brand System de um cliente pelo slug. */
