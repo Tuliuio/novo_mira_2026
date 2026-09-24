@@ -55,6 +55,8 @@ export interface HubPair { bg: string; fg: string; label: string; }
 export interface HubType { role: string; family: string; sample: string; cssFamily?: string; }
 export interface HubApplication { k: string; s: string; bg: string; fg: string; }
 export interface HubPhoto { src: string; label: string; group?: string; fit?: "cover" | "contain"; pad?: string; }
+/** Comparativo de rebranding — logo antigo x novo, num slider de antes/depois. */
+export interface HubRebrand { before: HubLogo; after: HubLogo; note?: string; }
 
 /** Um bloco de leitura corrida (Essência ou Narrativa) — título + texto em parágrafos. */
 export interface ArticleSection { heading: string; paragraphs: string[]; }
@@ -80,6 +82,8 @@ export interface HubBrand {
   /** URL (Drive) da pasta/arquivo de fontes — botão de download na Tipografia */
   fontsUrl?: string;
   logos: HubLogo[];
+  /** quando presente, o Hero mostra um slider de antes/depois em vez do logo estático */
+  rebrand?: HubRebrand;
   colorsNote?: string;
   colors: HubColor[];
   pairings?: HubPair[];
@@ -1196,6 +1200,11 @@ const CASA_CAMPO: ClientBrand = {
       { name: "Assinatura sobre azul-petróleo", role: "Aplicação padrão, fundos escuros", src: "/clients/casa-campo/logo-01.jpg", file: "casa-campo-petroleo.jpg", pad: "#0e3e4a" },
       { name: "Assinatura sobre verde-sálvia", role: "Aplicação alternativa, fundos claros", src: "/clients/casa-campo/logo-02.jpg", file: "casa-campo-salvia.jpg", pad: "#8fbf97" },
     ],
+    rebrand: {
+      before: { name: "Identidade atual (pré-Mira)", role: "Diamante de linha fina, tipografia condensada", src: "/clients/casa-campo/logo-01.jpg", file: "casa-campo-antes.jpg", pad: "#0e3e4a" },
+      after: { name: "Nova assinatura (Expressão Mira)", role: "Diamante mais espesso, serifada leve e editorial", src: "/clients/casa-campo/logo-novo.png", file: "casa-campo-novo.png", pad: "#0e3e4a" },
+      note: "Primeira exploração da Expressão: o traço do diamante ganha espessura e presença, e a tipografia se ajusta para um desenho mais leve e editorial.",
+    },
     colorsNote: "Identidade atual (pré-Mira) — a Expressão está em desenvolvimento. Paleta e tipografia abaixo seguem como base provisória até o novo sistema visual fechar.",
     colors: [
       { name: "Verde-sálvia", hex: "#8fbf97", role: "Natureza e jardins — cor de apoio" },
@@ -1362,6 +1371,26 @@ const CASA_CAMPO: ClientBrand = {
       { src: "/clients/casa-campo/fotografia/portao.jpg", label: "O portão do parque, em obras", group: "Bastidores" },
       { src: "/clients/casa-campo/fotografia/jardim-obra.jpg", label: "Plantio dos jardins temáticos", group: "Bastidores" },
       { src: "/clients/casa-campo/fotografia/canteiro.jpg", label: "Abrindo caminho, canteiro a canteiro", group: "Bastidores" },
+      /* Campanha — conceitos visuais gerados com IA (símbolo do diamante),
+         ainda não são peças de produção real; servem para guiar a Expressão. */
+      { src: "/clients/casa-campo/campanha/portao-entrada.jpg", label: "Portão de entrada", group: "Campanha — Sinalização" },
+      { src: "/clients/casa-campo/campanha/marcador-jardim-cactos.jpg", label: "Marcador entre a coleção de cactos", group: "Campanha — Sinalização" },
+      { src: "/clients/casa-campo/campanha/instalacao-noturna.jpg", label: "Instalação luminosa, caminho do jardim à noite", group: "Campanha — Sinalização" },
+      { src: "/clients/casa-campo/campanha/aerea-placas-jardins.jpg", label: "Vista aérea, placas dos jardins temáticos", group: "Campanha — Sinalização" },
+      { src: "/clients/casa-campo/campanha/placa-jardim-florescer.jpg", label: "Placa de pedra, \"Florescer é o destino\"", group: "Campanha — Sinalização" },
+      { src: "/clients/casa-campo/campanha/produto-caneca-ecobag.jpg", label: "Caneca e ecobag da loja de souvenirs", group: "Campanha — Produto" },
+      { src: "/clients/casa-campo/campanha/caderno-macro.jpg", label: "Guia do visitante, capa em padrão do diamante", group: "Campanha — Produto" },
+      { src: "/clients/casa-campo/campanha/app-icon.jpg", label: "Ícone do app na tela inicial", group: "Campanha — Produto" },
+      { src: "/clients/casa-campo/campanha/outdoor-01-tem-dias-em-branco.jpg", label: "Outdoor BR-101 · 1 de 8 — \"Tem dias que passam em branco\"", group: "Campanha — Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-02-guarda-para-sempre.jpg", label: "Outdoor BR-101 · 2 de 8 — \"E tem os que a gente guarda para sempre\"", group: "Campanha — Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-03-diferenca-onde-para.jpg", label: "Outdoor BR-101 · 3 de 8 — \"A diferença é onde você para\"", group: "Campanha — Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-04-um-dia-vira-memoria.jpg", label: "Outdoor BR-101 · 4 de 8 — \"Um dia aqui vira memória\"", group: "Campanha — Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-05-dias-bons-passam-rapido.jpg", label: "Outdoor BR-101 · 5 de 8 — o guia: \"Os dias bons com quem você ama passam rápido\"", group: "Campanha — Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-06-nenhum-dia-em-branco.jpg", label: "Outdoor BR-101 · 6 de 8 — \"Aqui, nenhum dia passa em branco\"", group: "Campanha — Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-07-soma-parque-eventos-hospedagem.jpg", label: "Outdoor BR-101 · 7 de 8 — a soma: \"Parque, eventos e hospedagem, no mesmo lugar\"", group: "Campanha — Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-08-cta-garanta-visita.jpg", label: "Outdoor BR-101 · 8 de 8 — CTA: \"Garanta sua visita\"", group: "Campanha — Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-florescer-destino.jpg", label: "Outdoor BR-101 — \"Florescer é o destino de tudo e de todos\"", group: "Campanha — Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/familia-tv-comercial.jpg", label: "Família assistindo o comercial, com Seu Zouhair na tela", group: "Campanha — Filme e TV" },
     ],
     narratives: [
       {

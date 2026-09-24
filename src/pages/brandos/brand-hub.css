@@ -93,6 +93,26 @@
 .bh .hero-lede .tag { color: var(--muted); font-size: clamp(15px, 2vw, 18px); }
 .bh .instruct { margin-top: 20px; display: inline-flex; align-items: center; gap: 10px; color: var(--muted); font-size: 14px; }
 .bh .instruct .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
+.bh .chip-gold { border-color: color-mix(in srgb, var(--gold) 45%, var(--border)); color: var(--gold-soft); }
+
+/* Antes/depois — slider de rebranding no Hero */
+.bh .ba { margin: 32px 0 8px; }
+.bh .ba-frame { position: relative; width: 100%; border-radius: var(--radius-card); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); cursor: ew-resize; touch-action: none; user-select: none; }
+.bh .ba-side { position: absolute; inset: 0; display: grid; place-items: center; padding: min(8vw, 68px); }
+.bh .ba-side img { width: min(520px, 78%); height: auto; display: block; pointer-events: none; }
+.bh .ba-line { position: absolute; top: 0; bottom: 0; width: 0; transform: translateX(-50%); pointer-events: none; }
+.bh .ba-line::before { content: ""; position: absolute; inset: 0; width: 2px; left: 50%; transform: translateX(-50%); background: color-mix(in srgb, var(--text) 70%, transparent); }
+.bh .ba-handle { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; background: var(--text); color: var(--hub-bg); display: grid; place-items: center; box-shadow: var(--shadow); }
+.bh .ba-tag { position: absolute; top: 16px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 6px 12px; border-radius: var(--radius); background: color-mix(in srgb, var(--hub-bg) 55%, transparent); color: var(--text); backdrop-filter: blur(6px); transition: opacity .18s; }
+.bh .ba-tag-before { left: 16px; }
+.bh .ba-tag-after { right: 16px; }
+.bh .ba-cap { margin-top: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: var(--muted); font-size: 13.5px; }
+.bh .ba-cap b { color: var(--text); }
+.bh .ba-arrow { color: var(--gold); }
+.bh .hero-rebrand-note { margin: 14px 0 0; color: var(--muted); font-size: 14px; max-width: 62ch; }
+@media (max-width: 560px) {
+  .bh .ba-side { padding: 32px 22px; }
+}
 
 /* Grids + cards */
 .bh .grid { display: grid; gap: 18px; }

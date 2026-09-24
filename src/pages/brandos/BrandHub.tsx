@@ -4,6 +4,7 @@ import { useAuth } from "@/lib/auth";
 import { DEMO_CLIENT, getClient, type ClientBrand, type HubBrand, type HubArticle } from "@/lib/content";
 import { hexToRgb, rgbToCmyk, contrastRatio, contrastBadge, copyText } from "@/lib/color";
 import { Logo } from "@/components/Logo";
+import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import "./brand-hub.css";
 
 function colorLine(c: HubBrand["colors"][number]): string {
@@ -332,8 +333,14 @@ function Hero({ client, hub }: { client: ClientBrand; hub: HubBrand }) {
       <div className="hero-top">
         <span className="chip"><b>{hub.year}</b> Brand System</span>
         {hub.since && <span className="chip">{hub.since}</span>}
+        {hub.rebrand && <span className="chip chip-gold">Rebranding em andamento</span>}
       </div>
-      {primary ? (
+      {hub.rebrand ? (
+        <>
+          <BeforeAfterSlider before={hub.rebrand.before} after={hub.rebrand.after} />
+          {hub.rebrand.note && <p className="hero-rebrand-note">{hub.rebrand.note}</p>}
+        </>
+      ) : primary ? (
         <div className="hero-logo" style={{ background: primary.pad }}>
           <img src={primary.src} alt={"Logo " + client.name} />
         </div>
