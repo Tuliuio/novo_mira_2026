@@ -63,6 +63,11 @@ const DEMO_USERS: Array<{ username: string; password: string; user: User }> = [
     password: "OKA2026",
     user: { name: "OKA", username: "OKA", clientSlug: "oka" },
   },
+  {
+    username: "Aloha",
+    password: "Aloha2026",
+    user: { name: "Aloha", username: "Aloha", clientSlug: "aloha" },
+  },
 ];
 
 /** normaliza para comparar: ignora caixa e QUALQUER espaço

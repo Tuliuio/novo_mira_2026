@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aloha · Narrativa de Marca</title>
+<style>
+:root{
+  --bg:#161616; --panel:#232323; --line:#333333; --line2:#2b2b2b;
+  --text:#c9c9c9; --white:#ffffff; --muted:#9a9a9a; --dim:#6f6f6f;
+  --green:#5FC08A; --green-deep:#10231a;
+  --display: Impact, "Haettenschweiler", "Arial Narrow Bold", sans-serif;
+  --body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+@page{ size:1280px 720px; margin:0 }
+*{ box-sizing:border-box; margin:0; padding:0 }
+html,body{ background:#0d0d0d }
+body{ font-family:var(--body); color:var(--text); -webkit-font-smoothing:antialiased }
+
+/* ---------- slide base ---------- */
+.deck{ counter-reset: pg }
+.slide{
+  counter-increment: pg;
+  position:relative; width:1280px; height:720px; overflow:hidden;
+  background:var(--bg); padding:62px 82px 60px 82px;
+}
+.slide::before{ content:"ALOHA"; position:absolute; top:28px; right:83px;
+  font-family:var(--display); font-size:12px; letter-spacing:1.2px; color:var(--green) }
+.slide::after{ content:counter(pg); position:absolute; bottom:32px; right:90px;
+  font-size:11px; color:var(--dim) }
+.slide.cover::after, .slide.close::after{ content:"" }
+
+h1.t{ font-family:var(--display); font-weight:400; font-size:50px; line-height:1; color:var(--white);
+  text-transform:uppercase; letter-spacing:.2px; padding-bottom:22px; border-bottom:1px solid var(--line); width:833px }
+h1.t .n{ color:var(--green); margin-right:12px }
+.sub{ font-size:16px; color:var(--muted); margin:12px 0 18px }
+.lbl{ font-family:var(--display); font-size:12.5px; letter-spacing:2.2px; color:var(--green); text-transform:uppercase; margin:0 0 10px }
+p{ font-size:14.5px; line-height:1.52; margin:0 0 11px; max-width:833px }
+p b, li b, td b{ color:var(--white); font-weight:700 }
+.wide p{ max-width:1116px }
+ul.l{ list-style:none; max-width:833px }
+ul.l li{ font-size:14.5px; line-height:1.5; margin:0 0 7px; padding-left:16px; position:relative }
+ul.l li::before{ content:""; position:absolute; left:0; top:8px; width:6px; height:6px; border-radius:50%; background:var(--green) }
+ol.l{ list-style:none; counter-reset:li; max-width:833px }
+ol.l li{ counter-increment:li; font-size:14.5px; line-height:1.5; margin:0 0 8px; padding-left:24px; position:relative }
+ol.l li::before{ content:counter(li)"."; position:absolute; left:0; color:var(--white); font-weight:700 }
+
+/* columns */
+.cols{ display:grid; grid-template-columns:1fr 1fr; gap:44px; width:1116px }
+.cols3{ display:grid; grid-template-columns:repeat(3,1fr); gap:32px; width:1116px }
+.cols p, .cols3 p{ max-width:none }
+
+/* tables (padrão Essência) */
+table.tb{ width:1116px; border-collapse:collapse; margin-top:6px }
+table.tb th{ background:var(--panel); color:var(--white); font-family:var(--display); font-weight:400;
+  font-size:12.5px; letter-spacing:.6px; text-transform:uppercase; text-align:left; padding:9px 11px }
+table.tb th.hl{ background:var(--green); color:#0e1a13 }
+table.tb td{ font-size:12px; line-height:1.45; padding:10px 11px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--text) }
+table.tb td:first-child{ color:var(--white) }
+table.tb td.ok{ color:var(--green) }
+table.tb td.no{ color:var(--dim) }
+table.tb.big td{ font-size:13.5px; padding:12px 12px }
+table.narrow{ width:833px }
+
+/* cards de nível / elementos */
+.card{ background:var(--panel); padding:18px 20px 16px; border-top:2px solid var(--green) }
+.card .k{ font-family:var(--display); font-size:13px; letter-spacing:1.6px; color:var(--green); text-transform:uppercase; margin-bottom:8px }
+.card p{ font-size:13.5px; margin:0 }
+.chip{ display:inline-block; font-family:var(--display); font-size:11px; letter-spacing:1.4px; text-transform:uppercase;
+  color:#0e1a13; background:var(--green); padding:4px 9px 3px; margin-right:6px }
+.chip.o{ background:transparent; color:var(--green); border:1px solid var(--green) }
+
+/* quote / one-liner */
+.q{ font-size:30px; line-height:1.3; color:var(--white); max-width:1000px; font-weight:400; letter-spacing:-.2px }
+.q em{ font-style:normal; color:var(--green) }
+.q.sm{ font-size:22px; line-height:1.4 }
+.rule{ border-left:3px solid var(--green); padding-left:26px }
+.note{ font-size:12px; color:var(--muted); line-height:1.5; max-width:1000px }
+
+/* história em uma página */
+.story{ width:1116px }
+.story .row{ display:grid; grid-template-columns:170px 1fr; border-bottom:1px solid var(--line); padding:11px 0 }
+.story .row .k{ font-family:var(--display); font-size:15px; letter-spacing:1.5px; color:var(--green); text-transform:uppercase; padding-top:2px }
+.story .row .v{ font-size:15px; line-height:1.45; color:var(--text) }
+
+/* de -> para */
+.dp{ width:1116px; display:grid; grid-template-columns:1fr 46px 1fr; row-gap:10px; align-items:center }
+.dp .h{ font-family:var(--display); font-size:12.5px; letter-spacing:.6px; color:var(--white); background:var(--panel); padding:9px 12px; text-transform:uppercase }
+.dp .h.g{ background:var(--green); color:#0e1a13 }
+.dp .a{ font-size:15px; color:var(--muted); padding:0 12px }
+.dp .b{ font-size:15px; color:var(--white); padding:0 12px }
+.dp .ar{ color:var(--green); font-size:20px; text-align:center }
+
+/* índice */
+.idx{ display:grid; grid-template-columns:1fr 1fr; column-gap:120px; width:833px; margin-top:6px }
+.idx div{ font-size:15px; padding:6px 0; color:var(--text) }
+.idx span{ font-family:var(--display); color:var(--green); display:inline-block; width:34px; font-size:15px }
+
+/* cover & close */
+.cover{ padding-top:200px }
+.cover .kicker{ font-family:var(--display); font-size:25px; letter-spacing:1.6px; color:var(--green); text-transform:uppercase }
+.cover .big{ font-family:var(--display); font-size:132px; line-height:.95; color:var(--white); margin:10px 0 26px }
+.cover .by{ font-size:16px; color:var(--muted); margin-bottom:16px }
+.cover img{ width:160px; display:block }
+.cover .foot{ position:absolute; left:82px; bottom:78px; font-size:13px; color:var(--dim) }
+.close{ display:flex; flex-direction:column; justify-content:center; padding-left:900px }
+.close .kicker{ font-family:var(--display); font-size:15px; letter-spacing:2px; color:var(--green) }
+.close .big{ font-family:var(--display); font-size:72px; color:var(--white); line-height:1; margin-top:6px }
+.close img{ position:absolute; right:84px; bottom:70px; width:84px }
+.slide.close.on{ display:flex }
+
+/* manifesto */
+.mani p{ font-size:16px; line-height:1.55; color:var(--text); max-width:900px; margin-bottom:10px }
+.mani p.s{ color:var(--white); font-weight:700 }
+
+/* ---------- screen presentation ---------- */
+@media screen{
+  body{ height:100vh; overflow:hidden }
+  .deck{ position:fixed; inset:0 }
+  .slide{ position:absolute; left:50%; top:50%; transform-origin:center center; display:none;
+    box-shadow:0 0 0 1px #222 }
+  .slide.on{ display:block }
+  .hud{ position:fixed; bottom:12px; left:50%; transform:translateX(-50%); font:12px var(--body); color:#666; z-index:9;
+    background:#0d0d0dcc; padding:5px 12px; border-radius:20px; user-select:none }
+  .hud button{ background:none; border:0; color:#aaa; font-size:14px; cursor:pointer; padding:0 8px }
+  body.grid{ overflow:auto; height:auto }
+  body.grid .deck{ position:static; display:flex; flex-wrap:wrap; gap:18px; padding:18px; justify-content:center }
+  body.grid .slide{ position:relative; left:auto; top:auto; display:block; transform:none; zoom:.24; cursor:pointer }
+}
+@media print{
+  html,body{ background:var(--bg); height:auto; overflow:visible }
+  .deck{ position:static }
+  .slide{ page-break-after:always; break-after:page; position:relative !important; left:auto !important; top:auto !important;
+    transform:none !important; display:block !important }
+  .slide.close{ display:flex !important }
+  .hud{ display:none }
+}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- 1 CAPA -->
+<section class="slide cover">
+  <div class="kicker">Narrativa de marca</div>
+  <div class="big">ALOHA</div>
+  <div class="by">Desenvolvido por</div>
+  <img src="assets/mira-logo.png" alt="mira brand studio">
+  <div class="foot">Documento de trabalho · versão 1</div>
+</section>
+
+<!-- 2 PONTO DE PARTIDA -->
+<section class="slide">
+  <h1 class="t">O ponto de partida</h1>
+  <div class="sub">O que a Essência definiu, e o que a Narrativa faz com isso</div>
+  <table class="tb">
+    <tr><th style="width:50%">O que a Essência definiu</th><th class="hl">O que a Narrativa faz com isso</th></tr>
+    <tr><td>O território é o recovery, ampliado até conter bem-estar, saúde mental e autocuidado</td><td>Conta o recovery como algo que sustenta qualquer pessoa em movimento, não só quem compete</td></tr>
+    <tr><td>O público é quem tem, no mínimo, um pé em movimento, com atenção às mulheres</td><td>Elege um herói principal e aninha dois sub-roteiros, sem criar marcas soltas</td></tr>
+    <tr><td>A promessa é literal: a pessoa sai melhor do que entrou</td><td>Transforma a promessa no fio que costura todos os roteiros</td></tr>
+    <tr><td>O diferencial é a mão de quem atende e a origem de atleta para atleta</td><td>Posiciona a Aloha como guia: quem já viveu o problema e sabe o caminho</td></tr>
+    <tr><td>O nome preferido é Aloha Recovery Club</td><td>Dá ao clube um sentido: pertencer a um lugar que existe para cuidar de você</td></tr>
+  </table>
+</section>
+
+<!-- 3 ÍNDICE -->
+<section class="slide">
+  <h1 class="t">Narrativa</h1>
+  <div class="sub">11 pontos</div>
+  <div class="idx">
+    <div><span>01</span>Como ler este documento</div>
+    <div><span>07</span>Sub-roteiro · O atleta</div>
+    <div><span>02</span>Decisões assumidas</div>
+    <div><span>08</span>Manifesto</div>
+    <div><span>03</span>Regras de voz</div>
+    <div><span>09</span>Frases de apoio</div>
+    <div><span>04</span>A história em uma página</div>
+    <div><span>10</span>O que muda no discurso</div>
+    <div><span>05</span>Roteiro principal · Quem se movimenta</div>
+    <div><span>11</span>Pontos a validar</div>
+    <div><span>06</span>Sub-roteiro · Mulheres e círculo social</div>
+    <div></div>
+  </div>
+</section>
+
+<!-- 4 COMO LER -->
+<section class="slide">
+  <h1 class="t"><span class="n">01</span>Como ler</h1>
+  <div class="sub">O método e a arquitetura dos roteiros</div>
+  <p>A Essência definiu o que a Aloha é. A Narrativa define como ela conta isso, com base no StoryBrand de Donald Miller: quem é o herói de cada conversa, que problema ele enfrenta, por que a Aloha é o guia certo, qual caminho oferece e o que está em jogo.</p>
+  <p><b>A regra de ouro: o herói nunca é a marca. É sempre o cliente da Aloha.</b> A Aloha é o guia, quem já passou pelo problema e sabe o caminho. Uma marca-mãe, um roteiro principal e dois sub-roteiros aninhados, todos com o mesmo tom, o mesmo guia e a mesma promessa.</p>
+  <table class="tb">
+    <tr><th style="width:22%">Roteiro</th><th style="width:30%">Público</th><th>Papel no negócio</th></tr>
+    <tr><td>Principal</td><td>Quem se movimenta</td><td>Volume e crescimento. É onde a Aloha fatura mais e onde o recovery ampliado vive</td></tr>
+    <tr><td>Sub-roteiro 1</td><td>Mulheres e o círculo social de quem já frequenta</td><td>Expansão. Quebra o teto de público apontado na Essência</td></tr>
+    <tr><td>Sub-roteiro 2</td><td>O atleta</td><td>Legitimidade. Sustenta a autoridade que ninguém copia</td></tr>
+    <tr><td style="color:var(--dim)">Em espera</td><td style="color:var(--dim)">Franqueado</td><td style="color:var(--dim)">B2B suspenso por decisão dos sócios em 11/09. Entra numa próxima rodada</td></tr>
+  </table>
+</section>
+
+<!-- 5 DECISÕES -->
+<section class="slide">
+  <h1 class="t"><span class="n">02</span>Decisões assumidas</h1>
+  <div class="sub">O que esta versão toma como ponto de partida, e que deve ser validado</div>
+  <ol class="l">
+    <li><b>Nome.</b> Aloha Recovery Club, como recomendado na Essência e tratado como caminho na reunião de 11/09.</li>
+    <li><b>Herói unificador.</b> Um herói-mãe único, quem se movimenta e cobra muito do próprio corpo, com variações por público.</li>
+    <li><b>Herói primário.</b> Quem se movimenta sem necessariamente se ver como atleta. As mulheres são o recorte prioritário desse público e ganham sub-roteiro próprio.</li>
+    <li><b>Tom.</b> Direto e caloroso, de quem fala entre iguais. Sem jargão técnico na comunicação geral.</li>
+    <li><b>Idioma.</b> Português em toda a copy. Inglês só como nome próprio (Recovery Club, Reset, Day Spa). O slogan atual em inglês fica em avaliação na Expressão.</li>
+    <li><b>Pontuação.</b> Sem travessão em nenhuma peça.</li>
+    <li><b>Honestidade.</b> Nenhuma escassez, nenhum superlativo que a marca não consiga provar. "O maior e melhor centro do Brasil", do manual atual, sai do discurso.</li>
+  </ol>
+</section>
+
+<!-- 6 VOZ 1 -->
+<section class="slide">
+  <h1 class="t"><span class="n">03</span>Regras de voz</h1>
+  <div class="sub">Como a Aloha fala</div>
+  <p>A Aloha fala como alguém que treina, que já sentiu o corpo pedir pausa e que sabe exatamente o que fazer com uma banheira de gelo. <b>Calorosa sem ser melosa. Segura sem ser técnica. Próxima sem ser informal demais.</b></p>
+  <p>Fala com a pessoa, não sobre si mesma. Descreve o benefício percebido antes da técnica. Usa a técnica como prova, nunca como vitrine.</p>
+  <div class="lbl" style="margin-top:22px">Três testes antes de publicar qualquer frase</div>
+  <div class="cols3" style="width:1116px">
+    <div class="card"><div class="k">1 · O herói</div><p>O herói é o cliente? Se a frase fala mais da Aloha do que da pessoa, reescreva.</p></div>
+    <div class="card"><div class="k">2 · A prova</div><p>Dá para provar? Se não dá, sai. Nenhum superlativo sem lastro, nenhuma escassez inventada.</p></div>
+    <div class="card"><div class="k">3 · O convite</div><p>Uma pessoa que treina duas vezes por semana se sente convidada? Se não, ajuste.</p></div>
+  </div>
+</section>
+
+<!-- 7 VOZ 2 -->
+<section class="slide">
+  <h1 class="t"><span class="n">03</span>Regras de voz</h1>
+  <div class="sub">O que usar, o que evitar</div>
+  <table class="tb">
+    <tr><th class="hl" style="width:28%">Usar</th><th style="width:28%">Evitar</th><th>Por quê</th></tr>
+    <tr><td>quem se movimenta, quem treina, quem se cuida</td><td>atleta, na comunicação geral</td><td>Afasta quem não compete. Só entra no roteiro do atleta</td></tr>
+    <tr><td>recovery, recuperar, se recuperar</td><td>wellness como definição da marca</td><td>Termo em banalização. Pode aparecer como contexto, nunca como definição</td></tr>
+    <tr><td>saúde mental e física, cabeça boa, pausa real</td><td>meditação, mindfulness, holístico</td><td>A Aloha não é um espaço holístico</td></tr>
+    <tr><td>comprometimento, constância</td><td>disciplina, sacrifício, sem dor sem ganho</td><td>O novo público não precisa de régua de atleta</td></tr>
+    <tr><td>renovado, sair melhor do que entrou</td><td>milagre, transformação total, detox</td><td>Promessa literal, sem exagero</td></tr>
+    <tr><td>clube, fazer parte, a casa</td><td>exclusivo, VIP, para poucos</td><td>Clube é pertencimento, não barreira</td></tr>
+    <tr><td>quem atende, a mão de quem atende</td><td>terapeuta holístico, esteticista</td><td>O diferencial é competência</td></tr>
+  </table>
+</section>
+
+<!-- 8 HISTÓRIA EM UMA PÁGINA -->
+<section class="slide">
+  <h1 class="t"><span class="n">04</span>A história em uma página</h1>
+  <div class="sub">O BrandScript da marca-mãe, em seis linhas</div>
+  <div class="story">
+    <div class="row"><div class="k">O herói</div><div class="v">Quem se movimenta: corre, treina, pedala, joga, faz academia, e cobra do próprio corpo todos os dias.</div></div>
+    <div class="row"><div class="k">O problema</div><div class="v">O corpo recebe cobrança e quase nunca recebe pausa. A tensão acumula, a dor aparece, a semana começa cansada.</div></div>
+    <div class="row"><div class="k">O guia</div><div class="v">A Aloha, criada por triatletas que viveram isso na pele e montaram, num só lugar, o circuito que precisavam.</div></div>
+    <div class="row"><div class="k">O plano</div><div class="v">Chegar como está, passar uma hora nas mãos de quem sabe, sair renovado e fazer disso rotina.</div></div>
+    <div class="row"><div class="k">Em jogo</div><div class="v">Continuar fazendo o que se ama, sem que o cansaço decida por você.</div></div>
+    <div class="row"><div class="k">A virada</div><div class="v">Passar de alguém que aguenta para alguém que se cuida.</div></div>
+  </div>
+</section>
+
+<!-- 9 PRINCIPAL · PERSONAGEM -->
+<section class="slide">
+  <h1 class="t"><span class="n">05</span>Roteiro principal</h1>
+  <div class="sub">Quem se movimenta · 1. Personagem</div>
+  <p>Pessoa entre 25 e 55 anos, com concentração nos 40, que tem no mínimo um pé em movimento: academia duas ou três vezes por semana, grupo de corrida, beach tennis, pedal de fim de semana, pilates. Trabalha muito, muitas vezes em funções de alta exigência, e aplica ao corpo a mesma régua da carreira. Ou faz o caminho contrário e desacelera de propósito, pondo a saúde à frente do trabalho.</p>
+  <div class="cols" style="margin-top:22px">
+    <div class="card"><div class="k">O que ele quer</div><p>Um corpo funcionando, sem dor e sem tensão, para continuar fazendo o que gosta e dar conta da semana.</p></div>
+    <div class="card"><div class="k">O desejo de fundo</div><p>Se reconhecer como alguém que se cuida. Muitas vezes, se sentir um pouco atleta, mesmo sem nunca ter competido.</p></div>
+  </div>
+</section>
+
+<!-- 10 PRINCIPAL · PROBLEMA -->
+<section class="slide">
+  <h1 class="t"><span class="n">05</span>Roteiro principal</h1>
+  <div class="sub">Quem se movimenta · 2. Problema</div>
+  <div class="lbl">O vilão</div>
+  <p class="q sm rule" style="margin-bottom:26px"><em>O acúmulo.</em> A tensão que se soma dia após dia num corpo cobrado todos os dias e que quase nunca recebe uma pausa de verdade.</p>
+  <div class="cols3">
+    <div class="card"><div class="k">Externo</div><p>Dor, tensão muscular, cansaço acumulado, sono ruim. E cuidar disso exige ir a vários lugares diferentes, em dias diferentes.</p></div>
+    <div class="card"><div class="k">Interno</div><p>A sensação de estar sempre um pouco travado, de começar a semana já cansado. E a dúvida: recovery é coisa de atleta, não é para mim.</p></div>
+    <div class="card"><div class="k">Filosófico</div><p>Recuperar não deveria ser privilégio de quem compete. Quem se movimenta merece se recuperar tão bem quanto quem vive disso.</p></div>
+  </div>
+</section>
+
+<!-- 11 PRINCIPAL · ESCOLHA DO VILÃO -->
+<section class="slide">
+  <h1 class="t"><span class="n">05</span>Roteiro principal</h1>
+  <div class="sub">Por que este vilão</div>
+  <p>Um bom vilão é verdadeiro para todos os públicos, não depende de medo nem de escassez e deixa claro que a pausa faz parte do movimento, não é o oposto dele. Avaliamos três caminhos.</p>
+  <table class="tb">
+    <tr><th style="width:22%">Opção</th><th style="width:31%">O que ganha</th><th style="width:31%">O que arrisca</th><th>Veredito</th></tr>
+    <tr><td>O acúmulo</td><td>Vale para quem compete e para quem só quer dar conta da semana. Abriga corpo, cabeça e sono. É honesto.</td><td>Exige imagem e linguagem concretas para não soar abstrato.</td><td class="ok">Recomendado</td></tr>
+    <tr><td>A recuperação espalhada em vários endereços</td><td>É a origem real da marca e o argumento prático do circuito.</td><td>É pequeno demais para sustentar a marca inteira.</td><td class="ok">Entra como problema externo</td></tr>
+    <tr><td>O "isso não é para mim"</td><td>Nomeia a barreira que afasta mulheres e não atletas.</td><td>É uma percepção sobre a marca, não um inimigo do herói.</td><td class="ok">Entra como problema interno</td></tr>
+    <tr><td>O wellness sem lastro</td><td>Diferencia a Aloha de quem só tem vocabulário.</td><td>Coloca a concorrência no centro, e o herói não se importa com ela.</td><td class="no">Não recomendado</td></tr>
+  </table>
+</section>
+
+<!-- 12 PRINCIPAL · GUIA -->
+<section class="slide">
+  <h1 class="t"><span class="n">05</span>Roteiro principal</h1>
+  <div class="sub">Quem se movimenta · 3. Guia</div>
+  <div class="lbl">Empatia</div>
+  <p class="q sm rule" style="margin-bottom:24px">A gente sabe como é, porque começou do mesmo lugar: treinando muito, cobrando demais do corpo e descobrindo que a recuperação é tão importante quanto o treino.</p>
+  <div class="lbl">Autoridade · só o que é verificável</div>
+  <ul class="l">
+    <li>Nascida da experiência real de um fundador que disputou o Mundial de Ironman no Havaí, em 2016, e de sócios que vêm do triatlo.</li>
+    <li>Em operação desde 2019, com unidades em várias capitais e cidades do Brasil.</li>
+    <li>Notas entre 4,9 e 5,0 nas avaliações públicas das cinco praças analisadas, com o mesmo vocabulário de cidade em cidade.</li>
+    <li>Um circuito montado como método, testado pelos próprios sócios antes de virar negócio.</li>
+    <li>Quem atende passa por uma seleção rigorosa, acompanhada de perto por sócios que usam o próprio serviço.</li>
+  </ul>
+</section>
+
+<!-- 13 PRINCIPAL · PLANO -->
+<section class="slide">
+  <h1 class="t"><span class="n">05</span>Roteiro principal</h1>
+  <div class="sub">Quem se movimenta · 4. Plano</div>
+  <div class="cols">
+    <div>
+      <div class="lbl">Plano de processo</div>
+      <ol class="l">
+        <li><b>Chegue do jeito que está.</b> Agende ou apareça. Conte o que o corpo está pedindo.</li>
+        <li><b>Deixe uma hora nas mãos de quem sabe.</b> Contraste de gelo e calor, eletroestimulação, massagem e bota de compressão, num só lugar e num só circuito.</li>
+        <li><b>Saia renovado e faça disso rotina.</b> Encaixe a recuperação na semana, como você já encaixa o treino.</li>
+      </ol>
+      <p class="note" style="margin-top:14px">Os três passos conversam com o Relaxar · Recuperar · Recarregar do manual atual e podem virar a versão em português dele na Expressão.</p>
+    </div>
+    <div>
+      <div class="lbl">Plano de acordo</div>
+      <ul class="l">
+        <li>Você não precisa ser atleta.</li>
+        <li>A pressão é sua: quem atende pergunta e ajusta.</li>
+        <li>Tudo num só lugar, em cerca de uma hora.</li>
+        <li>Sala privativa para quem prefere.</li>
+        <li>O mesmo padrão em qualquer unidade Aloha.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 14 PRINCIPAL · CTA + STAKES -->
+<section class="slide">
+  <h1 class="t"><span class="n">05</span>Roteiro principal</h1>
+  <div class="sub">Quem se movimenta · 5. Chamada à ação e 6. O que está em jogo</div>
+  <div class="cols">
+    <div>
+      <div class="lbl">Chamada direta</div>
+      <p><span class="chip">Agende seu recovery</span><span class="chip">Marque sua primeira hora</span></p>
+      <div class="lbl" style="margin-top:22px">Chamada transicional</div>
+      <ul class="l">
+        <li><b>Qual circuito é o seu?</b> Um guia curto que indica Recovery, Reset, Day Spa ou massagem conforme a rotina.</li>
+        <li><b>Traga alguém na próxima.</b> Convite para o círculo de quem já frequenta.</li>
+        <li><b>Entre para o clube.</b> Quando a assinatura estiver ativa.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl">O que se evita</div>
+      <p style="color:var(--muted);font-size:13px">Sem exagero e sem medo, só consequências reais.</p>
+      <ul class="l">
+        <li>A dor que vira companhia de todos os dias.</li>
+        <li>Parar de fazer o que você gosta porque o corpo não acompanha.</li>
+        <li>A pausa que só chega quando o corpo obriga.</li>
+        <li>Semanas que começam no cansaço da anterior.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 15 PRINCIPAL · SUCESSO -->
+<section class="slide">
+  <h1 class="t"><span class="n">05</span>Roteiro principal</h1>
+  <div class="sub">Quem se movimenta · 7. Sucesso e transformação</div>
+  <p><b>Sucesso:</b> corpo funcionando de novo, tensão dissolvida, sono melhor, cabeça mais leve, uma hora de pausa real por semana e um lugar ao qual se pertence.</p>
+  <div class="lbl" style="margin-top:20px">Transformação de identidade</div>
+  <div class="dp">
+    <div class="h">De</div><div></div><div class="h g">Para</div>
+    <div class="a">Alguém que aguenta</div><div class="ar">→</div><div class="b">Alguém que se cuida</div>
+    <div class="a">Quem deixa a pausa para quando der</div><div class="ar">→</div><div class="b">Quem trata a recuperação como parte do movimento</div>
+    <div class="a">"Isso é coisa de atleta"</div><div class="ar">→</div><div class="b">"Eu me recupero como os melhores"</div>
+  </div>
+</section>
+
+<!-- 16 PRINCIPAL · ONE-LINER -->
+<section class="slide">
+  <h1 class="t"><span class="n">05</span>One-liner</h1>
+  <div class="sub">Quem se movimenta · a história inteira em uma fala</div>
+  <p class="q rule" style="margin-top:40px">Quem se movimenta cobra muito do corpo e quase nunca devolve. A Aloha reúne, num só lugar e em cerca de uma hora, o circuito de recuperação criado por quem treina, com quem sabe o que faz. <em>Você sai melhor do que entrou.</em></p>
+  <p class="note" style="margin-top:34px">Versão curta · <span style="color:var(--white)">Seu corpo trabalha a semana inteira. Aqui ele recebe de volta.</span></p>
+</section>
+
+<!-- 17 SUB1 · PERSONAGEM + PROBLEMA -->
+<section class="slide">
+  <h1 class="t"><span class="n">06</span>Mulheres e círculo social</h1>
+  <div class="sub">Sub-roteiro aninhado · 1. Personagem e 2. Problema</div>
+  <p>Mulher entre 30 e 50 anos, muitas vezes esposa, amiga ou parte do círculo de quem já frequenta a Aloha. Trabalha, muitas vezes é mãe, faz academia, corre, joga beach tennis ou pratica pilates. Já faz massagem com frequência, mas em outro lugar. <b>Ela quer</b> tirar a tensão e o peso do corpo e ter uma hora que seja só dela, num lugar onde se sinta à vontade desde a porta.</p>
+  <p style="margin-top:14px"><span class="chip o">Vilão</span> O mesmo acúmulo, somado a um cuidado que ela sempre adia porque cuida de todo mundo antes.</p>
+  <div class="cols3" style="margin-top:16px">
+    <div class="card"><div class="k">Externo</div><p>Tensão, pernas pesadas, inchaço, dor que aparece depois do treino ou de uma semana difícil.</p></div>
+    <div class="card"><div class="k">Interno</div><p>Esse lugar parece de atleta, cheio de homem. Vou me sentir deslocada. E se a massagem for forte demais?</p></div>
+    <div class="card"><div class="k">Filosófico</div><p>Cuidar de si não precisa de licença. Autocuidado não é luxo, é o que sustenta a rotina.</p></div>
+  </div>
+</section>
+
+<!-- 18 SUB1 · GUIA + PLANO -->
+<section class="slide">
+  <h1 class="t"><span class="n">06</span>Mulheres e círculo social</h1>
+  <div class="sub">Sub-roteiro aninhado · 3. Guia e 4. Plano</div>
+  <div class="cols">
+    <div>
+      <div class="lbl">Empatia</div>
+      <p class="q sm rule" style="font-size:19px">Entrar num lugar novo, cheio de gente treinando, pode intimidar. A gente pensou nisso.</p>
+      <div class="lbl" style="margin-top:18px">Autoridade</div>
+      <p>A mesma competência reconhecida em toda a rede; profissionais mulheres no time; sala privativa com climatização; pressão ajustada a cada pessoa; avaliações que já falam de paz, acolhimento e aconchego, como na unidade do Leblon.</p>
+    </div>
+    <div>
+      <div class="lbl">Processo</div>
+      <ol class="l">
+        <li><b>Escolha o seu circuito.</b> Para começar, o novo circuito de drenagem linfática, bota de compressão e sauna.</li>
+        <li><b>Escolha como quer ser atendida.</b> Sala privativa, profissional mulher e, se aprovado, horário exclusivo.</li>
+        <li><b>Uma hora só sua.</b> Saia leve e marque a próxima.</li>
+      </ol>
+      <div class="lbl" style="margin-top:14px">Acordo</div>
+      <ul class="l">
+        <li>Aqui ninguém vai perguntar o seu pace.</li>
+        <li>A pressão é você quem decide.</li>
+        <li>Espaço reservado para quem prefere.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 19 SUB1 · NOME DO CIRCUITO -->
+<section class="slide">
+  <h1 class="t"><span class="n">06</span>Mulheres e círculo social</h1>
+  <div class="sub">O nome do novo circuito · drenagem linfática, bota de compressão e sauna</div>
+  <p>Pedido dos sócios na reunião de 11/09. A recomendação é <b>não nomear o circuito como feminino</b>: ele é pensado para elas e comunicado para elas, mas aberto a todos. Isso acolhe sem criar gueto e não afasta quem busca o mesmo resultado.</p>
+  <table class="tb big">
+    <tr><th style="width:18%">Opção</th><th style="width:48%">Leitura</th><th>Veredito</th></tr>
+    <tr><td>Leve</td><td>Descreve o resultado real: drenagem e compressão desincham e aliviam. Curto, em português, não restringe por gênero. "Fiz um Leve hoje."</td><td class="ok">Recomendado</td></tr>
+    <tr><td>Respiro</td><td>Fala da pausa e da cabeça. Mais emocional, menos concreto sobre o que o corpo sente.</td><td class="ok">Segunda opção</td></tr>
+    <tr><td>Ritual Aloha</td><td>Evoca cuidado e repetição, mas soa spa ou holístico, território que a marca decidiu não ocupar.</td><td class="no">Não recomendado</td></tr>
+  </table>
+</section>
+
+<!-- 20 SUB1 · CTA + STAKES + SUCESSO -->
+<section class="slide">
+  <h1 class="t"><span class="n">06</span>Mulheres e círculo social</h1>
+  <div class="sub">Sub-roteiro aninhado · 5. Chamada, 6. O que está em jogo e 7. Sucesso</div>
+  <div class="cols">
+    <div>
+      <div class="lbl">Chamada direta</div>
+      <p><span class="chip">Agende sua primeira hora</span></p>
+      <div class="lbl" style="margin-top:16px">Chamada transicional</div>
+      <p><span class="chip o">Venha com uma amiga</span><span class="chip o">Conheça o espaço antes</span></p>
+      <div class="lbl" style="margin-top:20px">O que se evita</div>
+      <ul class="l">
+        <li>Um cuidado que fica sempre para depois, até virar dor.</li>
+        <li>Carregar a tensão da semana para dentro de casa.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl">Sucesso</div>
+      <p>Corpo leve, pernas leves, sono melhor e a sensação de ter feito algo por si.</p>
+      <div class="lbl" style="margin-top:18px">Transformação</div>
+      <div class="dp" style="width:100%;grid-template-columns:1fr 34px 1fr">
+        <div class="a" style="font-size:14px">Quem cuida de todo mundo e se deixa por último</div><div class="ar">→</div><div class="b" style="font-size:14px">Quem se inclui na própria rotina</div>
+        <div class="a" style="font-size:14px">"Não é um lugar para mim"</div><div class="ar">→</div><div class="b" style="font-size:14px">"É o meu lugar de pausa"</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 21 SUB1 · ONE-LINER -->
+<section class="slide">
+  <h1 class="t"><span class="n">06</span>One-liner</h1>
+  <div class="sub">Mulheres e círculo social</div>
+  <p class="q rule" style="margin-top:40px">Você cuida de tudo e de todos. A Aloha cuida de você: uma hora de pausa real, com quem sabe o que faz, do jeito que você preferir. <em>Você sai leve, melhor do que entrou.</em></p>
+</section>
+
+<!-- 22 SUB2 · PERSONAGEM + PROBLEMA -->
+<section class="slide">
+  <h1 class="t"><span class="n">07</span>O atleta</h1>
+  <div class="sub">Sub-roteiro aninhado · 1. Personagem e 2. Problema · único roteiro em que a palavra atleta aparece de frente</div>
+  <p>Atleta amador ou competidor: triatlo, corrida, ciclismo, natação, HYROX, esportes de quadra, categorias de base. Tem planilha, prova no calendário e cobrança alta sobre o próprio desempenho. <b>Ele quer</b> treinar mais e melhor, sem se machucar, e chegar inteiro no próximo treino e na próxima prova.</p>
+  <p style="margin-top:14px"><span class="chip o">Vilão</span> A fadiga acumulada que rouba o próximo treino.</p>
+  <div class="cols3" style="margin-top:16px">
+    <div class="card"><div class="k">Externo</div><p>Carga alta, dor muscular, recuperação improvisada e espalhada entre vários profissionais.</p></div>
+    <div class="card"><div class="k">Interno</div><p>Treinar muito e sentir que não rende. O receio de ter que parar.</p></div>
+    <div class="card"><div class="k">Filosófico</div><p>A recuperação é tão importante quanto o treino.</p></div>
+  </div>
+</section>
+
+<!-- 23 SUB2 · GUIA + PLANO -->
+<section class="slide">
+  <h1 class="t"><span class="n">07</span>O atleta</h1>
+  <div class="sub">Sub-roteiro aninhado · 3. Guia e 4. Plano</div>
+  <div class="cols">
+    <div>
+      <div class="lbl">Empatia</div>
+      <p class="q sm rule" style="font-size:19px">De atleta para atleta. Não é slogan, é a nossa história.</p>
+      <div class="lbl" style="margin-top:18px">Autoridade</div>
+      <p>José Lozano disputou o Mundial de Ironman no Havaí em 2016 e terminou entre os melhores brasileiros amadores, sustentado por uma atenção obsessiva à recuperação. Os sócios vêm do triatlo, um deles com carreira profissional desde os 11 anos. O circuito foi testado neles mesmos antes de virar negócio. Quem atende entende de carga, de prova e de pré-prova.</p>
+    </div>
+    <div>
+      <div class="lbl">Processo</div>
+      <ol class="l">
+        <li><b>Coloque o recovery na planilha.</b> Um dia fixo na semana, como um treino.</li>
+        <li><b>Ajuste o circuito à carga.</b> Recovery completo na rotina, Super Recovery nas semanas duras, Reset para a cabeça.</li>
+        <li><b>Chegue inteiro.</b> No próximo treino e na próxima prova.</li>
+      </ol>
+      <div class="lbl" style="margin-top:14px">Acordo</div>
+      <ul class="l">
+        <li>O mesmo padrão em qualquer unidade Aloha, inclusive quando você viaja para competir.</li>
+        <li>Quem atende sabe o que é carga.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 24 SUB2 · CTA + STAKES + SUCESSO -->
+<section class="slide">
+  <h1 class="t"><span class="n">07</span>O atleta</h1>
+  <div class="sub">Sub-roteiro aninhado · 5. Chamada, 6. O que está em jogo e 7. Sucesso</div>
+  <div class="cols">
+    <div>
+      <div class="lbl">Chamada direta</div>
+      <p><span class="chip">Marque o recovery da semana</span></p>
+      <div class="lbl" style="margin-top:16px">Chamada transicional</div>
+      <p><span class="chip o">Plano de recuperação para a sua prova</span></p>
+      <p><span class="chip o">Parcerias com assessorias e grupos de corrida</span></p>
+      <div class="lbl" style="margin-top:20px">O que se evita</div>
+      <ul class="l">
+        <li>Lesão que tira você da temporada.</li>
+        <li>Estagnar mesmo treinando mais.</li>
+        <li>Largar cansado na prova que você preparou por meses.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl">Sucesso</div>
+      <p>Constância nos treinos, evolução e chegada inteira na prova.</p>
+      <div class="lbl" style="margin-top:18px">Transformação</div>
+      <div class="dp" style="width:100%;grid-template-columns:1fr 34px 1fr">
+        <div class="a" style="font-size:14px">Atleta que só treina</div><div class="ar">→</div><div class="b" style="font-size:14px">Atleta completo, que trata a recuperação como treino</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 25 SUB2 · ONE-LINER -->
+<section class="slide">
+  <h1 class="t"><span class="n">07</span>One-liner</h1>
+  <div class="sub">O atleta</div>
+  <p class="q rule" style="margin-top:40px">Treinar forte é metade do trabalho. A Aloha foi criada por triatletas para cuidar da outra metade: tudo o que o corpo precisa para se recuperar, num só lugar, em cerca de uma hora. <em>Para você chegar inteiro no próximo treino.</em></p>
+</section>
+
+<!-- 26 MANIFESTO -->
+<section class="slide mani">
+  <h1 class="t"><span class="n">08</span>Manifesto</h1>
+  <div class="sub">Rascunho para a Expressão</div>
+  <p>Tem gente que acorda cedo para correr. Tem gente que encaixa a academia entre uma reunião e outra. Tem gente que pedala no fim de semana, joga com os amigos, se desafia numa prova ou só quer dar conta da semana com o corpo inteiro.</p>
+  <p class="s">Todo mundo que se movimenta cobra alguma coisa do corpo. E quase ninguém devolve.</p>
+  <p>A Aloha nasceu de quem aprendeu isso na pele: treinando para um Mundial de Ironman, descobrindo que a recuperação é tão importante quanto o treino. Voltamos com uma ideia simples: reunir num só lugar tudo o que o corpo precisa para se recuperar.</p>
+  <p>Hoje, recovery é mais do que o depois do treino. É o corpo funcionando, a cabeça leve, o sono de volta, uma hora de pausa de verdade. É um lugar para pertencer.</p>
+  <p class="s">Você não precisa ser atleta. Precisa só de um pé em movimento.<br>Chegue do jeito que está. Saia melhor do que entrou.</p>
+  <p style="font-family:var(--display);font-size:22px;letter-spacing:1px;color:var(--green);margin-top:6px">ALOHA RECOVERY CLUB</p>
+</section>
+
+<!-- 27 FRASES -->
+<section class="slide">
+  <h1 class="t"><span class="n">09</span>Frases de apoio</h1>
+  <div class="sub">Banco inicial para site, posts, espaço físico e brand system</div>
+  <table class="tb big">
+    <tr><th style="width:52%">Frase</th><th>Onde funciona melhor</th></tr>
+    <tr><td>Saia melhor do que entrou.</td><td>Assinatura, fachada, fim de qualquer peça</td></tr>
+    <tr><td>Recuperar é para quem se movimenta.</td><td>Posicionamento, site, campanha de abertura</td></tr>
+    <tr><td>Seu corpo trabalha a semana inteira. Aqui ele recebe de volta.</td><td>Posts, anúncios, parede do espaço</td></tr>
+    <tr><td>Em qualquer lugar tem uma banheira de gelo. Aqui tem quem sabe o que fazer com ela.</td><td>Diferenciação, frente à commodity</td></tr>
+    <tr><td>Uma hora. Um lugar. Tudo o que o corpo pede.</td><td>Explicação do circuito</td></tr>
+    <tr><td>Você não precisa ser atleta. Precisa de um pé em movimento.</td><td>Novo público, primeira visita</td></tr>
+    <tr><td>A recuperação é tão importante quanto o treino.</td><td>Atleta, assessorias, provas</td></tr>
+  </table>
+</section>
+
+<!-- 28 O QUE MUDA -->
+<section class="slide">
+  <h1 class="t"><span class="n">10</span>O que muda no discurso</h1>
+  <div class="sub">Do manual e da apresentação atuais para a nova narrativa</div>
+  <table class="tb">
+    <tr><th style="width:32%">Discurso atual</th><th class="hl" style="width:34%">Nova narrativa</th><th>Por quê</th></tr>
+    <tr><td>"O maior e melhor centro de recuperação do Brasil"</td><td>Pioneira, reconhecida e consistente, com prova nas avaliações</td><td>Superlativo difícil de provar</td></tr>
+    <tr><td>"Deixar nossos clientes prontos para o próximo treino ou competição"</td><td>Sair melhor do que entrou</td><td>Amplia o recovery para além de quem compete</td></tr>
+    <tr><td>"Ir além dos limites"</td><td>Estar inteiro para continuar</td><td>A régua de atleta afasta o público novo</td></tr>
+    <tr><td>A marca no centro: "não entregamos apenas terapias, criamos experiências"</td><td>O cliente no centro, a Aloha como guia</td><td>Regra do método</td></tr>
+    <tr><td>Terapias em linguagem técnica: edema, ácido lático, retorno venoso</td><td>Benefício percebido primeiro, técnica como prova</td><td>Clareza para quem não é do meio</td></tr>
+    <tr><td>Slogan em inglês: Time to Relax · Recover · Recharge</td><td>Relaxar, recuperar, recarregar como os três passos do plano</td><td>Mantém o que já existe e fala a língua do público</td></tr>
+  </table>
+</section>
+
+<!-- 29 PONTOS A VALIDAR -->
+<section class="slide">
+  <h1 class="t"><span class="n">11</span>Pontos a validar</h1>
+  <div class="sub">Com os sócios, antes da versão 2</div>
+  <div class="cols">
+    <ol class="l">
+      <li><b>Nome.</b> Aloha Recovery Club aprovado para toda a narrativa.</li>
+      <li><b>Vilão.</b> O acúmulo como vilão-mãe.</li>
+      <li><b>A história do José.</b> Os sócios contam pouco. Até que ponto a comunicação pode usar Kona 2016?</li>
+      <li><b>Circuito.</b> Nome recomendado: Leve. Comunicado como aberto a todos?</li>
+      <li><b>Horário exclusivo feminino.</b> Aprovado? Em quais unidades?</li>
+    </ol>
+    <ol class="l" start="6" style="counter-reset:li 5">
+      <li><b>Clube.</b> Nome, valor e data da assinatura. Condiciona a chamada "Entre para o clube".</li>
+      <li><b>Slogan em inglês.</b> Aposentar, traduzir ou manter como assinatura?</li>
+      <li><b>Superlativos.</b> Retirar "o maior e melhor do Brasil" de todos os materiais da rede.</li>
+      <li><b>Teste com o público.</b> Apresentar o sub-roteiro 1 às esposas e ao círculo de quem frequenta, como combinado em 10/08.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 30 FECHO -->
+<section class="slide close">
+  <div class="kicker">PRÓXIMA ETAPA</div>
+  <div class="big">EXPRESSÃO</div>
+  <img src="assets/mira-logo.png" alt="mira">
+</section>
+
+</div>
+<div class="hud"><button id="prev">‹</button><span id="pos"></span><button id="next">›</button><button id="grid" title="Grade (G)">▦</button></div>
+<script>
+(function(){
+  var s=[].slice.call(document.querySelectorAll('.slide')), i=0;
+  var h=parseInt(location.hash.slice(1),10); if(h>0&&h<=s.length) i=h-1;
+  function fit(){ var k=Math.min(innerWidth/1280,(innerHeight-44)/720);
+    s.forEach(function(e){ if(!document.body.classList.contains('grid')) e.style.transform='translate(-50%,-50%) scale('+k+')'; else e.style.transform='' }); }
+  function show(n){ i=Math.max(0,Math.min(s.length-1,n)); s.forEach(function(e,j){e.classList.toggle('on',j===i)});
+    document.getElementById('pos').textContent=(i+1)+' / '+s.length; history.replaceState(null,'','#'+(i+1)); }
+  function grid(){ document.body.classList.toggle('grid'); fit(); }
+  addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' '].indexOf(e.key)>-1){e.preventDefault();show(i+1)}
+    if(['ArrowLeft','PageUp'].indexOf(e.key)>-1){e.preventDefault();show(i-1)}
+    if(e.key==='g'||e.key==='G') grid();
+    if(e.key==='f'||e.key==='F'){ document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen() }
+  });
+  s.forEach(function(e,j){ e.addEventListener('click',function(){ if(document.body.classList.contains('grid')){grid();show(j)} }) });
+  document.getElementById('prev').onclick=function(){show(i-1)};
+  document.getElementById('next').onclick=function(){show(i+1)};
+  document.getElementById('grid').onclick=grid;
+  addEventListener('resize',fit); fit(); show(i);
+})();
+</script>
+</body>
+</html>
