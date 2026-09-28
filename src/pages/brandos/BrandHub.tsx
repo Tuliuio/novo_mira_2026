@@ -275,7 +275,7 @@ export function BrandHub() {
           <Narrative hub={hub} onRead={(i) => hub.narratives && openReader(hub.narratives, i)} />
         )}
         {sections.some((s) => s.id === "verbal") && <Verbal hub={hub} />}
-        {sections.some((s) => s.id === "em-uso") && <InUse hub={hub} clientName={client.name} />}
+        {sections.some((s) => s.id === "em-uso") && <InUse hub={hub} clientName={client.name} onDownload={downloadLogo} />}
         <AIGuide md={md} onCopy={copyGuide} onDownload={downloadGuide} onDownloadSkill={downloadSkill} />
       </main>
 
@@ -333,7 +333,7 @@ function Hero({ client, hub }: { client: ClientBrand; hub: HubBrand }) {
       <div className="hero-top">
         <span className="chip"><b>{hub.year}</b> Brand System</span>
         {hub.since && <span className="chip">{hub.since}</span>}
-        {hub.rebrand && <span className="chip chip-gold">Rebranding em andamento</span>}
+        {hub.rebrand && <span className="chip chip-gold chip-live"><span className="live-dot" aria-hidden="true" />Rebranding em andamento</span>}
       </div>
       {hub.rebrand ? (
         <>
@@ -366,7 +366,10 @@ function Logos({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, f
               <div className="logo-vis" style={{ background: l.pad }}><img src={l.src} alt={l.name} /></div>
               <div className="logo-meta">
                 <div><div className="lm-name">{l.name}</div><div className="lm-role">{l.role}</div></div>
-                <button className="btn" onClick={() => onDownload(l.src, l.file)}>↓ PNG</button>
+                <div className="logo-dl">
+                  <button className="btn" onClick={() => onDownload(l.src, l.file)}>↓ PNG</button>
+                  {l.svg && <button className="btn" onClick={() => onDownload(l.svg!, l.file.replace(/\.[a-z]+$/i, "") + ".svg")}>↓ SVG</button>}
+                </div>
               </div>
             </div>
           ))}
@@ -574,7 +577,12 @@ function Verbal({ hub }: { hub: HubBrand }) {
   );
 }
 
-function InUse({ hub, clientName }: { hub: HubBrand; clientName: string }) {
+/** Nome de arquivo para download a partir do caminho da imagem. */
+function photoFile(src: string) {
+  return src.split("/").pop() ?? "imagem.jpg";
+}
+
+function InUse({ hub, clientName, onDownload }: { hub: HubBrand; clientName: string; onDownload: (src: string, file: string) => void }) {
   // Agrupa as fotos preservando a ordem dos grupos
   const photos = hub.photos ?? [];
   const groups: { name: string; items: typeof photos }[] = [];
@@ -584,6 +592,25 @@ function InUse({ hub, clientName }: { hub: HubBrand; clientName: string }) {
     if (!g) { g = { name, items: [] }; groups.push(g); }
     g.items.push(p);
   });
+  // Ordem de navegação do lightbox = ordem visual (grupo a grupo)
+  const flat = groups.flatMap((g) => g.items);
+  const [open, setOpen] = useState<number | null>(null);
+  const current = open === null ? null : flat[open];
+
+  useEffect(() => {
+    if (open === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(null);
+      else if (e.key === "ArrowRight") setOpen((i) => (i === null ? i : (i + 1) % flat.length));
+      else if (e.key === "ArrowLeft") setOpen((i) => (i === null ? i : (i - 1 + flat.length) % flat.length));
+    };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = prevOverflow; };
+  }, [open, flat.length]);
+
+  const step = (d: number) => setOpen((i) => (i === null ? i : (i + d + flat.length) % flat.length));
 
   return (
     <section id="em-uso">
@@ -595,11 +622,22 @@ function InUse({ hub, clientName }: { hub: HubBrand; clientName: string }) {
             <div className="photo-carousel" role="group" aria-label={g.name}>
               {g.items.map((p) => (
                 <figure
-                  className={"photo reveal" + (p.fit === "contain" ? " contain" : "")}
+                  className={"photo zoomable reveal" + (p.fit === "contain" ? " contain" : "")}
                   key={p.src}
                   style={p.pad ? { background: p.pad } : undefined}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={"Ampliar: " + p.label}
+                  onClick={() => setOpen(flat.indexOf(p))}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setOpen(flat.indexOf(p)); } }}
                 >
                   <img src={p.src} alt={p.label} loading="lazy" />
+                  <button
+                    className="photo-dl"
+                    aria-label={"Baixar " + p.label}
+                    title="Baixar imagem"
+                    onClick={(e) => { e.stopPropagation(); onDownload(p.src, photoFile(p.src)); }}
+                  >↓</button>
                   <figcaption className="cap">{p.label}</figcaption>
                 </figure>
               ))}
@@ -615,9 +653,29 @@ function InUse({ hub, clientName }: { hub: HubBrand; clientName: string }) {
           ))}
         </div>
       ) : null}
+      {hub.conceptDeck && (
+        <div style={{ marginTop: 22 }} className="reveal">
+          <a className="btn btn-gold" href={hub.conceptDeck} target="_blank" rel="noopener noreferrer">↗ Ver apresentação do conceito visual (PDF)</a>
+        </div>
+      )}
       {hub.drive?.expressao && (
         <div style={{ marginTop: 22 }} className="reveal">
           <a className="btn" href={hub.drive.expressao} target="_blank" rel="noopener noreferrer">↗ Ver mais aplicações e moodboard no Drive</a>
+        </div>
+      )}
+      {current && open !== null && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label={current.label} onClick={() => setOpen(null)}>
+          <button className="lb-btn lb-close" aria-label="Fechar" onClick={() => setOpen(null)}>✕</button>
+          {flat.length > 1 && <button className="lb-btn lb-prev" aria-label="Anterior" onClick={(e) => { e.stopPropagation(); step(-1); }}>‹</button>}
+          <figure className="lb-figure" onClick={(e) => e.stopPropagation()}>
+            <img src={current.src} alt={current.label} style={current.pad ? { background: current.pad } : undefined} />
+            <figcaption className="lb-bar">
+              <span className="lb-count">{open + 1} / {flat.length}</span>
+              <span className="lb-cap">{current.group ? current.group + " · " : ""}{current.label}</span>
+              <button className="btn btn-gold" onClick={() => onDownload(current.src, photoFile(current.src))}>↓ Baixar</button>
+            </figcaption>
+          </figure>
+          {flat.length > 1 && <button className="lb-btn lb-next" aria-label="Próxima" onClick={(e) => { e.stopPropagation(); step(1); }}>›</button>}
         </div>
       )}
     </section>

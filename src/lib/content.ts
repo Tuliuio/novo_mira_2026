@@ -49,7 +49,7 @@ export interface BrandPage {
  * É o "BRAND" do hub interativo, agora por cliente. Trocar de cliente =
  * preencher isto. RGB/CMYK e contraste são calculados no render.
  * ------------------------------------------------------------------ */
-export interface HubLogo { name: string; role: string; src: string; file: string; drive?: string; pad: string; }
+export interface HubLogo { name: string; role: string; src: string; file: string; drive?: string; pad: string; /** versão vetorial (SVG) — botão de download ao lado do PNG */ svg?: string; }
 export interface HubColor { name: string; hex: string; role?: string; /** CMYK oficial (do brandbook); se ausente, é calculado do hex */ cmyk?: string; }
 export interface HubPair { bg: string; fg: string; label: string; }
 export interface HubType { role: string; family: string; sample: string; cssFamily?: string; }
@@ -79,6 +79,8 @@ export interface HubBrand {
   drive?: { assets?: string; expressao?: string };
   /** URL (Drive) do brandbook completo em PDF — botão de download na Essência */
   brandbook?: string;
+  /** URL da apresentação do conceito visual (PDF) — botão na seção Em uso */
+  conceptDeck?: string;
   /** URL (Drive) da pasta/arquivo de fontes — botão de download na Tipografia */
   fontsUrl?: string;
   logos: HubLogo[];
@@ -1185,8 +1187,8 @@ export const JUJOO: ClientBrand = {
  * Cliente — Casa Campo (Parque de jardins temáticos, eventos e hospedagem)
  * Essência extraída de "Casa Campo - Essência de Marca (v3)" (12 pontos).
  * Narrativa (StoryBrand, Parque + Eventos + Hospedagem) já entregue.
- * Expressão em andamento — cores/tipografia abaixo são a identidade atual
- * (pré-Mira), mantida como base provisória até o novo sistema visual fechar.
+ * Expressão: logo refinado manualmente (Drive "Logo 2026", Casa Campo 2026.ai,
+ * set/2026) e paleta de 5 cores fechados. Conceito visual em PDF.
  * ------------------------------------------------------------------ */
 const CASA_CAMPO: ClientBrand = {
   slug: "casa-campo",
@@ -1196,31 +1198,41 @@ const CASA_CAMPO: ClientBrand = {
   hub: {
     year: "2026",
     since: "Abertura do parque em novembro de 2026",
+    drive: { assets: "https://drive.google.com/drive/folders/1lW4i7MR1CyH8LQB2tvyB6HB77Jw_lY-n" },
+    conceptDeck: "/clients/casa-campo/conceito-visual.pdf",
     logos: [
-      { name: "Assinatura sobre azul-petróleo", role: "Aplicação padrão, fundos escuros", src: "/clients/casa-campo/logo-01.jpg", file: "casa-campo-petroleo.jpg", pad: "#0e3e4a" },
-      { name: "Assinatura sobre verde-sálvia", role: "Aplicação alternativa, fundos claros", src: "/clients/casa-campo/logo-02.jpg", file: "casa-campo-salvia.jpg", pad: "#8fbf97" },
+      { name: "Assinatura em petróleo", role: "Versão principal, fundos claros", src: "/clients/casa-campo/logos/casa-campo-petroleo.png", file: "casa-campo-petroleo.png", svg: "/clients/casa-campo/logos/svg/casa-campo-petroleo.svg", pad: "#f5f6f5" },
+      { name: "Assinatura em branco sobre petróleo", role: "Versão negativa, fundos escuros", src: "/clients/casa-campo/logos/casa-campo-branco-sobre-petroleo.png", file: "casa-campo-branco-sobre-petroleo.png", svg: "/clients/casa-campo/logos/svg/casa-campo-branco-sobre-petroleo.svg", pad: "#0e3e4a" },
+      { name: "Petróleo sobre sálvia", role: "Fundos de natureza e jardins", src: "/clients/casa-campo/logos/casa-campo-petroleo-sobre-salvia.png", file: "casa-campo-petroleo-sobre-salvia.png", svg: "/clients/casa-campo/logos/svg/casa-campo-petroleo-sobre-salvia.svg", pad: "#8fbf97" },
+      { name: "Petróleo sobre âmbar", role: "Fundos quentes, peças de destaque", src: "/clients/casa-campo/logos/casa-campo-petroleo-sobre-ambar.png", file: "casa-campo-petroleo-sobre-ambar.png", svg: "/clients/casa-campo/logos/svg/casa-campo-petroleo-sobre-ambar.svg", pad: "#eda656" },
+      { name: "Petróleo sobre rosa", role: "Fundos de flores e afeto", src: "/clients/casa-campo/logos/casa-campo-petroleo-sobre-rosa.png", file: "casa-campo-petroleo-sobre-rosa.png", svg: "/clients/casa-campo/logos/svg/casa-campo-petroleo-sobre-rosa.svg", pad: "#ff7da2" },
+      { name: "Assinatura em âmbar", role: "Acento sobre fundos claros", src: "/clients/casa-campo/logos/casa-campo-ambar.png", file: "casa-campo-ambar.png", svg: "/clients/casa-campo/logos/svg/casa-campo-ambar.svg", pad: "#f5f6f5" },
+      { name: "Assinatura em rosa", role: "Acento sobre fundos claros", src: "/clients/casa-campo/logos/casa-campo-rosa.png", file: "casa-campo-rosa.png", svg: "/clients/casa-campo/logos/svg/casa-campo-rosa.svg", pad: "#f5f6f5" },
     ],
     rebrand: {
-      before: { name: "Identidade atual (pré-Mira)", role: "Diamante de linha fina, tipografia condensada", src: "/clients/casa-campo/logo-01.jpg", file: "casa-campo-antes.jpg", pad: "#0e3e4a" },
-      after: { name: "Nova assinatura (Expressão Mira)", role: "Diamante mais espesso, serifada leve e editorial", src: "/clients/casa-campo/logo-novo.png", file: "casa-campo-novo.png", pad: "#0e3e4a" },
-      note: "Primeira exploração da Expressão: o traço do diamante ganha espessura e presença, e a tipografia se ajusta para um desenho mais leve e editorial.",
+      before: { name: "Identidade anterior (pré-Mira)", role: "Diamante de linha fina, tipografia condensada", src: "/clients/casa-campo/logo-01.jpg", file: "casa-campo-antes.jpg", pad: "#0e3e4a" },
+      after: { name: "Nova assinatura (Expressão Mira)", role: "Diamante espesso e lettering exclusivo com floreio no A", src: "/clients/casa-campo/logos/casa-campo-branco-sobre-petroleo.png", file: "casa-campo-novo.png", svg: "/clients/casa-campo/logos/svg/casa-campo-branco-sobre-petroleo.svg", pad: "#0e3e4a" },
+      note: "O traço do diamante ganha espessura e presença, e o nome ganha um lettering exclusivo: a curva que sai do C e entra no A desenha o movimento de quem chega e fica. Refinado à mão em set/2026.",
     },
-    colorsNote: "Identidade atual (pré-Mira) — a Expressão está em desenvolvimento. Paleta e tipografia abaixo seguem como base provisória até o novo sistema visual fechar.",
+    colorsNote: "Paleta oficial da Expressão (Casa Campo 2026.ai). O petróleo ancora a marca; sálvia, âmbar e rosa trazem jardim, pôr do sol e flor.",
     colors: [
-      { name: "Verde-sálvia", hex: "#8fbf97", role: "Natureza e jardins — cor de apoio" },
-      { name: "Azul-petróleo", hex: "#0e3e4a", role: "Âncora da marca — profundidade e sofisticação" },
-      { name: "Âmbar", hex: "#eda656", role: "Calor e acolhimento — pôr do sol" },
+      { name: "Azul-petróleo", hex: "#0e3e4a", role: "Âncora da marca: profundidade e sofisticação" },
+      { name: "Verde-sálvia", hex: "#8fbf97", role: "Natureza e jardins" },
+      { name: "Âmbar", hex: "#eda656", role: "Calor e acolhimento, o pôr do sol" },
+      { name: "Rosa", hex: "#e65b7c", role: "Flor e afeto, acento" },
       { name: "Branco-gelo", hex: "#f5f6f5", role: "Respiro e fundos claros" },
     ],
     pairings: [
       { bg: "#0e3e4a", fg: "#f5f6f5", label: "Petróleo + Branco-gelo" },
       { bg: "#8fbf97", fg: "#0e3e4a", label: "Sálvia + Petróleo" },
+      { bg: "#eda656", fg: "#0e3e4a", label: "Âmbar + Petróleo" },
+      { bg: "#e65b7c", fg: "#0e3e4a", label: "Rosa + Petróleo" },
       { bg: "#0e3e4a", fg: "#eda656", label: "Petróleo + Âmbar" },
     ],
     type: [
-      { role: "Títulos", family: "Poppins (Negrito)", sample: "Um dia que vira memória." },
-      { role: "Texto", family: "Poppins (Leve)", sample: "Jardins, eventos e hospedagem num só lugar." },
-      { role: "Assinatura / acento", family: "Buffalo", sample: "Casa Campo" },
+      { role: "Assinatura", family: "Lettering exclusivo (desenhado para a marca)", sample: "Casa Campo" },
+      { role: "Apoio e títulos de campanha", family: "Montserrat (SemiBold no logo; Light e ExtraBold Itálico nas peças)", sample: "Venha visitar o maior parque de flores de Santa Catarina.", cssFamily: "Montserrat" },
+      { role: "Editorial (convites, cartas, apresentações)", family: "Cormorant Garamond", sample: "Algumas raridades merecem ser vistas de perto.", cssFamily: "Cormorant Garamond" },
     ],
     essence: {
       lead: "Um dia que vira memória: parque, eventos e hospedagem somados numa experiência de excelência em meio à natureza, ao lado de quem se ama.",
@@ -1389,7 +1401,12 @@ const CASA_CAMPO: ClientBrand = {
       { src: "/clients/casa-campo/campanha/outdoor-07-soma-parque-eventos-hospedagem.jpg", label: "Outdoor BR-101 · 7 de 8 — a soma: \"Parque, eventos e hospedagem, no mesmo lugar\"", group: "Campanha — Outdoors BR-101" },
       { src: "/clients/casa-campo/campanha/outdoor-08-cta-garanta-visita.jpg", label: "Outdoor BR-101 · 8 de 8 — CTA: \"Garanta sua visita\"", group: "Campanha — Outdoors BR-101" },
       { src: "/clients/casa-campo/campanha/outdoor-florescer-destino.jpg", label: "Outdoor BR-101 — \"Florescer é o destino de tudo e de todos\"", group: "Campanha — Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-09-maior-parque-flores.jpg", label: "Outdoor BR-101: \"Venha visitar o maior parque de flores de Santa Catarina\"", group: "Campanha — Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-09-arte-painel.jpg", label: "Arte do painel, com o logo novo aplicado", group: "Campanha — Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/aerea-masterplan-diamante.jpg", label: "Vista aérea: os caminhos do jardim desenham o diamante", group: "Campanha — Sinalização" },
       { src: "/clients/casa-campo/campanha/familia-tv-comercial.jpg", label: "Família assistindo o comercial, com Seu Zouhair na tela", group: "Campanha — Filme e TV" },
+      { src: "/clients/casa-campo/campanha/convite-abertura-digital.jpg", label: "Convite digital: o cacto dentro do diamante, uma raridade para ver de perto", group: "Abertura oficial · 14/11/2026" },
+      { src: "/clients/casa-campo/campanha/convite-abertura-carta.jpg", label: "Carta-convite impressa para autoridades e personalidades", group: "Abertura oficial · 14/11/2026" },
     ],
     narratives: [
       {
