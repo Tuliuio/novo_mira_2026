@@ -73,6 +73,25 @@ export interface HubArticle {
   presentationUrl?: string;
 }
 
+/** Expressão verbal. Os campos além de tom/sim/nao/examples são opcionais:
+ *  naming, eNaoE e superlativo aparecem direto; o resto fica atrás do "Ver tudo". */
+export interface HubVerbal {
+  tom?: string;
+  sim?: string[];
+  nao?: string[];
+  examples?: { sim: string; nao: string }[];
+  /** Nome, apelido, tagline, slogan… */
+  naming?: { label: string; value: string }[];
+  /** Tom de voz em pares "é / não é" */
+  eNaoE?: { e: string; nao: string }[];
+  superlativo?: string;
+  territorio?: { faz: string[]; naoFaz: string[] };
+  recursos?: { title: string; text: string }[];
+  manifesto?: string[];
+  mensagens?: { label: string; items: string[] }[];
+  pitch?: string;
+}
+
 export interface HubBrand {
   year: string;
   since?: string;
@@ -95,7 +114,7 @@ export interface HubBrand {
   essence?: { lead?: string; proposito?: string; posicionamento?: string; quote?: string; atributos?: string[] };
   /** texto corrido completo da Essência, pra leitura confortável (estilo blog post) */
   essenceArticle?: HubArticle;
-  verbal?: { tom?: string; sim?: string[]; nao?: string[]; examples?: { sim: string; nao: string }[] };
+  verbal?: HubVerbal;
   applications?: HubApplication[];
   /** fotografias reais da marca no mundo (aplicações + direção fotográfica) */
   photos?: HubPhoto[];
@@ -614,7 +633,7 @@ export const DEMO_CLIENT: ClientBrand = {
 export const CRUZ_DE_MALTA: ClientBrand = {
   slug: "cruz-de-malta",
   name: "Cruz de Malta",
-  tagline: "O restaurante mais tradicional de Pelotas.",
+  tagline: "Servindo Pelotas à mesa desde 1967.",
   accent: "#E71E2E", // vermelho âncora (amostrado dos logos)
   hub: {
     year: "2026",
@@ -743,13 +762,80 @@ export const CRUZ_DE_MALTA: ClientBrand = {
       ],
     },
     verbal: {
-      tom: "Acolhedor e orgulhoso, sem pretensão. Fala com quem já é de casa e com quem ainda vai ser. Direto, caloroso, com o pé no chão de quem trabalha há 60 anos.",
-      sim: ["Comida de verdade", "Feito na hora", "Tradição de Pelotas", "Como se estivesse em casa", "O Cruz da Bento"],
-      nao: ["Gourmet", "Experiência gastronômica premium", "Disruptivo", "O melhor da cidade (superlativo vazio)", "Happy hour"],
-      examples: [
-        { sim: "Há 60 anos, a mesma comida de verdade. É só chegar.", nao: "A experiência gastronômica mais autêntica e premium de Pelotas." },
-        { sim: "Parmegiana, peixe com camarão e a receita que não muda.", nao: "Pratos autorais que ressignificam a tradição regional." },
+      // Fonte: "Cruz de Malta - Expressão Verbal.pdf" (03. Expressão/07. Verbal)
+      naming: [
+        { label: "Nome", value: "Restaurante Cruz de Malta" },
+        { label: "Apelido de marca", value: "Cruz da Bento" },
+        { label: "Tagline", value: "Servindo Pelotas à mesa desde 1967." },
+        { label: "Slogan", value: "Vem pro Cruz da Bento." },
       ],
+      tom: "Fala como quem recebe Pelotas em casa há 60 anos. Tem orgulho do que construiu, não precisa provar nada a ninguém e sempre tem lugar para mais um.",
+      eNaoE: [
+        { e: "Orgulhoso, com fatos", nao: "Exibido" },
+        { e: "Tranquilo", nao: "Desesperado" },
+        { e: "Objetivo", nao: "Ríspido" },
+        { e: "Tradicional", nao: "Antigo" },
+        { e: "Pelotense de sotaque", nao: "Caricatura gaúcha" },
+        { e: "Bem-humorado de leve", nao: "Engraçadinho" },
+      ],
+      sim: ["Cruz da Bento", "Servindo Pelotas à mesa", "Sabor autêntico", "Tradição em Pelotas", "Memórias em família"],
+      nao: ["Gourmet", "Experiência gastronômica premium", "Disruptivo", "O melhor da cidade", "Happy hour"],
+      superlativo: "Só vale superlativo que dá para provar. “O mais antigo em funcionamento” pode. “O melhor” e “o mais saboroso” não podem.",
+      examples: [
+        { sim: "A parmegiana continua igualzinha. Tem coisa que a gente não mexe.", nao: "Uma releitura afetiva dos clássicos que marcaram gerações." },
+        { sim: "Domingo tem mesa pra família inteira. Até pra vó que chega cedo.", nao: "O destino ideal para momentos inesquecíveis em família." },
+      ],
+      territorio: {
+        faz: [
+          "Comida de verdade, à la carte, no almoço e no jantar, todos os dias.",
+          "Um cardápio vasto, com as mais diversas origens: parmegiana, peixe com camarão, galeto, churrasco, bacalhau e muito mais.",
+          "É onde a família comemora: o almoço de domingo, os aniversários de todas as idades, os batizados.",
+          "É o primeiro almoço de quem volta para Pelotas.",
+          "Guarda o sabor que a cidade conhece, e também o endereço: está na Bento desde sempre.",
+        ],
+        naoFaz: [
+          "Não é buffet, restaurante por quilo, fast food nem rodízio.",
+          "Não faz happy hour, música ao vivo nem balada.",
+          "Não faz cozinha autoral nem segue tendência. Não compete por novidade.",
+          "Não fala como fine dining e também não se faz de simples demais. É restaurante de mesa posta.",
+          "Não briga com os outros “Cruz”. Se diferencia pelo endereço e pela história, sem citar ninguém.",
+        ],
+      },
+      recursos: [
+        { title: "O ano como carimbo", text: "“Desde 1967” é o selo de procedência. Em 2027, vira a contagem dos 60 anos." },
+        { title: "“À mesa.”", text: "É a expressão-chave: servir Pelotas à mesa, a família à mesa, a cidade à mesa." },
+        { title: "“Vem pro Cruz da Bento.”", text: "É a chamada de ação padrão da marca." },
+        { title: "O prato pelo nome", text: "Parmegiana e peixe com camarão, nunca “nossos pratos deliciosos”." },
+        { title: "A gente da casa", text: "O Nei com 46 anos de casa, a Cacilda, a cozinha. Quem trabalha ali é a prova de que o sabor se mantém." },
+        { title: "A memória do cliente em primeira pessoa", text: "Histórias reais, como “comemorei meus 15 anos aqui” ou “meu avô pedia isso”." },
+        { title: "O contraste “muda tudo, o sabor não”", text: "Pode ser usado com humor e sem nostalgia pesada." },
+        { title: "O endereço como identidade", text: "“Na Bento, no mesmo lugar.”" },
+        { title: "A cruz ✠ como pontuação visual", text: "" },
+        { title: "Emojis com moderação", text: "No máximo um ou dois por texto, para dar leveza a uma comunicação tradicional sem deixá-la ultrapassada. O emoji acompanha a palavra e nunca a substitui." },
+      ],
+      manifesto: [
+        "Somos uma marca orgulhosamente pelotense.",
+        "Desde 1967, servimos Pelotas à mesa, no almoço e no jantar, todos os dias. Tanto tempo fez do Cruz de Malta o restaurante mais antigo em funcionamento da cidade. Para nós, isso é um compromisso que renovamos a cada mesa posta.",
+        "Acreditamos na comida de verdade, feita com respeito ao alimento e a quem senta para saboreá-lo. Acreditamos no sabor que atravessa gerações e continua igualzinho. Acreditamos que a mesa é onde a família se encontra, comemora e guarda suas memórias.",
+        "É assim que olhamos para o futuro: com os pés na tradição que construímos e a porta aberta para quem chega. Para quem já é de casa e para quem ainda vai ser.",
+        "Seguimos servindo Pelotas à mesa. Com o mesmo sabor, no mesmo endereço e sempre com lugar para mais um.",
+        "Restaurante Cruz de Malta. Cruz da Bento.\nServindo Pelotas à mesa desde 1967.",
+      ],
+      mensagens: [
+        { label: "Curtas", items: ["Servindo Pelotas à mesa desde 1967.", "Cruz da Bento.", "Comida de verdade com sabor autêntico, todo dia.", "60 anos sem pausa."] },
+        { label: "Médias", items: [
+          "O restaurante mais antigo em funcionamento de Pelotas, servindo a cidade à mesa desde 1967.",
+          "Da parmegiana ao bacalhau: um cardápio vasto, no almoço e no jantar, todos os dias.",
+          "Domingo, aniversário, batizado: as datas da família têm mesa no Cruz da Bento.",
+          "Tem mesa para a família inteira. E sempre cabe mais um.",
+          "O sabor que Pelotas conhece, no mesmo endereço de sempre.",
+        ] },
+        { label: "Longas", items: [
+          "Desde 1967, o Cruz de Malta serve Pelotas à mesa. Mudam as gerações, mas o sabor continua igualzinho. É por isso que tanta família escolhe o Cruz da Bento em todos os dias que importam.",
+          "Quem cresceu em Pelotas tem uma memória no Cruz de Malta: um aniversário, um domingo, o primeiro almoço depois de voltar. Seguimos aqui, no mesmo endereço, para você criar a sua próxima memória.",
+        ] },
+      ],
+      pitch: "O Cruz de Malta é o restaurante mais antigo em funcionamento de Pelotas. Está na Bento Gonçalves desde 1967 e abre todos os dias, no almoço e no jantar, à la carte. Serve comida de verdade com sabor autêntico, da parmegiana ao peixe com camarão. É onde a cidade reúne a família. É o Cruz da Bento.",
     },
     photos: [
       { src: "/clients/cruz-de-malta/fotografia/fachada.jpg", label: "Fachada — o Cruz da Bento", group: "Aplicações" },

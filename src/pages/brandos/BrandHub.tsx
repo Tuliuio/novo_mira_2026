@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
-import { DEMO_CLIENT, getClient, type ClientBrand, type HubBrand, type HubArticle, type HubLogo } from "@/lib/content";
-import { hexToRgb, rgbToCmyk, contrastRatio, contrastBadge, copyText } from "@/lib/color";
+import { DEMO_CLIENT, getClient, type ClientBrand, type HubBrand, type HubArticle, type HubLogo, type HubVerbal } from "@/lib/content";
+import { hexToRgb, rgbToCmyk, contrastRatio, copyText } from "@/lib/color";
 import { Logo } from "@/components/Logo";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import "./brand-hub.css";
@@ -14,6 +14,37 @@ function colorLine(c: HubBrand["colors"][number]): string {
 }
 
 /* Constrói o brand.md completo a partir do hub — sempre em sincronia. */
+/* Expressão verbal em markdown — mesma fonte para o brand.md e a SKILL.md */
+function verbalLines(v: HubVerbal): string[] {
+  const L: string[] = ["\n## Expressão verbal"];
+  if (v.naming?.length) L.push(v.naming.map((n) => `**${n.label}:** ${n.value}`).join("  \n"));
+  if (v.tom) L.push("**Tom de voz:** " + v.tom);
+  if (v.eNaoE?.length) L.push("| É | Não é |\n|---|---|\n" + v.eNaoE.map((x) => `| ${x.e} | ${x.nao} |`).join("\n"));
+  if (v.sim?.length) L.push("**Diga:** " + v.sim.join(", "));
+  if (v.nao?.length) L.push("**Evite:** " + v.nao.join(", "));
+  if (v.superlativo) L.push("**Regra do superlativo:** " + v.superlativo);
+  if (v.examples?.length) {
+    L.push("**Exemplos (assim sim / assim não):**");
+    v.examples.forEach((e) => L.push(`- ✅ ${e.sim}\n- ❌ ${e.nao}`));
+  }
+  if (v.territorio) {
+    L.push("### Território de atuação");
+    if (v.territorio.faz.length) L.push("**O que faz:**\n" + v.territorio.faz.map((x) => "- " + x).join("\n"));
+    if (v.territorio.naoFaz.length) L.push("**O que não faz:**\n" + v.territorio.naoFaz.map((x) => "- " + x).join("\n"));
+  }
+  if (v.recursos?.length) {
+    L.push("### Recursos comunicacionais");
+    L.push(v.recursos.map((r, i) => `${i + 1}. **${r.title}.**${r.text ? " " + r.text : ""}`).join("\n"));
+  }
+  if (v.manifesto?.length) L.push("### Manifesto\n" + v.manifesto.join("\n\n"));
+  if (v.mensagens?.length) {
+    L.push("### Mensagens-chave");
+    v.mensagens.forEach((m) => L.push(`**${m.label}:**\n` + m.items.map((x) => "- " + x).join("\n")));
+  }
+  if (v.pitch) L.push("### Pitch elevator\n" + v.pitch);
+  return L;
+}
+
 function buildMarkdown(client: ClientBrand): string {
   const h = client.hub!;
   const L: string[] = [];
@@ -29,16 +60,7 @@ function buildMarkdown(client: ClientBrand): string {
     if (h.essence.quote) L.push("> " + h.essence.quote);
     if (h.essence.atributos?.length) L.push("**Atributos:** " + h.essence.atributos.join(", "));
   }
-  if (h.verbal) {
-    L.push("\n## Tom de voz");
-    if (h.verbal.tom) L.push(h.verbal.tom);
-    if (h.verbal.sim?.length) L.push("**Diga:** " + h.verbal.sim.join(", "));
-    if (h.verbal.nao?.length) L.push("**Evite:** " + h.verbal.nao.join(", "));
-    if (h.verbal.examples?.length) {
-      L.push("**Exemplos (assim sim / assim não):**");
-      h.verbal.examples.forEach((e) => L.push(`- ✅ ${e.sim}\n- ❌ ${e.nao}`));
-    }
-  }
+  if (h.verbal) L.push(...verbalLines(h.verbal));
 
   L.push("\n## Cores");
   if (h.colorsNote) L.push("_" + h.colorsNote + "_");
@@ -95,12 +117,7 @@ function buildSkill(client: ClientBrand): string {
   if (h.type?.length) h.type.forEach((t) => L.push(`- ${t.role}: ${t.family}`));
   else if (h.typeNote) L.push(`- ${h.typeNote}`);
 
-  if (h.verbal) {
-    L.push("\n## Tom de voz");
-    if (h.verbal.tom) L.push(h.verbal.tom);
-    if (h.verbal.sim?.length) L.push("SEMPRE soar como: " + h.verbal.sim.join("; "));
-    if (h.verbal.nao?.length) L.push("NUNCA soar como: " + h.verbal.nao.join("; "));
-  }
+  if (h.verbal) L.push(...verbalLines(h.verbal));
   if (h.essence) {
     L.push("\n## Essência (o porquê)");
     if (h.essence.posicionamento) L.push("Posicionamento: " + h.essence.posicionamento);
@@ -115,6 +132,9 @@ function buildSkill(client: ClientBrand): string {
 
 interface SectionDef { id: string; label: string; }
 
+/** Seções agrupadas sob "Identidade Visual" no menu (dropdown). */
+const VISUAL_IDS = ["logos", "cores", "fontes", "apoio"];
+
 export function BrandHub() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -127,6 +147,8 @@ export function BrandHub() {
     try { return (localStorage.getItem("bh-theme") as "dark" | "light") || "dark"; } catch { return "dark"; }
   });
   const [toast, setToast] = useState<{ msg: string; color: string } | null>(null);
+  const [visualMenu, setVisualMenu] = useState<{ left: number } | null>(null);
+  const navRef = useRef<HTMLElement>(null);
   const [reader, setReader] = useState<{ items: HubArticle[]; index: number } | null>(null);
   function openReader(items: HubArticle[], index = 0) { setReader({ items, index }); }
   function closeReader() { setReader(null); }
@@ -147,13 +169,14 @@ export function BrandHub() {
   const sections = useMemo<SectionDef[]>(() => {
     if (!hub) return [];
     const s: SectionDef[] = [];
-    if (hub.logos.length || hub.drive?.assets) s.push({ id: "logos", label: "Logos" });
+    if (hub.logos.length || hub.drive?.assets) s.push({ id: "logos", label: "Logo" });
     if (hub.colors.length) s.push({ id: "cores", label: "Cores" });
-    if ((hub.type && hub.type.length) || hub.typeNote) s.push({ id: "tipografia", label: "Tipografia" });
+    if ((hub.type && hub.type.length) || hub.typeNote) s.push({ id: "fontes", label: "Fontes" });
+    s.push({ id: "apoio", label: "Elementos de apoio" });
     if (hub.essence) s.push({ id: "essencia", label: "Essência" });
     if (hub.narratives && hub.narratives.length) s.push({ id: "narrativa", label: "Narrativa" });
-    if (hub.verbal) s.push({ id: "verbal", label: "Verbal" });
-    if ((hub.photos && hub.photos.length) || (hub.applications && hub.applications.length) || hub.drive?.expressao) s.push({ id: "em-uso", label: "Em uso" });
+    if (hub.verbal) s.push({ id: "expressao", label: "Expressão" });
+    if ((hub.photos && hub.photos.length) || (hub.applications && hub.applications.length) || hub.conceptDeck) s.push({ id: "aplicacoes", label: "Aplicações" });
     s.push({ id: "ia", label: "IA" });
     return s;
   }, [hub]);
@@ -210,6 +233,7 @@ export function BrandHub() {
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key !== "Escape") return;
+      setVisualMenu(null);
       if (reader) closeReader(); else setDrawer(false);
     }
     window.addEventListener("keydown", onKey);
@@ -221,6 +245,21 @@ export function BrandHub() {
     document.body.style.overflow = reader ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [reader]);
+
+  /* Fecha o dropdown de Identidade Visual ao clicar fora do menu */
+  useEffect(() => {
+    if (!visualMenu) return;
+    const onDown = (e: PointerEvent) => { if (!navRef.current?.contains(e.target as Node)) setVisualMenu(null); };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [visualMenu]);
+
+  function toggleVisualMenu(btn: HTMLElement) {
+    if (visualMenu) { setVisualMenu(null); return; }
+    const nav = navRef.current;
+    if (!nav) return;
+    setVisualMenu({ left: btn.getBoundingClientRect().left - nav.getBoundingClientRect().left });
+  }
 
   if (!hub) {
     return (
@@ -234,6 +273,8 @@ export function BrandHub() {
   }
 
   const md = buildMarkdown(client);
+  const visualSections = sections.filter((s) => VISUAL_IDS.includes(s.id));
+  const otherSections = sections.filter((s) => !VISUAL_IDS.includes(s.id));
 
   return (
     <div className="bh" data-theme={theme} ref={rootRef} style={brandVars}>
@@ -242,12 +283,29 @@ export function BrandHub() {
         <Link className="brandmark" to="/" aria-label="Ir para o site da Mira">
           <Logo height={22} tone={theme === "light" ? "dark" : undefined} />
         </Link>
-        <nav className="nav" aria-label="Seções">
+        <nav className="nav" aria-label="Seções" ref={navRef}>
           <div className="nav-scroll">
-            {sections.map((s) => (
+            {visualSections.length > 0 && (
+              <button
+                className={"nav-btn" + (VISUAL_IDS.includes(active) ? " active" : "")}
+                aria-expanded={!!visualMenu}
+                aria-haspopup="true"
+                onClick={(e) => toggleVisualMenu(e.currentTarget)}
+              >
+                Identidade Visual <span className={"caret" + (visualMenu ? " open" : "")} aria-hidden="true">▾</span>
+              </button>
+            )}
+            {otherSections.map((s) => (
               <a key={s.id} href={"#" + s.id} className={active === s.id ? "active" : ""}>{s.label}</a>
             ))}
           </div>
+          {visualMenu && (
+            <div className="nav-menu" style={{ left: visualMenu.left }} role="menu">
+              {visualSections.map((s) => (
+                <a key={s.id} href={"#" + s.id} role="menuitem" className={active === s.id ? "current" : ""} onClick={() => setVisualMenu(null)}>{s.label}</a>
+              ))}
+            </div>
+          )}
           <span className="spacer" />
           <button className="icon-btn" onClick={toggleTheme} title="Alternar tema claro/escuro" aria-label="Alternar tema">
             {theme === "light" ? (
@@ -267,15 +325,16 @@ export function BrandHub() {
         <Hero client={client} hub={hub} />
         {sections.some((s) => s.id === "logos") && <Logos hub={hub} onDownload={downloadLogo} />}
         {sections.some((s) => s.id === "cores") && <Colors hub={hub} onCopy={copyHex} />}
-        {sections.some((s) => s.id === "tipografia") && <Typography hub={hub} />}
+        {sections.some((s) => s.id === "fontes") && <Typography hub={hub} />}
+        <Support />
         {sections.some((s) => s.id === "essencia") && (
           <Essence hub={hub} onRead={() => hub.essenceArticle && openReader([hub.essenceArticle])} />
         )}
         {sections.some((s) => s.id === "narrativa") && (
           <Narrative hub={hub} onRead={(i) => hub.narratives && openReader(hub.narratives, i)} />
         )}
-        {sections.some((s) => s.id === "verbal") && <Verbal hub={hub} />}
-        {sections.some((s) => s.id === "em-uso") && <InUse hub={hub} clientName={client.name} onDownload={downloadLogo} />}
+        {sections.some((s) => s.id === "expressao") && <Verbal hub={hub} />}
+        {sections.some((s) => s.id === "aplicacoes") && <InUse hub={hub} onDownload={downloadLogo} />}
         <AIGuide md={md} onCopy={copyGuide} onDownload={downloadGuide} onDownloadSkill={downloadSkill} />
       </main>
 
@@ -317,11 +376,11 @@ export function BrandHub() {
 }
 
 /* ---------------- Seções ---------------- */
-function SecHead({ eyebrow, title, desc }: { eyebrow: string; title: string; desc: string }) {
+function SecHead({ eyebrow, title, desc }: { eyebrow: string; title: string; desc?: string }) {
   return (
     <div className="sec-head reveal">
       <div><span className="eyebrow">{eyebrow}</span><h2>{title}</h2></div>
-      <p>{desc}</p>
+      {desc && <p>{desc}</p>}
     </div>
   );
 }
@@ -331,8 +390,7 @@ function Hero({ client, hub }: { client: ClientBrand; hub: HubBrand }) {
   return (
     <section className="hero" id="hero">
       <div className="hero-top">
-        <span className="chip"><b>{hub.year}</b> Brand System</span>
-        {hub.since && <span className="chip">{hub.since}</span>}
+        <span className="chip"><b>{client.name}</b> — Brand System — {hub.year}</span>
         {hub.rebrand && <span className="chip chip-gold chip-live"><span className="live-dot" aria-hidden="true" />Rebranding em andamento</span>}
       </div>
       {hub.rebrand ? (
@@ -349,8 +407,6 @@ function Hero({ client, hub }: { client: ClientBrand; hub: HubBrand }) {
           <div className="hero-mark" style={{ color: client.accent }}>{client.name}</div>
         </div>
       )}
-      <div className="hero-lede"><span className="name">{client.name}</span><span className="tag">{client.tagline}</span></div>
-      <div className="instruct"><span className="dot" /> Clique em qualquer cor para copiar o hex. Baixe os logos direto daqui.</div>
     </section>
   );
 }
@@ -364,7 +420,7 @@ function Logos({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, f
   });
   return (
     <section id="logos">
-      <SecHead eyebrow="Logos" title="Assinatura da marca" desc="Cada versão em seu contexto. Os arquivos vetoriais (SVG/AI/PDF, RGB e CMYK) ficam no pacote completo no Drive." />
+      <SecHead eyebrow="Logo" title="Assinatura da marca" />
       {hub.logos.length > 0 ? (
         groups.map((g) => (
         <div key={g.name ?? "logos"}>
@@ -386,10 +442,11 @@ function Logos({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, f
         </div>
         ))
       ) : (
-        <div className="note-card reveal">Os logos ainda serão publicados aqui.</div>
+        <div className="note-card reveal">O logo ainda será publicado aqui.</div>
       )}
       {hub.drive?.assets && (
         <div style={{ marginTop: 22 }} className="reveal">
+          <p className="pack-note">Os arquivos vetoriais (SVG/AI/PDF, RGB e CMYK) ficam no pacote completo no Drive.</p>
           <a className="btn btn-gold" href={hub.drive.assets} target="_blank" rel="noopener noreferrer">↗ Abrir pacote completo no Drive</a>
         </div>
       )}
@@ -400,7 +457,7 @@ function Logos({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, f
 function Colors({ hub, onCopy }: { hub: HubBrand; onCopy: (hex: string) => void }) {
   return (
     <section id="cores">
-      <SecHead eyebrow="Cores" title="Paleta" desc="Clique num swatch para copiar o hex. RGB e CMYK são calculados a partir do hex — nunca digitados." />
+      <SecHead eyebrow="Cores" title="Cores da marca" desc="Clique em cima da cor para copiar o seu código hexadecimal." />
       <div className="grid g3">
         {hub.colors.map((c) => {
           const rgb = hexToRgb(c.hex), k = rgbToCmyk(rgb);
@@ -416,34 +473,14 @@ function Colors({ hub, onCopy }: { hub: HubBrand; onCopy: (hex: string) => void 
           );
         })}
       </div>
-      {hub.colorsNote && <div className="note-card reveal" style={{ marginTop: 22 }}><b>Nota:</b> {hub.colorsNote}</div>}
-      {hub.pairings && hub.pairings.length > 0 && (
-        <>
-          <div className="grp-label">Pares aprovados · contraste calculado (WCAG)</div>
-          <div className="grid g2">
-            {hub.pairings.map((p) => {
-              const bd = contrastBadge(contrastRatio(p.bg, p.fg));
-              return (
-                <div className="pair reveal" key={p.label}>
-                  <div className="demo" style={{ background: p.bg, color: p.fg }}>
-                    <div className="p-eyebrow">Etiqueta</div><div className="p-head">{p.label.split(" + ")[0]}</div>
-                    <p className="p-body">Contraste testado para uso real.</p>
-                  </div>
-                  <div className="meta"><span className="combo">{p.label}</span><span className={"badge " + bd.level}>{bd.label}</span></div>
-                </div>
-              );
-            })}
-          </div>
-        </>
-      )}
     </section>
   );
 }
 
 function Typography({ hub }: { hub: HubBrand }) {
   return (
-    <section id="tipografia">
-      <SecHead eyebrow="Tipografia" title="Sistema tipográfico" desc="A tipografia que sustenta a marca em todos os pontos de contato." />
+    <section id="fontes">
+      <SecHead eyebrow="Fontes" title="Fontes que sustentam a marca" />
       {hub.type && hub.type.length > 0 ? (
         <div className="grid" style={{ gap: 18 }}>
           {hub.type.map((t) => (
@@ -455,7 +492,7 @@ function Typography({ hub }: { hub: HubBrand }) {
           ))}
         </div>
       ) : (
-        <div className="note-card reveal"><b>Tipografia em documentação.</b> {hub.typeNote}</div>
+        <div className="note-card reveal"><b>Fontes em documentação.</b> {hub.typeNote}</div>
       )}
       {hub.fontsUrl && (
         <div style={{ marginTop: 22 }} className="reveal">
@@ -466,11 +503,20 @@ function Typography({ hub }: { hub: HubBrand }) {
   );
 }
 
+function Support() {
+  return (
+    <section id="apoio">
+      <SecHead eyebrow="Elementos de apoio" title="Elementos de apoio" />
+      <div className="note-card reveal"><b>Em documentação.</b> Os elementos de apoio da marca serão publicados aqui.</div>
+    </section>
+  );
+}
+
 function Essence({ hub, onRead }: { hub: HubBrand; onRead: () => void }) {
   const e = hub.essence!;
   return (
     <section id="essencia">
-      <SecHead eyebrow="Essência" title="O porquê antes do quê" desc="Antes dos ativos, a estratégia. É daqui que toda decisão de marca deriva." />
+      <SecHead eyebrow="Essência" title="Direcionamento estratégico da marca" />
       <div className="prose reveal">
         {e.lead && <p className="lead">{e.lead}</p>}
         {e.proposito && <><div className="grp-label">Propósito</div><p>{e.proposito}</p></>}
@@ -480,9 +526,6 @@ function Essence({ hub, onRead }: { hub: HubBrand; onRead: () => void }) {
         <div className="read-more">
           {hub.essenceArticle && (
             <button className="btn btn-gold" onClick={onRead}>Ler a essência completa ↗</button>
-          )}
-          {hub.brandbook && (
-            <a className="btn" href={hub.brandbook} target="_blank" rel="noopener noreferrer">↓ Baixar o brandbook completo (PDF)</a>
           )}
         </div>
       </div>
@@ -494,21 +537,18 @@ function Narrative({ hub, onRead }: { hub: HubBrand; onRead: (index: number) => 
   const items = hub.narratives ?? [];
   return (
     <section id="narrativa">
-      <SecHead eyebrow="Narrativa" title="O roteiro da marca" desc="Como a marca-mãe e cada frente falam com seu público — metodologia StoryBrand, em texto corrido." />
+      <SecHead eyebrow="Narrativa" title="O roteiro de comunicação da marca" />
       <div className="narr-grid">
         {items.map((n, i) => (
           <div className="narr-card reveal" key={n.slug}>
             <div>
-              {n.kicker && <div className="narr-kicker">{n.kicker}</div>}
-              <h3 className="narr-title">{n.title}</h3>
+              {/* com uma só narrativa, o título repetiria o da seção */}
+              {items.length > 1 && <h3 className="narr-title">{n.title}</h3>}
               {n.subtitle && <p className="narr-sub">{n.subtitle}</p>}
             </div>
             {n.closing && <p className="narr-closing">“{n.closing}”</p>}
             <div className="narr-actions">
-              <button className="btn btn-gold" onClick={() => onRead(i)}>Ler roteiro completo ↗</button>
-              {n.presentationUrl && (
-                <a className="btn" href={n.presentationUrl} target="_blank" rel="noopener noreferrer">↗ Ver apresentação</a>
-              )}
+              <button className="btn btn-gold" onClick={() => onRead(i)}>Ler narrativa completa ↗</button>
             </div>
           </div>
         ))}
@@ -565,13 +605,29 @@ function ArticleReader({
 
 function Verbal({ hub }: { hub: HubBrand }) {
   const v = hub.verbal!;
+  const [all, setAll] = useState(false);
+  const hasMore = !!(v.territorio || v.recursos?.length || v.manifesto?.length || v.mensagens?.length || v.pitch);
   return (
-    <section id="verbal">
-      <SecHead eyebrow="Verbal" title="Tom de voz" desc="Como a marca soa — e o vocabulário que a mantém fiel a si mesma." />
+    <section id="expressao">
+      <SecHead eyebrow="Expressão verbal" title="Comunicação da marca" desc="Como a marca soa — e o vocabulário que a mantém fiel a si mesma." />
+      {v.naming && v.naming.length > 0 && (
+        <div className="vb-names reveal">
+          {v.naming.map((n) => (
+            <div className="vb-name" key={n.label}><span className="vb-label">{n.label}</span><span className="vb-value">{n.value}</span></div>
+          ))}
+        </div>
+      )}
       <div className="prose reveal">
-        {v.tom && <p className="lead">{v.tom}</p>}
+        {v.tom && <><div className="grp-label">Tom de voz</div><p className="lead">{v.tom}</p></>}
+        {v.eNaoE && v.eNaoE.length > 0 && (
+          <div className="vb-isnot">
+            <div className="vb-isnot-h"><span>É</span><span>Não é</span></div>
+            {v.eNaoE.map((x) => <div className="vb-isnot-r" key={x.e}><span>{x.e}</span><span>{x.nao}</span></div>)}
+          </div>
+        )}
         {v.sim && v.sim.length > 0 && <><div className="grp-label">Vocabulário — sim</div><div className="attrs">{v.sim.map((x) => <span className="tag2" key={x}>{x}</span>)}</div></>}
         {v.nao && v.nao.length > 0 && <><div className="grp-label">Vocabulário — não</div><div className="attrs">{v.nao.map((x) => <span className="tag2" key={x}>{x}</span>)}</div></>}
+        {v.superlativo && <div className="note-card" style={{ marginTop: 22 }}><b>Regra do superlativo.</b> {v.superlativo}</div>}
         {v.examples && v.examples.length > 0 && (
           <>
             <div className="grp-label" style={{ marginTop: 30 }}>Exemplos</div>
@@ -584,6 +640,59 @@ function Verbal({ hub }: { hub: HubBrand }) {
           </>
         )}
       </div>
+      {hasMore && all && (
+        <div className="vb-more">
+          {v.territorio && (
+            <>
+              <div className="grp-label">Território de atuação</div>
+              <div className="sim-nao">
+                <div className="sn sim"><h4>O que faz</h4><ul>{v.territorio.faz.map((x) => <li key={x}>{x}</li>)}</ul></div>
+                <div className="sn nao"><h4>O que não faz</h4><ul>{v.territorio.naoFaz.map((x) => <li key={x}>{x}</li>)}</ul></div>
+              </div>
+            </>
+          )}
+          {v.recursos && v.recursos.length > 0 && (
+            <>
+              <div className="grp-label">Recursos comunicacionais</div>
+              <ol className="vb-recursos">
+                {v.recursos.map((r) => <li key={r.title}><b>{r.title}.</b>{r.text && " " + r.text}</li>)}
+              </ol>
+            </>
+          )}
+          {v.manifesto && v.manifesto.length > 0 && (
+            <>
+              <div className="grp-label">Manifesto</div>
+              <div className="vb-manifesto">{v.manifesto.map((p, i) => <p key={i}>{p}</p>)}</div>
+            </>
+          )}
+          {v.mensagens && v.mensagens.length > 0 && (
+            <>
+              <div className="grp-label">Mensagens-chave</div>
+              <div className="vb-msgs">
+                {v.mensagens.map((m) => (
+                  <div className="vb-msg" key={m.label}>
+                    <span className="vb-label">{m.label}</span>
+                    <ul>{m.items.map((x) => <li key={x}>{x}</li>)}</ul>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+          {v.pitch && (
+            <>
+              <div className="grp-label">Pitch elevator</div>
+              <div className="quote"><p>{v.pitch}</p></div>
+            </>
+          )}
+        </div>
+      )}
+      {hasMore && (
+        <div className="read-more">
+          <button className="btn btn-gold" onClick={() => setAll((x) => !x)} aria-expanded={all}>
+            {all ? "Ver menos ↑" : "Ver tudo ↓"}
+          </button>
+        </div>
+      )}
     </section>
   );
 }
@@ -593,7 +702,7 @@ function photoFile(src: string) {
   return src.split("/").pop() ?? "imagem.jpg";
 }
 
-function InUse({ hub, clientName, onDownload }: { hub: HubBrand; clientName: string; onDownload: (src: string, file: string) => void }) {
+function InUse({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, file: string) => void }) {
   // Agrupa as fotos preservando a ordem dos grupos
   const photos = hub.photos ?? [];
   const groups: { name: string; items: typeof photos }[] = [];
@@ -624,12 +733,13 @@ function InUse({ hub, clientName, onDownload }: { hub: HubBrand; clientName: str
   const step = (d: number) => setOpen((i) => (i === null ? i : (i + d + flat.length) % flat.length));
 
   return (
-    <section id="em-uso">
-      <SecHead eyebrow="Em uso" title="A marca no mundo real" desc={`A marca ao vivo — aplicações e direção fotográfica que guiam como ${clientName} aparece em cada ponto de contato.`} />
+    <section id="aplicacoes">
+      <SecHead eyebrow="Aplicações" title="A marca no mundo real" />
       {groups.length > 0 ? (
         groups.map((g) => (
           <div key={g.name}>
-            <div className="grp-label">{g.name}</div>
+            {/* "Aplicações" já é o nome da seção — não repete como rótulo */}
+            {g.name !== "Aplicações" && <div className="grp-label">{g.name}</div>}
             <div className="photo-carousel" role="group" aria-label={g.name}>
               {g.items.map((p) => (
                 <figure
@@ -669,11 +779,6 @@ function InUse({ hub, clientName, onDownload }: { hub: HubBrand; clientName: str
           <a className="btn btn-gold" href={hub.conceptDeck} target="_blank" rel="noopener noreferrer">↗ Ver apresentação do conceito visual (PDF)</a>
         </div>
       )}
-      {hub.drive?.expressao && (
-        <div style={{ marginTop: 22 }} className="reveal">
-          <a className="btn" href={hub.drive.expressao} target="_blank" rel="noopener noreferrer">↗ Ver mais aplicações e moodboard no Drive</a>
-        </div>
-      )}
       {current && open !== null && (
         <div className="lightbox" role="dialog" aria-modal="true" aria-label={current.label} onClick={() => setOpen(null)}>
           <button className="lb-btn lb-close" aria-label="Fechar" onClick={() => setOpen(null)}>✕</button>
@@ -696,7 +801,7 @@ function InUse({ hub, clientName, onDownload }: { hub: HubBrand; clientName: str
 function AIGuide({ md, onCopy, onDownload, onDownloadSkill }: { md: string; onCopy: () => void; onDownload: () => void; onDownloadSkill: () => void }) {
   return (
     <section id="ia">
-      <SecHead eyebrow="IA" title="Use sua marca com IA" desc="A marca inteira em texto estruturado — cole no ChatGPT, Claude ou Midjourney antes de pedir qualquer peça e o modelo já cria dentro da identidade." />
+      <SecHead eyebrow="IA" title="Insumos para uso de IA na marca" />
       <div className="ai-card reveal">
         <p>
           Gerado a partir do próprio Brand System, então nunca fica desatualizado. Duas formas de usar:
