@@ -49,7 +49,7 @@ export interface BrandPage {
  * É o "BRAND" do hub interativo, agora por cliente. Trocar de cliente =
  * preencher isto. RGB/CMYK e contraste são calculados no render.
  * ------------------------------------------------------------------ */
-export interface HubLogo { name: string; role: string; src: string; file: string; drive?: string; pad: string; /** versão vetorial (SVG) — botão de download ao lado do PNG */ svg?: string; }
+export interface HubLogo { name: string; role: string; src: string; file: string; drive?: string; pad: string; /** versão vetorial (SVG) — botão de download ao lado do PNG */ svg?: string; /** agrupa versões na seção Logos (ex.: "Horizontal", "Empilhada") */ group?: string; }
 export interface HubColor { name: string; hex: string; role?: string; /** CMYK oficial (do brandbook); se ausente, é calculado do hex */ cmyk?: string; }
 export interface HubPair { bg: string; fg: string; label: string; }
 export interface HubType { role: string; family: string; sample: string; cssFamily?: string; }
@@ -1189,7 +1189,31 @@ export const JUJOO: ClientBrand = {
  * Narrativa (StoryBrand, Parque + Eventos + Hospedagem) já entregue.
  * Expressão: logo refinado manualmente (Drive "Logo 2026", Casa Campo 2026.ai,
  * set/2026) e paleta de 5 cores fechados. Conceito visual em PDF.
+ * Logos com espaçamento padronizado (30/set) em 3 arranjos: horizontal,
+ * empilhada e compacta (CASA e CAMPO em duas linhas), cada um em 7 cores.
  * ------------------------------------------------------------------ */
+const CASA_CAMPO_LOGO_COLORS = [
+  { slug: "petroleo", name: "Assinatura em petróleo", role: "Versão principal, fundos claros", pad: "#f5f6f5" },
+  { slug: "branco-sobre-petroleo", name: "Assinatura em branco sobre petróleo", role: "Versão negativa, fundos escuros", pad: "#0e3e4a" },
+  { slug: "petroleo-sobre-salvia", name: "Petróleo sobre sálvia", role: "Fundos de natureza e jardins", pad: "#8fbf97" },
+  { slug: "petroleo-sobre-ambar", name: "Petróleo sobre âmbar", role: "Fundos quentes, peças de destaque", pad: "#eda656" },
+  { slug: "petroleo-sobre-rosa", name: "Petróleo sobre rosa", role: "Fundos de flores e afeto", pad: "#ff7da2" },
+  { slug: "ambar", name: "Assinatura em âmbar", role: "Acento sobre fundos claros", pad: "#f5f6f5" },
+  { slug: "rosa", name: "Assinatura em rosa", role: "Acento sobre fundos claros", pad: "#f5f6f5" },
+];
+const CASA_CAMPO_LOGOS: HubLogo[] = [
+  { group: "Horizontal", prefix: "casa-campo-" },
+  { group: "Empilhada", prefix: "casa-campo-empilhada-" },
+  { group: "Compacta (duas linhas)", prefix: "casa-campo-compacta-" },
+].flatMap(({ group, prefix }) =>
+  CASA_CAMPO_LOGO_COLORS.map((c) => ({
+    group, name: c.name, role: c.role, pad: c.pad,
+    src: `/clients/casa-campo/logos/${prefix}${c.slug}.png`,
+    file: `${prefix}${c.slug}.png`,
+    svg: `/clients/casa-campo/logos/svg/${prefix}${c.slug}.svg`,
+  })),
+);
+
 const CASA_CAMPO: ClientBrand = {
   slug: "casa-campo",
   name: "Casa Campo",
@@ -1200,15 +1224,7 @@ const CASA_CAMPO: ClientBrand = {
     since: "Abertura do parque em novembro de 2026",
     drive: { assets: "https://drive.google.com/drive/folders/1lW4i7MR1CyH8LQB2tvyB6HB77Jw_lY-n" },
     conceptDeck: "/clients/casa-campo/conceito-visual.pdf",
-    logos: [
-      { name: "Assinatura em petróleo", role: "Versão principal, fundos claros", src: "/clients/casa-campo/logos/casa-campo-petroleo.png", file: "casa-campo-petroleo.png", svg: "/clients/casa-campo/logos/svg/casa-campo-petroleo.svg", pad: "#f5f6f5" },
-      { name: "Assinatura em branco sobre petróleo", role: "Versão negativa, fundos escuros", src: "/clients/casa-campo/logos/casa-campo-branco-sobre-petroleo.png", file: "casa-campo-branco-sobre-petroleo.png", svg: "/clients/casa-campo/logos/svg/casa-campo-branco-sobre-petroleo.svg", pad: "#0e3e4a" },
-      { name: "Petróleo sobre sálvia", role: "Fundos de natureza e jardins", src: "/clients/casa-campo/logos/casa-campo-petroleo-sobre-salvia.png", file: "casa-campo-petroleo-sobre-salvia.png", svg: "/clients/casa-campo/logos/svg/casa-campo-petroleo-sobre-salvia.svg", pad: "#8fbf97" },
-      { name: "Petróleo sobre âmbar", role: "Fundos quentes, peças de destaque", src: "/clients/casa-campo/logos/casa-campo-petroleo-sobre-ambar.png", file: "casa-campo-petroleo-sobre-ambar.png", svg: "/clients/casa-campo/logos/svg/casa-campo-petroleo-sobre-ambar.svg", pad: "#eda656" },
-      { name: "Petróleo sobre rosa", role: "Fundos de flores e afeto", src: "/clients/casa-campo/logos/casa-campo-petroleo-sobre-rosa.png", file: "casa-campo-petroleo-sobre-rosa.png", svg: "/clients/casa-campo/logos/svg/casa-campo-petroleo-sobre-rosa.svg", pad: "#ff7da2" },
-      { name: "Assinatura em âmbar", role: "Acento sobre fundos claros", src: "/clients/casa-campo/logos/casa-campo-ambar.png", file: "casa-campo-ambar.png", svg: "/clients/casa-campo/logos/svg/casa-campo-ambar.svg", pad: "#f5f6f5" },
-      { name: "Assinatura em rosa", role: "Acento sobre fundos claros", src: "/clients/casa-campo/logos/casa-campo-rosa.png", file: "casa-campo-rosa.png", svg: "/clients/casa-campo/logos/svg/casa-campo-rosa.svg", pad: "#f5f6f5" },
-    ],
+    logos: CASA_CAMPO_LOGOS,
     rebrand: {
       before: { name: "Identidade anterior (pré-Mira)", role: "Diamante de linha fina, tipografia condensada", src: "/clients/casa-campo/logo-01.jpg", file: "casa-campo-antes.jpg", pad: "#0e3e4a" },
       after: { name: "Nova assinatura (Expressão Mira)", role: "Diamante espesso e lettering exclusivo com floreio no A", src: "/clients/casa-campo/logos/casa-campo-branco-sobre-petroleo.png", file: "casa-campo-novo.png", svg: "/clients/casa-campo/logos/svg/casa-campo-branco-sobre-petroleo.svg", pad: "#0e3e4a" },

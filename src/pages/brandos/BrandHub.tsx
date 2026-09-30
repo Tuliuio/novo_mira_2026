@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
-import { DEMO_CLIENT, getClient, type ClientBrand, type HubBrand, type HubArticle } from "@/lib/content";
+import { DEMO_CLIENT, getClient, type ClientBrand, type HubBrand, type HubArticle, type HubLogo } from "@/lib/content";
 import { hexToRgb, rgbToCmyk, contrastRatio, contrastBadge, copyText } from "@/lib/color";
 import { Logo } from "@/components/Logo";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
@@ -59,7 +59,7 @@ function buildMarkdown(client: ClientBrand): string {
 
   if (h.logos?.length) {
     L.push("\n## Logos");
-    h.logos.forEach((lg) => L.push(`- **${lg.name}** — ${lg.role}`));
+    h.logos.forEach((lg) => L.push(`- **${lg.group ? lg.group + " · " : ""}${lg.name}** — ${lg.role}`));
   }
   if (h.drive?.assets) L.push("Pacote de assets (SVG/AI/PDF, RGB+CMYK): " + h.drive.assets);
   if (h.brandbook) L.push("Brandbook completo (PDF): " + h.brandbook);
@@ -356,12 +356,21 @@ function Hero({ client, hub }: { client: ClientBrand; hub: HubBrand }) {
 }
 
 function Logos({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, file: string) => void }) {
+  const groups: { name?: string; items: HubLogo[] }[] = [];
+  hub.logos.forEach((l) => {
+    let g = groups.find((x) => x.name === l.group);
+    if (!g) { g = { name: l.group, items: [] }; groups.push(g); }
+    g.items.push(l);
+  });
   return (
     <section id="logos">
       <SecHead eyebrow="Logos" title="Assinatura da marca" desc="Cada versão em seu contexto. Os arquivos vetoriais (SVG/AI/PDF, RGB e CMYK) ficam no pacote completo no Drive." />
       {hub.logos.length > 0 ? (
+        groups.map((g) => (
+        <div key={g.name ?? "logos"}>
+        {g.name && <div className="grp-label">{g.name}</div>}
         <div className="grid g2">
-          {hub.logos.map((l) => (
+          {g.items.map((l) => (
             <div className="card reveal" key={l.file}>
               <div className="logo-vis" style={{ background: l.pad }}><img src={l.src} alt={l.name} /></div>
               <div className="logo-meta">
@@ -374,6 +383,8 @@ function Logos({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, f
             </div>
           ))}
         </div>
+        </div>
+        ))
       ) : (
         <div className="note-card reveal">Os logos ainda serão publicados aqui.</div>
       )}
