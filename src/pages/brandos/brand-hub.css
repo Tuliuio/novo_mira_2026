@@ -374,3 +374,33 @@
   .bh .lb-figure img { max-height: calc(100vh - 220px); }
 }
 @media (prefers-reduced-motion: reduce) { .bh .lightbox { animation: none; } .bh .photo-dl { transition: none; } }
+
+/* Defesa do logo */
+.bh .logo-story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 300px); gap: 32px; align-items: start; margin-bottom: 34px; }
+.bh .story-points { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.bh .story-points li { padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); font-size: 13.5px; font-weight: 600; }
+@media (max-width: 760px) { .bh .logo-story { grid-template-columns: 1fr; gap: 20px; } }
+
+/* Fontes — amostras renderizadas como máscara (herdam a cor do tema) */
+.bh .mask-img { width: 100%; background: currentColor; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: left center; mask-position: left center; }
+.bh .type-sample-img { max-width: 720px; margin: 18px 0 16px; color: var(--text); }
+.bh .type-pangram-img { max-width: 560px; color: var(--muted); }
+.bh .type-info { margin-top: 16px; display: grid; gap: 10px; }
+.bh .type-usage { margin: 0; color: var(--text); max-width: 68ch; font-size: 14.5px; line-height: 1.6; }
+.bh .type-weights { color: var(--muted); font-size: 12.5px; }
+.bh .type-weights span { font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: 11px; margin-right: 10px; color: var(--text); }
+
+/* Elementos de apoio */
+.bh .support-item .grp-label:first-child { margin-top: 0; }
+.bh .support-pattern { position: relative; margin: 0 0 28px; border-radius: var(--radius-card); overflow: hidden; }
+.bh .support-pattern img { display: block; width: 100%; height: auto; }
+.bh .support-pattern .photo-dl { opacity: 1; }
+.bh .support-text h3 { margin: 0 0 14px; font-size: clamp(22px, 3vw, 30px); letter-spacing: -.02em; }
+.bh .support-text .story-points { flex-direction: row; flex-wrap: wrap; margin-top: 18px; }
+.bh .tile-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; }
+.bh .tile { padding: 0; border: none; background: none; cursor: pointer; border-radius: 6px; overflow: hidden; transition: transform .18s; }
+.bh .tile:hover { transform: translateY(-3px); }
+.bh .tile img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+@media (max-width: 760px) { .bh .tile-grid { grid-template-columns: repeat(4, 1fr); } }
+.bh .logo-story .prose p, .bh .support-text .prose p { margin: 0 0 14px; line-height: 1.65; }
+.bh .logo-story .prose p:last-child, .bh .support-text .prose p:last-child { margin-bottom: 0; }

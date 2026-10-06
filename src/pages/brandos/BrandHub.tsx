@@ -72,11 +72,16 @@ function buildMarkdown(client: ClientBrand): string {
 
   if (h.type?.length) {
     L.push("\n## Tipografia");
-    h.type.forEach((t) => L.push(`- **${t.role}:** ${t.family}`));
+    h.type.forEach((t) => L.push(`- **${t.role}:** ${t.family}${t.usage ? " — " + t.usage : ""}`));
     if (h.fontsUrl) L.push("Arquivos das fontes: " + h.fontsUrl);
   } else if (h.typeNote) {
     L.push("\n## Tipografia");
     L.push("_" + h.typeNote + "_");
+  }
+
+  if (h.support?.length) {
+    L.push("\n## Elementos de apoio");
+    h.support.forEach((x) => L.push(`**${x.name}** — ${x.paragraphs.join(" ")}${x.uses?.length ? "\nUsos: " + x.uses.join(", ") : ""}`));
   }
 
   if (h.logos?.length) {
@@ -114,7 +119,7 @@ function buildSkill(client: ClientBrand): string {
   }
 
   L.push("\n## Tipografia");
-  if (h.type?.length) h.type.forEach((t) => L.push(`- ${t.role}: ${t.family}`));
+  if (h.type?.length) h.type.forEach((t) => L.push(`- ${t.role}: ${t.family}${t.usage ? " — " + t.usage : ""}`));
   else if (h.typeNote) L.push(`- ${h.typeNote}`);
 
   if (h.verbal) L.push(...verbalLines(h.verbal));
@@ -326,7 +331,7 @@ export function BrandHub() {
         {sections.some((s) => s.id === "logos") && <Logos hub={hub} onDownload={downloadLogo} />}
         {sections.some((s) => s.id === "cores") && <Colors hub={hub} onCopy={copyHex} />}
         {sections.some((s) => s.id === "fontes") && <Typography hub={hub} />}
-        <Support />
+        <Support hub={hub} onDownload={downloadLogo} />
         {sections.some((s) => s.id === "essencia") && (
           <Essence hub={hub} onRead={() => hub.essenceArticle && openReader([hub.essenceArticle])} />
         )}
@@ -421,6 +426,14 @@ function Logos({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, f
   return (
     <section id="logos">
       <SecHead eyebrow="Logo" title="Assinatura da marca" />
+      {hub.logoStory && (
+        <div className="logo-story reveal">
+          <div className="prose">{hub.logoStory.paragraphs.map((p, i) => <p key={i}>{p}</p>)}</div>
+          {hub.logoStory.points && hub.logoStory.points.length > 0 && (
+            <ul className="story-points">{hub.logoStory.points.map((p) => <li key={p}>{p}</li>)}</ul>
+          )}
+        </div>
+      )}
       {hub.logos.length > 0 ? (
         groups.map((g) => (
         <div key={g.name ?? "logos"}>
@@ -486,8 +499,22 @@ function Typography({ hub }: { hub: HubBrand }) {
           {hub.type.map((t) => (
             <div className="card type-card reveal" key={t.role}>
               <span className="type-role">{t.role} — {t.family}</span>
-              <div className="type-sample" style={{ fontFamily: t.cssFamily ?? undefined }}>{t.sample}</div>
-              <div className="type-pangram">Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz</div>
+              {t.sampleImg ? (
+                <MaskImg img={t.sampleImg} alt={t.sample} className="type-sample-img" />
+              ) : (
+                <div className="type-sample" style={{ fontFamily: t.cssFamily ?? undefined, fontWeight: t.sampleWeight }}>{t.sample}</div>
+              )}
+              {t.pangramImg ? (
+                <div className="type-pangram"><MaskImg img={t.pangramImg} alt="Alfabeto da família" className="type-pangram-img" /></div>
+              ) : (
+                <div className="type-pangram" style={{ fontFamily: t.cssFamily ?? undefined }}>Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz</div>
+              )}
+              {(t.usage || t.weights) && (
+                <div className="type-info">
+                  {t.usage && <p className="type-usage">{t.usage}</p>}
+                  {t.weights && <div className="type-weights"><span>Pesos</span>{t.weights.join(" · ")}</div>}
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -503,11 +530,71 @@ function Typography({ hub }: { hub: HubBrand }) {
   );
 }
 
-function Support() {
+/** Texto renderizado como imagem-máscara: herda a cor do tema (fontes que não podem ser publicadas como arquivo). */
+function MaskImg({ img, alt, className }: { img: { src: string; w: number; h: number }; alt: string; className: string }) {
+  const url = `url("${img.src}")`;
+  return (
+    <div
+      className={"mask-img " + className}
+      role="img"
+      aria-label={alt}
+      style={{ aspectRatio: `${img.w} / ${img.h}`, WebkitMaskImage: url, maskImage: url }}
+    />
+  );
+}
+
+function Support({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, file: string) => void }) {
+  const items = hub.support ?? [];
   return (
     <section id="apoio">
       <SecHead eyebrow="Elementos de apoio" title="Elementos de apoio" />
-      <div className="note-card reveal"><b>Em documentação.</b> Os elementos de apoio da marca serão publicados aqui.</div>
+      {items.length === 0 && (
+        <div className="note-card reveal"><b>Em documentação.</b> Os elementos de apoio da marca serão publicados aqui.</div>
+      )}
+      {items.map((s) => (
+        <div className="support-item" key={s.name}>
+          <div className="grp-label">{s.name}</div>
+          {s.pattern && (
+            <figure className="support-pattern reveal">
+              <img src={s.pattern} alt={"Padrão — " + s.name} loading="lazy" />
+              <button className="photo-dl" aria-label="Baixar padrão" title="Baixar padrão" onClick={() => onDownload(s.pattern!, photoFile(s.pattern!))}>↓</button>
+            </figure>
+          )}
+          <div className="support-text reveal">
+            {s.title && <h3>{s.title}</h3>}
+            <div className="prose">{s.paragraphs.map((p, i) => <p key={i}>{p}</p>)}</div>
+            {s.uses && s.uses.length > 0 && (
+              <ul className="story-points">{s.uses.map((u) => <li key={u}>{u}</li>)}</ul>
+            )}
+          </div>
+          {s.tiles && s.tiles.length > 0 && (
+            <>
+              <div className="grp-label">As peças</div>
+              <div className="tile-grid">
+                {s.tiles.map((t, i) => (
+                  <button className="tile reveal" key={t} onClick={() => onDownload(t, photoFile(t))} aria-label={"Baixar peça " + (i + 1)} title="Baixar peça">
+                    <img src={t} alt={"Peça " + (i + 1)} loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+          {s.photos && s.photos.length > 0 && (
+            <>
+              <div className="grp-label">Aplicados</div>
+              <div className="photo-carousel" role="group" aria-label={s.name + " aplicados"}>
+                {s.photos.map((p) => (
+                  <figure className="photo reveal" key={p.src}>
+                    <img src={p.src} alt={p.label} loading="lazy" />
+                    <button className="photo-dl" aria-label={"Baixar " + p.label} title="Baixar imagem" onClick={() => onDownload(p.src, photoFile(p.src))}>↓</button>
+                    <figcaption className="cap">{p.label}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      ))}
     </section>
   );
 }

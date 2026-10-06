@@ -52,7 +52,33 @@ export interface BrandPage {
 export interface HubLogo { name: string; role: string; src: string; file: string; drive?: string; pad: string; /** versão vetorial (SVG) — botão de download ao lado do PNG */ svg?: string; /** agrupa versões na seção Logos (ex.: "Horizontal", "Empilhada") */ group?: string; }
 export interface HubColor { name: string; hex: string; role?: string; /** CMYK oficial (do brandbook); se ausente, é calculado do hex */ cmyk?: string; }
 export interface HubPair { bg: string; fg: string; label: string; }
-export interface HubType { role: string; family: string; sample: string; cssFamily?: string; }
+export interface HubType {
+  role: string;
+  family: string;
+  sample: string;
+  cssFamily?: string;
+  /** peso da amostra ao vivo (CSS font-weight) */
+  sampleWeight?: number;
+  /** quando e como usar a família */
+  usage?: string;
+  /** pesos disponíveis da família */
+  weights?: string[];
+  /** amostra renderizada como imagem (máscara) — p/ fontes que não podem ser publicadas como arquivo */
+  sampleImg?: { src: string; w: number; h: number };
+  pangramImg?: { src: string; w: number; h: number };
+}
+/** Elemento de apoio (ex.: ladrilhos) — texto, peças soltas, padrão montado e aplicações. */
+export interface HubSupport {
+  name: string;
+  title?: string;
+  paragraphs: string[];
+  uses?: string[];
+  pattern?: string;
+  tiles?: string[];
+  photos?: HubPhoto[];
+}
+/** Publicação de rede social: post único ou carrossel (várias imagens). */
+export interface HubPost { images: string[]; caption?: string; label?: string; }
 export interface HubApplication { k: string; s: string; bg: string; fg: string; }
 export interface HubPhoto { src: string; label: string; group?: string; fit?: "cover" | "contain"; pad?: string; }
 /** Comparativo de rebranding — logo antigo x novo, num slider de antes/depois. */
@@ -108,6 +134,14 @@ export interface HubBrand {
   colorsNote?: string;
   colors: HubColor[];
   pairings?: HubPair[];
+  /** defesa do logo — o porquê do desenho, logo no início da seção Logo */
+  logoStory?: { paragraphs: string[]; points?: string[] };
+  /** elementos de apoio (ladrilhos, grafismos…) */
+  support?: HubSupport[];
+  /** publicações (posts) mostradas em mockup na seção Aplicações */
+  posts?: HubPost[];
+  /** @ do Instagram usado no mockup das publicações */
+  instagram?: string;
   /** se preenchido, mostra esta nota no lugar dos cards de tipografia */
   typeNote?: string;
   type?: HubType[];
@@ -649,6 +683,14 @@ export const CRUZ_DE_MALTA: ClientBrand = {
       { name: "Sobre creme", role: "Peças de tradição", src: "/clients/cruz-de-malta/logo-03.png", file: "cruz-de-malta-creme.png", drive: "https://drive.google.com/file/d/1CmSEVGo1-OcA5guaNKYzgiiEPeEZdGuS/view", pad: "var(--c3)" },
       { name: "Branco sobre bordô", role: "Uso sóbrio", src: "/clients/cruz-de-malta/logo-04.png", file: "cruz-de-malta-bordo.png", drive: "https://drive.google.com/file/d/1jKgYnnbgoHozdskD7jErK91_71WcK1yu/view", pad: "var(--c2)" },
     ],
+    logoStory: {
+      paragraphs: [
+        "O logo do Cruz de Malta atravessou décadas sem nunca ter sido documentado: cada placa, cardápio e embalagem saía de um jeito. O redesenho não troca a marca que Pelotas conhece. Mantém o vermelho, a cruz e o nome, ajusta o que precisava de cuidado e organiza tudo num padrão que se sustenta pelos próximos anos.",
+        "A inspiração vem dos selos e rótulos vintage. A letra continua clássica, mas ganhou curvas e um respiro que marcam o novo momento da casa, e dá ênfase ao “Cruz”, o nome pelo qual a cidade chama o restaurante.",
+        "A forma circular carrega a memória dos emblemas tradicionais, das marcas feitas para durar. As terminações arredondadas e a construção limpa trazem o presente. É o equilíbrio que a marca precisava: passado, presente e futuro na mesma assinatura. É assim que antigo vira tradicional.",
+      ],
+      points: ["Ênfase no “Cruz”", "Referências vintage", "Uma forma única, não uma soma de elementos", "Cores já reconhecidas, com frescor", "Tem “o molho”"],
+    },
     colorsNote: "Paleta provisória — extraída dos logos entregues, aguardando documentação oficial das cores.",
     colors: [
       { name: "Vermelho Cruz", hex: "#E71E2E", role: "Cor âncora da marca" },
@@ -663,8 +705,46 @@ export const CRUZ_DE_MALTA: ClientBrand = {
       { bg: "#19191A", fg: "#F8E2C0", label: "Tinta + Creme" },
       { bg: "#891623", fg: "#F8E2C0", label: "Bordô + Creme" },
     ],
-    typeNote:
-      "O sistema tipográfico do Cruz de Malta ainda está sendo definido pela Mira — uma fonte com propósito, que carregue tradição e atualidade. Enquanto isso, a assinatura vintage do logo é a referência de personalidade. Assim que fechada, ela aparece aqui com amostra viva, pangrama e ficha técnica.",
+    type: [
+      {
+        role: "Títulos",
+        family: "Arsenica",
+        sample: "Servindo Pelotas à mesa há seis décadas.",
+        usage: "A fonte da família do logo. Tem desenho rico, com curvas e contraste, e por isso pede espaço: use em títulos curtos, chamadas e destaques. Em textos longos ou tamanhos pequenos a leitura fica difícil. Nesses casos, entra a Inter.",
+        weights: ["Thin", "Light", "Regular", "Medium", "Demibold", "Bold", "Extrabold", "com itálicos"],
+        sampleImg: { src: "/clients/cruz-de-malta/fontes/arsenica-amostra.png", w: 1979, h: 327 },
+        pangramImg: { src: "/clients/cruz-de-malta/fontes/arsenica-pangrama.png", w: 2067, h: 399 },
+      },
+      {
+        role: "Textos e títulos de apoio",
+        family: "Inter",
+        sample: "Comida de verdade, à la carte, no almoço e no jantar, todos os dias.",
+        cssFamily: "\"Inter\", sans-serif",
+        sampleWeight: 600,
+        usage: "Família extensa e de excelente leitura. Use nos textos curtos e longos, em cardápios, legendas e informações, e também nos títulos em que a Arsenica ficaria complexa demais.",
+        weights: ["Thin", "ExtraLight", "Light", "Regular", "Medium", "SemiBold", "Bold", "ExtraBold", "Black"],
+      },
+    ],
+    support: [
+      {
+        name: "Ladrilhos",
+        title: "Um pedaço de Pelotas em cada peça",
+        paragraphs: [
+          "Quem anda pelo centro de Pelotas conhece: os casarões do tempo do charque guardam nas fachadas uma herança que veio de Portugal, os azulejos. A cidade cresceu olhando para eles, e eles fazem parte do jeito pelotense de viver a arte e a arquitetura.",
+          "Os ladrilhos do Cruz nascem daí. Cada peça leva a cruz de Malta, com as mesmas curvas do logo, e as cores da casa: vermelho, bordô, creme, caramelo e branco. Combinadas entre si, formam peças únicas, que só existem no Cruz.",
+          "Como no azulejo português, a força está na repetição. Uma peça sozinha é um detalhe; juntas, viram parede, piso, padrão. É a mesma lógica da casa: o que se repete com cuidado vira tradição.",
+          "Funcionam no digital e no impresso, em posts, cardápios, embalagens e sacolas. E saem do papel: podem revestir uma parede do salão, marcar a entrada ou virar porta-copo na mesa. Podem virar lembrança, também: um ladrilho de verdade, com a cruz da casa, é o tipo de presente que o cliente leva e guarda. Nos 60 anos, em 2027, cada família pode levar o seu pedaço do Cruz.",
+        ],
+        uses: ["Posts e stories", "Cardápio", "Embalagens e sacolas", "Parede do salão", "Piso da entrada", "Porta-copos", "Lembrança dos 60 anos"],
+        pattern: "/clients/cruz-de-malta/ladrilhos/ladrilhos-padrao.png",
+        tiles: Array.from({ length: 16 }, (_, i) => `/clients/cruz-de-malta/ladrilhos/ladrilho-${String(i + 1).padStart(2, "0")}.png`),
+        photos: [
+          { src: "/clients/cruz-de-malta/ladrilhos/aplicado-parede.jpg", label: "Parede do salão" },
+          { src: "/clients/cruz-de-malta/ladrilhos/aplicado-peca-avulsa.jpg", label: "Peça avulsa — lembrança e porta-copo" },
+          { src: "/clients/cruz-de-malta/ladrilhos/aplicado-piso.jpg", label: "Piso da entrada" },
+        ],
+      },
+    ],
     essence: {
       lead: "Tirar o Cruz do lugar de “antigo” e levá-lo ao de “tradicional”. Antigo é o que ficou para trás; tradicional é o que mantém relevância, independentemente do tempo.",
       proposito: "Manter viva — e servida à mesa — a comida de verdade que fez do Cruz de Malta parte da história de Pelotas. Seis décadas sem uma única pausa: o restaurante mais antigo em funcionamento da cidade.",
@@ -838,16 +918,27 @@ export const CRUZ_DE_MALTA: ClientBrand = {
       pitch: "O Cruz de Malta é o restaurante mais antigo em funcionamento de Pelotas. Está na Bento Gonçalves desde 1967 e abre todos os dias, no almoço e no jantar, à la carte. Serve comida de verdade com sabor autêntico, da parmegiana ao peixe com camarão. É onde a cidade reúne a família. É o Cruz da Bento.",
     },
     photos: [
-      { src: "/clients/cruz-de-malta/fotografia/fachada.jpg", label: "Fachada — o Cruz da Bento", group: "Aplicações" },
-      { src: "/clients/cruz-de-malta/fotografia/cardapio.jpg", label: "Cardápio", group: "Aplicações" },
-      { src: "/clients/cruz-de-malta/fotografia/embalagem.jpg", label: "Embalagem", group: "Aplicações" },
-      { src: "/clients/cruz-de-malta/fotografia/sacola.jpg", label: "Sacola", group: "Aplicações" },
-      { src: "/clients/cruz-de-malta/fotografia/taca.jpg", label: "Taça", group: "Aplicações" },
-      { src: "/clients/cruz-de-malta/fotografia/avental.jpg", label: "Avental", group: "Aplicações" },
-      { src: "/clients/cruz-de-malta/fotografia/campo.jpg", label: "O campo — a origem", group: "Direção fotográfica" },
-      { src: "/clients/cruz-de-malta/fotografia/em-casa.jpg", label: "O Cruz na sua casa", group: "Direção fotográfica" },
-      { src: "/clients/cruz-de-malta/fotografia/delivery.jpg", label: "Delivery", group: "Direção fotográfica" },
-      { src: "/clients/cruz-de-malta/fotografia/cacilda.jpg", label: "A cozinha da Cilda", group: "Direção fotográfica" },
+      { src: "/clients/cruz-de-malta/aplicacoes/fachada.jpg", label: "Fachada — o Cruz da Bento", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/backlight-caixa-fachada.jpg", label: "Luminoso da fachada", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/backlight-bandeira.jpg", label: "Luminoso bandeira", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/cardapio.jpg", label: "Cardápio", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/taca.jpg", label: "Copo", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/guardanapo.jpg", label: "Guardanapo", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/v2-guardanapo.jpg", label: "Guardanapo na mesa posta", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/fosforos.jpg", label: "Caixa de fósforos", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/avental.jpg", label: "Avental", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/v2-avental-premium.jpg", label: "Avental com placa de couro", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/camiseta.jpg", label: "Camiseta da equipe", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/sacola.jpg", label: "Ecobag", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/embalagem-delivery.jpg", label: "Caixa para viagem", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/v2-embalagem.jpg", label: "Embalagens para viagem", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/van-delivery.jpg", label: "Van de entregas", group: "Aplicações" },
+      { src: "/clients/cruz-de-malta/aplicacoes/v2-familia.jpg", label: "A família à mesa", group: "Direção fotográfica" },
+      { src: "/clients/cruz-de-malta/aplicacoes/delivery-pedido-balcao.jpg", label: "Pedido pronto no balcão", group: "Direção fotográfica" },
+      { src: "/clients/cruz-de-malta/aplicacoes/delivery-entregador-porta.jpg", label: "Entrega na porta", group: "Direção fotográfica" },
+      { src: "/clients/cruz-de-malta/aplicacoes/cacilda-01-bancada.jpg", label: "A cozinha da Cacilda", group: "Direção fotográfica" },
+      { src: "/clients/cruz-de-malta/aplicacoes/cacilda-02-prato.jpg", label: "Direto da cozinha", group: "Direção fotográfica" },
+      { src: "/clients/cruz-de-malta/aplicacoes/cacilda-03-maos.jpg", label: "Feito à mão", group: "Direção fotográfica" },
     ],
     narratives: [
       {
@@ -2222,8 +2313,9 @@ const OKA: ClientBrand = {
  * síntese). Narrativa v1 (StoryBrand) de "Aloha - Narrativa v1.md": roteiro
  * principal (quem se movimenta) + sub-roteiros Mulheres e Atleta; franqueado
  * em espera por decisão dos sócios (11/09). Nome em validação: a
- * recomendação é "Aloha Recovery Club". Cores, tipografia e logos são os
- * oficiais do manual atual (dez/2025) — a Expressão ainda não começou.
+ * recomendação é "Aloha Recovery Club". Expressão v1 (out/2026): wordmark
+ * novo desenhado sob medida, paleta, grafismos, fotografia e aplicações (o logo
+ * do manual de dez/2025 aparece só no slider de antes/depois).
  * ------------------------------------------------------------------ */
 const ALOHA: ClientBrand = {
   slug: "aloha",
@@ -2233,29 +2325,82 @@ const ALOHA: ClientBrand = {
   hub: {
     year: "2026",
     since: "Desde 2019",
+    rebrand: {
+      before: { name: "Identidade anterior (manual dez/2025)", role: "Círculo de setas em gradiente, tipografia Gotham", src: "/clients/aloha/logo-light.png", file: "aloha-antes.png", pad: "#231f20" },
+      after: { name: "Nova assinatura (Expressão Mira)", role: "Wordmark desenhado sob medida, O com contraforma girada", src: "/clients/aloha/logos/aloha-logo-malva.png", file: "aloha-logo-malva.png", svg: "/clients/aloha/logos/aloha-logo-malva.svg", pad: "#1d1918" },
+      note: "As setas saem e o giro fica: a renovação, que estava num símbolo à parte, passa a morar dentro do próprio O. O nome ganha o Club e um desenho exclusivo, mais leve e convidativo, sem perder o esporte. Out/2026.",
+    },
     logos: [
-      { name: "Logotipo principal · fundo claro", role: "Aplicação padrão, fundos claros", src: "/clients/aloha/logo-dark.png", file: "aloha-logo-fundo-claro.png", pad: "#f3efe6" },
-      { name: "Logotipo principal · fundo escuro", role: "Versão negativa, fundos escuros", src: "/clients/aloha/logo-light.png", file: "aloha-logo-fundo-escuro.png", pad: "#231f20" },
-      { name: "Símbolo", role: "Ciclo contínuo de recuperação — uso isolado", src: "/clients/aloha/simbolo.png", file: "aloha-simbolo.png", pad: "#f3efe6" },
+      { name: "Assinatura principal", role: "Malva e areia sobre carvão", src: "/clients/aloha/logos/aloha-logo-malva.png", file: "aloha-logo-malva.png", svg: "/clients/aloha/logos/aloha-logo-malva.svg", pad: "#1d1918" },
+      { name: "Sobre claro", role: "Carvão sobre off-white: papelaria, site e documentos", src: "/clients/aloha/logos/aloha-logo-carvao.png", file: "aloha-logo-carvao.png", svg: "/clients/aloha/logos/aloha-logo-carvao.svg", pad: "#f2ede3" },
+      { name: "Sobre cor e foto", role: "Off-white sobre terracota, ocre ou fotografia", src: "/clients/aloha/logos/aloha-logo-offwhite.png", file: "aloha-logo-offwhite.png", svg: "/clients/aloha/logos/aloha-logo-offwhite.svg", pad: "#c05f3f" },
+      { name: "Sobre cor clara", role: "Carvão sobre sálvia, ocre ou malva", src: "/clients/aloha/logos/aloha-logo-carvao.png", file: "aloha-logo-carvao-salvia.png", svg: "/clients/aloha/logos/aloha-logo-carvao.svg", pad: "#68a498" },
+      { name: "Monocromática areia", role: "Bordado, gravação e aplicações tom sobre tom", src: "/clients/aloha/logos/aloha-logo-areia.png", file: "aloha-logo-areia.png", svg: "/clients/aloha/logos/aloha-logo-areia.svg", pad: "#1d1918" },
+      { name: "Construção, nós e grade", role: "Referência de desenho, não usar como logo", src: "/clients/aloha/logos/construcao.png", file: "aloha-construcao.png", pad: "#1d1918" },
     ],
-    colorsNote: "Paleta oficial do manual atual da marca (dez/2025). A Expressão ainda não foi iniciada: a Essência pede uma expressão menos masculina e mais convidativa, então este sistema pode evoluir.",
+    logoStory: {
+      paragraphs: [
+        "O ALOHA não é uma fonte: cada letra foi redesenhada em vetor para a marca. A base continua forte e esportiva, larga, com cantos suaves, mas ganhou detalhes que só ela tem.",
+        "O O é o coração do desenho. No logo antigo, a renovação morava num círculo de setas. Agora ela está dentro da própria letra: a contraforma do O gira 28°, como quem acabou de dar uma volta. É a promessa da marca, sair melhor do que entrou, escrita sem precisar de seta.",
+        "Os pés do A e do L são cortados na mesma inclinação da perna do A, e a palavra inteira anda para frente. A assinatura RECOVERY CLUB é presa a uma grade: o R começa na haste do primeiro A e o B termina na perna do último. Ela tem cerca de um quarto da altura do nome e espaçamento aberto, para respirar.",
+        "Área de proteção: a largura da haste do L em volta de toda a assinatura. Tamanho mínimo: 120 px de largura no digital e 30 mm no impresso. Abaixo disso, use só o ALOHA, sem a assinatura.",
+      ],
+      points: ["Wordmark exclusivo, não é fonte", "O giro da renovação dentro do O", "Movimento para frente nos pés do A e do L", "Assinatura presa à grade das pernas do A", "Menos masculina, sem perder o esporte"],
+    },
+    colorsNote: "Paleta da Expressão. A base é neutra e quente: carvão como fundo principal, malva como a cor do wordmark, areia e off-white para texto e respiro. Terracota, ocre e sálvia vêm do manual antigo e passam a ser fundos chapados de fotografia e grafismos, nunca a cor do logo.",
     colors: [
-      { name: "Laranja", hex: "#c05f3f", role: "Ação — cor de destaque" },
-      { name: "Amarelo", hex: "#d5b256", role: "Criatividade e calor" },
-      { name: "Bege", hex: "#c7b992", role: "Estabilidade — fundos e apoio" },
-      { name: "Azul esverdeado", hex: "#68a498", role: "Equilíbrio" },
-      { name: "Vermelho", hex: "#d74550", role: "Paixão — ponta do gradiente" },
-      { name: "Preto", hex: "#231f20", role: "Presença e força — logotipo" },
+      { name: "Carvão", hex: "#1d1918", role: "Fundo principal, presença" },
+      { name: "Malva", hex: "#b1a19d", role: "A cor do wordmark" },
+      { name: "Areia", hex: "#d7cbb0", role: "Assinatura e textos sobre carvão" },
+      { name: "Off-white", hex: "#f2ede3", role: "Fundo claro, papelaria, site" },
+      { name: "Terracota", hex: "#c05f3f", role: "Apoio: energia, botões e fundos de foto" },
+      { name: "Ocre", hex: "#d5b256", role: "Apoio: calor, fundos de foto e grafismo" },
+      { name: "Sálvia", hex: "#68a498", role: "Apoio: pausa, fundos de foto e grafismo" },
     ],
     pairings: [
-      { bg: "#231f20", fg: "#c7b992", label: "Preto + Bege" },
-      { bg: "#c7b992", fg: "#231f20", label: "Bege + Preto" },
-      { bg: "#231f20", fg: "#d5b256", label: "Preto + Amarelo" },
-      { bg: "#c05f3f", fg: "#ffffff", label: "Laranja + Branco" },
+      { bg: "#1d1918", fg: "#b1a19d", label: "Carvão + Malva" },
+      { bg: "#1d1918", fg: "#d7cbb0", label: "Carvão + Areia" },
+      { bg: "#f2ede3", fg: "#1d1918", label: "Off-white + Carvão" },
+      { bg: "#c05f3f", fg: "#f2ede3", label: "Terracota + Off-white" },
     ],
-    type: [
-      { role: "Títulos / logotipo", family: "Gotham Ultra (iCiel Gotham Ultra)", sample: "SAIA MELHOR DO QUE ENTROU" },
-      { role: "Apoio", family: "Gilroy (Bold / UltraLight)", sample: "Relaxar · Recuperar · Recarregar" },
+    typeNote: "O ALOHA é um wordmark desenhado sob medida e nunca deve ser recomposto em texto; a assinatura RECOVERY CLUB segue a mesma família. A tipografia de apoio para títulos e textos (site, posts, papelaria) está em definição na Expressão. Nas peças de exploração usamos uma sans larga e pesada em caixa alta nos títulos, na linha do wordmark.",
+    support: [
+      {
+        name: "Grafismos",
+        title: "Tudo nasce do próprio logo",
+        paragraphs: [
+          "Os grafismos da Aloha não são enfeite: saem das duas formas que dão personalidade ao wordmark. A primeira é a contraforma girada do O, que vira ritmo (Giro), respiração (Pista), escala de parede (Contraforma) e movimento (Onda).",
+          "A segunda é a inclinação da perna do A, cerca de 19°, que aparece nas faixas de cor (Movimento) e no módulo do pé cortado, repetido como arquibancada (Corte).",
+          "Funcionam como fundo, textura e moldura. O carvão é o fundo padrão; as cores de apoio entram em blocos chapados, sempre em poucas por peça. Os arquivos vetoriais estão no pacote da marca.",
+        ],
+        uses: ["Posts e stories", "Site e apresentações", "Paredes do espaço", "Embalagens e sacolas", "Uniforme e enxoval", "Papelaria e cartão de membro"],
+        pattern: "/clients/aloha/grafismos/padrao-giro.jpg",
+        tiles: Array.from({ length: 8 }, (_, i) => `/clients/aloha/grafismos/peca-${String(i + 1).padStart(2, "0")}.jpg`),
+        photos: [
+          { src: "/clients/aloha/aplicacoes/post-02.jpg", label: "Post com o Giro de fundo" },
+          { src: "/clients/aloha/aplicacoes/site-mockup-devices.jpg", label: "Site, o Giro atrás do título" },
+        ],
+      },
+    ],
+    photos: [
+      { src: "/clients/aloha/aplicacoes/site-mockup-pagina.jpg", label: "Site completo (representação): serviços, como funciona, clube, unidades", group: "Site" },
+      { src: "/clients/aloha/aplicacoes/site-mockup-devices.jpg", label: "Site no notebook e no celular", group: "Site" },
+      { src: "/clients/aloha/aplicacoes/site-hero.jpg", label: "Hero do site: menu, promessa e serviços", group: "Site" },
+      { src: "/clients/aloha/aplicacoes/01-fachada.jpg", label: "Fachada, letreiro com luz por trás", group: "Espaço" },
+      { src: "/clients/aloha/aplicacoes/05-recepcao.jpg", label: "Recepção, letras metálicas sobre carvão", group: "Espaço" },
+      { src: "/clients/aloha/aplicacoes/02-toalhas.jpg", label: "Toalhas, bordado tom sobre tom", group: "Clube e objetos" },
+      { src: "/clients/aloha/aplicacoes/03-camiseta.jpg", label: "Camiseta", group: "Clube e objetos" },
+      { src: "/clients/aloha/aplicacoes/04-cartao-membro.jpg", label: "Cartão de membro do clube", group: "Clube e objetos" },
+      { src: "/clients/aloha/aplicacoes/06-ecobag-garrafa.jpg", label: "Ecobag e garrafa", group: "Clube e objetos" },
+      { src: "/clients/aloha/aplicacoes/post-01.jpg", label: "Uma hora só sua", group: "Posts" },
+      { src: "/clients/aloha/aplicacoes/post-02.jpg", label: "Seu corpo trabalha a semana inteira", group: "Posts" },
+      { src: "/clients/aloha/aplicacoes/post-03.jpg", label: "Saia melhor do que entrou", group: "Posts" },
+      { src: "/clients/aloha/fotografia/01-corredora-ceu.jpg", label: "Depois da corrida: câmera no chão, céu chapado", group: "Direção fotográfica" },
+      { src: "/clients/aloha/fotografia/02-alongamento.jpg", label: "Alongamento: fundo sálvia, luz de estúdio", group: "Direção fotográfica" },
+      { src: "/clients/aloha/fotografia/03-botas-compressao.jpg", label: "Botas de compressão: fundo ocre", group: "Direção fotográfica" },
+      { src: "/clients/aloha/fotografia/04-massagem.jpg", label: "Massagem: mãos de quem sabe", group: "Direção fotográfica" },
+      { src: "/clients/aloha/fotografia/05-grupo-clube.jpg", label: "O clube: pertencer", group: "Direção fotográfica" },
+      { src: "/clients/aloha/fotografia/06-sauna-amigas.jpg", label: "Sauna: o círculo social", group: "Direção fotográfica" },
     ],
     essence: {
       lead: "A Aloha ocupa o recovery, e o trabalho daqui para frente é expandir o que essa palavra significa: um recovery que já contém bem-estar, saúde mental e autocuidado, para qualquer pessoa com um pé em movimento.",
