@@ -78,6 +78,8 @@ export interface HubSupport {
   pattern?: string;
   tiles?: string[];
   photos?: HubPhoto[];
+  /** pacote para baixar (zip com SVG + PNG) */
+  download?: { href: string; label: string };
 }
 /** Publicação de rede social: post único ou carrossel (várias imagens). */
 export interface HubPost { images: string[]; caption?: string; label?: string; }
@@ -1450,6 +1452,53 @@ const CASA_CAMPO: ClientBrand = {
       { role: "Textos, subtítulos e títulos de seção", family: "Montserrat", sample: "E a casa da maior coleção de cactos da América Latina.", cssFamily: "Montserrat", weights: ["Light 300", "Regular 400", "Medium 500", "SemiBold 600", "ExtraBold 800 Itálico (campanhas)"], usage: "Texto corrido em Regular. Títulos de seção e cartões em SemiBold com tracking negativo. Rótulos em Medium, caixa-alta e espaçamento largo (como o PARQUE do logo).", download: "/clients/casa-campo/fontes/casa-campo-fonte-montserrat.zip" },
       { role: "Editorial (convites, cartas, apresentações)", family: "Cormorant", sample: "Temos a honra de convidar Vossa Senhoria.", cssFamily: "Cormorant", weights: ["Regular 400", "Medium 500", "Itálico"], usage: "Texto corrido de convites e cartas, em itálico nas saudações e fechos. Na web, usar Cormorant e não Cormorant Garamond, que desloca o acento circunflexo no Chrome.", download: "/clients/casa-campo/fontes/casa-campo-fonte-cormorant.zip" },
       { role: "Assinatura manuscrita (só em convites e cartas do fundador)", family: "Pinyon Script", sample: "Zouhair Haidar", cssFamily: "Pinyon Script", usage: "Apenas para o nome de quem assina. Nunca em títulos ou chamadas.", download: "/clients/casa-campo/fontes/casa-campo-fonte-pinyon-script.zip" },
+    ],
+    support: [
+      {
+        name: "Padrão do diamante",
+        title: "O símbolo vira textura",
+        paragraphs: [
+          "O padrão repete o diamante oficial, no mesmo desenho do logo, em grade alternada com pequenas sementes. Não é um diamante parecido: é o símbolo da marca, por isso funciona como assinatura mesmo quando o logo não aparece.",
+          "Há duas famílias. A de diamantes é mais sóbria e serve de fundo para qualquer peça. A de jardim alterna o diamante com o cacto e a alstroemeria e entra quando a peça fala do parque e das flores.",
+          "Use sempre em duas cores da paleta, com bastante respiro. O latão sobre petróleo fica para peças especiais e impressas, como o convite.",
+        ],
+        uses: ["Fundo de posts e stories", "Papel de seda e embalagens", "Verso de cartões e convites", "Ecobag e souvenirs", "Tapumes e muros da obra", "Capas de apresentação"],
+        pattern: "/clients/casa-campo/apoio/padroes/padrao-diamantes-salvia-sobre-petroleo-faixa.png",
+        tiles: ["salvia-sobre-petroleo", "latao-sobre-petroleo", "petroleo-sobre-gelo", "petroleo-sobre-salvia"].map((c) => `/clients/casa-campo/apoio/padroes/padrao-diamantes-${c}.png`).concat(["petroleo-sobre-gelo", "gelo-sobre-petroleo"].map((c) => `/clients/casa-campo/apoio/padroes/padrao-jardim-${c}.png`)),
+        download: { href: "/clients/casa-campo/apoio/casa-campo-padroes.zip", label: "Baixar padrões (SVG, módulo e PNG)" },
+      },
+      {
+        name: "Ícones dos jardins",
+        title: "Um ícone para cada jardim",
+        paragraphs: [
+          "Cada jardim temático ganha um ícone, em traço único e grosso, com pontas arredondadas, o mesmo espírito do traço do diamante. Servem para placas, mapa do parque, site e destaques do Instagram.",
+          "Primeira leva: Jardim Japonês, das Águas, das Rosas, Rochoso, Francês, do Sol, do Marinheiro, Tropical e a Ponte do Suspiro. Os demais jardins entram na mesma linha conforme forem abrindo.",
+        ],
+        uses: ["Placas e totens de sinalização", "Mapa do parque", "Destaques do Instagram", "Site e link na bio", "Guia do visitante"],
+        tiles: ["jardim-japones", "jardim-das-aguas", "jardim-das-rosas", "jardim-rochoso", "jardim-frances", "jardim-do-sol", "jardim-do-marinheiro", "jardim-tropical", "ponte-do-suspiro"].map((n) => `/clients/casa-campo/apoio/icones/icone-${n}.png`),
+        download: { href: "/clients/casa-campo/apoio/casa-campo-icones.zip", label: "Baixar ícones (SVG e PNG transparente)" },
+      },
+      {
+        name: "Ilustrações botânicas",
+        title: "As plantas da casa, em dois registros",
+        paragraphs: [
+          "Em traço, as ilustrações acompanham a elegância do convite e das peças editoriais: cacto colunar, cacto bola, agave, alstroemeria, rosa e lótus. Em cor chapada, com a paleta inteira, trazem alegria para redes sociais, loja e souvenirs.",
+          "As espécies foram escolhidas pelo que o parque tem de mais forte: a coleção de cactos da América Latina, as flores dos jardins e a água. Use uma ou duas por peça, nunca como estampa cheia; para estampa, use o padrão.",
+        ],
+        uses: ["Posts e stories", "Cardápio da cafeteria", "Etiquetas da loja de plantas", "Souvenirs, canecas e ecobags", "Convites e cartões"],
+        pattern: "/clients/casa-campo/apoio/padroes/padrao-jardim-petroleo-sobre-gelo-faixa.png",
+        tiles: ["botanica-cacto-colunar", "botanica-cacto-bola", "botanica-agave", "botanica-alstroemeria", "botanica-rosa", "botanica-lotus", "ilustracao-cacto-florido", "ilustracao-alstroemeria", "ilustracao-rosa", "ilustracao-agave"].map((n) => `/clients/casa-campo/apoio/botanicas/${n}.png`),
+        download: { href: "/clients/casa-campo/apoio/casa-campo-botanicas.zip", label: "Baixar ilustrações (SVG e PNG transparente)" },
+      },
+      {
+        name: "Vinhetas",
+        paragraphs: [
+          "Divisórias finas com um motivo botânico ao centro: a flor de cacto, o botão de alstroemeria e os ramos. Separam blocos de texto em convites, cardápios, apresentações e no site, sempre centralizadas e em uma cor só.",
+        ],
+        uses: ["Convites e cartas", "Cardápios", "Apresentações", "Site"],
+        tiles: ["flor-de-cacto", "botao", "ramos"].map((n) => `/clients/casa-campo/apoio/vinhetas/vinheta-${n}.png`),
+        download: { href: "/clients/casa-campo/apoio/casa-campo-vinhetas.zip", label: "Baixar vinhetas (SVG e PNG transparente)" },
+      },
     ],
     essence: {
       lead: "Um dia que vira memória: parque, eventos e hospedagem somados numa experiência de excelência em meio à natureza, ao lado de quem se ama.",

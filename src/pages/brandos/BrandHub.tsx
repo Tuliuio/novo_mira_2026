@@ -569,6 +569,9 @@ function Support({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string,
             {s.uses && s.uses.length > 0 && (
               <ul className="story-points">{s.uses.map((u) => <li key={u}>{u}</li>)}</ul>
             )}
+            {s.download && (
+              <div style={{ marginTop: 18 }}><a className="btn btn-gold" href={s.download.href} download>↓ {s.download.label}</a></div>
+            )}
           </div>
           {s.tiles && s.tiles.length > 0 && (
             <>
