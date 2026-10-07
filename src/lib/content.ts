@@ -1378,18 +1378,36 @@ const CASA_CAMPO_LOGO_COLORS = [
   { slug: "ambar", name: "Assinatura em âmbar", role: "Acento sobre fundos claros", pad: "#f5f6f5" },
   { slug: "rosa", name: "Assinatura em rosa", role: "Acento sobre fundos claros", pad: "#f5f6f5" },
 ];
+/* Selos e avatares (07/out): quadrado 1080 px com fundo cheio, para o
+   recorte circular de WhatsApp e Instagram não cortar a marca. A assinatura
+   cabe inteira num círculo de 72% do lado; o diamante ocupa 40% da altura.
+   O selo redondo repete o adesivo do convite (disco + anel duplo). */
+const CASA_CAMPO_SEAL_COLORS = [
+  { slug: "branco-sobre-petroleo", name: "Branco sobre petróleo", role: "Versão principal dos perfis", pad: "#0e3e4a" },
+  { slug: "latao-sobre-petroleo", name: "Latão sobre petróleo", role: "A mesma do selo do convite, ocasiões especiais", pad: "#0e3e4a" },
+  { slug: "petroleo-sobre-salvia", name: "Petróleo sobre sálvia", role: "Jardins e natureza", pad: "#8fbf97" },
+  { slug: "petroleo-sobre-gelo", name: "Petróleo sobre branco-gelo", role: "Fundos claros", pad: "#f5f6f5" },
+  { slug: "petroleo-sobre-ambar", name: "Petróleo sobre âmbar", role: "Datas e campanhas quentes", pad: "#eda656" },
+  { slug: "petroleo-sobre-rosa", name: "Petróleo sobre rosa", role: "Flores e afeto", pad: "#ff7da2" },
+];
+const casaCampoLogo = (group: string, prefix: string, c: { slug: string; name: string; role: string; pad: string }): HubLogo => ({
+  group, name: c.name, role: c.role, pad: c.pad,
+  src: `/clients/casa-campo/logos/${prefix}${c.slug}.png`,
+  file: `${prefix}${c.slug}.png`,
+  svg: `/clients/casa-campo/logos/svg/${prefix}${c.slug}.svg`,
+});
 const CASA_CAMPO_LOGOS: HubLogo[] = [
-  { group: "Horizontal", prefix: "casa-campo-" },
-  { group: "Empilhada", prefix: "casa-campo-empilhada-" },
-  { group: "Compacta (duas linhas)", prefix: "casa-campo-compacta-" },
-].flatMap(({ group, prefix }) =>
-  CASA_CAMPO_LOGO_COLORS.map((c) => ({
-    group, name: c.name, role: c.role, pad: c.pad,
-    src: `/clients/casa-campo/logos/${prefix}${c.slug}.png`,
-    file: `${prefix}${c.slug}.png`,
-    svg: `/clients/casa-campo/logos/svg/${prefix}${c.slug}.svg`,
-  })),
-);
+  ...[
+    { group: "Horizontal", prefix: "casa-campo-" },
+    { group: "Empilhada", prefix: "casa-campo-empilhada-" },
+    { group: "Compacta (duas linhas)", prefix: "casa-campo-compacta-" },
+  ].flatMap(({ group, prefix }) => CASA_CAMPO_LOGO_COLORS.map((c) => casaCampoLogo(group, prefix, c))),
+  ...[
+    { group: "Avatar de perfil (WhatsApp, Instagram, Google): assinatura com margem de recorte", prefix: "casa-campo-avatar-compacta-" },
+    { group: "Selo só com o diamante (avatar, ícone, favicon)", prefix: "casa-campo-selo-diamante-" },
+    { group: "Selo redondo só com o diamante (adesivo, lacre, carimbo), fundo transparente", prefix: "casa-campo-selo-redondo-" },
+  ].flatMap(({ group, prefix }) => CASA_CAMPO_SEAL_COLORS.map((c) => casaCampoLogo(group, prefix, c))),
+];
 
 const CASA_CAMPO: ClientBrand = {
   slug: "casa-campo",
@@ -1398,7 +1416,7 @@ const CASA_CAMPO: ClientBrand = {
   accent: "#0e3e4a",
   hub: {
     year: "2026",
-    since: "Abertura do parque em novembro de 2026",
+    since: "Convidados em 21/11/2026, público em 22/11/2026",
     drive: { assets: "https://drive.google.com/drive/folders/1lW4i7MR1CyH8LQB2tvyB6HB77Jw_lY-n" },
     conceptDeck: "/clients/casa-campo/conceito-visual.pdf",
     logos: CASA_CAMPO_LOGOS,
@@ -1414,6 +1432,7 @@ const CASA_CAMPO: ClientBrand = {
       { name: "Âmbar", hex: "#eda656", role: "Calor e acolhimento, o pôr do sol" },
       { name: "Rosa", hex: "#e65b7c", role: "Flor e afeto, acento" },
       { name: "Branco-gelo", hex: "#f5f6f5", role: "Respiro e fundos claros" },
+      { name: "Latão (acabamento)", hex: "#c9a66b", role: "Só em peças especiais e impressas (convite, selo, lacre), como se fosse metal. Não substitui o âmbar no digital" },
     ],
     pairings: [
       { bg: "#0e3e4a", fg: "#f5f6f5", label: "Petróleo + Branco-gelo" },
@@ -1425,12 +1444,13 @@ const CASA_CAMPO: ClientBrand = {
     type: [
       { role: "Assinatura", family: "Lettering exclusivo (desenhado para a marca)", sample: "Casa Campo" },
       { role: "Apoio e títulos de campanha", family: "Montserrat (SemiBold no logo; Light e ExtraBold Itálico nas peças)", sample: "Venha visitar o maior parque de flores de Santa Catarina.", cssFamily: "Montserrat" },
-      { role: "Editorial (convites, cartas, apresentações)", family: "Cormorant Garamond", sample: "Algumas raridades merecem ser vistas de perto.", cssFamily: "Cormorant Garamond" },
+      { role: "Editorial (convites, cartas, apresentações)", family: "Cormorant (na web, preferir Cormorant à Cormorant Garamond, que desloca o acento circunflexo no Chrome)", sample: "Temos a honra de convidar Vossa Senhoria.", cssFamily: "Cormorant", usage: "Texto corrido de convites e cartas, em itálico nas saudações e fechos. Pareada com Montserrat Medium em caixa-alta espaçada para rótulos (CONVITE, datas, RSVP)." },
+      { role: "Assinatura manuscrita (só em convites e cartas do fundador)", family: "Pinyon Script", sample: "Zouhair Haidar", cssFamily: "Pinyon Script", usage: "Apenas para o nome de quem assina. Nunca em títulos ou chamadas." },
     ],
     essence: {
       lead: "Um dia que vira memória: parque, eventos e hospedagem somados numa experiência de excelência em meio à natureza, ao lado de quem se ama.",
       proposito: "Reunir jardins temáticos, eventos e hospedagem sob uma só marca-mãe — o Parque Casa Campo — dando à experiência a potência de um grande parque, à altura da região de Balneário Camboriú.",
-      posicionamento: "Ocupar a categoria de parque: 60 mil m² com jardins temáticos e a maior coleção de cactos do Brasil, somando eventos (mais de 20 anos, 2 mil realizados) e hospedagem dentro do próprio parque — combinação que nenhum concorrente da região tem.",
+      posicionamento: "Ocupar a categoria de parque: 60 mil m² de natureza, com jardins temáticos e a maior coleção de cactos da América Latina, somando eventos e hospedagens dentro do próprio parque, combinação que nenhum concorrente da região tem. Desde out/2026, o cliente descreve essa soma como um ecossistema de lazer e entretenimento: o descritor explica o que o parque reúne, e o nome da categoria continua sendo parque.",
       quote: "Aqui não tem fim.",
       atributos: ["Deslumbrante", "Natural", "Impecável", "Surpreendente", "Inesquecível", "Estruturada", "Bem servida", "Acolhedora"],
     },
@@ -1558,15 +1578,26 @@ const CASA_CAMPO: ClientBrand = {
             "Essência definida, o próximo passo é transformar tudo isso em narrativa e expressão.",
           ],
         },
+        {
+          heading: "13 · Atualizações de outubro de 2026",
+          paragraphs: [
+            "Este capítulo registra decisões tomadas pelo cliente depois da Essência v3. Onde houver conflito com os capítulos anteriores, vale o que está aqui.",
+            "Ecossistema de lazer e entretenimento. No convite da inauguração, o cliente escolheu descrever o Parque Casa Campo como \"um ecossistema de lazer e entretenimento\". A decisão não estava mapeada na estratégia, mas é acatada e cabe nela sem atrito: o termo nomeia a soma (parque, eventos, hospedagens, cafeteria, playground e o que ainda vem), que já era o diferencial mais forte da marca. A diferença para o \"complexo multifuncional\", descartado no capítulo 11, está na ordem: a categoria continua sendo parque, e o ecossistema vem depois do nome, como descritor. Forma correta: \"o Parque Casa Campo, um ecossistema de lazer e entretenimento\". Forma a evitar: \"o ecossistema Casa Campo\". Entretenimento, aqui, quer dizer programação, eventos, gastronomia e convivência, nunca adrenalina ou brinquedos de estímulo, que seguem fora do território da marca.",
+            "Onde usar o descritor: textos institucionais e formais (convites, cartas, apresentações a autoridades e parceiros, imprensa, rodapés de site). Na comunicação com o visitante (redes, outdoors, anúncios), o eixo segue sendo \"um dia que vira memória\" e a categoria parque.",
+            "Fatos atualizados. Abertura para convidados no sábado, 21/11/2026, e ao público no domingo, 22/11/2026. A coleção de cactos passa a ser \"a maior da América Latina\". Nos eventos, não usar \"mais de 20 anos\" nem \"2 mil eventos\" (eram dos antigos sócios), e usar a palavra \"privilégio\". Hospedagens: 15 prontas na abertura, sempre chamadas de hospedagens (não existem cabanas). Localização: entre Itajaí e Brusque. O mirante ainda não está pronto e não deve ser citado.",
+            "Tom cerimonioso. O convite inaugurou um registro mais formal (\"Vossa Senhoria\", \"Temos a honra\", assinatura do fundador), reservado para peças a convidados e autoridades. Ele convive com o tom acolhedor do dia a dia e não o substitui.",
+          ],
+        },
       ],
     },
     verbal: {
-      tom: "Acolhedor e seguro, com a autoridade de quem já fez 2 mil eventos. Fala como um guia que sabe que os dias bons com quem se ama passam rápido, e que o visitante deve viver o dia, não resolver problemas. Regra fixa de copy: a marca nunca usa travessão em nenhum texto.",
-      sim: ["Um dia que vira memória", "Viver o dia, não resolver problemas", "O parque à sua porta", "Jardins temáticos e a maior coleção de cactos do Brasil", "Não precisar ir embora"],
-      nao: ["Complexo multifuncional (termo vazio, não nomeia categoria)", "Mais uma atração", "Experiência gastronômica premium (lugar-comum da região)", "Adrenalina, parque de aventura", "Travessão em qualquer texto"],
+      tom: "Acolhedor e seguro, com a autoridade de quem pôs de pé um parque desse tamanho. Fala como um guia que sabe que os dias bons com quem se ama passam rápido, e que o visitante deve viver o dia, não resolver problemas. Regra fixa de copy: a marca nunca usa travessão em nenhum texto. Em peças formais (convites, cartas, autoridades) o tom sobe para o cerimonioso, com \"Vossa Senhoria\" e \"privilégio\", sem perder o afeto.",
+      sim: ["Um dia que vira memória", "Viver o dia, não resolver problemas", "O parque à sua porta", "Jardins temáticos e a maior coleção de cactos da América Latina", "Não precisar ir embora", "Parque Casa Campo, um ecossistema de lazer e entretenimento (o descritor vem depois do nome)", "Será um privilégio receber você (eventos e convites)", "Hospedagens", "Entre Itajaí e Brusque"],
+      nao: ["Complexo multifuncional (termo vazio, não nomeia categoria)", "Ecossistema no lugar de parque (\"o ecossistema Casa Campo\"): o nome da categoria é sempre parque", "Entretenimento no sentido de adrenalina, brinquedos e atrações de estímulo", "Mais de 20 anos, 2 mil eventos (eram dos antigos sócios, sem comprovação)", "Cabanas (não existem; dizer hospedagens)", "Mirante (ainda não está pronto)", "Mais uma atração", "Experiência gastronômica premium (lugar-comum da região)", "Adrenalina, parque de aventura", "Travessão em qualquer texto"],
       examples: [
         { sim: "Um dia comum vira memória. Venha para o Parque Casa Campo.", nao: "Complexo multifuncional de lazer com experiências premium em meio à natureza." },
         { sim: "Durma dentro do parque. É só não ir embora.", nao: "Hospedagem exclusiva com infraestrutura de padrão internacional." },
+        { sim: "O Parque Casa Campo, um ecossistema de lazer e entretenimento com espaços para eventos, hospedagens, cafeteria e playground.", nao: "O ecossistema Casa Campo de entretenimento chegou para trazer adrenalina à região." },
       ],
     },
     photos: [
@@ -1598,8 +1629,11 @@ const CASA_CAMPO: ClientBrand = {
       { src: "/clients/casa-campo/campanha/outdoor-09-arte-painel.jpg", label: "Arte do painel, com o logo novo aplicado", group: "Campanha — Outdoors BR-101" },
       { src: "/clients/casa-campo/campanha/aerea-masterplan-diamante.jpg", label: "Vista aérea: os caminhos do jardim desenham o diamante", group: "Campanha — Sinalização" },
       { src: "/clients/casa-campo/campanha/familia-tv-comercial.jpg", label: "Família assistindo o comercial, com Seu Zouhair na tela", group: "Campanha — Filme e TV" },
-      { src: "/clients/casa-campo/campanha/convite-abertura-digital.jpg", label: "Convite digital: o cacto dentro do diamante, uma raridade para ver de perto", group: "Abertura oficial · 14/11/2026" },
-      { src: "/clients/casa-campo/campanha/convite-abertura-carta.jpg", label: "Carta-convite impressa para autoridades e personalidades", group: "Abertura oficial · 14/11/2026" },
+      { src: "/clients/casa-campo/campanha/convite-abertura-digital.jpg", label: "Convite digital (v2): o cacto dentro do diamante, uma raridade para ver de perto", group: "Abertura para convidados · 21/11/2026" },
+      { src: "/clients/casa-campo/campanha/convite-abertura-carta.jpg", label: "Carta-convite impressa (v2, substituída pela v4)", group: "Abertura para convidados · 21/11/2026" },
+      { src: "/clients/casa-campo/campanha/convite-v4-carta.jpg", label: "Convite impresso v4, versão final aprovada: cartão 130 x 190 mm, Cormorant, latão e assinatura do fundador", group: "Abertura para convidados · 21/11/2026", fit: "contain", pad: "#f5f0e6" },
+      { src: "/clients/casa-campo/campanha/convite-v4-envelope-selo.jpg", label: "Envelope verde-musgo com o selo só do diamante, em latão sobre petróleo", group: "Abertura para convidados · 21/11/2026" },
+      { src: "/clients/casa-campo/campanha/convite-v4-envelope.jpg", label: "Alternativa de selo, com a assinatura compacta", group: "Abertura para convidados · 21/11/2026" },
     ],
     narratives: [
       {
@@ -1635,7 +1669,7 @@ const CASA_CAMPO: ClientBrand = {
             heading: "03 · O guia",
             paragraphs: [
               "Empatia: “sabemos que os dias bons com quem você ama passam rápido, e que você quer que alguns deles fiquem para sempre”.",
-              "Autoridade, a soma como prova: parque, eventos e hospedagem no mesmo lugar, uma combinação que ninguém na região tem. 11 mil m² de jardins temáticos assinados por Beto Amaral. A maior coleção de cactos do Brasil. Mais de 20 anos e 2 mil eventos. Nota 5,0 no Google. A 15 minutos da BR-101.",
+              "Autoridade, a soma como prova: parque, eventos e hospedagem no mesmo lugar, uma combinação que ninguém na região tem. 11 mil m² de jardins temáticos assinados por Beto Amaral. A maior coleção de cactos da América Latina. Eventos com nota 5,0 no Google. Hospedagens dentro do parque. Entre Itajaí e Brusque, a 15 minutos da BR-101.",
             ],
           },
           {
@@ -1701,13 +1735,13 @@ const CASA_CAMPO: ClientBrand = {
             heading: "03 · O guia",
             paragraphs: [
               "Empatia: “sabemos que é um dia que não se repete, e que você quer viver cada minuto dele, não resolver problemas”.",
-              "Autoridade: mais de 20 anos e 2 mil eventos realizados. Quatro espaços com identidade própria, de 80 a 500 pessoas, cada um com cozinha própria. Capela para cerimônias. Buffet, equipe completa e estacionamento interno. Nota 5,0. E o que ninguém na região tem: os jardins do parque como cenário e hospedagem para os convidados no mesmo lugar.",
+              "Autoridade: quatro espaços com identidade própria, de 80 a 500 pessoas, cada um com cozinha própria. Capela para cerimônias. Buffet, equipe completa e estacionamento interno. Nota 5,0. E o que ninguém na região tem: os jardins do parque como cenário e hospedagem para os convidados no mesmo lugar.",
             ],
           },
           {
             heading: "04 · O plano",
             paragraphs: [
-              "Processo: visite e escolha o espaço, conheça o lugar e o cenário — a visita costuma fechar a decisão. Deixe com a equipe: buffet, serviço, cerimônia e cada detalhe com quem já fez isso 2 mil vezes. Viva o dia: celebre sem preocupação, com os convidados no parque e hospedagem ali mesmo.",
+              "Processo: visite e escolha o espaço, conheça o lugar e o cenário — a visita costuma fechar a decisão. Deixe com a equipe: buffet, serviço, cerimônia e cada detalhe com uma equipe que vive de fazer isso dar certo. Viva o dia: celebre sem preocupação, com os convidados no parque e hospedagem ali mesmo.",
               "Acordo (promessas): um cenário que nenhum outro espaço da região tem. Equipe que cuida de tudo. Convidados que podem dormir no parque.",
             ],
           },
@@ -1732,7 +1766,7 @@ const CASA_CAMPO: ClientBrand = {
             ],
           },
         ],
-        closing: "Todo grande momento merece um lugar à altura. Na Casa Campo você celebra entre jardins, com uma equipe de mais de 2 mil eventos cuidando de tudo e hospedagem para os convidados no mesmo lugar, para viver o dia em vez de resolver problemas.",
+        closing: "Todo grande momento merece um lugar à altura. Na Casa Campo você celebra entre jardins, com uma equipe dedicada cuidando de tudo e hospedagem para os convidados no mesmo lugar, para viver o dia em vez de resolver problemas.",
       },
       {
         slug: "hospedagem",
@@ -1767,13 +1801,13 @@ const CASA_CAMPO: ClientBrand = {
             heading: "03 · O guia",
             paragraphs: [
               "Empatia: “sabemos que o melhor de um lugar assim é não precisar ir embora”.",
-              "Autoridade: casas e cabanas planejadas para conforto, privacidade e bem-estar em meio à natureza, dentro do próprio parque. Atendem noivos, convidados e visitantes. Em expansão: 20 unidades em 2026, 50 até 2027 e 100 em 2028.",
+              "Autoridade: hospedagens planejadas para conforto, privacidade e bem-estar em meio à natureza, dentro do próprio parque. Atendem noivos, convidados e visitantes. Em expansão: 15 prontas na abertura, 50 até 2027 e 100 em 2028.",
             ],
           },
           {
             heading: "04 · O plano",
             paragraphs: [
-              "Processo: reserve sua casa ou cabana, escolha a data e a unidade. Durma dentro do parque, com privacidade e natureza ao redor. Acorde sem pressa, com o parque à sua porta, no seu tempo.",
+              "Processo: reserve sua hospedagem, escolha a data e a unidade. Durma dentro do parque, com privacidade e natureza ao redor. Acorde sem pressa, com o parque à sua porta, no seu tempo.",
               "Acordo (promessas): privacidade e silêncio. Natureza ao redor. O parque à sua porta.",
             ],
           },
@@ -1781,7 +1815,7 @@ const CASA_CAMPO: ClientBrand = {
             heading: "05 · A ação",
             paragraphs: [
               "Direta: reserve sua estadia.",
-              "Transicional: veja as casas e cabanas, consulte datas, combine com sua visita ao parque.",
+              "Transicional: veja as hospedagens, consulte datas, combine com sua visita ao parque.",
             ],
           },
           {
@@ -1798,7 +1832,7 @@ const CASA_CAMPO: ClientBrand = {
             ],
           },
         ],
-        closing: "O melhor de um lugar assim é não precisar ir embora. Na Casa Campo, casas e cabanas dentro do parque deixam você dormir cercado de natureza, com privacidade e bem-estar, e acordar com o parque à sua porta.",
+        closing: "O melhor de um lugar assim é não precisar ir embora. No Parque Casa Campo, as hospedagens dentro do parque deixam você dormir cercado de natureza, com privacidade e bem-estar, e acordar com o parque à sua porta.",
       },
     ],
   },
