@@ -397,7 +397,12 @@
 .bh .support-pattern img { display: block; width: 100%; height: auto; }
 .bh .support-pattern .photo-dl { opacity: 1; }
 .bh .support-text h3 { margin: 0 0 14px; font-size: clamp(22px, 3vw, 30px); letter-spacing: -.02em; }
-.bh .support-text .story-points { flex-direction: row; flex-wrap: wrap; margin-top: 18px; }
+.bh .support-text { display: grid; grid-template-columns: minmax(0, 66ch) minmax(260px, 1fr); gap: 56px; align-items: start; }
+.bh .support-text .prose p { max-width: none; }
+.bh .support-side { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; padding-top: 6px; }
+.bh .support-side-label { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: -6px; }
+.bh .support-text .story-points { flex-direction: row; flex-wrap: wrap; }
+@media (max-width: 860px) { .bh .support-text { grid-template-columns: 1fr; gap: 22px; } }
 .bh .tile-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; }
 .bh .tile { padding: 0; border: none; background: none; cursor: pointer; border-radius: 6px; overflow: hidden; transition: transform .18s; }
 .bh .tile:hover { transform: translateY(-3px); }

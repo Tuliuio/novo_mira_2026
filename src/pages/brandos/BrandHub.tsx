@@ -564,13 +564,22 @@ function Support({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string,
             </figure>
           )}
           <div className="support-text reveal">
-            {s.title && <h3>{s.title}</h3>}
-            <div className="prose">{s.paragraphs.map((p, i) => <p key={i}>{p}</p>)}</div>
-            {s.uses && s.uses.length > 0 && (
-              <ul className="story-points">{s.uses.map((u) => <li key={u}>{u}</li>)}</ul>
-            )}
-            {s.download && (
-              <div style={{ marginTop: 18 }}><a className="btn btn-gold" href={s.download.href} download>↓ {s.download.label}</a></div>
+            <div className="support-main">
+              {s.title && <h3>{s.title}</h3>}
+              <div className="prose">{s.paragraphs.map((p, i) => <p key={i}>{p}</p>)}</div>
+            </div>
+            {((s.uses && s.uses.length > 0) || s.download) && (
+              <div className="support-side">
+                {s.uses && s.uses.length > 0 && (
+                  <>
+                    <div className="support-side-label">Onde usar</div>
+                    <ul className="story-points">{s.uses.map((u) => <li key={u}>{u}</li>)}</ul>
+                  </>
+                )}
+                {s.download && (
+                  <a className="btn btn-gold" href={s.download.href} download>↓ {s.download.label}</a>
+                )}
+              </div>
             )}
           </div>
           {s.tiles && s.tiles.length > 0 && (
