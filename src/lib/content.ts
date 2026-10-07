@@ -66,6 +66,8 @@ export interface HubType {
   /** amostra renderizada como imagem (máscara) — p/ fontes que não podem ser publicadas como arquivo */
   sampleImg?: { src: string; w: number; h: number };
   pangramImg?: { src: string; w: number; h: number };
+  /** arquivo da família para baixar (zip com TTF + licença) */
+  download?: string;
 }
 /** Elemento de apoio (ex.: ladrilhos) — texto, peças soltas, padrão montado e aplicações. */
 export interface HubSupport {
@@ -1419,6 +1421,7 @@ const CASA_CAMPO: ClientBrand = {
     since: "Convidados em 21/11/2026, público em 22/11/2026",
     drive: { assets: "https://drive.google.com/drive/folders/1lW4i7MR1CyH8LQB2tvyB6HB77Jw_lY-n" },
     conceptDeck: "/clients/casa-campo/conceito-visual.pdf",
+    fontsUrl: "/clients/casa-campo/fontes/casa-campo-fontes.zip",
     logos: CASA_CAMPO_LOGOS,
     rebrand: {
       before: { name: "Identidade anterior (pré-Mira)", role: "Diamante de linha fina, tipografia condensada", src: "/clients/casa-campo/logo-01.jpg", file: "casa-campo-antes.jpg", pad: "#0e3e4a" },
@@ -1442,10 +1445,11 @@ const CASA_CAMPO: ClientBrand = {
       { bg: "#0e3e4a", fg: "#eda656", label: "Petróleo + Âmbar" },
     ],
     type: [
-      { role: "Assinatura", family: "Lettering exclusivo (desenhado para a marca)", sample: "Casa Campo" },
-      { role: "Apoio e títulos de campanha", family: "Montserrat (SemiBold no logo; Light e ExtraBold Itálico nas peças)", sample: "Venha visitar o maior parque de flores de Santa Catarina.", cssFamily: "Montserrat" },
-      { role: "Editorial (convites, cartas, apresentações)", family: "Cormorant (na web, preferir Cormorant à Cormorant Garamond, que desloca o acento circunflexo no Chrome)", sample: "Temos a honra de convidar Vossa Senhoria.", cssFamily: "Cormorant", usage: "Texto corrido de convites e cartas, em itálico nas saudações e fechos. Pareada com Montserrat Medium em caixa-alta espaçada para rótulos (CONVITE, datas, RSVP)." },
-      { role: "Assinatura manuscrita (só em convites e cartas do fundador)", family: "Pinyon Script", sample: "Zouhair Haidar", cssFamily: "Pinyon Script", usage: "Apenas para o nome de quem assina. Nunca em títulos ou chamadas." },
+      { role: "Assinatura", family: "Lettering exclusivo (desenhado para a marca)", sample: "Casa Campo", usage: "Não é fonte: CASA CAMPO é desenhado à mão. Use sempre os arquivos de logo." },
+      { role: "Títulos de campanha e do site", family: "Playfair Display", sample: "Em breve, o lançamento do maior parque de flores de Santa Catarina.", cssFamily: "Playfair Display", sampleWeight: 500, weights: ["Medium 500 (padrão)", "Medium Itálico para o destaque"], usage: "Fonte de título desde o site e o carrossel de abertura (out/2026). Medium com tracking levemente negativo (-0,02em). A palavra de destaque vai em itálico, na cor âmbar sobre petróleo. Só em títulos: nunca em texto corrido.", download: "/clients/casa-campo/fontes/casa-campo-fonte-playfair-display.zip" },
+      { role: "Textos, subtítulos e títulos de seção", family: "Montserrat", sample: "E a casa da maior coleção de cactos da América Latina.", cssFamily: "Montserrat", weights: ["Light 300", "Regular 400", "Medium 500", "SemiBold 600", "ExtraBold 800 Itálico (campanhas)"], usage: "Texto corrido em Regular. Títulos de seção e cartões em SemiBold com tracking negativo. Rótulos em Medium, caixa-alta e espaçamento largo (como o PARQUE do logo).", download: "/clients/casa-campo/fontes/casa-campo-fonte-montserrat.zip" },
+      { role: "Editorial (convites, cartas, apresentações)", family: "Cormorant", sample: "Temos a honra de convidar Vossa Senhoria.", cssFamily: "Cormorant", weights: ["Regular 400", "Medium 500", "Itálico"], usage: "Texto corrido de convites e cartas, em itálico nas saudações e fechos. Na web, usar Cormorant e não Cormorant Garamond, que desloca o acento circunflexo no Chrome.", download: "/clients/casa-campo/fontes/casa-campo-fonte-cormorant.zip" },
+      { role: "Assinatura manuscrita (só em convites e cartas do fundador)", family: "Pinyon Script", sample: "Zouhair Haidar", cssFamily: "Pinyon Script", usage: "Apenas para o nome de quem assina. Nunca em títulos ou chamadas.", download: "/clients/casa-campo/fontes/casa-campo-fonte-pinyon-script.zip" },
     ],
     essence: {
       lead: "Um dia que vira memória: parque, eventos e hospedagem somados numa experiência de excelência em meio à natureza, ao lado de quem se ama.",

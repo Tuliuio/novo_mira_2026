@@ -389,6 +389,7 @@
 .bh .type-usage { margin: 0; color: var(--text); max-width: 68ch; font-size: 14.5px; line-height: 1.6; }
 .bh .type-weights { color: var(--muted); font-size: 12.5px; }
 .bh .type-weights span { font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: 11px; margin-right: 10px; color: var(--text); }
+.bh .type-dl { margin-top: 14px; }
 
 /* Elementos de apoio */
 .bh .support-item .grp-label:first-child { margin-top: 0; }

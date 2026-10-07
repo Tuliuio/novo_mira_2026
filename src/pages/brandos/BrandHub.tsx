@@ -515,6 +515,9 @@ function Typography({ hub }: { hub: HubBrand }) {
                   {t.weights && <div className="type-weights"><span>Pesos</span>{t.weights.join(" · ")}</div>}
                 </div>
               )}
+              {t.download && (
+                <div className="type-dl"><a className="btn" href={t.download} download>↓ Baixar {t.family}</a></div>
+              )}
             </div>
           ))}
         </div>
