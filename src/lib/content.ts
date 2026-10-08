@@ -1660,6 +1660,17 @@ const CASA_CAMPO: ClientBrand = {
       { src: "/clients/casa-campo/fotografia/portao.jpg", label: "O portão do parque, em obras", group: "Bastidores" },
       { src: "/clients/casa-campo/fotografia/jardim-obra.jpg", label: "Plantio dos jardins temáticos", group: "Bastidores" },
       { src: "/clients/casa-campo/fotografia/canteiro.jpg", label: "Abrindo caminho, canteiro a canteiro", group: "Bastidores" },
+      /* Campanha de abertura: outdoors BR-101 no sistema publicitário (peça 10 aprovada em 07/10/2026; 11 a 14 em aprovação) */
+      { src: "/clients/casa-campo/campanha/outdoor-10-abertura-maior-parque-flores-mockup.jpg", label: "Outdoor 10: \"O maior parque de flores de Santa Catarina\", abertura 22/11", group: "Campanha de abertura · Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-10-abertura-maior-parque-flores-arte.jpg", label: "Outdoor 10, arte 9 x 3 m", group: "Campanha de abertura · Outdoors BR-101", fit: "contain", pad: "#0e3e4a" },
+      { src: "/clients/casa-campo/campanha/outdoor-11-maior-colecao-cactos-mockup.jpg", label: "Outdoor 11: \"A maior coleção de cactos da América Latina\"", group: "Campanha de abertura · Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-11-maior-colecao-cactos-arte.jpg", label: "Outdoor 11, arte 9 x 3 m", group: "Campanha de abertura · Outdoors BR-101", fit: "contain", pad: "#0e3e4a" },
+      { src: "/clients/casa-campo/campanha/outdoor-12-inauguracao-diamante-mockup.jpg", label: "Outdoor 12: inauguração, o cacto dentro do diamante. \"Abrimos as portas em 22 de novembro\"", group: "Campanha de abertura · Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-12-inauguracao-diamante-arte.jpg", label: "Outdoor 12, arte 9 x 3 m", group: "Campanha de abertura · Outdoors BR-101", fit: "contain", pad: "#0e3e4a" },
+      { src: "/clients/casa-campo/campanha/outdoor-13-zouhair-bem-vindo-mockup.jpg", label: "Outdoor 13: Seu Zouhair, \"Um jardim é a forma mais bonita de dizer bem-vindo\"", group: "Campanha de abertura · Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-13-zouhair-bem-vindo-arte.jpg", label: "Outdoor 13, arte 9 x 3 m", group: "Campanha de abertura · Outdoors BR-101", fit: "contain", pad: "#0e3e4a" },
+      { src: "/clients/casa-campo/campanha/outdoor-14-voce-chegou-mockup.jpg", label: "Outdoor 14: placa de acesso, \"Você chegou\"", group: "Campanha de abertura · Outdoors BR-101" },
+      { src: "/clients/casa-campo/campanha/outdoor-14-voce-chegou-arte.jpg", label: "Outdoor 14, arte 9 x 3 m", group: "Campanha de abertura · Outdoors BR-101", fit: "contain", pad: "#0e3e4a" },
       /* Campanha — conceitos visuais gerados com IA (símbolo do diamante),
          ainda não são peças de produção real; servem para guiar a Expressão. */
       { src: "/clients/casa-campo/campanha/portao-entrada.jpg", label: "Portão de entrada", group: "Campanha — Sinalização" },
