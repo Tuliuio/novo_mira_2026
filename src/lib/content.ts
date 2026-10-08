@@ -1671,6 +1671,9 @@ const CASA_CAMPO: ClientBrand = {
       { src: "/clients/casa-campo/campanha/outdoor-13-zouhair-bem-vindo-arte.jpg", label: "Outdoor 13, arte 9 x 3 m", group: "Campanha de abertura · Outdoors BR-101", fit: "contain", pad: "#0e3e4a" },
       { src: "/clients/casa-campo/campanha/outdoor-14-voce-chegou-mockup.jpg", label: "Outdoor 14: placa de acesso, \"Você chegou\"", group: "Campanha de abertura · Outdoors BR-101" },
       { src: "/clients/casa-campo/campanha/outdoor-14-voce-chegou-arte.jpg", label: "Outdoor 14, arte 9 x 3 m", group: "Campanha de abertura · Outdoors BR-101", fit: "contain", pad: "#0e3e4a" },
+      /* Sinalização interna v2 (aprovada em 07/10/2026): preto fosco + latão + iconografia dos Elementos de apoio */
+      { src: "/clients/casa-campo/campanha/sinalizacao-01-totem-direcional-jardim.jpg", label: "Totem direcional preto fosco, diamante vazado no topo e ícones dos jardins em latão; ao lado, a lâmina baixa de entrada do Jardim das Rosas", group: "Sinalização interna · preto e latão" },
+      { src: "/clients/casa-campo/campanha/sinalizacao-02-iconografia-latao.jpg", label: "Base da sinalização: iconografia e logo em latão #c9a66b sobre preto", group: "Sinalização interna · preto e latão", fit: "contain", pad: "#0b0b0b" },
       /* Campanha — conceitos visuais gerados com IA (símbolo do diamante),
          ainda não são peças de produção real; servem para guiar a Expressão. */
       { src: "/clients/casa-campo/campanha/portao-entrada.jpg", label: "Portão de entrada", group: "Campanha — Sinalização" },
