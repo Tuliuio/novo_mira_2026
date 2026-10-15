@@ -662,6 +662,46 @@ export const DEMO_CLIENT: ClientBrand = {
   },
 };
 
+/* Kit vetorial (14/out): gerado do .ai original, cores oficiais. PNG + SVG por versão. */
+const CDM_PADS: Record<string, string> = { vermelho: "var(--c1)", bordo: "var(--c2)", creme: "var(--c3)", branco: "#ffffff", preto: "#19191a", caramelo: "#a07244" };
+const CDM_VERSOES: { slug: string; name: string; role: string; pad?: string }[] = [
+  { slug: "branco-fundo-vermelho", name: "Positiva sobre vermelho", role: "Versão principal" },
+  { slug: "vermelho-fundo-branco", name: "Vermelho sobre branco", role: "Fundos claros" },
+  { slug: "vermelho-fundo-creme", name: "Vermelho sobre creme", role: "Peças de tradição" },
+  { slug: "branco-fundo-bordo", name: "Branco sobre bordô", role: "Uso sóbrio" },
+  { slug: "branco-fundo-caramelo", name: "Branco sobre caramelo", role: "Peças em tom de terra" },
+  { slug: "creme-fundo-vermelho", name: "Creme sobre vermelho", role: "Variação suave sobre o vermelho" },
+  { slug: "branco-fundo-preto", name: "Branco sobre preto", role: "Fundos escuros" },
+  { slug: "preto-fundo-branco", name: "Preto sobre branco", role: "Impressão em uma cor" },
+  { slug: "vermelho", name: "Vermelho, fundo transparente", role: "Sobre fotos e fundos claros", pad: "#ffffff" },
+  { slug: "branco", name: "Branco, fundo transparente", role: "Sobre fotos e fundos escuros", pad: "var(--c1)" },
+  { slug: "creme", name: "Creme, fundo transparente", role: "Sobre vermelho e bordô", pad: "var(--c2)" },
+  { slug: "preto", name: "Preto, fundo transparente", role: "Carimbo, gravação e uma cor", pad: "var(--c3)" },
+];
+const CDM_FAMILIAS = [
+  { prefix: "assinatura", group: "Assinatura (selo completo)" },
+  { prefix: "simplificada", group: "Versão simplificada (espaços estreitos e tamanhos pequenos)" },
+  { prefix: "simbolo", group: "Símbolo (avatar, ícone, carimbo)" },
+];
+const CDM_EXISTE: Record<string, string[]> = {
+  assinatura: ["branco-fundo-vermelho", "vermelho-fundo-branco", "vermelho-fundo-creme", "branco-fundo-bordo", "branco-fundo-caramelo", "branco-fundo-preto", "preto-fundo-branco", "vermelho", "branco", "preto"],
+  simplificada: ["branco-fundo-vermelho", "vermelho-fundo-branco", "vermelho-fundo-creme", "creme-fundo-vermelho", "branco-fundo-preto", "preto-fundo-branco", "vermelho", "branco", "creme", "preto"],
+  simbolo: ["branco-fundo-vermelho", "vermelho-fundo-branco", "vermelho-fundo-creme", "creme-fundo-vermelho", "branco-fundo-preto", "preto-fundo-branco", "vermelho", "branco", "creme", "preto"],
+};
+const CRUZ_DE_MALTA_LOGOS: HubLogo[] = CDM_FAMILIAS.flatMap(({ prefix, group }) =>
+  CDM_VERSOES.filter((v) => CDM_EXISTE[prefix].includes(v.slug)).map((v) => {
+    const nome = `cruz-de-malta-${prefix}-${v.slug}`;
+    const fundo = v.slug.split("-fundo-")[1];
+    return {
+      group, name: v.name, role: v.role,
+      pad: v.pad ?? CDM_PADS[fundo],
+      src: `/clients/cruz-de-malta/logos/${nome}.png`,
+      file: `${nome}.png`,
+      svg: `/clients/cruz-de-malta/logos/svg/${nome}.svg`,
+    };
+  }),
+);
+
 /* ------------------------------------------------------------------ *
  * Cliente — Cruz de Malta (Restaurante · Pelotas/RS · 60 anos)
  * Essência extraída de "Cruz de Malta – Essência de Marca (v2)" (Drive).
@@ -681,12 +721,7 @@ export const CRUZ_DE_MALTA: ClientBrand = {
       expressao: "https://drive.google.com/drive/folders/1vmNRp891cFr4xx25i4_f_j8vua02B8eU",
     },
     brandbook: "https://drive.google.com/file/d/1k-LIns2b6glB9AmibZn_8ZSaJOOW9kOu/view",
-    logos: [
-      { name: "Assinatura principal", role: "Positiva sobre vermelho", src: "/clients/cruz-de-malta/logo-02.png", file: "cruz-de-malta-principal.png", drive: "https://drive.google.com/file/d/1o9NtFtu25cT_fdzQxvh1l1ZCnpjmrX7p/view", pad: "var(--c1)" },
-      { name: "Vermelho sobre branco", role: "Fundos claros", src: "/clients/cruz-de-malta/logo-01.png", file: "cruz-de-malta-vermelho.png", drive: "https://drive.google.com/file/d/1mub_QSel8s7k0r2Ct3WAW3UTczwhiDxM/view", pad: "#ffffff" },
-      { name: "Sobre creme", role: "Peças de tradição", src: "/clients/cruz-de-malta/logo-03.png", file: "cruz-de-malta-creme.png", drive: "https://drive.google.com/file/d/1CmSEVGo1-OcA5guaNKYzgiiEPeEZdGuS/view", pad: "var(--c3)" },
-      { name: "Branco sobre bordô", role: "Uso sóbrio", src: "/clients/cruz-de-malta/logo-04.png", file: "cruz-de-malta-bordo.png", drive: "https://drive.google.com/file/d/1jKgYnnbgoHozdskD7jErK91_71WcK1yu/view", pad: "var(--c2)" },
-    ],
+    logos: CRUZ_DE_MALTA_LOGOS,
     logoStory: {
       paragraphs: [
         "O logo do Cruz de Malta atravessou décadas sem nunca ter sido documentado: cada placa, cardápio e embalagem saía de um jeito. O redesenho não troca a marca que Pelotas conhece. Mantém o vermelho, a cruz e o nome, ajusta o que precisava de cuidado e organiza tudo num padrão que se sustenta pelos próximos anos.",
