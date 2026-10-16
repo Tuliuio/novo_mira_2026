@@ -49,7 +49,7 @@ export interface BrandPage {
  * É o "BRAND" do hub interativo, agora por cliente. Trocar de cliente =
  * preencher isto. RGB/CMYK e contraste são calculados no render.
  * ------------------------------------------------------------------ */
-export interface HubLogo { name: string; role: string; src: string; file: string; drive?: string; pad: string; /** versão vetorial (SVG) — botão de download ao lado do PNG */ svg?: string; /** agrupa versões na seção Logos (ex.: "Horizontal", "Empilhada") */ group?: string; }
+export interface HubLogo { name: string; role: string; src: string; file: string; drive?: string; pad: string; /** cor do traço do logo (ponto bicolor no slider de variações) */ ink?: string; /** versão vetorial (SVG) — botão de download ao lado do PNG */ svg?: string; /** agrupa versões na seção Logos (ex.: "Horizontal", "Empilhada") */ group?: string; }
 export interface HubColor { name: string; hex: string; role?: string; /** CMYK oficial (do brandbook); se ausente, é calculado do hex */ cmyk?: string; }
 export interface HubPair { bg: string; fg: string; label: string; }
 export interface HubType {
@@ -1429,8 +1429,10 @@ const CASA_CAMPO_SEAL_COLORS = [
   { slug: "petroleo-sobre-ambar", name: "Petróleo sobre âmbar", role: "Datas e campanhas quentes", pad: "#eda656" },
   { slug: "petroleo-sobre-rosa", name: "Petróleo sobre rosa", role: "Flores e afeto", pad: "#ff7da2" },
 ];
+const casaCampoInk = (slug: string) =>
+  slug.startsWith("branco") ? "#f5f6f5" : slug.startsWith("latao") ? "#c9a66b" : slug === "ambar" ? "#eda656" : slug === "rosa" ? "#e65b7c" : "#0e3e4a";
 const casaCampoLogo = (group: string, prefix: string, c: { slug: string; name: string; role: string; pad: string }): HubLogo => ({
-  group, name: c.name, role: c.role, pad: c.pad,
+  group, name: c.name, role: c.role, pad: c.pad, ink: casaCampoInk(c.slug),
   src: `/clients/casa-campo/logos/${prefix}${c.slug}.png`,
   file: `${prefix}${c.slug}.png`,
   svg: `/clients/casa-campo/logos/svg/${prefix}${c.slug}.svg`,

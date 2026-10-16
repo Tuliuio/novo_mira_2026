@@ -105,7 +105,7 @@
 
 /* Antes/depois — slider de rebranding no Hero */
 .bh .ba { margin: 32px 0 8px; }
-.bh .ba-frame { position: relative; width: 100%; border-radius: var(--radius-card); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); cursor: ew-resize; touch-action: none; user-select: none; }
+.bh .ba-frame { position: relative; width: 100%; border-radius: var(--radius-card); overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); cursor: ew-resize; user-select: none; }
 .bh .ba-side { position: absolute; inset: 0; display: grid; place-items: center; padding: min(8vw, 68px); }
 .bh .ba-side img { width: min(520px, 78%); height: auto; display: block; pointer-events: none; }
 .bh .ba-line { position: absolute; top: 0; bottom: 0; width: 0; transform: translateX(-50%); pointer-events: none; }
@@ -410,3 +410,143 @@
 @media (max-width: 760px) { .bh .tile-grid { grid-template-columns: repeat(4, 1fr); } }
 .bh .logo-story .prose p, .bh .support-text .prose p { margin: 0 0 14px; line-height: 1.65; }
 .bh .logo-story .prose p:last-child, .bh .support-text .prose p:last-child { margin-bottom: 0; }
+
+/* ===================================================================
+ * Slider (scroll-snap) — logos por estrutura, fotos, e cores/fontes
+ * no celular. Encurta a página sem esconder nada.
+ * =================================================================== */
+.bh .slider { position: relative; }
+.bh .slider-track {
+  display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  margin: 0 -24px; padding: 2px 24px 4px; scroll-padding-left: 24px;
+}
+.bh .slider-track::-webkit-scrollbar { display: none; }
+.bh .slide { flex: 0 0 auto; scroll-snap-align: start; display: flex; }
+.bh .slide > * { flex: 1; min-width: 0; }
+.bh .slider-ui { display: flex; align-items: center; gap: 14px; margin-top: 14px; }
+.bh .slider-dots { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; flex: 1; min-width: 0; }
+/* área de toque de 28px, ponto visual menor */
+.bh .sd { position: relative; width: 8px; height: 8px; padding: 0; border: none; border-radius: 99px; background: var(--border-strong); cursor: pointer; transition: width .2s, background .2s; }
+.bh .sd::after { content: ""; position: absolute; inset: -10px -4px; }
+.bh .sd.on { width: 22px; background: var(--text); }
+.bh .sd.colored { width: 16px; height: 16px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 0 0 1px var(--border); }
+.bh .sd.colored.on { width: 16px; box-shadow: 0 0 0 2px var(--hub-bg), 0 0 0 4px var(--text); }
+.bh .slider-count { color: var(--muted); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.bh .slider-arrows { display: flex; gap: 6px; }
+.bh .sa { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; font: inherit; font-size: 20px; line-height: 1; color: var(--text); background: var(--surface); border: 1px solid var(--border-strong); transition: background .16s, opacity .16s; }
+.bh .sa:hover:not(:disabled) { background: var(--surface-2); }
+.bh .sa:disabled { opacity: .3; cursor: default; }
+@media (hover: none) { .bh .slider-arrows { display: none; } }
+@media (prefers-reduced-motion: reduce) { .bh .slider-track { scroll-behavior: auto; } }
+
+/* Larguras dos slides por tipo */
+.bh .slider-logos .slide { width: calc((100% - 48px - 28px) / 2.15); }
+.bh .slider-photos .slide { width: clamp(240px, 38%, 340px); }
+.bh .logo-group + .logo-group .grp-label { margin-top: 44px; }
+.bh .grp-count { margin-left: 10px; padding: 3px 9px; border-radius: 99px; border: 1px solid var(--border); font-size: 10.5px; letter-spacing: .08em; color: var(--muted); }
+.bh .logo-card { display: flex; flex-direction: column; }
+.bh .logo-card .logo-meta { flex: 1; }
+.bh .photo-carousel { display: none; } /* legado: substituído pelo .slider */
+
+/* Cores e fontes: grade/lista no desktop, slider no celular */
+@media (min-width: 721px) {
+  .bh .slider-mobile .slider-track { display: grid; overflow: visible; margin: 0; padding: 0; gap: 18px; scroll-snap-type: none; }
+  .bh .slider-mobile .slide { width: auto; }
+  .bh .slider-mobile .slider-ui { display: none; }
+  .bh .slider-colors .slider-track { grid-template-columns: repeat(3, 1fr); }
+  .bh .slider-type .slider-track { grid-template-columns: 1fr; }
+}
+
+/* ===================================================================
+ * Otimização mobile (≤720px)
+ * =================================================================== */
+.bh .top-actions { display: none; }
+@media (max-width: 720px) {
+  .bh .wrap { padding: 0 16px; }
+  .bh .slider-track { margin: 0 -16px; padding-left: 16px; padding-right: 16px; scroll-padding-left: 16px; }
+
+  /* Header em duas linhas: marca + ações em cima, menu com a largura toda embaixo */
+  .bh .hub-top { flex-wrap: wrap; row-gap: 8px; padding: 10px 16px 12px; background: color-mix(in srgb, var(--hub-bg) 94%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .bh .brandmark { order: 1; flex: 1 1 auto; }
+  .bh .top-actions { order: 2; display: flex; gap: 2px; margin-right: -8px; }
+  .bh .nav { order: 3; flex: 1 1 100%; padding: 4px; }
+  .bh .nav > .icon-btn, .bh .nav .spacer { display: none; }
+  .bh .nav-scroll { flex: 1; -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); padding-right: 24px; }
+  .bh .nav a, .bh .nav .nav-btn { padding: 9px 13px; font-size: 13px; }
+  .bh .nav-menu { left: 4px !important; right: 4px; min-width: 0; }
+  .bh .nav-menu a { padding: 13px 14px; }
+  .bh section { scroll-margin-top: 112px; }
+
+  /* Slides ocupam quase a tela, com o próximo aparecendo na borda */
+  .bh .slider-logos .slide, .bh .slider-photos .slide, .bh .slider-mobile .slide { width: 84%; }
+  .bh .slider-type .slide { width: 88%; }
+
+  /* Cards de logo: nome em cima, botões embaixo com a largura toda */
+  .bh .logo-vis { padding: 22px; }
+  .bh .logo-meta { flex-direction: column; align-items: stretch; gap: 12px; padding: 14px 16px 16px; }
+  .bh .logo-dl .btn { flex: 1; justify-content: center; padding: 10px 14px; }
+
+  /* Antes/depois: quadro mais alto e logo inteiro (antes cortava "CASAC") */
+  .bh .ba-frame { aspect-ratio: 4 / 3 !important; }
+  .bh .ba-side { padding: 28px 18px; }
+  .bh .ba-side img { width: 86%; max-height: 100%; object-fit: contain; }
+  .bh .ba-cap { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .bh .ba-arrow { transform: rotate(90deg); }
+
+  /* Cores: dica de copiar sempre visível (não há hover no toque) */
+  .bh .chipcolor { height: 150px; }
+  .bh .copyhint { opacity: 1; place-items: end start; padding: 12px; }
+  .bh .copyhint span { font-size: 10px; padding: 5px 10px; }
+
+  /* Fontes */
+  .bh .type-card { padding: 22px 18px; }
+  .bh .type-role { font-size: 11px; letter-spacing: .1em; }
+  .bh .type-sample { font-size: 28px; }
+  .bh .type-pangram { font-size: 13px; }
+  .bh .type-dl .btn { width: 100%; justify-content: center; padding: 11px 14px; }
+
+  /* Botões principais com área de toque confortável */
+  .bh .btn { padding: 10px 16px; font-size: 13px; }
+  .bh .btn-gold { white-space: normal; text-align: center; justify-content: center; }
+  .bh .support-side { align-items: stretch; }
+  .bh .ai-actions .btn { flex: 1 1 100%; justify-content: center; }
+  .bh pre.ai-preview { max-height: 240px; font-size: 11.5px; }
+
+  /* Narrativa / Expressão */
+  .bh .narr-card { padding: 22px 18px; }
+  .bh .vb-isnot-h span, .bh .vb-isnot-r span { padding: 10px 12px; font-size: 14px; }
+  .bh .vb-manifesto { padding: 20px 18px; }
+
+  /* Ref rápida: botão flutuante no canto, sem cobrir o texto */
+  .bh .qr-tab { top: auto; bottom: calc(16px + env(safe-area-inset-bottom)); right: 16px; writing-mode: horizontal-tb; display: inline-flex; align-items: center; gap: 8px; padding: 11px 15px; border-radius: 99px; font-size: 10.5px; letter-spacing: .12em; box-shadow: 0 10px 30px -10px rgba(0,0,0,.6); }
+  .bh .qr { width: 100vw; border-left: none; }
+  .bh .qr-row { padding: 10px 0; }
+  .bh .toast { bottom: calc(76px + env(safe-area-inset-bottom)); max-width: calc(100vw - 32px); }
+  .bh footer { padding-bottom: 96px; }
+
+  /* Leitor: barra não estoura com Anterior/Próximo/Ver apresentação */
+  .bh .reader-bar { flex-wrap: wrap; }
+  .bh .reader-nav { flex-wrap: wrap; }
+
+  /* Lightbox: botões maiores para o polegar */
+  .bh .lb-btn { width: 48px; height: 48px; }
+  .bh .lb-bar { gap: 10px; }
+}
+.bh .qr-tab-dots { display: none; }
+@media (max-width: 720px) {
+  .bh .qr-tab-dots { display: inline-flex; }
+  .bh .qr-tab-dots i { width: 10px; height: 10px; border-radius: 50%; margin-left: -3px; box-shadow: 0 0 0 1.5px var(--text); }
+  .bh .qr-tab-dots i:first-child { margin-left: 0; }
+}
+/* Toque: o antes/depois não pode travar o scroll vertical da página */
+.bh .ba-frame { touch-action: pan-y; }
+
+/* "Ler mais" dos textos de apoio — só no celular */
+.bh .more-btn { display: none; }
+@media (max-width: 720px) {
+  .bh .prose.clamp:not(.open) { max-height: 9.9em; overflow: hidden; -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
+  .bh .more-btn { display: inline-flex; margin-top: 10px; padding: 8px 0; background: none; border: none; color: var(--gold); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+  .bh .slider-photos .slide { width: 74%; }
+  .bh #aplicacoes .grp-label, .bh #apoio .grp-label { margin: 26px 0 12px; }
+}

@@ -32,9 +32,12 @@ export function BeforeAfterSlider({
     const onUp = () => setDragging(false);
     window.addEventListener("pointermove", onMove);
     window.addEventListener("pointerup", onUp);
+    // no toque, um gesto vertical vira scroll da página e cancela o arraste
+    window.addEventListener("pointercancel", onUp);
     return () => {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerup", onUp);
+      window.removeEventListener("pointercancel", onUp);
     };
   }, [dragging, setFromClientX]);
 

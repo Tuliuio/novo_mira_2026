@@ -5,6 +5,7 @@ import { DEMO_CLIENT, getClient, type ClientBrand, type HubBrand, type HubArticl
 import { hexToRgb, rgbToCmyk, contrastRatio, copyText } from "@/lib/color";
 import { Logo } from "@/components/Logo";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
+import { Slider } from "@/components/Slider";
 import "./brand-hub.css";
 
 function colorLine(c: HubBrand["colors"][number]): string {
@@ -259,6 +260,16 @@ export function BrandHub() {
     return () => document.removeEventListener("pointerdown", onDown);
   }, [visualMenu]);
 
+  /* No celular a pílula rola: mantém o item ativo à vista */
+  useEffect(() => {
+    const nav = navRef.current?.querySelector(".nav-scroll");
+    const el = nav?.querySelector<HTMLElement>(".active");
+    if (!nav || !el) return;
+    const n = nav as HTMLElement;
+    const left = el.offsetLeft - n.offsetLeft - 12;
+    if (left < n.scrollLeft || el.offsetLeft - n.offsetLeft + el.offsetWidth > n.scrollLeft + n.clientWidth) n.scrollTo({ left, behavior: "smooth" });
+  }, [active]);
+
   function toggleVisualMenu(btn: HTMLElement) {
     if (visualMenu) { setVisualMenu(null); return; }
     const nav = navRef.current;
@@ -324,6 +335,19 @@ export function BrandHub() {
           </button>
         </nav>
         <span className="client-tag"><b>{client.name}</b> · Brand System</span>
+        {/* No celular os ícones saem da pílula e o menu ganha a largura toda */}
+        <div className="top-actions">
+          <button className="icon-btn" onClick={toggleTheme} aria-label="Alternar tema">
+            {theme === "light" ? (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" /></svg>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="4.5" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19" /></svg>
+            )}
+          </button>
+          <button className="icon-btn" onClick={handleLogout} aria-label="Sair">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><path d="m16 17 5-5-5-5" /><path d="M21 12H9" /></svg>
+          </button>
+        </div>
       </header>
 
       <main className="wrap">
@@ -351,7 +375,10 @@ export function BrandHub() {
       </footer>
 
       {/* Quick Ref */}
-      <button className="qr-tab" onClick={() => setDrawer(true)} aria-expanded={drawer}>Ref rápida</button>
+      <button className="qr-tab" onClick={() => setDrawer(true)} aria-expanded={drawer} aria-label="Abrir referência rápida">
+        <span className="qr-tab-dots" aria-hidden="true">{hub.colors.slice(0, 3).map((c) => <i key={c.hex} style={{ background: c.hex }} />)}</span>
+        <span className="qr-tab-label">Ref rápida</span>
+      </button>
       <div className={"qr-overlay" + (drawer ? " open" : "")} onClick={() => setDrawer(false)} />
       <aside className={"qr" + (drawer ? " open" : "")} aria-hidden={!drawer} aria-label="Referência rápida">
         <div className="qr-head"><h3>Referência rápida</h3><button className="icon-btn" onClick={() => setDrawer(false)} aria-label="Fechar">✕</button></div>
@@ -436,12 +463,12 @@ function Logos({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, f
       )}
       {hub.logos.length > 0 ? (
         groups.map((g) => (
-        <div key={g.name ?? "logos"}>
-        {g.name && <div className="grp-label">{g.name}</div>}
-        <div className="grid g2">
+        <div key={g.name ?? "logos"} className="logo-group reveal">
+        {g.name && <div className="grp-label">{g.name}{g.items.length > 1 && <span className="grp-count">{g.items.length} cores</span>}</div>}
+        <Slider label={g.name ?? "Logos"} className="slider-logos" dots={g.items.map((l) => (l.ink ? `linear-gradient(135deg, ${l.pad} 50%, ${l.ink} 50%)` : l.pad))}>
           {g.items.map((l) => (
-            <div className="card reveal" key={l.file}>
-              <div className="logo-vis" style={{ background: l.pad }}><img src={l.src} alt={l.name} /></div>
+            <div className="card logo-card" key={l.file}>
+              <div className="logo-vis" style={{ background: l.pad }}><img src={l.src} alt={l.name} loading="lazy" /></div>
               <div className="logo-meta">
                 <div><div className="lm-name">{l.name}</div><div className="lm-role">{l.role}</div></div>
                 <div className="logo-dl">
@@ -451,7 +478,7 @@ function Logos({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, f
               </div>
             </div>
           ))}
-        </div>
+        </Slider>
         </div>
         ))
       ) : (
@@ -470,12 +497,13 @@ function Logos({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, f
 function Colors({ hub, onCopy }: { hub: HubBrand; onCopy: (hex: string) => void }) {
   return (
     <section id="cores">
-      <SecHead eyebrow="Cores" title="Cores da marca" desc="Clique em cima da cor para copiar o seu código hexadecimal." />
-      <div className="grid g3">
+      <SecHead eyebrow="Cores" title="Cores da marca" desc="Toque na cor para copiar o seu código hexadecimal." />
+      <div className="reveal">
+      <Slider label="Cores da marca" className="slider-mobile slider-colors" dots={hub.colors.map((c) => c.hex)}>
         {hub.colors.map((c) => {
           const rgb = hexToRgb(c.hex), k = rgbToCmyk(rgb);
           return (
-            <button className="card swatch reveal" key={c.hex} onClick={() => onCopy(c.hex)} aria-label={"Copiar " + c.hex}>
+            <button className="card swatch" key={c.hex} onClick={() => onCopy(c.hex)} aria-label={"Copiar " + c.hex}>
               <div className="chipcolor" style={{ background: c.hex }}><div className="copyhint"><span>Copiar hex</span></div></div>
               <div className="sw-body">
                 <div className="sw-name">{c.name}</div>
@@ -485,6 +513,7 @@ function Colors({ hub, onCopy }: { hub: HubBrand; onCopy: (hex: string) => void 
             </button>
           );
         })}
+      </Slider>
       </div>
     </section>
   );
@@ -495,9 +524,10 @@ function Typography({ hub }: { hub: HubBrand }) {
     <section id="fontes">
       <SecHead eyebrow="Fontes" title="Fontes que sustentam a marca" />
       {hub.type && hub.type.length > 0 ? (
-        <div className="grid" style={{ gap: 18 }}>
+        <div className="reveal">
+        <Slider label="Fontes" className="slider-mobile slider-type">
           {hub.type.map((t) => (
-            <div className="card type-card reveal" key={t.role}>
+            <div className="card type-card" key={t.role}>
               <span className="type-role">{t.role} — {t.family}</span>
               {t.sampleImg ? (
                 <MaskImg img={t.sampleImg} alt={t.sample} className="type-sample-img" />
@@ -520,6 +550,7 @@ function Typography({ hub }: { hub: HubBrand }) {
               )}
             </div>
           ))}
+        </Slider>
         </div>
       ) : (
         <div className="note-card reveal"><b>Fontes em documentação.</b> {hub.typeNote}</div>
@@ -566,7 +597,7 @@ function Support({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string,
           <div className="support-text reveal">
             <div className="support-main">
               {s.title && <h3>{s.title}</h3>}
-              <div className="prose">{s.paragraphs.map((p, i) => <p key={i}>{p}</p>)}</div>
+              <ClampProse paragraphs={s.paragraphs} />
             </div>
             {((s.uses && s.uses.length > 0) || s.download) && (
               <div className="support-side">
@@ -597,20 +628,33 @@ function Support({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string,
           {s.photos && s.photos.length > 0 && (
             <>
               <div className="grp-label">Aplicados</div>
-              <div className="photo-carousel" role="group" aria-label={s.name + " aplicados"}>
+              <Slider label={s.name + " aplicados"} className="slider-photos">
                 {s.photos.map((p) => (
-                  <figure className="photo reveal" key={p.src}>
+                  <figure className="photo" key={p.src}>
                     <img src={p.src} alt={p.label} loading="lazy" />
                     <button className="photo-dl" aria-label={"Baixar " + p.label} title="Baixar imagem" onClick={() => onDownload(p.src, photoFile(p.src))}>↓</button>
                     <figcaption className="cap">{p.label}</figcaption>
                   </figure>
                 ))}
-              </div>
+              </Slider>
             </>
           )}
         </div>
       ))}
     </section>
+  );
+}
+
+/** Texto que, no celular, mostra só o começo com "Ler mais" (no desktop vai inteiro). */
+function ClampProse({ paragraphs }: { paragraphs: string[] }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <div className={"prose clamp" + (open ? " open" : "")}>{paragraphs.map((p, i) => <p key={i}>{p}</p>)}</div>
+      {paragraphs.join(" ").length > 280 && (
+        <button className="more-btn" onClick={() => setOpen((x) => !x)} aria-expanded={open}>{open ? "Ler menos ↑" : "Ler mais ↓"}</button>
+      )}
+    </>
   );
 }
 
@@ -842,10 +886,10 @@ function InUse({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, f
           <div key={g.name}>
             {/* "Aplicações" já é o nome da seção — não repete como rótulo */}
             {g.name !== "Aplicações" && <div className="grp-label">{g.name}</div>}
-            <div className="photo-carousel" role="group" aria-label={g.name}>
+            <Slider label={g.name} className="slider-photos">
               {g.items.map((p) => (
                 <figure
-                  className={"photo zoomable reveal" + (p.fit === "contain" ? " contain" : "")}
+                  className={"photo zoomable" + (p.fit === "contain" ? " contain" : "")}
                   key={p.src}
                   style={p.pad ? { background: p.pad } : undefined}
                   role="button"
@@ -864,7 +908,7 @@ function InUse({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, f
                   <figcaption className="cap">{p.label}</figcaption>
                 </figure>
               ))}
-            </div>
+            </Slider>
           </div>
         ))
       ) : hub.applications && hub.applications.length > 0 ? (
