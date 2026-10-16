@@ -550,3 +550,9 @@
   .bh .slider-photos .slide { width: 74%; }
   .bh #aplicacoes .grp-label, .bh #apoio .grp-label { margin: 26px 0 12px; }
 }
+
+/* Logo sempre centralizado no card. No Safari do iPhone, max-width/max-height
+   em % dentro de um grid com aspect-ratio deslocava a imagem para a direita
+   e para baixo. Posicionamento absoluto + object-fit resolve em todos. */
+.bh .logo-vis { position: relative; overflow: hidden; }
+.bh .logo-vis img { position: absolute; inset: 0; margin: auto; width: 82%; height: 82%; max-width: none; max-height: none; object-fit: contain; }
