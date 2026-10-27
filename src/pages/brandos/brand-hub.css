@@ -130,6 +130,7 @@
 @media (max-width: 560px) { .bh .g3, .bh .g2 { grid-template-columns: 1fr; } }
 .bh .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); box-shadow: var(--shadow); overflow: hidden; }
 
+.bh .colors-note { max-width: 760px; margin: 0 0 26px; color: var(--muted); }
 .bh .logo-vis { aspect-ratio: 16/10; display: grid; place-items: center; padding: 26px; }
 .bh .logo-vis img { max-width: 82%; max-height: 82%; height: auto; }
 .bh .logo-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; border-top: 1px solid var(--border); }
@@ -182,6 +183,7 @@
 .bh .tag2 { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 7px 14px; font-size: 13px; font-weight: 600; }
 .bh .quote { margin: 22px 0 0; padding: 18px 22px; border-left: 3px solid var(--gold); background: var(--surface); border-radius: 0 14px 14px 0; }
 .bh .quote p { margin: 0; font-size: clamp(18px, 2.2vw, 21px); font-weight: 600; letter-spacing: -.01em; }
+.bh .quote p + p { margin-top: 14px; }
 .bh .sim-nao { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; margin-top: 8px; }
 @media (max-width: 620px) { .bh .sim-nao { grid-template-columns: 1fr; } }
 .bh .sn { border-radius: var(--radius-card); border: 1px solid var(--border); overflow: hidden; }
@@ -239,6 +241,7 @@
 .bh .reader article { margin-top: 50px; }
 .bh .reader article h2 { font-size: 12.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin: 46px 0 16px; }
 .bh .reader article h2:first-child { margin-top: 0; }
+.bh .reader article h3 { font-size: 15px; font-weight: 700; color: var(--text); margin: 28px 0 10px; }
 .bh .reader article p { font-size: 18px; line-height: 1.85; color: var(--text); margin: 0 0 20px; max-width: 100%; }
 .bh .reader .reader-closing { margin-top: 52px; padding: 22px 26px; border-left: 3px solid var(--gold); background: var(--surface); border-radius: 0 16px 16px 0; font-size: clamp(19px, 2.4vw, 23px); font-weight: 500; line-height: 1.5; letter-spacing: -.01em; }
 @media (max-width: 560px) {

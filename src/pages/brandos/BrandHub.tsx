@@ -498,6 +498,7 @@ function Colors({ hub, onCopy }: { hub: HubBrand; onCopy: (hex: string) => void 
   return (
     <section id="cores">
       <SecHead eyebrow="Cores" title="Cores da marca" desc="Toque na cor para copiar o seu código hexadecimal." />
+      {hub.colorsNote && <div className="prose colors-note reveal"><p>{hub.colorsNote}</p></div>}
       <div className="reveal">
       <Slider label="Cores da marca" className="slider-mobile slider-colors" dots={hub.colors.map((c) => c.hex)}>
         {hub.colors.map((c) => {
@@ -736,7 +737,7 @@ function ArticleReader({
                 {a.sections.map((s) => (
                   <div key={s.heading}>
                     <h2>{s.heading}</h2>
-                    {s.paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+                    {s.paragraphs.map((p, i) => (p.startsWith("## ") ? <h3 key={i}>{p.slice(3)}</h3> : <p key={i}>{p}</p>))}
                   </div>
                 ))}
               </article>
@@ -827,7 +828,7 @@ function Verbal({ hub }: { hub: HubBrand }) {
           {v.pitch && (
             <>
               <div className="grp-label">Pitch elevator</div>
-              <div className="quote"><p>{v.pitch}</p></div>
+              <div className="quote">{v.pitch.split("\n\n").map((p, i) => <p key={i}>{p}</p>)}</div>
             </>
           )}
         </div>
