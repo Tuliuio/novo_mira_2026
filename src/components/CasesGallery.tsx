@@ -102,7 +102,7 @@ export function CasesGallery() {
 
   return (
     <section id="cases" className="relative mx-auto max-w-6xl px-6 pb-12 pt-16 md:pb-20">
-      <div className="mb-10 flex md:mb-12 flex-col justify-between gap-6 md:flex-row md:items-end">
+      <div className="mb-10 md:mb-12">
         <div>
           <Eyebrow>Cases</Eyebrow>
           <h2
@@ -112,10 +112,6 @@ export function CasesGallery() {
             Universos que já ajudamos a construir.
           </h2>
         </div>
-        <p className="max-w-xs text-[15px] leading-relaxed text-stone-500">
-          Peças de marcas criadas pela Mira, da identidade às aplicações. Entre as
-          mais recentes: Casa Campo, Aloha, OKA e Cruz de Malta.
-        </p>
       </div>
       <div
         ref={rootRef}
