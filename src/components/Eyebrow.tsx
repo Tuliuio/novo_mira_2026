@@ -40,7 +40,7 @@ export function Eyebrow({
     >
       <PlanetIcon size={15} />
       <span className="h-px w-8 bg-current opacity-50" />
-      {children}
+      <span className="whitespace-nowrap">{children}</span>
     </p>
   );
 }

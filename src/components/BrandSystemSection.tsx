@@ -141,7 +141,7 @@ function BrandSystemMock() {
 /* ------------------------------------------------------------ Seção */
 export function BrandSystemSection() {
   return (
-    <section id="brand-system" className="border-t border-black/5 bg-white py-24">
+    <section id="brand-system" className="border-t border-black/5 bg-white py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-6">
         <Eyebrow>A entrega Mira</Eyebrow>
         <h2
@@ -155,7 +155,7 @@ export function BrandSystemSection() {
           um lugar vivo onde a marca inteira mora, da essência às aplicações.
         </p>
 
-        <div className="mt-14 grid items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
+        <div className="mt-10 grid items-center gap-10 md:mt-14 md:gap-12 lg:grid-cols-[1.15fr_1fr]">
           <BrandSystemMock />
           <ul className="space-y-7">
             {BENEFITS.map((b) => (
@@ -173,21 +173,24 @@ export function BrandSystemSection() {
         </div>
 
         {/* manual tradicional × Brand System */}
-        <div className="mt-20 overflow-hidden rounded-3xl border border-black/10">
-          <div className="grid grid-cols-2 bg-paper text-xs font-semibold uppercase tracking-[0.18em]">
+        <div className="mt-14 overflow-hidden rounded-3xl border border-black/10 md:mt-20">
+          <div className="hidden grid-cols-2 bg-paper text-xs font-semibold uppercase tracking-[0.18em] sm:grid">
             <p className="px-5 py-4 text-stone-400 md:px-8">Manual tradicional</p>
             <p className="border-l border-black/10 px-5 py-4 text-gold-700 md:px-8">Brand System Mira</p>
           </div>
           {COMPARE.map(([a, b]) => (
-            <div key={a} className="grid grid-cols-2 border-t border-black/5 text-[15px]">
-              <p className="px-5 py-4 text-stone-400 line-through decoration-stone-300 md:px-8">{a}</p>
-              <p className="border-l border-black/10 px-5 py-4 font-medium text-ink-900 md:px-8">{b}</p>
+            <div key={a} className="grid border-black/5 px-5 py-4 text-[15px] first-of-type:border-t-0 sm:grid-cols-2 sm:border-t sm:p-0 [&+&]:border-t">
+              <p className="text-sm text-stone-400 line-through decoration-stone-300 sm:px-5 sm:py-4 sm:text-[15px] md:px-8">{a}</p>
+              <p className="mt-1 font-medium text-ink-900 sm:mt-0 sm:border-l sm:border-black/10 sm:px-5 sm:py-4 md:px-8">
+                <span className="mr-1.5 text-accent-500 sm:hidden">✓</span>
+                {b}
+              </p>
             </div>
           ))}
         </div>
 
         {/* IA — o diferencial mais atual */}
-        <div className="relative mt-6 overflow-hidden rounded-3xl bg-ink-900 px-8 py-12 text-cream md:px-14 md:py-16">
+        <div className="relative mt-6 overflow-hidden rounded-3xl bg-ink-900 px-6 py-10 text-cream md:px-14 md:py-16">
           <div className="starfield pointer-events-none absolute inset-0 opacity-40" />
           <div className="relative grid items-center gap-10 md:grid-cols-[1.3fr_1fr]">
             <div>
@@ -204,7 +207,7 @@ export function BrandSystemSection() {
                 gerada já sai com suas cores, fontes e tom de voz.
               </p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-ink-950/70 p-5 font-mono text-[12px] leading-relaxed text-fog backdrop-blur-sm">
+            <div className="rounded-2xl border border-white/10 bg-ink-950/70 p-4 font-mono text-[11px] md:p-5 md:text-[12px] leading-relaxed text-fog backdrop-blur-sm">
               <p className="text-accent-400">marca-sua-marca-SKILL.md</p>
               <p className="mt-2">→ use sempre as cores da marca</p>
               <p>→ títulos em Sora, textos em Inter</p>

@@ -1,4 +1,5 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useAuth } from "@/lib/auth";
 import { Home } from "@/pages/Home";
 import { Login } from "@/pages/Login";
@@ -18,7 +19,34 @@ function Protected({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
+declare global {
+  interface Window {
+    dataLayer?: Record<string, unknown>[];
+  }
+}
+
+/**
+ * GTM (GTM-WF676HZ, snippet no index.html): o SPA não recarrega a página, então
+ * cada troca de rota vira um evento `virtual_page_view` no dataLayer. A 1ª
+ * carga já é coberta pelo próprio gtm.js, por isso é pulada aqui.
+ */
+function useGtmPageViews() {
+  const { pathname, search } = useLocation();
+  const path = pathname + search;
+  const last = useRef(path);
+  useEffect(() => {
+    if (last.current === path) return;
+    last.current = path;
+    (window.dataLayer = window.dataLayer || []).push({
+      event: "virtual_page_view",
+      page_path: path,
+      page_title: document.title,
+    });
+  }, [path]);
+}
+
 export function App() {
+  useGtmPageViews();
   return (
     <Routes>
       <Route path="/" element={<Home />} />

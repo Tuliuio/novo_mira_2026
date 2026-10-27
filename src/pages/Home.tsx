@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { CasesGallery } from "@/components/CasesGallery";
@@ -6,19 +5,23 @@ import { ScrollVideo } from "@/components/ScrollVideo";
 import { BrandSystemSection } from "@/components/BrandSystemSection";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Moments } from "@/components/Moments";
+import { SiteNav } from "@/components/SiteNav";
+import { SplitFlap } from "@/components/SplitFlap";
 import { METHOD, pillarItems } from "@/lib/method";
 
 export function Home() {
   return (
     <div className="min-h-screen bg-ink-900">
-      <Nav />
+      <SiteNav />
       {/* Abertura — vídeo de descida do espaço, scrubado pelo scroll */}
-      <ScrollVideo src="/descent.mp4" poster="/descent-poster.jpg" trackVh={300}>
-        <HeroContent />
-      </ScrollVideo>
+      <div id="inicio">
+        <ScrollVideo src="/descent.mp4" poster="/descent-poster.jpg" trackVh={300}>
+          <HeroContent />
+        </ScrollVideo>
+      </div>
       {/* Mundo "solo" — branco. Sobe POR CIMA do vídeo ainda travado (margem
           negativa), então os cases entram antes do vídeo terminar. */}
-      <div className="relative z-10 -mt-[130vh] bg-white text-ink-900">
+      <div id="mundo" className="relative z-10 -mt-[130vh] bg-white text-ink-900">
         {/* borda suave de emergência: o vídeo desbota no branco */}
         <div className="pointer-events-none absolute inset-x-0 -top-[20vh] h-[20vh] bg-gradient-to-b from-transparent to-white" />
         <CasesGallery />
@@ -53,38 +56,6 @@ function RocketIcon() {
   );
 }
 
-/* --------------------------------------------------------------- Nav */
-function Nav() {
-  const [light, setLight] = useState(false); // true = mundo branco (solo)
-  useEffect(() => {
-    const onScroll = () => setLight(window.scrollY > window.innerHeight * 1.7);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-        light ? "text-ink-900" : "text-cream"
-      }`}
-    >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Logo height={32} tone={light ? "dark" : "light"} />
-        <Link
-          to="/login"
-          aria-label="Área do cliente"
-          title="Área do cliente"
-          className="inline-flex items-center gap-2 rounded-full border border-current px-4 py-2 text-sm font-medium text-current opacity-90 transition-opacity hover:opacity-100"
-        >
-          <RocketIcon />
-          <span>Área do cliente</span>
-        </Link>
-      </div>
-    </header>
-  );
-}
-
 /* ------------------------------------------------- Conteúdo do reader */
 function HeroContent() {
   return (
@@ -94,10 +65,16 @@ function HeroContent() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(0,0,0,0.45),transparent_75%)]" />
       <div className="relative max-w-4xl">
         <h1
-          className="mx-auto max-w-4xl text-balance text-[2.6rem] font-bold uppercase leading-[0.95] tracking-[-0.03em] drop-shadow-[0_2px_24px_rgba(0,0,0,0.5)] sm:text-6xl md:text-7xl lg:text-[5.5rem]"
+          aria-label="Cada marca é um universo"
+          className="mx-auto max-w-4xl text-[2.6rem] uppercase leading-[0.95] tracking-[-0.03em] drop-shadow-[0_2px_24px_rgba(0,0,0,0.5)] sm:text-6xl md:text-7xl lg:text-[5.5rem]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Cada marca é um universo.
+          <span aria-hidden="true" className="block text-[1.9rem] font-light sm:text-[length:inherit]">
+            Cada marca é um
+          </span>
+          <span className="mt-1 block text-[3.3rem] font-bold sm:mt-0 sm:text-[length:inherit]">
+            <SplitFlap word="UNIVERSO" />
+          </span>
         </h1>
         <p className="mx-auto mt-8 max-w-xl text-balance text-lg text-cream/80 drop-shadow-[0_2px_16px_rgba(0,0,0,0.5)]">
           A Mira constrói marcas com método e profundidade, da essência à
@@ -129,20 +106,20 @@ function HeroContent() {
 /* ------------------------------------------------------------ Method */
 function Method() {
   return (
-    <section id="metodo" className="border-t border-black/5 bg-white py-24">
+    <section id="metodo" className="border-t border-black/5 bg-white py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-6">
         <Eyebrow>Método Mira</Eyebrow>
         <h2
-          className="mt-5 max-w-2xl text-balance text-2xl font-bold tracking-tight text-ink-900 md:text-4xl"
+          className="mt-5 max-w-2xl text-balance text-[1.7rem] font-bold leading-tight tracking-tight text-ink-900 md:text-4xl"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Três camadas para construir uma marca, da essência à expressão.
         </h2>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
+        <div className="mt-10 grid gap-4 md:mt-12 md:grid-cols-3 md:gap-5">
           {METHOD.map((p) => (
             <div
               key={p.id}
-              className="rounded-3xl border border-black/10 bg-paper p-7 shadow-sm transition-colors hover:border-accent-500/50"
+              className="rounded-3xl border border-black/10 bg-paper p-6 shadow-sm md:p-7 transition-colors hover:border-accent-500/50"
             >
               <span
                 className="text-5xl font-bold text-accent-500"
@@ -180,12 +157,12 @@ function Method() {
 /* ---------------------------------------------------------------- CTA */
 function CTA() {
   return (
-    <section id="contato" className="bg-white px-6 pb-24 pt-4">
-      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] bg-ink-900 px-8 py-16 text-center text-cream">
+    <section id="contato" className="bg-white px-4 pb-16 pt-4 sm:px-6 md:pb-24">
+      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-ink-900 px-6 py-14 text-center md:rounded-[2.5rem] md:px-8 md:py-16 text-cream">
         <div className="starfield pointer-events-none absolute inset-0 opacity-50" />
         <div className="relative">
           <Eyebrow tone="dark" center>
-            Brand Studio · Florianópolis
+            Brand Studio
           </Eyebrow>
           <h2
             className="mx-auto mt-5 max-w-2xl text-balance text-3xl font-bold tracking-tight md:text-5xl"
@@ -225,16 +202,16 @@ function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 border-t border-black/5 px-6 py-12 text-sm text-stone-500 md:flex-row md:items-end">
         <Logo height={34} tone="dark" />
         <div className="flex flex-col items-center gap-1 md:items-start">
-          <a href="https://somosmira.com.br" className="transition-colors hover:text-ink-900">
+          <a href="https://somosmira.com.br" className="py-1.5 transition-colors md:py-0 hover:text-ink-900">
             somosmira.com.br
           </a>
-          <a href="https://instagram.com/somos.mira" className="transition-colors hover:text-ink-900">
+          <a href="https://instagram.com/somos.mira" className="py-1.5 transition-colors md:py-0 hover:text-ink-900">
             @somos.mira
           </a>
           <span>Campeche · Florianópolis · BR</span>
         </div>
         <div className="flex flex-col items-center gap-1 md:items-end">
-          <Link to="/login" className="text-gold-700 transition-colors hover:text-ink-900">
+          <Link to="/login" className="py-1.5 text-gold-700 transition-colors md:py-0 hover:text-ink-900">
             Acessar Brand System →
           </Link>
           <span>© {new Date().getFullYear()} Mira Brand Studio</span>

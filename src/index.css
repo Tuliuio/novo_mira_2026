@@ -158,3 +158,21 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .bs-scroll { animation: none; }
 }
+
+/* Âncoras do menu fixo: a seção não fica escondida atrás dele */
+section[id] {
+  scroll-margin-top: 88px;
+}
+
+/* Split-flap (painel de aeroporto) — cada troca de letra "vira" a plaquinha */
+@keyframes split-flap {
+  0% { transform: rotateX(-88deg); opacity: 0.35; }
+  100% { transform: rotateX(0); opacity: 1; }
+}
+.split-flap-char {
+  transform-origin: 50% 0%;
+  animation: split-flap 0.09s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .split-flap-char { animation: none; }
+}
