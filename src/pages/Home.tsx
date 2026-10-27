@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { CasesGallery } from "@/components/CasesGallery";
 import { ScrollVideo } from "@/components/ScrollVideo";
-import { METHOD } from "@/lib/method";
+import { BrandSystemSection } from "@/components/BrandSystemSection";
+import { Eyebrow } from "@/components/Eyebrow";
+import { Moments } from "@/components/Moments";
+import { METHOD, pillarItems } from "@/lib/method";
 
 export function Home() {
   return (
@@ -19,6 +22,8 @@ export function Home() {
         {/* borda suave de emergência: o vídeo desbota no branco */}
         <div className="pointer-events-none absolute inset-x-0 -top-[20vh] h-[20vh] bg-gradient-to-b from-transparent to-white" />
         <CasesGallery />
+        <Moments />
+        <BrandSystemSection />
         <Method />
         <CTA />
       </div>
@@ -44,25 +49,6 @@ function RocketIcon() {
       <path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3 -5a9 9 0 0 0 6 -8a3 3 0 0 0 -3 -3a9 9 0 0 0 -8 6a6 6 0 0 0 -5 3" />
       <path d="M7 14a6 6 0 0 0 -3 6a6 6 0 0 0 6 -3" />
       <circle cx="15" cy="9" r="1" />
-    </svg>
-  );
-}
-
-/** Planetinha (Saturno) — igual às apresentações do Canva da Mira. */
-function PlanetIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="11" r="5.2" />
-      <ellipse cx="12" cy="11" rx="10" ry="3.1" transform="rotate(-22 12 11)" />
     </svg>
   );
 }
@@ -103,20 +89,17 @@ function Nav() {
 function HeroContent() {
   return (
     <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-cream">
-      {/* scrim sutil para legibilidade sobre o vídeo */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink-950/50 via-transparent to-ink-950/40" />
-      <div className="relative max-w-3xl">
-        <span className="inline-flex items-center gap-2 rounded-full border border-accent-500/30 bg-ink-950/40 px-4 py-1.5 text-xs font-medium tracking-wide text-accent-300 backdrop-blur-sm">
-          <span className="size-1.5 rounded-full bg-accent-500" />
-          Brand Studio · desde 2020 · +300 marcas
-        </span>
+      {/* scrim para legibilidade sobre o vídeo: escurece tudo e reforça o centro, atrás do texto */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink-950/70 via-ink-950/45 to-ink-950/65" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(0,0,0,0.45),transparent_75%)]" />
+      <div className="relative max-w-4xl">
         <h1
-          className="mx-auto mt-7 max-w-3xl text-balance text-4xl font-bold leading-[1.05] tracking-tight drop-shadow-[0_2px_24px_rgba(0,0,0,0.5)] md:text-6xl"
+          className="mx-auto max-w-4xl text-balance text-[2.6rem] font-bold uppercase leading-[0.95] tracking-[-0.03em] drop-shadow-[0_2px_24px_rgba(0,0,0,0.5)] sm:text-6xl md:text-7xl lg:text-[5.5rem]"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Cada marca é um universo.
         </h1>
-        <p className="mx-auto mt-6 max-w-xl text-balance text-lg text-cream/80 drop-shadow-[0_2px_16px_rgba(0,0,0,0.5)]">
+        <p className="mx-auto mt-8 max-w-xl text-balance text-lg text-cream/80 drop-shadow-[0_2px_16px_rgba(0,0,0,0.5)]">
           A Mira constrói marcas com método e profundidade, da essência à
           expressão, e entrega tudo isso em um Brand System digital e
           exclusivo.
@@ -135,10 +118,7 @@ function HeroContent() {
             Ver cases
           </a>
         </div>
-        <p className="mt-8 text-xs font-medium tracking-[0.15em] text-cream/60">
-          Campeche · Florianópolis · BR
-        </p>
-        <p className="mt-10 text-xs uppercase tracking-[0.3em] text-cream/50">
+        <p className="mt-12 text-xs uppercase tracking-[0.3em] text-cream/50">
           role para descer ↓
         </p>
       </div>
@@ -151,12 +131,9 @@ function Method() {
   return (
     <section id="metodo" className="border-t border-black/5 bg-white py-24">
       <div className="mx-auto max-w-6xl px-6">
-        <p className="inline-flex items-center gap-2 text-sm font-medium text-gold-700">
-          <PlanetIcon size={16} />
-          Método Mira
-        </p>
+        <Eyebrow>Método Mira</Eyebrow>
         <h2
-          className="mt-1 max-w-2xl text-balance text-2xl font-bold tracking-tight text-ink-900 md:text-4xl"
+          className="mt-5 max-w-2xl text-balance text-2xl font-bold tracking-tight text-ink-900 md:text-4xl"
           style={{ fontFamily: "var(--font-display)" }}
         >
           Três camadas para construir uma marca, da essência à expressão.
@@ -180,6 +157,18 @@ function Method() {
                 {p.label}
               </h3>
               <p className="mt-2 text-sm text-stone-500">{p.tagline}</p>
+              <ul className="mt-6 flex flex-wrap gap-1.5 border-t border-black/5 pt-5">
+                {pillarItems(p)
+                  .filter((it) => !it.optional)
+                  .map((it) => (
+                    <li
+                      key={it.id}
+                      className="rounded-full border border-black/10 bg-white px-2.5 py-1 text-xs text-stone-600"
+                    >
+                      {it.label}
+                    </li>
+                  ))}
+              </ul>
             </div>
           ))}
         </div>
@@ -195,11 +184,11 @@ function CTA() {
       <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] bg-ink-900 px-8 py-16 text-center text-cream">
         <div className="starfield pointer-events-none absolute inset-0 opacity-50" />
         <div className="relative">
-          <p className="text-sm font-medium tracking-wide text-accent-400">
-            Brand Studio · Florianópolis, Brasil
-          </p>
+          <Eyebrow tone="dark" center>
+            Brand Studio · Florianópolis
+          </Eyebrow>
           <h2
-            className="mx-auto mt-3 max-w-2xl text-balance text-3xl font-bold tracking-tight md:text-5xl"
+            className="mx-auto mt-5 max-w-2xl text-balance text-3xl font-bold tracking-tight md:text-5xl"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Vamos construir a sua marca juntos?
@@ -213,7 +202,7 @@ function CTA() {
               href="mailto:contato@somosmira.com.br?subject=Quero%20construir%20minha%20marca%20com%20a%20Mira"
               className="inline-flex items-center gap-2 rounded-full bg-accent-500 px-7 py-3 text-sm font-semibold text-ink-900 transition-transform hover:scale-[1.03]"
             >
-              Iniciar um projeto
+              Começar um projeto
               <RocketIcon />
             </a>
             <a

@@ -142,3 +142,19 @@ body {
   background-repeat: repeat;
   background-size: 320px 320px;
 }
+
+/* Mockup do Brand System na home — rola sozinho e volta; pausa no hover */
+@keyframes bs-scroll {
+  0%, 12% { transform: translateY(0); }
+  50%, 62% { transform: translateY(calc(-100% + 420px)); }
+  100% { transform: translateY(0); }
+}
+.bs-scroll {
+  animation: bs-scroll 22s ease-in-out infinite;
+}
+.bs-scroll:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bs-scroll { animation: none; }
+}
