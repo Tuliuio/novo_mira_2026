@@ -6,14 +6,15 @@ import { ArrowDot } from "@/components/SiteNav";
 const BRANDS: Record<string, string> = {
   "casa-campo": "Casa Campo",
   aloha: "Aloha",
-  oka: "OKA",
   "cruz-de-malta": "Cruz de Malta",
 };
+// OKA fora por enquanto: marca aprovada, mas o cliente ainda não divulgou
+// (imagens seguem em public/cases/new-oka-*.jpg para voltar depois).
 const RECENT: [string, number][] = [
-  ["cruz-de-malta", 1], ["aloha", 1], ["casa-campo", 1], ["oka", 1],
-  ["aloha", 2], ["cruz-de-malta", 2], ["casa-campo", 2], ["oka", 2],
-  ["casa-campo", 3], ["oka", 3], ["cruz-de-malta", 3], ["aloha", 3],
-  ["casa-campo", 4], ["aloha", 4], ["oka", 4], ["cruz-de-malta", 4],
+  ["cruz-de-malta", 1], ["aloha", 1], ["casa-campo", 1],
+  ["aloha", 2], ["cruz-de-malta", 2], ["casa-campo", 2],
+  ["cruz-de-malta", 3], ["casa-campo", 3], ["aloha", 3],
+  ["casa-campo", 4], ["aloha", 4], ["cruz-de-malta", 4],
 ];
 
 /** Imagens dos cases (em public/cases): recentes + bentos antigos da Mira. */
