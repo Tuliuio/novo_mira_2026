@@ -8,6 +8,7 @@ import { LinkBio } from "@/pages/LinkBio";
 import { Metodo } from "@/pages/Metodo";
 import { Oka } from "@/pages/Oka";
 import { Costao } from "@/pages/Costao";
+import { TriadeDomini } from "@/pages/TriadeDomini";
 import { PROFILES } from "@/lib/bio";
 import { BrandHub } from "@/pages/brandos/BrandHub";
 import type { ReactNode } from "react";
@@ -56,6 +57,8 @@ export function App() {
       <Route path="/metodo" element={<Metodo />} />
       <Route path="/oka" element={<Oka />} />
       <Route path="/propostas/costao" element={<Costao />} />
+      <Route path="/diagnosticos/triade-domini" element={<TriadeDomini />} />
+      <Route path="/propostas/triade-domini" element={<Navigate to="/diagnosticos/triade-domini" replace />} />
       {/* Atalho: /costao redireciona para a URL canônica da proposta */}
       <Route path="/costao" element={<Navigate to="/propostas/costao" replace />} />
 

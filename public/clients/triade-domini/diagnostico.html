@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Diagnóstico Tríade + Domini</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: relatório-site de leitura contínua. Vídeo abre a página; capítulos numerados (é um percurso de leitura); evidências em grades de prints. Escuro primeiro, como a identidade da Mira. */
+:root{
+  --bg:#141210; --surface:#1c1916; --raise:#25211d; --fg:#efe9e1; --muted:#a59c90; --line:#352f29;
+  --gold:#c9a45c; --sun:#e0894a; --triade:#e3c443; --domini:#e0894a;
+  --display:"Fraunces", Georgia, "Times New Roman", serif;
+  --body:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#f5f1eb; --surface:#ffffff; --raise:#ece6dd; --fg:#1f1b17; --muted:#6a6157; --line:#ddd5c9;
+  --gold:#8f6c26; --sun:#b55a1c; --triade:#8a7300; --domini:#b55a1c; color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#f5f1eb; --surface:#ffffff; --raise:#ece6dd; --fg:#1f1b17; --muted:#6a6157; --line:#ddd5c9;
+  --gold:#8f6c26; --sun:#b55a1c; --triade:#8a7300; --domini:#b55a1c; color-scheme:light}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 96px}
+main{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:88px}
+h1,h2,h3{font-family:var(--display);font-weight:500;text-wrap:balance;line-height:1.12;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(2.2rem,5.6vw,3.6rem);font-weight:300}
+h1 em{font-style:italic;color:var(--gold);font-weight:300}
+h2{font-size:clamp(1.6rem,3.4vw,2.2rem)}
+h3{font-size:1.3rem;margin:36px 0 14px}
+p{margin:0 0 14px}
+.prose{max-width:66ch}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tag{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:2px;border:1px solid currentColor;vertical-align:.25em;margin-right:8px;font-weight:500}
+.t{color:var(--triade)} .d{color:var(--domini)} .g{color:var(--gold)}
+code{font-family:var(--mono);font-size:.86em;color:var(--fg);background:var(--raise);padding:1px 5px;border-radius:2px;word-break:break-word}
+
+/* Topo */
+.masthead{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-block:28px 0;max-width:1040px;margin:0 auto 40px;border-bottom:1px solid var(--line);padding-bottom:18px}
+.signers{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.signers b{color:var(--fg);font-weight:500}
+.hero{display:flex;flex-direction:column;gap:22px}
+.lede{font-size:1.18rem;color:var(--muted);max-width:60ch;margin:0}
+
+/* Vídeo */
+.video{position:relative;width:100%;max-width:100%;aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:
+  radial-gradient(120% 90% at 85% 10%, color-mix(in srgb,var(--sun) 28%,transparent), transparent 60%),
+  radial-gradient(90% 80% at 10% 100%, color-mix(in srgb,var(--gold) 22%,transparent), transparent 60%),
+  var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--fg)}
+.video .inner{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:24px}
+.play{width:76px;height:76px;border-radius:50%;border:1.5px solid var(--gold);display:grid;place-items:center;transition:transform .25s ease, background .25s ease}
+.play svg{width:26px;height:26px;margin-left:4px;fill:var(--gold)}
+.video .cap{font-family:var(--display);font-size:1.25rem}
+.video .sub{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+a.video:hover .play,a.video:focus-visible .play{transform:scale(1.06);background:color-mix(in srgb,var(--gold) 15%,transparent)}
+a.video:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* Tese */
+.thesis{font-family:var(--display);font-weight:300;font-size:clamp(1.35rem,2.6vw,1.75rem);line-height:1.4;max-width:34em;margin:0;padding-left:22px;border-left:2px solid var(--gold)}
+
+/* Capítulos */
+.chapter{display:flex;flex-direction:column;gap:18px}
+.chapter-head{display:grid;grid-template-columns:auto 1fr;gap:6px 20px;align-items:baseline}
+.chapter-head .n{font-family:var(--display);font-size:clamp(2.4rem,5vw,3.4rem);font-weight:300;color:var(--gold);line-height:1;grid-row:span 2}
+.chapter-head .eyebrow{align-self:end}
+.chapter-head>div{min-width:0}
+
+/* Tabela */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:.92rem;line-height:1.5}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--raise)}
+tr:last-child td{border-bottom:0}
+.num{font-variant-numeric:tabular-nums}
+
+/* Achados */
+ul.findings{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:26px 40px}
+ul.findings li{padding-top:14px;border-top:1px solid var(--line);min-width:0}
+ul.findings b{display:block;font-family:var(--display);font-weight:500;font-size:1.12rem;line-height:1.3;margin-bottom:6px}
+ul.findings span{color:var(--muted);font-size:.98rem}
+
+/* Prints */
+.figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:22px;margin-top:10px}
+figure{margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}
+figure img{width:100%;max-width:100%;height:auto;border:1px solid var(--line);border-radius:3px;display:block;background:var(--surface)}
+figcaption{font-size:.86rem;color:var(--muted);line-height:1.45}
+figcaption b{color:var(--fg);font-weight:600}
+
+/* Ciclo */
+.cycle{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:2px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;counter-reset:st}
+.step{background:var(--surface);padding:20px 22px;min-width:0}
+.step .who{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+.step p{margin:8px 0 0;font-size:.97rem}
+.step .today{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:.86rem;color:var(--muted)}
+
+/* Fases */
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px}
+.phase{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:20px 22px;min-width:0}
+.phase h4{margin:6px 0 10px;font-family:var(--display);font-weight:500;font-size:1.15rem}
+.phase ol{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.phase li{display:grid;grid-template-columns:98px 1fr;gap:12px;font-size:.94rem}
+.phase li .y{font-family:var(--mono);font-size:.76rem;color:var(--muted);padding-top:3px;font-variant-numeric:tabular-nums}
+.phase li.now{color:var(--fg)} .phase li.now .y{color:var(--gold)}
+.phase li strong{font-weight:600}
+
+/* Frentes */
+.fronts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:40px}
+.fronts>div{min-width:0}
+.fronts h3{margin:0 0 6px}
+.fronts p.k{color:var(--muted);font-size:.95rem;margin-bottom:14px}
+.fronts ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.fronts li{padding-left:20px;position:relative;font-size:.97rem}
+.fronts li::before{content:"";position:absolute;left:0;top:.72em;width:9px;height:1px;background:var(--gold)}
+
+ol.q{margin:0;padding-left:0;list-style:none;counter-reset:q;display:flex;flex-direction:column;gap:14px;max-width:70ch}
+ol.q li{counter-increment:q;display:grid;grid-template-columns:2.2em 1fr;gap:8px}
+ol.q li::before{content:counter(q, decimal-leading-zero);font-family:var(--mono);font-size:.8rem;color:var(--gold);padding-top:4px}
+
+.callout{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:22px 24px;max-width:72ch}
+.callout p:last-child{margin:0}
+
+footer{border-top:1px solid var(--line);padding-top:24px;display:flex;flex-direction:column;gap:12px;font-size:.86rem;color:var(--muted)}
+footer a{color:var(--gold)}
+a{color:var(--gold)}
+a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+.layers{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px}
+.layer{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:18px 20px;min-width:0}
+.layer .lh{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.layer .st{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:2px;border:1px solid currentColor}
+.layer.ok .st{color:var(--muted)} .layer.open{border-color:var(--sun)} .layer.open .st{color:var(--sun)}
+.layer h4{font-family:var(--display);font-weight:500;font-size:1.3rem;margin:10px 0 6px}
+.layer p{margin:0;font-size:.95rem;color:var(--muted)}
+.layer.open h4{color:var(--sun)}
+</style>
+
+</head>
+<body>
+<header class="masthead">
+  <div class="signers"><b>Mira Brand Studio</b> + <b>Tuliu</b></div>
+  <div class="signers">Diagnóstico de marca e presença · Outubro 2026</div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="eyebrow">Tríade Brasil · Domini</div>
+  <h1>O que está dentro <em>ainda não aparece</em> fora.</h1>
+  <p class="lede">Um retrato de como Tríade e Domini se apresentam hoje ao mercado, lido à luz da estratégia que vocês mesmos já definiram.</p>
+</section>
+
+<section class="chapter">
+  <div class="eyebrow">A leitura em uma frase</div>
+  <p class="thesis">A arquitetura de marca existe e está clara para quem conduz o negócio. A presença pública ainda conta uma versão anterior: a Domini segue falando como "projetos de vida" de primeiro imóvel, e a Tríade aparece ao mercado quase só como imobiliária de locação. O ciclo que une as duas não é contado em lugar nenhum.</p>
+  <p class="prose" style="color:var(--muted)">Essa leitura confirma o que surgiu na nossa conversa: o pedido começou como uma apresentação comercial e logo virou "precisamos alinhar tudo".</p>
+</section>
+
+<section class="callout">
+  <div class="eyebrow" style="margin-bottom:10px">Como fizemos</div>
+  <p>Cruzamos duas fontes. A primeira é a presença pública: sites e Instagrams das duas marcas e das marcas de produto, visitados em 29 e 30 de outubro de 2026. A segunda é o material interno que vocês nos enviaram: o estudo de arquitetura de marcas, manuais, logos, apresentações e portfólios. As evidências aparecem em prints ao longo da página.</p>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="n">1</span><div class="eyebrow">Mapa de presença</div><h2>Como o ecossistema aparece hoje</h2></div>
+  <p class="prose">Sete pontos de contato, três nomes diferentes para a Tríade e nenhum canal que apresente o ecossistema inteiro.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Canal</th><th>Como se apresenta</th><th>Fala com</th><th>Observação</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag t">Tríade</span><br><code>triadebr.com.br</code></td><td>"Tríade Brasil · Inteligência Patrimonial"</td><td>Investidor, acionista</td><td>Texto denso e técnico em Soluções; só 3 projetos listados; rodapé © 2023</td></tr>
+      <tr><td><span class="tag t">Tríade</span><br><code>triadebrlocacoes.com.br</code></td><td>"Triade Brasil Gestão Imobiliária Ltda · imobiliária em Florianópolis" (sem acento, razão social no título)</td><td>Locatário comercial</td><td>Template padrão de imobiliária; CRECI em branco no rodapé</td></tr>
+      <tr><td><span class="tag t">Tríade</span><br><code>@triadebrlocacoes</code></td><td>Nome "Tríade Brasil"; bio "Inteligência Patrimonial &amp; Locações de Imóveis Comerciais"</td><td>Locatário (saúde, Ekos)</td><td class="num">57 posts · 931 seguidores. Único perfil da Tríade, e o @ diz "locações"</td></tr>
+      <tr><td><span class="tag d">Domini</span><br><code>dominiprojetosdevida.com.br</code></td><td>"Domini Projetos de Vida · seu jeito de viver"</td><td>Comprador pessoa física, genérico</td><td>Descreve a Domini fazendo a cadeia inteira, inclusive o papel da Tríade</td></tr>
+      <tr><td><span class="tag d">Domini</span><br><code>@domini_projetosdevida</code></td><td>"Construtora e incorporadora · projetos com propósito de vida"</td><td>Comprador do lançamento</td><td class="num">327 posts · 3.712 seguidores. Feed recente tomado pelo Alma Gramado</td></tr>
+      <tr><td><span class="tag g">Produto</span><br><code>almagramado.com.br</code></td><td>"Alma Gramado · A atmosfera que eleva seu viver"</td><td>Família madura, alto padrão</td><td>Linguagem já madura; hotsite próprio</td></tr>
+      <tr><td><span class="tag g">Produto</span><br><code>almamorrodaspedras.com.br</code></td><td>Alma Morro das Pedras (Florianópolis)</td><td>Lançamento em breve</td><td>Segunda praça da linha Alma</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="n">2</span><div class="eyebrow"><span class="tag d">Domini</span>Presença pública</div><h2>A marca-mãe fala a língua antiga; o produto já fala a nova</h2></div>
+  <ul class="findings">
+    <li><b>"Projetos de Vida" está gravado em tudo.</b><span>Domínio, @, assinatura do logo, título de todas as páginas, nome da seção de empreendimentos. É a herança do período de primeiro imóvel, e hoje prende o nome a um posicionamento que a empresa já deixou para trás.</span></li>
+    <li><b>Duas marcas disputando a mesma tela.</b><span>Ao abrir o site, o popup do Alma Gramado mostra uma mulher madura, preto e branco, serifa elegante, "a atmosfera que eleva seu viver". Fechado o popup, a home da Domini mostra uma jovem deitada no sofá com o script "seu jeito de viver". O produto está à frente da marca que o assina.</span></li>
+    <li><b>O site atribui à Domini o papel da Tríade.</b><span>"O que fazemos" lista Pesquisa (inovação, conceituação, viabilidade), Projetos, Incorporação, Construção e Investimento Imobiliário, com convite a investidores. Pela arquitetura de marca, pesquisa, viabilidade e captação são da Tríade. Quem lê o site da Domini não tem por que procurar a Tríade.</span></li>
+    <li><b>"Quem somos" descreve outra empresa.</b><span>Fala em trajetória desde 2002 e portfólio de franquias, hotéis, vinícolas, hipermercados e indústrias, ou seja, uma construtora prestadora de serviço. Nada sobre a incorporadora residencial de unidades maiores para famílias maduras.</span></li>
+    <li><b>Portfólio sem curadoria.</b><span>11 entregues, sendo 7 em Caxias do Sul (Trip, Sweet, Face, After, Zenith, Advance, Neville) da fase de primeiro imóvel, misturados com Ekos, SKY 405 e Oka, que são projetos comerciais e aparecem também no site da Tríade. A lista não separa fases, tipologias nem papéis, e é exatamente o material que falta quando o time vai às imobiliárias.</span></li>
+    <li><b>O Instagram virou canal do lançamento.</b><span>O feed recente é quase todo Alma Gramado, com linguagem alpina, serifada, em preto e branco, muito bem resolvida. Como peça de produto, funciona. Como perfil institucional, a Domini desaparece: nada diz quem ela é hoje, e a bio ainda repete "propósito de vida".</span></li>
+  </ul>
+  <div class="figs">
+    <figure><img src="diagnostico/site-domini-popup-alma.jpg" alt="Popup do Alma Gramado no site da Domini"><figcaption><b>Popup ao abrir o site.</b> Alma Gramado: tom maduro, alto padrão.</figcaption></figure>
+    <figure><img src="diagnostico/site-domini-home.jpg" alt="Home do site da Domini com mulher jovem no sofá"><figcaption><b>A home logo atrás.</b> "Seu jeito de viver", leitura de primeiro apartamento.</figcaption></figure>
+    <figure><img src="diagnostico/site-domini-empreendimentos.jpg" alt="Página de empreendimentos da Domini"><figcaption><b>Empreendimentos "e projetos de vida".</b> O nome antigo vira título de seção.</figcaption></figure>
+    <figure><img src="diagnostico/ig-domini-perfil.jpg" alt="Perfil do Instagram da Domini"><figcaption><b>@domini_projetosdevida.</b> Bio de construtora com "propósito de vida"; destaques misturam Alma, Ekos, Oka e LEEV.</figcaption></figure>
+    <figure><img src="diagnostico/ig-domini-feed-1.jpg" alt="Feed do Instagram da Domini"><figcaption><b>Feed recente.</b> Linguagem do Alma já no patamar que a marca-mãe precisa alcançar.</figcaption></figure>
+    <figure><img src="diagnostico/ig-domini-feed-2.jpg" alt="Feed do Instagram da Domini, mais abaixo"><figcaption><b>Mais abaixo.</b> Gramado, araucárias, público maduro. A Domini assina, mas não aparece.</figcaption></figure>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="n">3</span><div class="eyebrow"><span class="tag t">Tríade</span>Presença pública</div><h2>Ao mercado, ela parece só uma imobiliária</h2></div>
+  <ul class="findings">
+    <li><b>O único Instagram é o de locações.</b><span>O @ é <code>triadebrlocacoes</code> e o conteúdo é locação de salas (Ekos, clínicas, Summit Saúde). A Tríade que estrutura negócios, faz viabilidade, capta investidores e entrega o projeto pronto para a Domini não existe nas redes.</span></li>
+    <li><b>Três nomes para a mesma empresa.</b><span>"Tríade Brasil", "Tríade Brasil Inteligência Patrimonial" e "Triade Brasil Gestão Imobiliária Ltda", sem acento e com a razão social como título do site de locações. Para quem pesquisa, não fica claro se é uma empresa ou várias.</span></li>
+    <li><b>O site institucional é bom no texto e fraco na prova.</b><span>Soluções detalha bem as três etapas das operações estruturadas, a gestão imobiliária e a consultoria. Mas "Projetos" mostra só SKY 405, Oka e Ekos, todos no Campeche. Para abrir carteira a complexos e clientes de fora em 2027, o portfólio não sustenta o discurso.</span></li>
+    <li><b>A arquitetura de marca está escrita, mas escondida.</b><span>A página <code>/domini</code> apresenta a Domini como "expressão criativa e humana do ecossistema" e separa bem os papéis. É o melhor texto de marca de todo o ecossistema, e fica num item de menu, com meta description de uma letra ("a").</span></li>
+    <li><b>Sinais de desatualização.</b><span>© 2023 no rodapé do site institucional e CRECI vazio no rodapé do site de locações.</span></li>
+  </ul>
+  <div class="figs">
+    <figure><img src="diagnostico/ig-triade-perfil.jpg" alt="Perfil do Instagram da Tríade"><figcaption><b>@triadebrlocacoes.</b> Nome Tríade Brasil, @ de locações, 57 posts; destaques para Sky 405, Ekos e Projetos.</figcaption></figure>
+    <figure><img src="diagnostico/ig-triade-feed.jpg" alt="Feed do Instagram da Tríade"><figcaption><b>Feed.</b> Salas para clínicas no Ekos. Nenhum conteúdo sobre estruturação ou investidores.</figcaption></figure>
+    <figure><img src="diagnostico/site-triade-home.jpg" alt="Home do site da Tríade"><figcaption><b>triadebr.com.br.</b> "Inteligência Patrimonial" com discurso voltado a acionistas.</figcaption></figure>
+    <figure><img src="diagnostico/site-triade-locacoes.jpg" alt="Site de locações da Tríade"><figcaption><b>triadebrlocacoes.com.br.</b> Busca de imóveis em formato de imobiliária, com outro nome e outro tom.</figcaption></figure>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="n">4</span><div class="eyebrow">Estudo de arquitetura de marcas</div><h2>A estratégia está decidida. A expressão ainda não.</h2></div>
+  <p class="prose">O estudo "Arquitetura das marcas" (58 páginas, construído com os diretores, 9 entrevistas internas e 8 externas) responde a uma dor que vocês mesmos registraram: "não sabemos qual é a nossa marca principal". A decisão foi <b>endosso leve + cobrand, com a Domini como motor</b>. A síntese diz que não se trata de um grupo, e sim de uma estrutura única com duas marcas, em que a Tríade é a holding da qual a Domini faz parte.</p>
+  <p class="prose">O que ainda falta é tudo o que vem depois da decisão: regras de assinatura, lockups conjuntos, o que cada marca diz e mostra, e um sistema visual que torne o endosso visível. No próprio documento, as marcas na atuação individual aparecem como <code>X®</code> e <code>Y®</code>, ainda como marcadores.</p>
+  <div class="figs">
+    <figure><img src="diagnostico/arq-decisao.jpg" alt="Slide: endosso leve + cobrand com a Domini sendo motor"><figcaption><b>A decisão.</b> Endosso leve + cobrand, Domini como motor.</figcaption></figure>
+    <figure><img src="diagnostico/arq-sintese.jpg" alt="Slide: não somos um grupo"><figcaption><b>A síntese.</b> Estrutura única, duas marcas; Tríade como holding.</figcaption></figure>
+    <figure><img src="diagnostico/arq-atuacao-individual.jpg" alt="Slide: atuação individual com Y® como marcador"><figcaption><b>Atuação individual.</b> As marcas ainda aparecem como X® e Y®. A estratégia existe; a forma de assinar, ainda não.</figcaption></figure>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="n">5</span><div class="eyebrow">O momento de cada marca</div><h2>As duas empresas já declararam uma virada</h2></div>
+  <p class="prose">Pela linha do tempo do próprio estudo, as duas marcas entram em 2026 numa fase nova. A presença pública ainda está na fase anterior.</p>
+  <div class="phases">
+    <div class="phase">
+      <span class="tag d">Domini</span>
+      <h4>Da primeira moradia à maturidade</h4>
+      <ol>
+        <li><span class="y">2002–2016</span><span><strong>Fase 1</strong> · custo-benefício. "Domini Incorporadora".</span></li>
+        <li><span class="y">2017–2025</span><span><strong>Fase 2</strong> · valor agregado. "Felicidade em metros quadrados", depois "Projetos de Vida".</span></li>
+        <li class="now"><span class="y">2026 →</span><span><strong>Fase 3 · Maturidade.</strong> Médio e grande porte, alta renda, capital híbrido. A palavra escolhida: <strong>Identidade</strong>. Descritor novo: ainda não existe.</span></li>
+      </ol>
+    </div>
+    <div class="phase">
+      <span class="tag t">Tríade</span>
+      <h4>Do nascimento à emancipação</h4>
+      <ol>
+        <li><span class="y">2018–2025</span><span><strong>Fase 1 · Nascimento.</strong> Consultoria e controladoria, comercial passivo, forte vínculo com a Domini.</span></li>
+        <li class="now"><span class="y">2026 →</span><span><strong>Fase 2 · Emancipação.</strong> Gestão de ativos como produto principal, comercial ativo, carteira própria. A dor registrada: sair da sombra da Domini.</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <h3><span class="tag d">Domini</span>A marca está uma fase atrás do negócio</h3>
+  <ul class="findings">
+    <li><b>A Fase 3 segue assinando com o descritor da Fase 2.</b><span>Cada fase trocou o descritor; a última ainda não trocou. Até o estudo estratégico repete o problema: no slide "Propósito" da Domini, logo depois de declarar a Fase 3, aparece "Projetos com propósito de vida", com a mesma foto da jovem no sofá que está na home do site.</span></li>
+    <li><b>Três versões da marca circulando ao mesmo tempo.</b><span>O manual vigente documenta a versão colorida (laranja, amarelo, vermelho, com os "arcos") e traz o aramado só como variação no fim. Site, Instagram e o estudo de arquitetura usam o aramado cinza. O portfólio em PDF ainda usa a colorida. Não há manual próprio da versão atual.</span></li>
+    <li><b>O nome "Incorporadora" nunca saiu de cena.</b><span>O e-mail é <code>@dominiincorporadora.com.br</code>, e a apresentação comercial diz "a Domini Incorporadora". Hoje o domínio <code>dominiincorporadora.com.br</code> redireciona para o "projetos de vida", quando o mais coerente seria o contrário.</span></li>
+    <li><b>O tamanho do que vem pede outro patamar de marca.</b><span>O pipeline apresentado soma 7 empreendimentos, cerca de 606 unidades e ~R$ 900 milhões de VGV até 2028: Alma Gramado, Alma Morro das Pedras, Ribeirão da Ilha, Senior Living, Office 405, Família Jardim e Jardim Campeche.</span></li>
+  </ul>
+  <div class="figs">
+    <figure><img src="diagnostico/logos-historico.jpg" alt="Histórico de logos da Domini e logo antigo da Tríade"><figcaption><b>Histórico.</b> Domini fases 1, 2 e atual; à direita, a primeira Tríade.</figcaption></figure>
+    <figure><img src="diagnostico/domini-fases.jpg" alt="Linha do tempo das fases da Domini"><figcaption><b>Fases do negócio.</b> A Fase 3 é "Identidade, Consolidação e Crescimento".</figcaption></figure>
+    <figure><img src="diagnostico/domini-proposito.jpg" alt="Slide propósito da Domini com projetos com propósito de vida"><figcaption><b>Mesmo estudo, poucas páginas depois.</b> O propósito ainda é o da fase anterior.</figcaption></figure>
+    <figure><img src="diagnostico/domini-fase3.jpg" alt="Descrição da Fase 3 da Domini"><figcaption><b>Fase 3 nas palavras de vocês.</b> Alta renda, médio e grande porte, capital híbrido.</figcaption></figure>
+    <figure><img src="diagnostico/manual-domini.jpg" alt="Páginas do manual da marca Domini"><figcaption><b>Manual vigente.</b> Documenta a versão colorida; o aramado atual aparece só no fim.</figcaption></figure>
+    <figure><img src="diagnostico/portfolio-domini.jpg" alt="Portfólio em PDF da Domini"><figcaption><b>Portfólio em PDF.</b> Logo colorido, "projetos de vida", sem curadoria por fase.</figcaption></figure>
+  </div>
+
+  <h3><span class="tag t">Tríade</span>Pronta para se emancipar, mas sem sistema de marca e com a história emprestada</h3>
+  <ul class="findings">
+    <li><b>O "manual" da Tríade são três telas do logo sobre três fundos.</b><span>Não há tipografia, grid, regras de aplicação nem versões para cobrand. Para uma marca que vai ganhar comercial ativo e carteira de terceiros, é pouco.</span></li>
+    <li><b>O institucional 2025 usa a história da Domini como se fosse da Tríade.</b><span>Visualmente ele é bem resolvido, mas "23 anos de mercado" e "82 empreendimentos, 1.352 unidades, 235.863 m²" são os números do slide de dados gerais da Domini. O portfólio da Tríade lista Advance (Caxias, 2012), Sweet Home, Trip Home e o Alma Gramado, todos Domini, e a Tríade nasceu em 2018.</span></li>
+    <li><b>Isso alimenta os cenários de confusão que vocês mesmos relataram.</b><span>O corretor que pergunta se as duas são concorrentes e o cliente que não sabe se fala com a Tríade ou com a Domini estão no estudo como problemas. Com o endosso leve decidido, falta a regra de como uma marca cita o histórico da outra.</span></li>
+  </ul>
+  <div class="figs">
+    <figure><img src="diagnostico/triade-fase2.jpg" alt="Slide Fase 2 Emancipação da Tríade"><figcaption><b>Fase 2 da Tríade.</b> Emancipação, comercial ativo, carteira própria.</figcaption></figure>
+    <figure><img src="diagnostico/manual-triade.jpg" alt="Manual da marca Tríade com três aplicações do logo"><figcaption><b>Manual atual.</b> Três aplicações do logo, e só.</figcaption></figure>
+    <figure><img src="diagnostico/institucional-triade-diferenciais.jpg" alt="Slide de diferenciais com 23 anos e 82 empreendimentos"><figcaption><b>Institucional 2025.</b> Os números da Domini como experiência da Tríade.</figcaption></figure>
+    <figure><img src="diagnostico/institucional-triade-portfolio.jpg" alt="Portfólio da Tríade com o Advance de 2012"><figcaption><b>Portfólio Tríade.</b> Advance, Caxias, 2012: produto Domini, seis anos antes da Tríade existir.</figcaption></figure>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="n">6</span><div class="eyebrow">O ecossistema</div><h2>O ciclo que só existe no documento interno</h2></div>
+  <p class="prose">O estudo de arquitetura conta o fluxo com clareza: viabiliza, estrutura, incorpora, constrói, gerencia ativos. Em público, ele aparece em pedaços, e os mesmos empreendimentos (Ekos, Oka, SKY 405) surgem nas duas marcas sem explicação de quem fez o quê.</p>
+  <div class="cycle">
+    <div class="step"><div class="who t">Tríade · início</div><p>Conceito, pesquisa, viabilidade, jurídico, sócios e captação. Entrega o projeto pronto.</p><div class="today">Hoje: quem reivindica essa etapa em público é o site da Domini.</div></div>
+    <div class="step"><div class="who d">Domini · meio</div><p>Incorporação, obra, habite-se. Vende lançamento e estoque.</p><div class="today">Hoje: aparece, mas não como parte de um sistema.</div></div>
+    <div class="step"><div class="who t">Tríade · depois</div><p>Gestão do ativo e locação corporativa. A Tríade abraça a Domini nas duas pontas.</p><div class="today">Hoje: é a única etapa que o Instagram da Tríade mostra.</div></div>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="n">7</span><div class="eyebrow">O plano de 2026 de vocês</div><h2>As prioridades já estão escritas</h2></div>
+  <p class="prose">Nas "Principais ações 2026", as duas empresas listam no topo, como primeira ação institucional, a arquitetura de marcas Domini e Tríade. Logo abaixo vêm: fortalecer a marca com plano de comunicação on e offline, elevar a experiência do cliente em contato com a marca, e planejar e contratar gestão de plataformas e redes sociais com foco institucional. A Tríade acrescenta foco em prospecção e em carteiras de locação fora dos imóveis da Domini.</p>
+  <p class="prose">Este diagnóstico olha para essa mesma lista a partir de fora: o que o mercado vê hoje, e o que precisa mudar para que ele veja o que vocês já decidiram ser.</p>
+</section>
+
+<section class="chapter">
+  <div class="chapter-head"><span class="n">8</span><div class="eyebrow">Leitura pelo método Mira</div><h2>Essência e narrativa estão sólidas. Falta a expressão.</h2></div>
+  <p class="prose">Trabalhamos marca em três camadas: essência, narrativa e expressão. Olhando Tríade e Domini por essas lentes, o diagnóstico fica simples. As duas primeiras camadas estão bem resolvidas, sobretudo na cabeça de quem conduz o negócio, e boa parte delas já está registrada no estudo de arquitetura. O que não acompanhou foi a terceira.</p>
+  <div class="layers">
+    <div class="layer ok"><div class="lh"><span class="eyebrow">Camada 1</span><span class="st">Sólida</span></div><h4>Essência</h4><p>Quem cada marca é e por que existe. Clara para os sócios e coerente com o momento de cada empresa.</p></div>
+    <div class="layer ok"><div class="lh"><span class="eyebrow">Camada 2</span><span class="st">Sólida</span></div><h4>Narrativa</h4><p>Como cada uma se posiciona e como a Tríade envolve a Domini nas duas pontas do ciclo. Decidida e documentada como endosso leve + cobrand.</p></div>
+    <div class="layer open"><div class="lh"><span class="eyebrow">Camada 3</span><span class="st">Em aberto</span></div><h4>Expressão</h4><p>Como tudo isso aparece: sites, redes, apresentações, padrões visuais. É aqui que o mercado ainda vê a versão anterior das duas marcas.</p></div>
+  </div>
+  <p class="prose">O próximo passo, portanto, é dar expressão ao que já foi construído, com respeito ao trabalho feito até aqui, para as duas marcas e com a mesma lógica de arquitetura.</p>
+  <div class="fronts">
+    <div>
+      <h3>O que a expressão precisa cobrir</h3>
+      <p class="k">Para Domini e para Tríade, cada uma no seu papel.</p>
+      <ul>
+        <li>Padrões visuais atualizados, com regras de assinatura, endosso e cobrand</li>
+        <li>Redes sociais ajustadas por inteiro: bio, destaques e padrão visual do feed</li>
+        <li>Sites reescritos e redesenhados à luz da arquitetura, com portfólio organizado por fase e papel</li>
+        <li>Apresentação institucional de cada marca</li>
+        <li>Apresentação comercial de cada marca, incluindo o material para imobiliárias</li>
+        <li>Regra de histórico: como uma marca cita os números e o portfólio da outra</li>
+      </ul>
+    </div>
+    <div>
+      <h3>A base técnica por trás</h3>
+      <p class="k">Para que a expressão se sustente no digital.</p>
+      <ul>
+        <li>Domínios organizados, começando por inverter o redirect do <code>dominiincorporadora</code></li>
+        <li>Hospedagem e certificados de segurança padronizados para todas as marcas</li>
+        <li>Redirecionamentos que preservem o histórico de busca</li>
+        <li>Sites mantidos em infraestrutura ágil, pronta para novidades e ajustes</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="signers"><b>Mira Brand Studio</b> · somosmira.com.br &nbsp;&nbsp; <b>Tuliu</b> · tuliu.io</div>
+  <p style="margin:0">Fontes públicas: <a href="https://dominiprojetosdevida.com.br/">dominiprojetosdevida.com.br</a>, <a href="https://www.instagram.com/domini_projetosdevida/">@domini_projetosdevida</a>, <a href="https://triadebr.com.br/">triadebr.com.br</a>, <a href="https://www.triadebrlocacoes.com.br/">triadebrlocacoes.com.br</a>, <a href="https://www.instagram.com/triadebrlocacoes/">@triadebrlocacoes</a>, visitados em 29 e 30 out 2026; números de seguidores e posts são do dia da visita. Material interno: "Arquitetura das marcas", manuais, logos, Apresentação e Portfólio Domini, Institucional 2025 e Infográfico Tríade, enviados por vocês.</p>
+</footer>
+
+</main>
+</body>
+</html>
