@@ -100,10 +100,10 @@ export function SiteNav({ standalone = false }: { standalone?: boolean }) {
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-5 md:pt-4">
       <div
-        className={`mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full border py-2 pl-5 pr-2 backdrop-blur-md transition-colors duration-500 ${shell}`}
+        className={`mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full border py-2 pl-6 pr-2 backdrop-blur-md transition-colors duration-500 ${shell}`}
       >
         <SectionLink id="inicio" standalone={standalone} aria-label="Mira, voltar ao início" className="shrink-0">
-          <Logo height={26} tone={light ? "dark" : "light"} />
+          <Logo height={20} tone={light ? "dark" : "light"} />
         </SectionLink>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Seções">
@@ -165,7 +165,7 @@ export function SiteNav({ standalone = false }: { standalone?: boolean }) {
       {open && (
         <div className="fixed inset-0 z-50 flex flex-col bg-ink-950/97 px-6 pb-10 pt-6 text-cream backdrop-blur-md lg:hidden">
           <div className="flex items-center justify-between">
-            <Logo height={26} tone="light" />
+            <Logo height={20} tone="light" />
             <button
               type="button"
               onClick={() => setOpen(false)}
