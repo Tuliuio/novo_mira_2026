@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { CasesGallery } from "@/components/CasesGallery";
 import { ScrollVideo } from "@/components/ScrollVideo";
@@ -10,6 +11,19 @@ import { SplitFlap } from "@/components/SplitFlap";
 import { METHOD, pillarItems } from "@/lib/method";
 
 export function Home() {
+  // chegando de outra página com /#secao (ex.: menu dos diagnósticos)
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (!hash) return;
+    // instantâneo e com folga: o scroll suave do <html> é interrompido
+    // enquanto a página ainda está montando o layout
+    const id = window.setTimeout(
+      () => document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "instant" }),
+      120,
+    );
+    return () => window.clearTimeout(id);
+  }, [hash]);
+
   return (
     <div className="min-h-screen bg-ink-900">
       <SiteNav />

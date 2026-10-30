@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentProps } from "react";
 import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 
@@ -27,12 +27,24 @@ export function ArrowDot({ dark = false }: { dark?: boolean }) {
   );
 }
 
+/** Âncora de seção: na home rola a página; fora dela, volta para a home na seção. */
+function SectionLink({
+  id,
+  standalone,
+  ...rest
+}: { id: string; standalone: boolean } & Omit<ComponentProps<"a">, "href">) {
+  return standalone ? <Link to={`/#${id}`} {...rest} /> : <a href={`#${id}`} {...rest} />;
+}
+
 /**
  * Menu fixo da home. Transparente sobre o vídeo da abertura; ao rolar ganha
  * fundo de vidro, e troca para o tema claro quando o "mundo branco" passa por
  * baixo dele. Destaca a seção visível no momento.
+ *
+ * `standalone`: uso fora da home (ex.: diagnósticos). Fundo de vidro fixo e os
+ * links levam de volta para a seção correspondente da home.
  */
-export function SiteNav() {
+export function SiteNav({ standalone = false }: { standalone?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [light, setLight] = useState(false); // true = mundo branco por baixo
   const [active, setActive] = useState<string | null>(null);
@@ -81,7 +93,7 @@ export function SiteNav() {
 
   const shell = light
     ? "border-black/5 bg-white/80 text-ink-900"
-    : scrolled
+    : scrolled || standalone
       ? "border-white/10 bg-ink-950/55 text-cream"
       : "border-transparent bg-transparent text-cream";
 
@@ -90,17 +102,18 @@ export function SiteNav() {
       <div
         className={`mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-full border py-2 pl-5 pr-2 backdrop-blur-md transition-colors duration-500 ${shell}`}
       >
-        <a href="#inicio" aria-label="Mira, voltar ao início" className="shrink-0">
+        <SectionLink id="inicio" standalone={standalone} aria-label="Mira, voltar ao início" className="shrink-0">
           <Logo height={26} tone={light ? "dark" : "light"} />
-        </a>
+        </SectionLink>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Seções">
           {LINKS.map((l) => {
             const on = active === l.id;
             return (
-              <a
+              <SectionLink
                 key={l.id}
-                href={`#${l.id}`}
+                id={l.id}
+                standalone={standalone}
                 aria-current={on ? "true" : undefined}
                 className={`relative rounded-full px-3.5 py-2 text-sm transition-colors ${
                   on ? "font-semibold" : "opacity-70 hover:opacity-100"
@@ -112,7 +125,7 @@ export function SiteNav() {
                     on ? "scale-x-100" : "scale-x-0"
                   }`}
                 />
-              </a>
+              </SectionLink>
             );
           })}
         </nav>
@@ -124,15 +137,16 @@ export function SiteNav() {
           >
             Área do cliente
           </Link>
-          <a
-            href="#contato"
+          <SectionLink
+            id="contato"
+            standalone={standalone}
             className={`hidden items-center gap-2 rounded-full py-1.5 pl-1.5 pr-4 text-sm font-semibold transition-transform hover:scale-[1.03] sm:inline-flex ${
               light ? "bg-ink-900 text-cream" : "bg-accent-500 text-ink-900"
             }`}
           >
             <ArrowDot dark={!light} />
             Vamos conversar
-          </a>
+          </SectionLink>
           <button
             type="button"
             onClick={() => setOpen(true)}
@@ -165,9 +179,10 @@ export function SiteNav() {
           </div>
           <nav className="mt-14 flex flex-col" aria-label="Seções">
             {LINKS.map((l, i) => (
-              <a
+              <SectionLink
                 key={l.id}
-                href={`#${l.id}`}
+                id={l.id}
+                standalone={standalone}
                 onClick={() => setOpen(false)}
                 className="flex items-baseline gap-4 border-b border-white/10 py-5 text-3xl font-semibold"
                 style={{ fontFamily: "var(--font-display)" }}
@@ -176,17 +191,18 @@ export function SiteNav() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 {l.label}
-              </a>
+              </SectionLink>
             ))}
           </nav>
           <div className="mt-auto flex flex-col gap-3">
-            <a
-              href="#contato"
+            <SectionLink
+              id="contato"
+              standalone={standalone}
               onClick={() => setOpen(false)}
               className="inline-flex items-center justify-center gap-2 rounded-full bg-accent-500 py-3.5 text-sm font-semibold text-ink-900"
             >
               Vamos conversar
-            </a>
+            </SectionLink>
             <Link
               to="/login"
               className="rounded-full border border-white/15 py-3.5 text-center text-sm font-medium"
