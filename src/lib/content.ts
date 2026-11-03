@@ -2113,13 +2113,10 @@ const OKA: ClientBrand = {
         ],
       },
     ],
-    site: { url: "https://lavenderblush-narwhal-660706.hostingersite.com/", label: "Site novo do OKA (homologação)" },
     photos: [
       { src: "/clients/oka/aplicacoes/site-mockup-devices.jpg", label: "Site no notebook e no celular", group: "Site", fit: "contain", pad: "#eddcc0" },
       { src: "/clients/oka/aplicacoes/site-hero.jpg", label: "Abertura: Onde o dia se resolve.", group: "Site", fit: "contain", pad: "#eddcc0" },
-      { src: "/clients/oka/aplicacoes/site-pagina.jpg", label: "Home completa: linha do dia, serviços, operações e o endereço", group: "Site" },
       { src: "/clients/oka/aplicacoes/outdoor-mockup.jpg", label: "Outdoor na via: Onde o dia se resolve.", group: "Outdoor" },
-      { src: "/clients/oka/aplicacoes/outdoor-arte-9x3.jpg", label: "Arte do outdoor 9x3", group: "Outdoor", fit: "contain", pad: "#131f1d" },
       { src: "/clients/oka/aplicacoes/01-fachada-totem.jpg", label: "Totem na via: o OKA para quem passa", group: "Espaço" },
       { src: "/clients/oka/aplicacoes/03-assinatura-de-luz.jpg", label: "Assinatura de luz: o logo e a sombra das folhas", group: "Espaço" },
       { src: "/clients/oka/aplicacoes/06b-hall-torre-sol.jpg", label: "Hall da Torre Sol", group: "Espaço" },
