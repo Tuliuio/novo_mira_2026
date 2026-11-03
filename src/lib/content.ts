@@ -154,6 +154,8 @@ export interface HubBrand {
   essenceArticle?: HubArticle;
   verbal?: HubVerbal;
   applications?: HubApplication[];
+  /** site publicado (ou em homologação): prévia ao vivo e link na seção Aplicações */
+  site?: { url: string; label?: string };
   /** fotografias reais da marca no mundo (aplicações + direção fotográfica) */
   photos?: HubPhoto[];
   /** roteiros de Narrativa (StoryBrand) — marca-mãe + sub-marcas, em texto corrido completo */
@@ -2092,8 +2094,32 @@ const OKA: ClientBrand = {
         ],
         download: { href: "/clients/oka/apoio/oka-texturas.zip", label: "Baixar texturas (PNG, fundo chapado e transparente)" },
       },
+      {
+        name: "Direção fotográfica",
+        title: "Luz de manhã, sombra de folha e gente resolvendo o dia",
+        paragraphs: [
+          "A fotografia do OKA mostra o lugar pelo que ele faz: adultos trabalhando, se reunindo e tomando um café, num dia de semana comum. Nada de cena de festa, de criança ou de vitrine. As pessoas estão em situação real, com notebook, café e reunião, o olhar para alguém fora do quadro e um sorriso contido, de quem está resolvendo a agenda.",
+          "A luz é natural, do fim da manhã, filtrada pelo teto de folhas: as sombras das folhas caem na pele, na mesa e na parede clara, e repetem a textura da marca. Do outro lado do quadro, o verde profundo da vegetação em sombra. É esse contraste, pedra clara ao sol e verde escuro, que dá o clima do OKA.",
+          "Figurino e objetos ficam na paleta: linho areia, verde, madeira e branco. O acabamento é de cinema, com grão de filme e enquadramento largo, deixando respiro de um lado para título e logo, como no site e no outdoor.",
+          "As imagens abaixo foram geradas por IA e servem como referência de direção para as produções. Não devem ser apresentadas como fotos reais do OKA nem das suas operações.",
+        ],
+        uses: ["Site", "Outdoor e mídia", "Redes sociais", "Apresentações comerciais", "Briefing de fotógrafo"],
+        pattern: "/clients/oka/fotografia/01-luz-de-folha.jpg",
+        photos: [
+          { src: "/clients/oka/fotografia/02-cafe-e-notebook.jpg", label: "Café e notebook sob o teto de folhas" },
+          { src: "/clients/oka/fotografia/03-a-praca.jpg", label: "A praça coberta, luz entrando pelo teto" },
+          { src: "/clients/oka/fotografia/04-reuniao-na-mesa.jpg", label: "Reunião na mesa: trabalho sem pressa" },
+          { src: "/clients/oka/fotografia/05-conversa-que-vira-negocio.jpg", label: "A conversa que vira negócio" },
+        ],
+      },
     ],
+    site: { url: "https://lavenderblush-narwhal-660706.hostingersite.com/", label: "Site novo do OKA (homologação)" },
     photos: [
+      { src: "/clients/oka/aplicacoes/site-mockup-devices.jpg", label: "Site no notebook e no celular", group: "Site", fit: "contain", pad: "#eddcc0" },
+      { src: "/clients/oka/aplicacoes/site-hero.jpg", label: "Abertura: Onde o dia se resolve.", group: "Site", fit: "contain", pad: "#eddcc0" },
+      { src: "/clients/oka/aplicacoes/site-pagina.jpg", label: "Home completa: linha do dia, serviços, operações e o endereço", group: "Site" },
+      { src: "/clients/oka/aplicacoes/outdoor-mockup.jpg", label: "Outdoor na via: Onde o dia se resolve.", group: "Outdoor" },
+      { src: "/clients/oka/aplicacoes/outdoor-arte-9x3.jpg", label: "Arte do outdoor 9x3", group: "Outdoor", fit: "contain", pad: "#131f1d" },
       { src: "/clients/oka/aplicacoes/01-fachada-totem.jpg", label: "Totem na via: o OKA para quem passa", group: "Espaço" },
       { src: "/clients/oka/aplicacoes/03-assinatura-de-luz.jpg", label: "Assinatura de luz: o logo e a sombra das folhas", group: "Espaço" },
       { src: "/clients/oka/aplicacoes/06b-hall-torre-sol.jpg", label: "Hall da Torre Sol", group: "Espaço" },

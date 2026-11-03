@@ -887,6 +887,16 @@ function InUse({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, f
   return (
     <section id="aplicacoes">
       <SecHead eyebrow="Aplicações" title="A marca no mundo real" />
+      {hub.site && (
+        <div className="site-live reveal">
+          <div className="site-live-bar">
+            <span className="site-live-dots" aria-hidden="true"><i /><i /><i /></span>
+            <span className="site-live-label">{hub.site.label ?? "Site"}</span>
+            <a className="btn btn-gold" href={hub.site.url} target="_blank" rel="noopener noreferrer">Abrir o site ↗</a>
+          </div>
+          <iframe className="site-live-frame" src={hub.site.url} title={hub.site.label ?? "Site"} loading="lazy" />
+        </div>
+      )}
       {groups.length > 0 ? (
         groups.map((g) => (
           <div key={g.name}>
