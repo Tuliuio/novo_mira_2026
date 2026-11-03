@@ -68,11 +68,6 @@ export function BeforeAfterSlider({
         <span className="ba-tag ba-tag-before" style={{ opacity: pos > 14 ? 1 : 0 }}>Antes</span>
         <span className="ba-tag ba-tag-after" style={{ opacity: pos < 86 ? 1 : 0 }}>Depois</span>
       </div>
-      <div className="ba-cap">
-        <span><b>{before.name}</b> — {before.role}</span>
-        <span className="ba-arrow">→</span>
-        <span><b>{after.name}</b> — {after.role}</span>
-      </div>
     </div>
   );
 }

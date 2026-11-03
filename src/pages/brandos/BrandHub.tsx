@@ -428,7 +428,6 @@ function Hero({ client, hub }: { client: ClientBrand; hub: HubBrand }) {
       {hub.rebrand ? (
         <>
           <BeforeAfterSlider before={hub.rebrand.before} after={hub.rebrand.after} />
-          {hub.rebrand.note && <p className="hero-rebrand-note">{hub.rebrand.note}</p>}
         </>
       ) : primary ? (
         <div className="hero-logo" style={{ background: primary.pad }}>
@@ -497,7 +496,7 @@ function Logos({ hub, onDownload }: { hub: HubBrand; onDownload: (src: string, f
 function Colors({ hub, onCopy }: { hub: HubBrand; onCopy: (hex: string) => void }) {
   return (
     <section id="cores">
-      <SecHead eyebrow="Cores" title="Cores da marca" desc="Toque na cor para copiar o seu código hexadecimal." />
+      <SecHead eyebrow="Cores" title="Cores da marca" />
       {hub.colorsNote && <div className="prose colors-note reveal"><p>{hub.colorsNote}</p></div>}
       <div className="reveal">
       <Slider label="Cores da marca" className="slider-mobile slider-colors" dots={hub.colors.map((c) => c.hex)}>
@@ -532,9 +531,9 @@ function Typography({ hub }: { hub: HubBrand }) {
               <span className="type-role">{t.role} — {t.family}</span>
               {t.sampleImg ? (
                 <MaskImg img={t.sampleImg} alt={t.sample} className="type-sample-img" />
-              ) : (
+              ) : t.sample ? (
                 <div className="type-sample" style={{ fontFamily: t.cssFamily ?? undefined, fontWeight: t.sampleWeight }}>{t.sample}</div>
-              )}
+              ) : null}
               {t.pangramImg ? (
                 <div className="type-pangram"><MaskImg img={t.pangramImg} alt="Alfabeto da família" className="type-pangram-img" /></div>
               ) : (
@@ -666,8 +665,12 @@ function Essence({ hub, onRead }: { hub: HubBrand; onRead: () => void }) {
       <SecHead eyebrow="Essência" title="Direcionamento estratégico da marca" />
       <div className="prose reveal">
         {e.lead && <p className="lead">{e.lead}</p>}
-        {e.proposito && <><div className="grp-label">Propósito</div><p>{e.proposito}</p></>}
-        {e.posicionamento && <><div className="grp-label">Posicionamento</div><p>{e.posicionamento}</p></>}
+        {(e.proposito || e.posicionamento) && (
+          <div className="ess-cols">
+            {e.proposito && <div><div className="grp-label">Propósito</div><p>{e.proposito}</p></div>}
+            {e.posicionamento && <div><div className="grp-label">Posicionamento</div><p>{e.posicionamento}</p></div>}
+          </div>
+        )}
         {e.quote && <div className="quote"><p>“{e.quote}”</p></div>}
         {e.atributos && e.atributos.length > 0 && <><div className="grp-label">Atributos</div><div className="attrs">{e.atributos.map((a) => <span className="tag2" key={a}>{a}</span>)}</div></>}
         <div className="read-more">
@@ -756,34 +759,36 @@ function Verbal({ hub }: { hub: HubBrand }) {
   const hasMore = !!(v.territorio || v.recursos?.length || v.manifesto?.length || v.mensagens?.length || v.pitch);
   return (
     <section id="expressao">
-      <SecHead eyebrow="Expressão verbal" title="Comunicação da marca" desc="Como a marca soa — e o vocabulário que a mantém fiel a si mesma." />
+      <SecHead eyebrow="Expressão verbal" title="Comunicação da marca" />
       {v.naming && v.naming.length > 0 && (
         <div className="vb-names reveal">
           {v.naming.map((n) => (
-            <div className="vb-name" key={n.label}><span className="vb-label">{n.label}</span><span className="vb-value">{n.value}</span></div>
+            <div className={"vb-name" + (n.value.length > 60 ? " vb-name-wide" : "")} key={n.label}><span className="vb-label">{n.label}</span><span className="vb-value">{n.value}</span></div>
           ))}
         </div>
       )}
       <div className="prose reveal">
-        {v.tom && <><div className="grp-label">Tom de voz</div><p className="lead">{v.tom}</p></>}
-        {v.eNaoE && v.eNaoE.length > 0 && (
-          <div className="vb-isnot">
-            <div className="vb-isnot-h"><span>É</span><span>Não é</span></div>
-            {v.eNaoE.map((x) => <div className="vb-isnot-r" key={x.e}><span>{x.e}</span><span>{x.nao}</span></div>)}
-          </div>
-        )}
-        {v.sim && v.sim.length > 0 && <><div className="grp-label">Vocabulário — sim</div><div className="attrs">{v.sim.map((x) => <span className="tag2" key={x}>{x}</span>)}</div></>}
-        {v.nao && v.nao.length > 0 && <><div className="grp-label">Vocabulário — não</div><div className="attrs">{v.nao.map((x) => <span className="tag2" key={x}>{x}</span>)}</div></>}
+        <div className={"vb-tom" + (v.eNaoE && v.eNaoE.length > 0 ? " has-table" : "")}>
+          {v.tom && <div><div className="grp-label">Tom de voz</div><p className="vb-tom-text">{v.tom}</p></div>}
+          {v.eNaoE && v.eNaoE.length > 0 && (
+            <div className="vb-isnot">
+              <div className="vb-isnot-h"><span>É</span><span>Não é</span></div>
+              {v.eNaoE.map((x) => <div className="vb-isnot-r" key={x.e}><span>{x.e}</span><span>{x.nao}</span></div>)}
+            </div>
+          )}
+        </div>
+        <div className="vb-vocab">
+          {v.sim && v.sim.length > 0 && <div><div className="grp-label">Vocabulário — sim</div><div className="attrs">{v.sim.map((x) => <span className="tag2" key={x}>{x}</span>)}</div></div>}
+          {v.nao && v.nao.length > 0 && <div><div className="grp-label">Vocabulário — não</div><div className="attrs">{v.nao.map((x) => <span className="tag2" key={x}>{x}</span>)}</div></div>}
+        </div>
         {v.superlativo && <div className="note-card" style={{ marginTop: 22 }}><b>Regra do superlativo.</b> {v.superlativo}</div>}
         {v.examples && v.examples.length > 0 && (
           <>
             <div className="grp-label" style={{ marginTop: 30 }}>Exemplos</div>
-            {v.examples.map((x, i) => (
-              <div className="sim-nao" key={i}>
-                <div className="sn sim"><h4>Assim sim</h4><ul><li>{x.sim}</li></ul></div>
-                <div className="sn nao"><h4>Assim não</h4><ul><li>{x.nao}</li></ul></div>
-              </div>
-            ))}
+            <div className="sim-nao">
+              <div className="sn sim"><h4>Assim sim</h4><ul>{v.examples.map((x, i) => <li key={i}>{x.sim}</li>)}</ul></div>
+              <div className="sn nao"><h4>Assim não</h4><ul>{v.examples.map((x, i) => <li key={i}>{x.nao}</li>)}</ul></div>
+            </div>
           </>
         )}
       </div>

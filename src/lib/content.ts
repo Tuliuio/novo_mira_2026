@@ -2059,7 +2059,7 @@ const OKA: ClientBrand = {
       {
         role: "Apoio (assinatura FLORIPA)",
         family: "Montserrat",
-        sample: "CENTRO DE SERVIÇOS E NEGÓCIOS",
+        sample: "SUL DA ILHA",
         cssFamily: "Montserrat",
         sampleWeight: 500,
         weights: ["Light 300", "Regular 400", "Medium 500", "SemiBold 600", "Bold 700"],
@@ -2069,8 +2069,7 @@ const OKA: ClientBrand = {
       {
         role: "Logo (só documentação, não usar em textos)",
         family: "All Round Gothic Demi",
-        sample: "Onde o dia se resolve.",
-        sampleImg: { src: "/clients/oka/fontes/all-round-amostra.png", w: 1940, h: 170 },
+        sample: "",
         pangramImg: { src: "/clients/oka/fontes/all-round-pangrama.png", w: 2243, h: 154 },
         usage: "A fonte do logo, registrada aqui só para documentação. Ela foi escolhida para ser uma evolução do logo anterior e por isso é muito arredondada: em títulos e textos, fica infantil e divertida demais para o momento da marca. Não use em textos nem em títulos; para isso, use a Be Vietnam Pro. Fonte comercial, por isso não é distribuída aqui.",
       },
@@ -2106,7 +2105,6 @@ const OKA: ClientBrand = {
       lead: "Convivência virou conveniência. O OKA deixa de disputar a família como público principal para se tornar o centro de serviços e negócios do dia a dia do sul da ilha.",
       proposito: "Corrigir a equação que sustenta o empreendimento — recompor a rentabilidade a ponto de retomar a distribuição de resultados aos cotistas — reposicionando o OKA como centro de serviços e negócios do sul da ilha, não mais como shopping voltado à família.",
       posicionamento: "Ocupar o lugar de centro de serviços e de negócios do dia a dia do sul da ilha: um endereço onde se trabalha, se reúne, se resolve o simples e se encontra quem também enxerga à frente. A palavra que traduz a virada é conveniência, que substitui a convivência que orientou o começo.",
-      quote: "Vamos marcar no OKA, que lá tu resolve tudo.",
       atributos: ["Profissionalismo", "Networking", "Bem-estar", "Estrutura segura", "Atendimento excelente", "Conveniência", "Tranquilidade", "Organização"],
     },
     essenceArticle: {
